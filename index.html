@@ -99,8 +99,8 @@ button:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
 <main id="app"></main>
 <div class="balao" id="balao" role="status" aria-live="polite" hidden></div>
 <footer>Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.<br><a href="sons.html">Mesa de som</a></footer>
-<script src="bancos.js?v=202611101143"></script>
-<script src="sons.js?v=202611101143"></script>
+<script src="bancos.js?v=202611101147"></script>
+<script src="sons.js?v=202611101147"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -157,7 +157,7 @@ function inicio() {
   const completo = ms.find(m => m.id === 'completo') || ms[0];
   const sm1 = ms.find(m => m.sm1todo);
   const erros = ms.find(m => m.erros);
-  const assuntos = ms.filter(m => m !== completo && m !== sm1 && m !== erros);
+  const assuntos = ms.filter(m => m !== completo && m !== sm1 && m !== erros && poolDe(m).length >= 3); /* tema com menos de 3 questões fica só no simulado completo */
   const nErros = erros ? poolDe(erros).length : 0;
   app.innerHTML = abasHtml() + `
   <section class="card capa">
@@ -169,7 +169,7 @@ function inicio() {
     <div class="legenda"><span><i class="origem sm1">(questão do simulado 1)</i>caiu igualzinho no SM1</span><span><i class="origem par">(semelhante à do SM1)</i>parecida com uma do SM1</span></div>
   </section>
   ${sm1 && poolDe(sm1).length ? `<section class="card bloco"><h2>Conferir a prova do SM1</h2><p class="sub">As ${poolDe(sm1).length} questões que caíram, na ordem da prova, pra refazer e ver o gabarito comentado.</p><button class="btn ghost" data-go="${sm1.id}">Ver a prova do SM1</button></section>` : ''}
-  ${assuntos.length ? `<section class="card bloco"><h2>Treinar um assunto</h2><p class="sub">Só questões daquele tema.</p><div class="assuntos">${assuntos.map(m => `<button class="assunto" data-go="${m.id}"><span>${esc(m.nome)}</span><small>${poolDe(m).length} questões</small></button>`).join('')}</div></section>` : ''}
+  ${assuntos.length ? `<section class="card bloco"><h2>Treinar um assunto</h2><p class="sub">Só questões daquele tema.</p><div class="assuntos">${assuntos.map(m => `<button class="assunto" data-go="${m.id}"><span>${esc(m.nome)}</span><small>${poolDe(m).length} ${poolDe(m).length === 1 ? 'questão' : 'questões'}</small></button>`).join('')}</div></section>` : ''}
   ${erros ? `<section class="card bloco"><h2>Revisar meus erros</h2>${nErros ? `<p class="sub">${nErros} ${nErros === 1 ? 'questão que você errou ou deixou em branco' : 'questões que você errou ou deixou em branco'} aqui.</p><button class="btn ghost" data-go="${erros.id}">Refazer as que errei</button>` : '<p class="sub">Quando você errar uma questão, ela aparece aqui pra refazer.</p>'}</section>` : ''}`;
   app.querySelectorAll('[data-mat]').forEach(el => el.onclick = () => { cancelaNota(); MAT = el.dataset.mat; grava('sds-materia', MAT); som('clique'); inicio(); });
   app.querySelectorAll('[data-rev]').forEach(el => el.onclick = () => { escolheModo(el.dataset.rev); som('pagina'); revisao(); });
