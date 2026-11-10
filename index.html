@@ -178,7 +178,7 @@ function sorteia() {
     const pegas = embaralha(sm1).slice(0, n);
     const resto = embaralha(livres.filter(q => !pegas.includes(q) && !q.sm1)).slice(0, 10 - n);
     escolhidas = embaralha(pegas.concat(resto));
-    if (escolhidas.length < 10) escolhidas = escolhidas.concat(embaralha(livres.filter(q => !escolhidas.includes(q))).slice(0, 10 - escolhidas.length));
+    if (escolhidas.length < 10) escolhidas = escolhidas.concat(embaralha(pool.filter(q => !escolhidas.includes(q) && !q.sm1)).slice(0, 10 - escolhidas.length));
   }
   if (!m.erros) grava(chave, usadas.concat(escolhidas.map(q => q.id)));
   return escolhidas.map(q => { const ordem = (q.fixa || q.af) ? [0, 1, 2, 3, 4] : embaralha([0, 1, 2, 3, 4]); return { q, ordem, certa: ordem.indexOf(q.a) }; });
