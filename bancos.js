@@ -23,18 +23,18 @@ window.BANCOS = {
   bases: {
     curso: 'Odontologia',
     materia: 'Bases Morfológicas da Odontologia',
+    curta: 'Bases',
     codigo: 'ARA4190',
     prof: 'GUSTAVO HOLDERBAUM',
     turma: '3008',
-    proxima: 'SM2 na segunda, 09/11/2026 (data do SIA lido em outubro; confira no SIA)',
+    proxima: 'SM2 pelo Teams, aberto até sábado 14/11',
     modos: [
       { id: 'completo', nome: 'Simulado completo', sub: '10 questões sorteadas de toda a matéria.', temas: null },
-      { id: 'sm1ver', nome: 'Ver o Simulado 1 completo', sub: 'Todas as questões que caíram no SM1, na ordem da prova, pra conferir.', temas: null, sm1todo: true },
-      { id: 'sm1', nome: 'Estilo SM1', sub: 'Crânio, glândula salivar e dentina, como caiu no SM1.', temas: ['Osteologia', 'Glândulas salivares', 'Dentina'] },
+      { id: 'sm1ver', nome: 'Prova do SM1', sub: 'As 10 questões que caíram no SM1, na ordem da prova.', temas: null, sm1todo: true },
       { id: 'inerv', nome: 'Inervação e anestesia', sub: 'Nervo maxilar e mandibular, qual nervo anestesiar e as técnicas na mandíbula.', temas: ['Inervação', 'Anestesia'] },
       { id: 'cranio', nome: 'Crânio, forames e suturas', sub: 'Neurocrânio, esfenoide, mandíbula, suturas e forames.', temas: ['Osteologia'] },
       { id: 'musc', nome: 'Músculos e vascularização', sub: 'Mastigação, mímica, supra-hióideos e carótida externa.', temas: ['Músculos da mastigação', 'Mímica', 'Vascularização'] },
-      { id: 'afirm', nome: 'Afirmativas, estilo Estácio', sub: 'Só questões de I, II e III ("está correto o que se afirma em") e de asserção e razão, de toda a matéria.', temas: null, af: true },
+      { id: 'afirm', nome: 'Afirmativas I, II, III', sub: 'Questões no estilo "está correto o que se afirma em" e de asserção e razão.', temas: null, af: true },
       { id: 'erros', nome: 'Revisar meus erros', sub: 'Só as questões que você errou ou deixou em branco aqui.', temas: null, erros: true }
     ],
     revisao: [
@@ -316,80 +316,100 @@ window.BANCOS = {
   },
   carie: {
  "curso": "Odontologia",
- "materia": "Cárie e Interações Biológicas",
- "codigo": "ARA4340 / ARA4380",
+ "materia": "Fundamentos Microbiológicos e Clínicos da Cárie",
+ "curta": "Cárie",
+ "codigo": "ARA4340",
  "prof": "SEBASTIÃO MAGNO",
- "turma": "3008 / 3007",
- "proxima": "SM2 na terça, 10/11/2026 (data do SIA lido em outubro; confira no Teams)",
+ "turma": "3008",
+ "proxima": "SM2 terça, 10/11, pelo Teams (aberto até sábado 14/11)",
  "modos": [
   {
    "id": "completo",
    "nome": "Simulado completo",
-   "sub": "10 questões sorteadas de Cárie e de Interações.",
+   "sub": "10 questões sorteadas de toda a matéria.",
    "temas": null
   },
   {
-   "id": "sm1ver-c",
-   "nome": "Ver o SM1 de Cárie completo",
-   "sub": "As 10 questões que caíram no SM1 de Fundamentos Microbiológicos e Clínicos da Cárie, na ordem da prova.",
+   "id": "sm1ver",
+   "nome": "Prova do SM1",
+   "sub": "As 10 questões que caíram no SM1, na ordem da prova.",
    "temas": null,
    "sm1todo": true,
    "prefixo": "sa"
   },
   {
-   "id": "sm1ver-i",
-   "nome": "Ver o SM1 de Interações completo",
-   "sub": "As 10 questões que caíram no SM1 de Interações Biológicas e Patológicas, na ordem da prova.",
-   "temas": null,
-   "sm1todo": true,
-   "prefixo": "sb"
+   "id": "t-etiologia",
+   "nome": "Etiologia",
+   "sub": "",
+   "temas": [
+    "Etiologia"
+   ]
   },
   {
-   "id": "carie",
-   "nome": "Só Cárie",
-   "sub": "Etiologia, pH e Curva de Stephan, flúor, mancha branca e prevenção.",
+   "id": "t-desmineralização",
+   "nome": "Desmineralização",
+   "sub": "",
    "temas": [
-    "Etiologia",
-    "Desmineralização",
-    "Flúor",
-    "Diagnóstico",
-    "Prevenção",
+    "Desmineralização"
+   ]
+  },
+  {
+   "id": "t-flúor",
+   "nome": "Flúor",
+   "sub": "",
+   "temas": [
+    "Flúor"
+   ]
+  },
+  {
+   "id": "t-diagnóstico",
+   "nome": "Diagnóstico",
+   "sub": "",
+   "temas": [
+    "Diagnóstico"
+   ]
+  },
+  {
+   "id": "t-prevenção",
+   "nome": "Prevenção",
+   "sub": "",
+   "temas": [
+    "Prevenção"
+   ]
+  },
+  {
+   "id": "t-saliva",
+   "nome": "Saliva",
+   "sub": "",
+   "temas": [
     "Saliva"
    ]
   },
   {
-   "id": "inter",
-   "nome": "Só Interações (Sebastião)",
-   "sub": "Patologia geral, lesões fundamentais, mucocele, biofilme e índice de O'Leary.",
+   "id": "t-biofilme",
+   "nome": "Biofilme",
+   "sub": "",
    "temas": [
-    "Biofilme",
-    "Índice de placa",
-    "Patologia geral",
-    "Lesões fundamentais",
-    "Glândulas salivares",
-    "Diagnóstico clínico"
+    "Biofilme"
    ]
   },
   {
    "id": "afirm",
-   "nome": "Afirmativas, estilo Estácio",
-   "sub": "Só questões de I, II e III e de asserção e razão.",
+   "nome": "Afirmativas I, II, III",
+   "sub": "Questões no estilo \"está correto o que se afirma em\".",
    "temas": null,
    "af": true
   },
   {
    "id": "erros",
    "nome": "Revisar meus erros",
-   "sub": "Só as questões que você errou ou deixou em branco aqui.",
+   "sub": "",
    "temas": null,
    "erros": true
   }
  ],
  "revisao": [
   {
-   "m": [
-    "carie"
-   ],
    "t": "Cárie, o essencial",
    "i": [
     "Doença biofilme-açúcar dependente: dente + biofilme + açúcar + TEMPO (Keyes + Newbrun).",
@@ -401,9 +421,6 @@ window.BANCOS = {
    ]
   },
   {
-   "m": [
-    "carie"
-   ],
    "t": "Flúor e lesões",
    "i": [
     "Flúor age principalmente de forma tópica; forma fluorapatita, mais resistente ao ácido.",
@@ -411,33 +428,6 @@ window.BANCOS = {
     "Mancha branca opaca e rugosa = lesão ativa e reversível. Brilhante, lisa e dura = inativa.",
     "Lesão não cavitada se trata sem broca: biofilme, dieta e flúor.",
     "Fóssulas e fissuras são os locais de maior risco; selante fecha esse nicho."
-   ]
-  },
-  {
-   "m": [
-    "inter"
-   ],
-   "t": "Interações (prof. Sebastião, 13/10)",
-   "i": [
-    "Película adquirida → colonizadores iniciais → tardios → biofilme maduro.",
-    "Evidenciação de placa: corante em bochecho de ~30 s. Não faz quem tem resina na vestibular dos anteriores ou aparelho.",
-    "O'Leary = faces coradas ÷ faces examinadas × 100. Cada dente = 5 faces.",
-    "Ideal segundo o professor: 25 a 30%.",
-    "Uso: todo paciente de primeira consulta, para ensinar a escovar."
-   ]
-  },
-  {
-   "m": [
-    "inter"
-   ],
-   "t": "Patologia geral (caiu no SM1)",
-   "i": [
-    "Agressão → adaptação, lesão reversível ou lesão irreversível (morte).",
-    "Hiperplasia = mais células. Hipertrofia = células maiores. Atrofia = menores. Metaplasia = troca de tipo de célula.",
-    "Etiologia = causa. Patogênese = mecanismo. Morfologia (anatomia patológica) = alteração da forma. Fisiopatologia = alteração da função.",
-    "Semiologia = sinais e sintomas. Propedêutica = diagnóstico por sinais, sintomas e exames.",
-    "Lesões fundamentais: mácula (cor, plana), pápula (sólida pequena), nódulo (sólido maior), vesícula (líquido pequena), bolha (líquido maior), erosão, úlcera.",
-    "Mucocele: lábio inferior, azulada, flutuante, aumenta e diminui, trauma rompe o ducto e o muco extravasa."
    ]
   }
  ],
@@ -824,127 +814,6 @@ window.BANCOS = {
    "net": true
   },
   {
-   "id": "c23",
-   "tema": "Biofilme",
-   "ctx": "Após a escovação, forma-se sobre o esmalte uma película de proteínas salivares, onde as primeiras bactérias se prendem.",
-   "p": "Como se chama essa camada?",
-   "o": [
-    "Cálculo dentário",
-    "Película adquirida",
-    "Cutícula de Nasmyth",
-    "Biofilme maduro",
-    "Matéria alba"
-   ],
-   "a": 1,
-   "w": "A película adquirida (proteínas da saliva) se forma em minutos. Nela aderem os colonizadores iniciais e, em camadas, o biofilme amadurece.",
-   "f": "Pesquisa da Mônica (cariologia básica: Fejerskov & Kidd, Cariologia clínica; Ministério da Saúde, Saúde Bucal no SUS, 2018). Conferir com o material do professor.",
-   "net": true,
-   "sm1par": true
-  },
-  {
-   "id": "c24",
-   "tema": "Biofilme",
-   "ctx": "O professor explicou que as bactérias vão se instalando no dente em camadas ao longo do tempo.",
-   "p": "Qual a ordem correta?",
-   "o": [
-    "Biofilme maduro → película → colonizadores iniciais",
-    "Película adquirida → colonizadores iniciais → colonizadores tardios → biofilme maduro",
-    "Cálculo → película → bactéria",
-    "Colonizadores tardios → película → biofilme",
-    "Biofilme maduro → cálculo → película"
-   ],
-   "a": 1,
-   "w": "Primeiro a película, depois as bactérias pioneiras (estreptococos), depois as tardias, até o biofilme maduro.",
-   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
-   "net": false,
-   "sm1par": true
-  },
-  {
-   "id": "c25",
-   "tema": "Índice de placa",
-   "ctx": "No exame de placa feito em aula, foi usado um corante para tornar o biofilme visível.",
-   "p": "Como se chama esse procedimento?",
-   "o": [
-    "Profilaxia",
-    "Evidenciação de placa",
-    "Raspagem",
-    "Selamento",
-    "Fluorterapia"
-   ],
-   "a": 1,
-   "w": "Evidenciação de placa: o corante (bochecho de cerca de 30 segundos) cora o biofilme e mostra ao paciente onde ele está.",
-   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
-   "net": false
-  },
-  {
-   "id": "c26",
-   "tema": "Índice de placa",
-   "ctx": "O índice de O'Leary mede a porcentagem de faces com placa.",
-   "p": "Como se calcula?",
-   "o": [
-    "Dentes cariados ÷ dentes presentes",
-    "(Faces coradas ÷ faces examinadas) × 100",
-    "Faces coradas × 5",
-    "Número de dentes × 100",
-    "Faces sem placa ÷ 2"
-   ],
-   "a": 1,
-   "w": "O'Leary = faces coradas ÷ faces examinadas × 100. Cada dente conta 5 faces.",
-   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
-   "net": false
-  },
-  {
-   "id": "c27",
-   "tema": "Índice de placa",
-   "ctx": "Um paciente teve 20 dentes examinados e 30 faces coradas no exame de placa.",
-   "p": "Qual é o índice de O'Leary?",
-   "o": [
-    "15%",
-    "20%",
-    "30%",
-    "60%",
-    "150%"
-   ],
-   "a": 2,
-   "w": "20 dentes × 5 faces = 100 faces examinadas. 30 coradas ÷ 100 × 100 = 30%.",
-   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
-   "net": false
-  },
-  {
-   "id": "c28",
-   "tema": "Índice de placa",
-   "ctx": "Na aula prática de evidenciação, nem todo aluno pôde ser paciente.",
-   "p": "Quem NÃO deve fazer a evidenciação de placa, segundo o professor?",
-   "o": [
-    "Quem escovou os dentes antes da aula",
-    "Quem tem restauração de resina na vestibular dos anteriores ou usa aparelho",
-    "Quem tem mais de 25 anos",
-    "Quem não tem cárie",
-    "Quem usa fio dental"
-   ],
-   "a": 1,
-   "w": "O corante mancha resina e aparelho. Por isso essas pessoas não fizeram como paciente.",
-   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
-   "net": false
-  },
-  {
-   "id": "c29",
-   "tema": "Índice de placa",
-   "ctx": "O professor Sebastião citou um valor ideal para o índice de O'Leary.",
-   "p": "Segundo o professor, o índice ideal fica em torno de",
-   "o": [
-    "5%",
-    "10 a 15%",
-    "25 a 30%",
-    "50%",
-    "acima de 70%"
-   ],
-   "a": 2,
-   "w": "Valor dito pelo professor em aula: 25 a 30%. (Parte da literatura fala em até 20%; na prova vale o do professor.)",
-   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
-   "net": false
-  },
-  {
    "id": "a01",
    "tema": "Etiologia",
    "ctx": "Uma criança de 5 anos tem várias cáries. A mãe conta que ela toma suco adoçado na mamadeira várias vezes ao dia e dorme mamando. O dentista explica que a cárie depende da interação entre o dente, o biofilme, o açúcar e o tempo. Considerando o caso, analise as afirmativas a seguir.",
@@ -1056,29 +925,6 @@ window.BANCOS = {
    "af": [
     "A frequência de consumo de açúcar é mais importante para a cárie do que a quantidade total consumida.",
     "Cada exposição ao açúcar faz o pH do biofilme cair abaixo do crítico, e com exposições repetidas o dente passa mais tempo desmineralizando do que se remineralizando."
-   ],
-   "fixa": true,
-   "ar": true
-  },
-  {
-   "id": "r02",
-   "tema": "Índice de placa",
-   "ctx": "Na primeira consulta, o dentista faz a evidenciação de placa e calcula o índice de O'Leary do paciente. Avalie as asserções a seguir e a relação proposta entre elas.",
-   "p": "A respeito dessas asserções, assinale a opção correta.",
-   "o": [
-    "As asserções I e II são verdadeiras, e a II é uma justificativa correta da I.",
-    "As asserções I e II são verdadeiras, mas a II não é uma justificativa correta da I.",
-    "A asserção I é verdadeira, e a II é falsa.",
-    "A asserção I é falsa, e a II é verdadeira.",
-    "As asserções I e II são falsas."
-   ],
-   "a": 0,
-   "w": "I verdadeira: o professor indicou fazer em todo paciente de primeira vez. II verdadeira e justifica: ver a placa corada ajuda o paciente a entender e a melhorar a escovação.",
-   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
-   "net": false,
-   "af": [
-    "A evidenciação de placa é indicada para pacientes de primeira consulta.",
-    "O corante torna o biofilme visível, permitindo mostrar ao paciente onde a escovação está falhando."
    ],
    "fixa": true,
    "ar": true
@@ -1262,6 +1108,262 @@ window.BANCOS = {
    "w": "O mais eficaz é diminuir a FREQUÊNCIA de açúcar e controlar o biofilme, com acompanhamento. Escovar sem mudar a dieta não resolve.",
    "f": "SM1 de Cárie, 22/09/2026, prof. Sebastião Magno, questão 10 (questão original da prova)",
    "net": false
+  }
+ ]
+},
+  inter: {
+ "curso": "Odontologia",
+ "materia": "Interações Biológicas e Patológicas",
+ "curta": "Interações",
+ "codigo": "ARA4380",
+ "prof": "SEBASTIÃO MAGNO",
+ "turma": "3007",
+ "proxima": "SM2 terça, 10/11, pelo Teams (aberto até sábado 14/11)",
+ "modos": [
+  {
+   "id": "completo",
+   "nome": "Simulado completo",
+   "sub": "10 questões sorteadas de toda a matéria.",
+   "temas": null
+  },
+  {
+   "id": "sm1ver",
+   "nome": "Prova do SM1",
+   "sub": "As 10 questões que caíram no SM1, na ordem da prova.",
+   "temas": null,
+   "sm1todo": true,
+   "prefixo": "sb"
+  },
+  {
+   "id": "t-biofilme",
+   "nome": "Biofilme",
+   "sub": "",
+   "temas": [
+    "Biofilme"
+   ]
+  },
+  {
+   "id": "t-índice-de-placa",
+   "nome": "Índice de placa",
+   "sub": "",
+   "temas": [
+    "Índice de placa"
+   ]
+  },
+  {
+   "id": "t-glândulas-salivares",
+   "nome": "Glândulas salivares",
+   "sub": "",
+   "temas": [
+    "Glândulas salivares"
+   ]
+  },
+  {
+   "id": "t-diagnóstico-clínico",
+   "nome": "Diagnóstico clínico",
+   "sub": "",
+   "temas": [
+    "Diagnóstico clínico"
+   ]
+  },
+  {
+   "id": "t-patologia-geral",
+   "nome": "Patologia geral",
+   "sub": "",
+   "temas": [
+    "Patologia geral"
+   ]
+  },
+  {
+   "id": "t-lesões-fundamentais",
+   "nome": "Lesões fundamentais",
+   "sub": "",
+   "temas": [
+    "Lesões fundamentais"
+   ]
+  },
+  {
+   "id": "afirm",
+   "nome": "Afirmativas I, II, III",
+   "sub": "Questões no estilo \"está correto o que se afirma em\".",
+   "temas": null,
+   "af": true
+  },
+  {
+   "id": "erros",
+   "nome": "Revisar meus erros",
+   "sub": "",
+   "temas": null,
+   "erros": true
+  }
+ ],
+ "revisao": [
+  {
+   "t": "Interações (prof. Sebastião, 13/10)",
+   "i": [
+    "Película adquirida → colonizadores iniciais → tardios → biofilme maduro.",
+    "Evidenciação de placa: corante em bochecho de ~30 s. Não faz quem tem resina na vestibular dos anteriores ou aparelho.",
+    "O'Leary = faces coradas ÷ faces examinadas × 100. Cada dente = 5 faces.",
+    "Ideal segundo o professor: 25 a 30%.",
+    "Uso: todo paciente de primeira consulta, para ensinar a escovar."
+   ]
+  },
+  {
+   "t": "Patologia geral (caiu no SM1)",
+   "i": [
+    "Agressão → adaptação, lesão reversível ou lesão irreversível (morte).",
+    "Hiperplasia = mais células. Hipertrofia = células maiores. Atrofia = menores. Metaplasia = troca de tipo de célula.",
+    "Etiologia = causa. Patogênese = mecanismo. Morfologia (anatomia patológica) = alteração da forma. Fisiopatologia = alteração da função.",
+    "Semiologia = sinais e sintomas. Propedêutica = diagnóstico por sinais, sintomas e exames.",
+    "Lesões fundamentais: mácula (cor, plana), pápula (sólida pequena), nódulo (sólido maior), vesícula (líquido pequena), bolha (líquido maior), erosão, úlcera.",
+    "Mucocele: lábio inferior, azulada, flutuante, aumenta e diminui, trauma rompe o ducto e o muco extravasa."
+   ]
+  }
+ ],
+ "q": [
+  {
+   "id": "c23",
+   "tema": "Biofilme",
+   "ctx": "Após a escovação, forma-se sobre o esmalte uma película de proteínas salivares, onde as primeiras bactérias se prendem.",
+   "p": "Como se chama essa camada?",
+   "o": [
+    "Cálculo dentário",
+    "Película adquirida",
+    "Cutícula de Nasmyth",
+    "Biofilme maduro",
+    "Matéria alba"
+   ],
+   "a": 1,
+   "w": "A película adquirida (proteínas da saliva) se forma em minutos. Nela aderem os colonizadores iniciais e, em camadas, o biofilme amadurece.",
+   "f": "Pesquisa da Mônica (cariologia básica: Fejerskov & Kidd, Cariologia clínica; Ministério da Saúde, Saúde Bucal no SUS, 2018). Conferir com o material do professor.",
+   "net": true,
+   "sm1par": true
+  },
+  {
+   "id": "c24",
+   "tema": "Biofilme",
+   "ctx": "O professor explicou que as bactérias vão se instalando no dente em camadas ao longo do tempo.",
+   "p": "Qual a ordem correta?",
+   "o": [
+    "Biofilme maduro → película → colonizadores iniciais",
+    "Película adquirida → colonizadores iniciais → colonizadores tardios → biofilme maduro",
+    "Cálculo → película → bactéria",
+    "Colonizadores tardios → película → biofilme",
+    "Biofilme maduro → cálculo → película"
+   ],
+   "a": 1,
+   "w": "Primeiro a película, depois as bactérias pioneiras (estreptococos), depois as tardias, até o biofilme maduro.",
+   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
+   "net": false,
+   "sm1par": true
+  },
+  {
+   "id": "c25",
+   "tema": "Índice de placa",
+   "ctx": "No exame de placa feito em aula, foi usado um corante para tornar o biofilme visível.",
+   "p": "Como se chama esse procedimento?",
+   "o": [
+    "Profilaxia",
+    "Evidenciação de placa",
+    "Raspagem",
+    "Selamento",
+    "Fluorterapia"
+   ],
+   "a": 1,
+   "w": "Evidenciação de placa: o corante (bochecho de cerca de 30 segundos) cora o biofilme e mostra ao paciente onde ele está.",
+   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
+   "net": false
+  },
+  {
+   "id": "c26",
+   "tema": "Índice de placa",
+   "ctx": "O índice de O'Leary mede a porcentagem de faces com placa.",
+   "p": "Como se calcula?",
+   "o": [
+    "Dentes cariados ÷ dentes presentes",
+    "(Faces coradas ÷ faces examinadas) × 100",
+    "Faces coradas × 5",
+    "Número de dentes × 100",
+    "Faces sem placa ÷ 2"
+   ],
+   "a": 1,
+   "w": "O'Leary = faces coradas ÷ faces examinadas × 100. Cada dente conta 5 faces.",
+   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
+   "net": false
+  },
+  {
+   "id": "c27",
+   "tema": "Índice de placa",
+   "ctx": "Um paciente teve 20 dentes examinados e 30 faces coradas no exame de placa.",
+   "p": "Qual é o índice de O'Leary?",
+   "o": [
+    "15%",
+    "20%",
+    "30%",
+    "60%",
+    "150%"
+   ],
+   "a": 2,
+   "w": "20 dentes × 5 faces = 100 faces examinadas. 30 coradas ÷ 100 × 100 = 30%.",
+   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
+   "net": false
+  },
+  {
+   "id": "c28",
+   "tema": "Índice de placa",
+   "ctx": "Na aula prática de evidenciação, nem todo aluno pôde ser paciente.",
+   "p": "Quem NÃO deve fazer a evidenciação de placa, segundo o professor?",
+   "o": [
+    "Quem escovou os dentes antes da aula",
+    "Quem tem restauração de resina na vestibular dos anteriores ou usa aparelho",
+    "Quem tem mais de 25 anos",
+    "Quem não tem cárie",
+    "Quem usa fio dental"
+   ],
+   "a": 1,
+   "w": "O corante mancha resina e aparelho. Por isso essas pessoas não fizeram como paciente.",
+   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
+   "net": false
+  },
+  {
+   "id": "c29",
+   "tema": "Índice de placa",
+   "ctx": "O professor Sebastião citou um valor ideal para o índice de O'Leary.",
+   "p": "Segundo o professor, o índice ideal fica em torno de",
+   "o": [
+    "5%",
+    "10 a 15%",
+    "25 a 30%",
+    "50%",
+    "acima de 70%"
+   ],
+   "a": 2,
+   "w": "Valor dito pelo professor em aula: 25 a 30%. (Parte da literatura fala em até 20%; na prova vale o do professor.)",
+   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
+   "net": false
+  },
+  {
+   "id": "r02",
+   "tema": "Índice de placa",
+   "ctx": "Na primeira consulta, o dentista faz a evidenciação de placa e calcula o índice de O'Leary do paciente. Avalie as asserções a seguir e a relação proposta entre elas.",
+   "p": "A respeito dessas asserções, assinale a opção correta.",
+   "o": [
+    "As asserções I e II são verdadeiras, e a II é uma justificativa correta da I.",
+    "As asserções I e II são verdadeiras, mas a II não é uma justificativa correta da I.",
+    "A asserção I é verdadeira, e a II é falsa.",
+    "A asserção I é falsa, e a II é verdadeira.",
+    "As asserções I e II são falsas."
+   ],
+   "a": 0,
+   "w": "I verdadeira: o professor indicou fazer em todo paciente de primeira vez. II verdadeira e justifica: ver a placa corada ajuda o paciente a entender e a melhorar a escovação.",
+   "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
+   "net": false,
+   "af": [
+    "A evidenciação de placa é indicada para pacientes de primeira consulta.",
+    "O corante torna o biofilme visível, permitindo mostrar ao paciente onde a escovação está falhando."
+   ],
+   "fixa": true,
+   "ar": true
   },
   {
    "id": "sb01",
@@ -1691,7 +1793,8 @@ window.BANCOS = {
 };
 
 window.MATERIAS = [
-  { id: 'bases', nome: 'Bases Morfológicas da Odontologia', pronto: true },
-  { id: 'farmaco', nome: 'Farmacologia e Anestesiologia', pronto: false, nota: 'em breve, SM2 em 12/11' },
-  { id: 'carie', nome: 'Cárie e Interações Biológicas', pronto: true }
+  { id: 'bases', nome: 'Bases Morfológicas', pronto: true },
+  { id: 'carie', nome: 'Cárie', pronto: true },
+  { id: 'inter', nome: 'Interações', pronto: true },
+  { id: 'farmaco', nome: 'Farmacologia', pronto: false, nota: 'em breve' }
 ];

@@ -66,20 +66,41 @@ footer a{color:var(--cinza)}
 .bordao{display:block;color:var(--marca);font-style:italic;font-size:14px;margin-top:4px}
 .balao{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);max-width:calc(100% - 32px);background:var(--marca);color:#fff;font-size:14px;padding:8px 14px;border-radius:18px;box-shadow:0 2px 8px rgba(0,0,0,.2);z-index:9;text-align:center;transition:opacity .3s;pointer-events:none}
 .balao[hidden]{display:block;opacity:0}
-@media (max-width:760px){.questoes{columns:1}.linha3{grid-template-columns:1fr 1fr}.linha2{grid-template-columns:1fr}main{padding:12px}}
+/* tela inicial */
+.curso{font-size:13px;opacity:.8}
+.abas{display:flex;gap:6px;overflow-x:auto;margin:0 0 14px;padding-bottom:2px}
+.aba{flex:0 0 auto;border:1.5px solid var(--linha);background:var(--papel);color:var(--tinta);border-radius:999px;padding:9px 16px;font:inherit;font-size:15px;cursor:pointer;min-height:44px}
+.aba[aria-selected="true"]{background:var(--marca);border-color:var(--marca);color:#fff;font-weight:bold}
+.aba:disabled{color:#9a9da3;cursor:default;background:transparent}
+.capa{padding:22px 20px}
+.capa h1{font-size:28px;margin:0 0 2px}
+.capa .nome{color:var(--cinza);font-size:14px;margin:0 0 14px}
+.capa .quando{display:inline-block;background:#e8eef9;color:var(--marca);border-radius:6px;padding:6px 10px;font-size:14px;margin:0 0 18px}
+.btn.grande{font-size:18px;padding:15px 26px;margin:0 14px 0 0}
+.link{background:none;border:0;padding:8px 0;font:inherit;font-size:15px;color:var(--marca);text-decoration:underline;cursor:pointer}
+.como{font-size:13px;color:var(--cinza);margin:12px 0 0}
+.legenda{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--cinza);margin-top:12px}
+.legenda .origem{margin-left:0;margin-right:4px}
+.bloco h2{font-size:17px;margin:0 0 4px}
+.bloco .sub{margin:0 0 12px}
+.assuntos{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.assunto{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;border:1.5px solid var(--linha);background:var(--papel);border-radius:8px;padding:11px 12px;font:inherit;font-size:15px;cursor:pointer;color:var(--tinta);min-height:48px}
+.assunto:hover{border-color:var(--marca)}
+.assunto small{color:var(--cinza);font-size:13px;white-space:nowrap}
+button:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
+@media (max-width:760px){.btn.grande{width:100%;margin:0 0 6px}.capa h1{font-size:24px}.questoes{columns:1}.linha3{grid-template-columns:1fr 1fr}.linha2{grid-template-columns:1fr}main{padding:12px}}
 </style>
 </head>
 <body>
 <div class="topo">
-  <b>Simulado do simulado</b>
-  <div class="trilha"><span id="curso">Odontologia</span><span>›</span><label for="mat" class="aviso" style="color:#fff;position:absolute;left:-9999px">Matéria</label><select id="mat" aria-label="Trocar de matéria"></select></div>
+  <b>Simulado do simulado</b><span class="curso">Odontologia, 2º período</span>
   <button type="button" class="som" id="som" aria-label="Silenciar sons">🔊</button>
 </div>
 <main id="app"></main>
 <div class="balao" id="balao" role="status" aria-live="polite" hidden></div>
 <footer>Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.<br><a href="sons.html">Mesa de som</a></footer>
-<script src="bancos.js?v=202611101135"></script>
-<script src="sons.js?v=202611101135"></script>
+<script src="bancos.js?v=202611101143"></script>
+<script src="sons.js?v=202611101143"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -112,10 +133,9 @@ let prova = null;
 let timerNota = null; /* nota atrasada pelo rufar; cancelada se o aluno sair da folha antes */
 const cancelaNota = () => { if (timerNota) { clearTimeout(timerNota); timerNota = null; } };
 
-function montaSeletor() {
-  const s = $('#mat');
-  s.innerHTML = MATERIAS.map(m => `<option value="${m.id}" ${m.id === MAT ? 'selected' : ''} ${m.pronto ? '' : 'disabled'}>${esc(m.nome)}${m.pronto ? '' : ' (' + esc(m.nota) + ')'}</option>`).join('');
-  s.onchange = () => { cancelaNota(); MAT = s.value; grava('sds-materia', MAT); inicio(); };
+function montaSeletor() { /* as matérias viram abas dentro da tela inicial */ }
+function abasHtml() {
+  return `<div class="abas" role="tablist" aria-label="Matéria">${MATERIAS.map(m => `<button type="button" class="aba" role="tab" data-mat="${m.id}" aria-selected="${m.id === MAT}" ${m.pronto ? '' : 'disabled'}>${esc(m.nome)}${m.pronto ? '' : ' (' + esc(m.nota) + ')'}</button>`).join('')}</div>`;
 }
 
 const modos = () => BANCOS[MAT].modos || [{ id: 'completo', nome: 'Simulado completo', sub: '', temas: null }];
@@ -133,17 +153,28 @@ function escolheModo(id) { MODO = id; grava('sds-modo', MODO); }
 function inicio() {
   cancelaNota();
   const b = BANCOS[MAT];
-  const feitos = ler('sds-n-' + MAT, 0);
-  const net = b.q.filter(q => q.net).length;
-  app.innerHTML = `<div class="card"><h1>${esc(b.materia)}</h1><p class="sub">Treino no mesmo formato do simulado da Estácio: 10 questões de 0,1 ponto, 5 alternativas, nota no final.</p>
-  <div class="chips"><span class="chip">${b.q.length} questões no banco</span><span class="chip">${feitos} simulado(s) feito(s) aqui</span><span class="chip">${net} questões de pesquisa, marcadas com *</span></div>
-  <p class="sub"><b>Próxima avaliação:</b> ${esc(b.proxima)}</p></div>
-  <div class="card"><h2>Escolha o tipo de simulado</h2>${modos().map(m => { const n = poolDe(m).length; const vazio = m.erros && n === 0;
-    return `<div class="modo"><h3>${esc(m.nome)}</h3><p class="sub">${esc(m.sub)} <span class="chip">${m.erros ? n + ' para revisar' : n + ' questões'}</span></p>
-    ${vazio ? '<p class="aviso">Ainda não tem erro guardado. Faça um simulado primeiro; o que você errar aparece aqui.</p>' : `<button class="btn ghost" data-rev="${m.id}">Revisão rápida</button><button class="btn" data-go="${m.id}">Começar</button>`}</div>`; }).join('')}
-  <p class="aviso">Antes de começar, dá uma olhada na revisão. Durante o simulado você pode voltar nela pelo botão no fim da folha.</p></div>`;
+  const ms = modos();
+  const completo = ms.find(m => m.id === 'completo') || ms[0];
+  const sm1 = ms.find(m => m.sm1todo);
+  const erros = ms.find(m => m.erros);
+  const assuntos = ms.filter(m => m !== completo && m !== sm1 && m !== erros);
+  const nErros = erros ? poolDe(erros).length : 0;
+  app.innerHTML = abasHtml() + `
+  <section class="card capa">
+    <h1>${esc(b.curta || b.materia)}</h1>
+    <p class="nome">${esc(b.materia)}${b.prof ? ', prof. ' + esc(b.prof.toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase())) : ''}</p>
+    ${b.proxima ? `<p class="quando">${esc(b.proxima)}</p>` : ''}
+    <div><button class="btn grande" data-go="${completo.id}">Fazer simulado</button><button class="link" data-rev="${completo.id}">Ler o resumo antes</button></div>
+    <p class="como">10 questões sorteadas de toda a matéria, igual à prova: 5 alternativas, 0,1 ponto cada, nota no fim.</p>
+    <div class="legenda"><span><i class="origem sm1">(questão do simulado 1)</i>caiu igualzinho no SM1</span><span><i class="origem par">(semelhante à do SM1)</i>parecida com uma do SM1</span></div>
+  </section>
+  ${sm1 && poolDe(sm1).length ? `<section class="card bloco"><h2>Conferir a prova do SM1</h2><p class="sub">As ${poolDe(sm1).length} questões que caíram, na ordem da prova, pra refazer e ver o gabarito comentado.</p><button class="btn ghost" data-go="${sm1.id}">Ver a prova do SM1</button></section>` : ''}
+  ${assuntos.length ? `<section class="card bloco"><h2>Treinar um assunto</h2><p class="sub">Só questões daquele tema.</p><div class="assuntos">${assuntos.map(m => `<button class="assunto" data-go="${m.id}"><span>${esc(m.nome)}</span><small>${poolDe(m).length} questões</small></button>`).join('')}</div></section>` : ''}
+  ${erros ? `<section class="card bloco"><h2>Revisar meus erros</h2>${nErros ? `<p class="sub">${nErros} ${nErros === 1 ? 'questão que você errou ou deixou em branco' : 'questões que você errou ou deixou em branco'} aqui.</p><button class="btn ghost" data-go="${erros.id}">Refazer as que errei</button>` : '<p class="sub">Quando você errar uma questão, ela aparece aqui pra refazer.</p>'}</section>` : ''}`;
+  app.querySelectorAll('[data-mat]').forEach(el => el.onclick = () => { cancelaNota(); MAT = el.dataset.mat; grava('sds-materia', MAT); som('clique'); inicio(); });
   app.querySelectorAll('[data-rev]').forEach(el => el.onclick = () => { escolheModo(el.dataset.rev); som('pagina'); revisao(); });
   app.querySelectorAll('[data-go]').forEach(el => el.onclick = () => { escolheModo(el.dataset.go); som('vinheta'); balao(bordao('inicio')); novaProva(); });
+  window.scrollTo(0, 0);
 }
 
 function revisao() {
