@@ -124,7 +124,7 @@ const errosDe = () => ler('sds-erros-' + MAT, []);
 function poolDe(m) {
   const b = BANCOS[MAT];
   if (m.erros) { const e = errosDe(); return b.q.filter(q => e.includes(q.id)); }
-  if (m.sm1todo) return b.q.filter(q => q.sm1).sort((x, y) => x.id.localeCompare(y.id, 'pt', { numeric: true }));
+  if (m.sm1todo) return b.q.filter(q => q.sm1 && (!m.prefixo || q.id.startsWith(m.prefixo))).sort((x, y) => x.id.localeCompare(y.id, 'pt', { numeric: true }));
   if (m.af) return b.q.filter(q => q.af && q.af.length);
   return m.temas ? b.q.filter(q => m.temas.includes(q.tema)) : b.q.slice();
 }

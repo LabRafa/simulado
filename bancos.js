@@ -329,11 +329,20 @@ window.BANCOS = {
    "temas": null
   },
   {
-   "id": "sm1ver",
-   "nome": "Ver o Simulado 1 completo",
-   "sub": "As 20 questões que caíram no SM1 (10 de Cárie e 10 de Interações), na ordem da prova, pra conferir.",
+   "id": "sm1ver-c",
+   "nome": "Ver o SM1 de Cárie completo",
+   "sub": "As 10 questões que caíram no SM1 de Fundamentos Microbiológicos e Clínicos da Cárie, na ordem da prova.",
    "temas": null,
-   "sm1todo": true
+   "sm1todo": true,
+   "prefixo": "sa"
+  },
+  {
+   "id": "sm1ver-i",
+   "nome": "Ver o SM1 de Interações completo",
+   "sub": "As 10 questões que caíram no SM1 de Interações Biológicas e Patológicas, na ordem da prova.",
+   "temas": null,
+   "sm1todo": true,
+   "prefixo": "sb"
   },
   {
    "id": "carie",
