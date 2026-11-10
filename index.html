@@ -9,7 +9,7 @@
 :root{--fundo:#eceef1;--papel:#fff;--tinta:#1d1d1f;--cinza:#6b6f76;--linha:#d6d8dc;--barra:#e9eaec;--marca:#1f3b73;--certo:#17803d;--errado:#c0392b;--net:#6b3fb5;--btn:#1f3b73}
 *{box-sizing:border-box}
 body{margin:0;background:var(--fundo);color:var(--tinta);font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.45}
-.topo{position:sticky;top:0;z-index:5;background:var(--marca);color:#fff;padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.topo{position:sticky;top:0;z-index:5;background:var(--marca);color:#fff;padding:8px 16px;display:flex;flex-wrap:nowrap;align-items:center;gap:8px 14px}
 .topo b{font-size:15px;letter-spacing:.2px}
 .trilha{display:flex;align-items:center;gap:6px;font-size:14px;flex-wrap:wrap}
 .trilha select{font:inherit;font-size:14px;padding:5px 8px;border-radius:6px;border:0;max-width:100%}
@@ -62,12 +62,12 @@ h1{font-size:22px;margin:0 0 6px}h2{font-size:18px;margin:0 0 10px}
 .res .f{font-size:12px;color:var(--cinza);margin-top:4px}.res.net .f{color:var(--net)}
 footer{text-align:center;font-size:12px;color:var(--cinza);padding:10px 16px 24px}
 footer a{color:var(--cinza)}
-.som{margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:6px;padding:4px 10px;font:inherit;font-size:16px;line-height:1.2;cursor:pointer;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+.som{margin-left:auto;flex:0 0 auto;background:transparent;border:1px solid rgba(255,255,255,.55);color:#fff;border-radius:6px;padding:4px 10px;font:inherit;font-size:16px;line-height:1.2;cursor:pointer;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
 .bordao{display:block;color:var(--marca);font-style:italic;font-size:14px;margin-top:4px}
 .balao{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);max-width:calc(100% - 32px);background:var(--marca);color:#fff;font-size:14px;padding:8px 14px;border-radius:18px;box-shadow:0 2px 8px rgba(0,0,0,.2);z-index:9;text-align:center;transition:opacity .3s;pointer-events:none}
 .balao[hidden]{display:block;opacity:0}
 /* tela inicial */
-.curso{font-size:13px;opacity:.8}
+.curso{font-size:13px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .abas{display:flex;gap:6px;overflow-x:auto;margin:0 0 14px;padding-bottom:2px}
 .aba{flex:0 0 auto;border:1.5px solid var(--linha);background:var(--papel);color:var(--tinta);border-radius:999px;padding:9px 16px;font:inherit;font-size:15px;cursor:pointer;min-height:44px}
 .aba[aria-selected="true"]{background:var(--marca);border-color:var(--marca);color:#fff;font-weight:bold}
@@ -99,8 +99,8 @@ button:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
 <main id="app"></main>
 <div class="balao" id="balao" role="status" aria-live="polite" hidden></div>
 <footer>Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.<br><a href="sons.html">Mesa de som</a></footer>
-<script src="bancos.js?v=202611101147"></script>
-<script src="sons.js?v=202611101147"></script>
+<script src="bancos.js?v=202611101558"></script>
+<script src="sons.js?v=202611101558"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
