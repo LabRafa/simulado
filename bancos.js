@@ -149,16 +149,16 @@ window.BANCOS = {
       { id: 'b13', tema: 'Folhetos', ctx: 'O mesoderma é a matriz dos sistemas de sustentação, contração e transporte.', p: 'Na odontologia, segundo o resumo da aula, o mesoderma origina:', o: ['O esmalte dental', 'A musculatura da mastigação e da mímica facial', 'A dentina e a polpa', 'O revestimento do estomodeu', 'Os melanócitos'], a: 1, w: 'A musculatura da mastigação e da mímica e os vasos da polpa vêm do mesoderma. Esmalte e estomodeu são ectoderma; dentina e polpa, ectomesênquima.', f: FONTE_AULA1 },
       { id: 'b14', tema: 'Osteologia', ctx: 'A asa maior do esfenoide tem forames para a passagem de estruturas vasculonervosas.', p: 'Por qual forame o nervo mandibular, terceira divisão do trigêmeo, sai do crânio?', o: ['Forame redondo', 'Forame espinhoso', 'Forame oval', 'Forame jugular', 'Forame magno'], a: 2, w: 'O nervo mandibular sai pelo forame oval. Pelo forame redondo sai o nervo maxilar.', f: FONTE_SM1 + '; ' + WIKI_MAN },
       { id: 'b15', tema: 'Osteologia', ctx: 'A mandíbula é o único osso móvel do crânio e recebe a inserção dos músculos da mastigação.', p: 'Com qual osso a mandíbula se articula na articulação temporomandibular?', o: ['Maxila', 'Osso temporal', 'Esfenoide', 'Osso zigomático', 'Occipital'], a: 1, w: 'A ATM une a cabeça da mandíbula ao osso temporal, como o próprio nome diz.', f: FONTE_SM1 },
-      { id: 'b16', tema: 'Osteologia', ctx: 'O canal mandibular conduz o feixe vasculonervoso alveolar inferior e termina na face externa do corpo da mandíbula.', p: 'Qual nervo sai pelo forame mentual?', o: ['Nervo lingual', 'Nervo bucal', 'Nervo mentual', 'Nervo milo-hióideo', 'Nervo auriculotemporal'], a: 2, w: 'O canal começa no forame mandibular e termina no forame mentual, por onde sai o nervo mentual.', f: FONTE_SM1 },
-      { id: 'b17', tema: 'Osteologia', ctx: 'O palato duro forma o teto da cavidade oral e o assoalho da cavidade nasal.', p: 'Os processos palatinos que formam a parte anterior do palato duro pertencem a qual osso?', o: ['Palatino', 'Maxila', 'Vômer', 'Esfenoide', 'Etmoide'], a: 1, w: 'Processos palatinos da maxila na frente e lâminas horizontais do palatino atrás.', f: FONTE_SM1 },
-      { id: 'b18', tema: 'Osteologia', ctx: 'O septo nasal tem uma porção cartilaginosa anterior e uma porção óssea posterior, formada por dois elementos.', p: 'A lâmina perpendicular que forma parte do septo ósseo pertence a qual osso?', o: ['Palatino', 'Esfenoide', 'Etmoide', 'Nasal', 'Vômer'], a: 2, w: 'O septo ósseo é a lâmina perpendicular do etmoide mais o vômer; o vômer é um osso próprio, sem lâmina perpendicular.', f: FONTE_SM1 },
-      { id: 'b19', tema: 'Osteologia', ctx: 'O arco zigomático é uma proeminência lateral da face formada pela união de dois processos.', p: 'No arco zigomático, o processo temporal do osso zigomático se une ao processo zigomático de qual osso?', o: ['Maxila', 'Frontal', 'Temporal', 'Esfenoide', 'Occipital'], a: 2, w: 'Processo temporal do zigomático + processo zigomático do temporal formam o arco.', f: FONTE_SM1 },
-      { id: 'b20', tema: 'Osteologia', ctx: 'As suturas da calvária permitem o crescimento do encéfalo e, com a idade, se fundem.', p: 'No bebê, as áreas membranosas amplas onde várias suturas se encontram, ainda sem ossificar, são chamadas de:', o: ['Sinostoses', 'Fontículos (fontanelas)', 'Díploe', 'Côndilos', 'Forames'], a: 1, w: 'Fontículos são as áreas membranosas ainda não ossificadas. Sinostose é a fusão óssea completa da sutura.', f: FONTE_SM1 },
-      { id: 'b21', tema: 'Osteologia', ctx: 'O osso occipital compõe o neurocrânio e tem, de cada lado do forame magno, os côndilos occipitais.', p: 'Com qual estrutura os côndilos occipitais se articulam?', o: ['Com a mandíbula', 'Com a primeira vértebra cervical (atlas)', 'Com o osso temporal', 'Com o esfenoide', 'Com o osso hioide'], a: 1, w: 'Os côndilos occipitais articulam com o atlas e permitem a flexão e a extensão da cabeça.', f: FONTE_SM1 },
+      { id: 'b16', sm1par: true, tema: 'Osteologia', ctx: 'O canal mandibular conduz o feixe vasculonervoso alveolar inferior e termina na face externa do corpo da mandíbula.', p: 'Qual nervo sai pelo forame mentual?', o: ['Nervo lingual', 'Nervo bucal', 'Nervo mentual', 'Nervo milo-hióideo', 'Nervo auriculotemporal'], a: 2, w: 'O canal começa no forame mandibular e termina no forame mentual, por onde sai o nervo mentual.', f: FONTE_SM1 },
+      { id: 'b17', sm1par: true, tema: 'Osteologia', ctx: 'O palato duro forma o teto da cavidade oral e o assoalho da cavidade nasal.', p: 'Os processos palatinos que formam a parte anterior do palato duro pertencem a qual osso?', o: ['Palatino', 'Maxila', 'Vômer', 'Esfenoide', 'Etmoide'], a: 1, w: 'Processos palatinos da maxila na frente e lâminas horizontais do palatino atrás.', f: FONTE_SM1 },
+      { id: 'b18', sm1par: true, tema: 'Osteologia', ctx: 'O septo nasal tem uma porção cartilaginosa anterior e uma porção óssea posterior, formada por dois elementos.', p: 'A lâmina perpendicular que forma parte do septo ósseo pertence a qual osso?', o: ['Palatino', 'Esfenoide', 'Etmoide', 'Nasal', 'Vômer'], a: 2, w: 'O septo ósseo é a lâmina perpendicular do etmoide mais o vômer; o vômer é um osso próprio, sem lâmina perpendicular.', f: FONTE_SM1 },
+      { id: 'b19', sm1par: true, tema: 'Osteologia', ctx: 'O arco zigomático é uma proeminência lateral da face formada pela união de dois processos.', p: 'No arco zigomático, o processo temporal do osso zigomático se une ao processo zigomático de qual osso?', o: ['Maxila', 'Frontal', 'Temporal', 'Esfenoide', 'Occipital'], a: 2, w: 'Processo temporal do zigomático + processo zigomático do temporal formam o arco.', f: FONTE_SM1 },
+      { id: 'b20', sm1par: true, tema: 'Osteologia', ctx: 'As suturas da calvária permitem o crescimento do encéfalo e, com a idade, se fundem.', p: 'No bebê, as áreas membranosas amplas onde várias suturas se encontram, ainda sem ossificar, são chamadas de:', o: ['Sinostoses', 'Fontículos (fontanelas)', 'Díploe', 'Côndilos', 'Forames'], a: 1, w: 'Fontículos são as áreas membranosas ainda não ossificadas. Sinostose é a fusão óssea completa da sutura.', f: FONTE_SM1 },
+      { id: 'b21', sm1par: true, tema: 'Osteologia', ctx: 'O osso occipital compõe o neurocrânio e tem, de cada lado do forame magno, os côndilos occipitais.', p: 'Com qual estrutura os côndilos occipitais se articulam?', o: ['Com a mandíbula', 'Com a primeira vértebra cervical (atlas)', 'Com o osso temporal', 'Com o esfenoide', 'Com o osso hioide'], a: 1, w: 'Os côndilos occipitais articulam com o atlas e permitem a flexão e a extensão da cabeça.', f: FONTE_SM1 },
       { id: 'b22', tema: 'Osteologia', ctx: 'O nervo maxilar, segunda divisão do trigêmeo, sai do crânio pelo forame redondo.', p: 'A qual fossa ele chega depois do forame redondo, antes de entrar no canal infraorbital?', o: ['Fossa temporal', 'Fossa pterigopalatina', 'Fossa mandibular', 'Fossa hipofisária', 'Fossa canina'], a: 1, w: 'O trajeto é fossa média do crânio, forame redondo, fossa pterigopalatina e canal infraorbital.', f: FONTE_ED + '; ' + WIKI_MAX, net: true },
       { id: 'b23', tema: 'Glândulas salivares', ctx: 'As glândulas salivares maiores são a parótida, a submandibular e a sublingual.', p: 'Qual delas é a maior em tamanho?', o: ['Submandibular', 'Sublingual', 'Parótida', 'Glândulas menores do palato', 'Glândulas labiais'], a: 2, w: 'A parótida é a maior. A submandibular é a segunda em tamanho, mas faz a maior parte do volume salivar.', f: FONTE_SM1 },
       { id: 'b24', tema: 'Glândulas salivares', ctx: 'A saliva da parótida chega à boca por um ducto que se abre no vestíbulo da cavidade oral.', p: 'Na altura de qual dente o ducto parotídeo se abre?', o: ['Primeiro pré-molar inferior', 'Incisivo central superior', 'Segundo molar superior', 'Terceiro molar inferior', 'Canino superior'], a: 2, w: 'O ducto parotídeo se abre no vestíbulo, na altura do colo do 2º molar superior.', f: WIKI_PAR, net: true },
-      { id: 'b25', tema: 'Dentina', ctx: 'A dentina pode ser classificada pelo momento e pelo motivo da sua formação.', p: 'Como se chama a dentina formada em resposta a uma lesão, como cárie ou desgaste, com padrão irregular de túbulos?', o: ['Dentina primária', 'Dentina secundária', 'Dentina terciária', 'Dentina do manto', 'Dentina peritubular'], a: 2, w: 'A terciária (reacionária ou reparadora) responde à lesão. A secundária se forma depois que o forame apical se completa.', f: FONTE_SM1 },
+      { id: 'b25', sm1par: true, tema: 'Dentina', ctx: 'A dentina pode ser classificada pelo momento e pelo motivo da sua formação.', p: 'Como se chama a dentina formada em resposta a uma lesão, como cárie ou desgaste, com padrão irregular de túbulos?', o: ['Dentina primária', 'Dentina secundária', 'Dentina terciária', 'Dentina do manto', 'Dentina peritubular'], a: 2, w: 'A terciária (reacionária ou reparadora) responde à lesão. A secundária se forma depois que o forame apical se completa.', f: FONTE_SM1 },
       { id: 'b26', tema: 'Inervação', ctx: 'Numa cirurgia na gengiva vestibular dos dentes anteriores e pré-molares superiores, é preciso anestesiar o nervo que inerva essa gengiva.', p: 'Qual nervo inerva a gengiva vestibular de incisivos, caninos e pré-molares superiores?', o: ['Nervo nasopalatino', 'Nervo palatino maior', 'Nervo infraorbital', 'Nervo bucal', 'Nervo lingual'], a: 2, w: 'O estudo dirigido lembra: a gengiva vestibular de incisivos, caninos e pré-molares superiores é inervada pelo infraorbital.', f: FONTE_ED },
       { id: 'b27', tema: 'Inervação', ctx: 'Uma punção no forame palatino maior em que a agulha percorre todo o canal palatino maior e o anestésico é depositado no alto da fossa pterigopalatina.', p: 'Qual nervo será anestesiado nessa técnica?', o: ['Somente o nervo palatino maior', 'O nervo maxilar (bloqueio troncular)', 'O nervo alveolar inferior', 'Somente o nervo nasopalatino', 'Somente o nervo infraorbital'], a: 1, w: 'No alto da fossa pterigopalatina está o tronco do nervo maxilar: é uma das técnicas de anestesia troncular dele.', f: FONTE_ED },
       { id: 'b28', tema: 'Inervação', ctx: 'O toro palatino mediano fica preferencialmente no centro do palato duro.', p: 'Para removê-lo cirurgicamente, quais nervos devem ser bloqueados antes?', o: ['Infraorbital e alveolar superior anterior', 'Nasopalatinos e palatinos maiores', 'Alveolares inferiores e linguais', 'Bucal e mentual', 'Somente o nasopalatino'], a: 1, w: 'O centro do palato recebe os nasopalatinos na frente e os palatinos maiores atrás: os dois precisam ser bloqueados.', f: FONTE_ED },
@@ -178,14 +178,14 @@ window.BANCOS = {
       /* ===== 09/11/2026: ampliação para o SM2 ===== */
       { id: 'b42', tema: 'Osteologia', ctx: 'O crânio se divide em neurocrânio, que envolve e protege o encéfalo, e viscerocrânio, que forma o esqueleto da face.', p: 'Quantos ossos compõem o neurocrânio?', o: ['6', '7', '8', '10', '14'], a: 2, w: 'Frontal, occipital, esfenoide, etmoide, dois parietais e dois temporais: 8 ossos.', f: FONTE_JONAS + '; ' + NET_CRANIO, net: true },
       { id: 'b43', tema: 'Osteologia', ctx: 'Entre os 8 ossos do neurocrânio há ossos ímpares, na linha mediana, e ossos pares, um de cada lado.', p: 'Qual destes ossos do neurocrânio é PAR?', o: ['Frontal', 'Occipital', 'Esfenoide', 'Temporal', 'Etmoide'], a: 3, w: 'Parietal e temporal são pares. Frontal, occipital, esfenoide e etmoide são ímpares.', f: NET_CRANIO, net: true },
-      { id: 'b44', tema: 'Osteologia', ctx: 'Na asa maior do esfenoide ficam, de frente para trás, o forame redondo, o forame oval e o forame espinhoso.', p: 'Qual estrutura passa pelo forame redondo?', o: ['Nervo mandibular (V3)', 'Artéria meníngea média', 'Nervo óptico', 'Nervo facial', 'Nervo maxilar (V2)'], a: 4, w: 'Redondo: nervo maxilar (V2). Oval: nervo mandibular (V3). Espinhoso: artéria meníngea média.', f: FONTE_SM1 + '; ' + FONTE_JONAS },
+      { id: 'b44', sm1par: true, tema: 'Osteologia', ctx: 'Na asa maior do esfenoide ficam, de frente para trás, o forame redondo, o forame oval e o forame espinhoso.', p: 'Qual estrutura passa pelo forame redondo?', o: ['Nervo mandibular (V3)', 'Artéria meníngea média', 'Nervo óptico', 'Nervo facial', 'Nervo maxilar (V2)'], a: 4, w: 'Redondo: nervo maxilar (V2). Oval: nervo mandibular (V3). Espinhoso: artéria meníngea média.', f: FONTE_SM1 + '; ' + FONTE_JONAS },
       { id: 'b45', tema: 'Osteologia', ctx: 'O forame espinhoso fica logo atrás do forame oval, na asa maior do esfenoide.', p: 'Qual estrutura atravessa o forame espinhoso?', o: ['Artéria meníngea média', 'Nervo maxilar', 'Nervo mandibular', 'Artéria carótida interna', 'Nervo hipoglosso'], a: 0, w: 'Pelo forame espinhoso passa a artéria meníngea média, ramo da artéria maxilar.', f: NET_CRANIO, net: true },
       { id: 'b46', tema: 'Osteologia', ctx: 'O forame magno é a maior abertura da base do crânio e dá passagem à continuação do tronco encefálico com a medula espinal.', p: 'Em qual osso fica o forame magno?', o: ['Esfenoide', 'Occipital', 'Temporal', 'Parietal', 'Etmoide'], a: 1, w: 'Fica no occipital, com os côndilos occipitais de cada lado.', f: NET_CRANIO, net: true },
       { id: 'b47', tema: 'Osteologia', ctx: 'As suturas da calvária recebem o nome conforme a posição e os ossos que unem.', p: 'Qual sutura une o osso frontal aos dois parietais?', o: ['Sagital', 'Lambdóidea', 'Coronal', 'Escamosa', 'Frontonasal'], a: 2, w: 'Coronal: frontal e parietais. Sagital: parietal com parietal. Lambdóidea: parietais e occipital.', f: NET_CRANIO, net: true },
       { id: 'b48', tema: 'Osteologia', ctx: 'A sutura sagital percorre o topo da calvária, na linha mediana, de frente para trás.', p: 'Quais ossos ela une?', o: ['Frontal e parietais', 'Parietais e occipital', 'Temporal e parietal', 'Os dois parietais', 'Frontal e esfenoide'], a: 3, w: 'A sagital une os dois parietais, um ao outro.', f: NET_CRANIO, net: true },
       { id: 'b49', tema: 'Osteologia', ctx: 'A sutura lambdóidea tem a forma da letra grega lambda e fica na parte posterior da calvária.', p: 'Quais ossos ela une?', o: ['Os dois parietais', 'Frontal e parietais', 'Temporal e esfenoide', 'Maxila e zigomático', 'Parietais e occipital'], a: 4, w: 'A lambdóidea une os parietais ao occipital.', f: NET_CRANIO, net: true },
-      { id: 'b50', tema: 'Osteologia', ctx: 'Os ossos do crânio são unidos por suturas e praticamente não se movem, com uma exceção, que recebe os músculos da mastigação.', p: 'Qual é o único osso móvel do crânio?', o: ['Mandíbula', 'Maxila', 'Zigomático', 'Etmoide', 'Hioide'], a: 0, w: 'A mandíbula é o único osso móvel do crânio. O hioide é móvel, mas fica no pescoço e não faz parte do crânio.', f: FONTE_SM1 + '; ' + FONTE_JONAS },
-      { id: 'b51', tema: 'Osteologia', ctx: 'Na face medial do ramo da mandíbula há uma abertura protegida por uma pequena lâmina óssea, a língula.', p: 'Como se chama essa abertura, onde começa o canal mandibular?', o: ['Forame mentual', 'Forame mandibular', 'Forame incisivo', 'Forame oval', 'Forame palatino maior'], a: 1, w: 'O canal mandibular começa no forame mandibular (face medial do ramo) e termina no forame mentual.', f: FONTE_SM1 },
+      { id: 'b50', sm1par: true, tema: 'Osteologia', ctx: 'Os ossos do crânio são unidos por suturas e praticamente não se movem, com uma exceção, que recebe os músculos da mastigação.', p: 'Qual é o único osso móvel do crânio?', o: ['Mandíbula', 'Maxila', 'Zigomático', 'Etmoide', 'Hioide'], a: 0, w: 'A mandíbula é o único osso móvel do crânio. O hioide é móvel, mas fica no pescoço e não faz parte do crânio.', f: FONTE_SM1 + '; ' + FONTE_JONAS },
+      { id: 'b51', sm1par: true, tema: 'Osteologia', ctx: 'Na face medial do ramo da mandíbula há uma abertura protegida por uma pequena lâmina óssea, a língula.', p: 'Como se chama essa abertura, onde começa o canal mandibular?', o: ['Forame mentual', 'Forame mandibular', 'Forame incisivo', 'Forame oval', 'Forame palatino maior'], a: 1, w: 'O canal mandibular começa no forame mandibular (face medial do ramo) e termina no forame mentual.', f: FONTE_SM1 },
       { id: 'b52', tema: 'Osteologia', ctx: 'O ramo da mandíbula termina em cima em dois processos separados pela incisura da mandíbula: o condilar, atrás, e o coronoide, na frente.', p: 'Qual músculo se insere no processo coronoide?', o: ['Masseter', 'Pterigóideo lateral', 'Temporal', 'Digástrico', 'Bucinador'], a: 2, w: 'O temporal se insere no processo coronoide (face medial e bordas).', f: FONTE_ED_MUSC },
       { id: 'b53', tema: 'Osteologia', ctx: 'No colo da mandíbula, logo abaixo da cabeça (côndilo), existe uma pequena depressão chamada fóvea pterigóidea.', p: 'Qual músculo se insere nela?', o: ['Pterigóideo medial', 'Masseter', 'Temporal', 'Pterigóideo lateral', 'Milo-hióideo'], a: 3, w: 'A fóvea pterigóidea recebe o pterigóideo lateral. O pterigóideo medial nasce na FOSSA pterigóidea do esfenoide e se insere no ângulo.', f: FONTE_ED_MUSC },
       { id: 'b54', tema: 'Osteologia', ctx: 'Na articulação temporomandibular, a cabeça da mandíbula se aloja numa depressão da base do crânio.', p: 'Em qual osso fica a fossa mandibular?', o: ['Esfenoide', 'Zigomático', 'Occipital', 'Maxila', 'Temporal'], a: 4, w: 'A fossa mandibular é do osso temporal, por isso a articulação se chama temporomandibular.', f: FONTE_SM1 + '; ' + NET_CRANIO, net: true },
@@ -457,7 +457,8 @@ window.BANCOS = {
    "a": 1,
    "w": "O Streptococcus mutans é o principal associado ao início da lesão em esmalte: produz ácido a partir do açúcar e tolera pH baixo. Os lactobacilos aparecem mais na progressão (dentina). P. gingivalis é periodontal.",
    "f": "Pesquisa da Mônica (cariologia básica: Fejerskov & Kidd, Cariologia clínica; Ministério da Saúde, Saúde Bucal no SUS, 2018). Conferir com o material do professor.",
-   "net": true
+   "net": true,
+   "sm1par": true
   },
   {
    "id": "c02",
@@ -474,7 +475,8 @@ window.BANCOS = {
    "a": 2,
    "w": "Keyes: hospedeiro (dente), microbiota e dieta (substrato). Newbrun acrescentou o TEMPO: os três precisam agir juntos por tempo suficiente.",
    "f": "Pesquisa da Mônica (cariologia básica: Fejerskov & Kidd, Cariologia clínica; Ministério da Saúde, Saúde Bucal no SUS, 2018). Conferir com o material do professor.",
-   "net": true
+   "net": true,
+   "sm1par": true
   },
   {
    "id": "c03",
@@ -525,7 +527,8 @@ window.BANCOS = {
    "a": 1,
    "w": "A visão atual: a bactéria está em quase todo mundo; o que desequilibra é a exposição frequente ao açúcar sobre o biofilme. Por isso não é tratada como doença infecciosa transmissível.",
    "f": "Pesquisa da Mônica (cariologia básica: Fejerskov & Kidd, Cariologia clínica; Ministério da Saúde, Saúde Bucal no SUS, 2018). Conferir com o material do professor.",
-   "net": true
+   "net": true,
+   "sm1par": true
   },
   {
    "id": "c06",
@@ -542,7 +545,8 @@ window.BANCOS = {
    "a": 2,
    "w": "O pH crítico do esmalte é cerca de 5,5. Abaixo disso a saliva fica subsaturada de cálcio e fosfato e o esmalte perde mineral. (Para a fluorapatita o pH crítico é mais baixo, cerca de 4,5.)",
    "f": "Pesquisa da Mônica (cariologia básica: Fejerskov & Kidd, Cariologia clínica; Ministério da Saúde, Saúde Bucal no SUS, 2018). Conferir com o material do professor.",
-   "net": true
+   "net": true,
+   "sm1par": true
   },
   {
    "id": "c07",
@@ -559,7 +563,8 @@ window.BANCOS = {
    "a": 1,
    "w": "Curva de Stephan: queda do pH em poucos minutos após o açúcar e volta em cerca de 30 a 40 minutos. Spee e Wilson são curvas de oclusão.",
    "f": "Pesquisa da Mônica (cariologia básica: Fejerskov & Kidd, Cariologia clínica; Ministério da Saúde, Saúde Bucal no SUS, 2018). Conferir com o material do professor.",
-   "net": true
+   "net": true,
+   "sm1par": true
   },
   {
    "id": "c08",
@@ -576,7 +581,8 @@ window.BANCOS = {
    "a": 1,
    "w": "O que mais pesa é a FREQUÊNCIA. Cada exposição derruba o pH; com muitas exposições o dente passa mais tempo desmineralizando do que se recuperando.",
    "f": "Pesquisa da Mônica (cariologia básica: Fejerskov & Kidd, Cariologia clínica; Ministério da Saúde, Saúde Bucal no SUS, 2018). Conferir com o material do professor.",
-   "net": true
+   "net": true,
+   "sm1par": true
   },
   {
    "id": "c09",
@@ -644,7 +650,8 @@ window.BANCOS = {
    "a": 0,
    "w": "Forma fluorapatita (e hidroxiapatita fluoretada), que só se dissolve em pH mais baixo (cerca de 4,5), resistindo mais ao ácido.",
    "f": "Pesquisa da Mônica (cariologia básica: Fejerskov & Kidd, Cariologia clínica; Ministério da Saúde, Saúde Bucal no SUS, 2018). Conferir com o material do professor.",
-   "net": true
+   "net": true,
+   "sm1par": true
   },
   {
    "id": "c13",
@@ -831,7 +838,8 @@ window.BANCOS = {
    "a": 1,
    "w": "A película adquirida (proteínas da saliva) se forma em minutos. Nela aderem os colonizadores iniciais e, em camadas, o biofilme amadurece.",
    "f": "Pesquisa da Mônica (cariologia básica: Fejerskov & Kidd, Cariologia clínica; Ministério da Saúde, Saúde Bucal no SUS, 2018). Conferir com o material do professor.",
-   "net": true
+   "net": true,
+   "sm1par": true
   },
   {
    "id": "c24",
@@ -848,7 +856,8 @@ window.BANCOS = {
    "a": 1,
    "w": "Primeiro a película, depois as bactérias pioneiras (estreptococos), depois as tardias, até o biofilme maduro.",
    "f": "Aula de Interações Biológicas e Patológicas, prof. Sebastião Magno, 13/10/2026 (transcrição da turma)",
-   "net": false
+   "net": false,
+   "sm1par": true
   },
   {
    "id": "c25",
@@ -979,7 +988,8 @@ window.BANCOS = {
     "O flúor favorece a formação de fluorapatita, menos solúvel em ácido que a hidroxiapatita.",
     "A ingestão excessiva de flúor durante a formação dos dentes pode causar fluorose."
    ],
-   "fixa": true
+   "fixa": true,
+   "sm1par": true
   },
   {
    "id": "a03",
@@ -1462,7 +1472,8 @@ window.BANCOS = {
    "a": 1,
    "w": "Hipertrofia, hiperplasia, atrofia e metaplasia são adaptações: a célula muda para sobreviver ao estímulo.",
    "f": "Questão no estilo do SM1 do prof. Sebastião (patologia geral e lesões fundamentais), feita pela Mônica a partir das questões do SM1.",
-   "net": false
+   "net": false,
+   "sm1par": true
   },
   {
    "id": "p02",
@@ -1496,7 +1507,8 @@ window.BANCOS = {
    "a": 0,
    "w": "Aumento do NÚMERO de células = hiperplasia (hiperplasia fibrosa inflamatória por prótese mal adaptada).",
    "f": "Questão no estilo do SM1 do prof. Sebastião (patologia geral e lesões fundamentais), feita pela Mônica a partir das questões do SM1.",
-   "net": false
+   "net": false,
+   "sm1par": true
   },
   {
    "id": "p04",
@@ -1513,7 +1525,8 @@ window.BANCOS = {
    "a": 2,
    "w": "Atrofia é a redução do tamanho da célula ou do órgão por falta de estímulo, nutrição ou uso.",
    "f": "Questão no estilo do SM1 do prof. Sebastião (patologia geral e lesões fundamentais), feita pela Mônica a partir das questões do SM1.",
-   "net": false
+   "net": false,
+   "sm1par": true
   },
   {
    "id": "p05",
@@ -1530,7 +1543,8 @@ window.BANCOS = {
    "a": 1,
    "w": "Reversível: retirou a agressão, a célula se recupera. Irreversível: passa do ponto de não retorno e morre (necrose ou apoptose).",
    "f": "Questão no estilo do SM1 do prof. Sebastião (patologia geral e lesões fundamentais), feita pela Mônica a partir das questões do SM1.",
-   "net": false
+   "net": false,
+   "sm1par": true
   },
   {
    "id": "p06",
@@ -1547,7 +1561,8 @@ window.BANCOS = {
    "a": 2,
    "w": "Mácula = mudança de cor sem elevação nem depressão.",
    "f": "Questão no estilo do SM1 do prof. Sebastião (patologia geral e lesões fundamentais), feita pela Mônica a partir das questões do SM1.",
-   "net": false
+   "net": false,
+   "sm1par": true
   },
   {
    "id": "p07",
@@ -1564,7 +1579,8 @@ window.BANCOS = {
    "a": 1,
    "w": "Elevação com líquido e pequena (até cerca de 3 a 5 mm) é vesícula; maior que isso é bolha.",
    "f": "Questão no estilo do SM1 do prof. Sebastião (patologia geral e lesões fundamentais), feita pela Mônica a partir das questões do SM1.",
-   "net": false
+   "net": false,
+   "sm1par": true
   },
   {
    "id": "p08",
@@ -1581,7 +1597,8 @@ window.BANCOS = {
    "a": 1,
    "w": "Úlcera = perda do epitélio em toda a espessura, expondo o conjuntivo. Erosão é perda só superficial do epitélio.",
    "f": "Questão no estilo do SM1 do prof. Sebastião (patologia geral e lesões fundamentais), feita pela Mônica a partir das questões do SM1.",
-   "net": false
+   "net": false,
+   "sm1par": true
   },
   {
    "id": "p09",
@@ -1598,7 +1615,8 @@ window.BANCOS = {
    "a": 0,
    "w": "Lesão SÓLIDA, elevada e maior que cerca de 1 cm é nódulo (aqui, provável fibroma traumático).",
    "f": "Questão no estilo do SM1 do prof. Sebastião (patologia geral e lesões fundamentais), feita pela Mônica a partir das questões do SM1.",
-   "net": false
+   "net": false,
+   "sm1par": true
   },
   {
    "id": "p10",
@@ -1615,7 +1633,8 @@ window.BANCOS = {
    "a": 1,
    "w": "A mucocele aparece mais no lábio inferior, onde é comum morder e machucar os ductos.",
    "f": "Questão no estilo do SM1 do prof. Sebastião (patologia geral e lesões fundamentais), feita pela Mônica a partir das questões do SM1.",
-   "net": false
+   "net": false,
+   "sm1par": true
   },
   {
    "id": "p11",
@@ -1639,7 +1658,8 @@ window.BANCOS = {
     "A bolsa periodontal é uma alteração morfológica.",
     "A mobilidade dentária é uma alteração funcional (fisiopatologia)."
    ],
-   "fixa": true
+   "fixa": true,
+   "sm1par": true
   },
   {
    "id": "p12",
@@ -1663,7 +1683,8 @@ window.BANCOS = {
     "A defesa nunca provoca lesão nos tecidos do próprio organismo.",
     "Só agentes biológicos, como bactérias, são considerados agressores."
    ],
-   "fixa": true
+   "fixa": true,
+   "sm1par": true
   }
  ]
 }
