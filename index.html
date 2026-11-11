@@ -231,6 +231,19 @@ p{margin:0}
 .aula .abretudo{background:none;border:0;color:var(--cor);font-weight:700;padding:6px 0;min-height:40px;margin-bottom:6px}
 .aula .tirado{font-size:14px;color:var(--cinza)}
 
+/* ---------- períodos (rascunho 11/11) ---------- */
+.periodos{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--branco);border-radius:var(--raio);padding:6px;margin:0 0 16px;box-shadow:0 3px 0 var(--linha)}
+.per{border:0;background:none;border-radius:12px;padding:10px 8px;min-height:60px;text-align:center}
+.per b{display:block;font-family:'Gabarito';font-weight:800;font-size:19px}
+.per small{display:block;font-size:13px;color:var(--cinza)}
+.per[aria-selected="true"]{background:var(--grafite);color:#fff}
+.per[aria-selected="true"] small{color:#fff;opacity:.85}
+.per-tit{font-size:22px;font-weight:900;margin:0 0 6px}
+.aviso-periodo{font-size:14px;color:var(--cinza);background:var(--branco);border:2px dashed var(--linha);border-radius:12px;padding:10px 14px;margin:0 0 12px;line-height:1.45}
+.intro-mat{color:var(--grafite);font-size:16px;margin:0 0 10px}
+.mat .prev{display:inline-block;font-family:'Atkinson Hyperlegible';font-size:12px;font-weight:700;border:1.5px solid var(--c);color:var(--c);border-radius:999px;padding:0 8px;margin-left:6px;vertical-align:3px}
+a.item{text-decoration:none}
+
 footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px;max-width:640px;margin:0 auto}
 
 @media (min-width:700px){.ola h1{font-size:40px}.palco{padding-top:24px}}
@@ -242,11 +255,12 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611111519"></script>
-<script src="banco-farmaco.js?v=202611111519"></script>
-<script src="banco-imagino.js?v=202611111519"></script>
-<script src="banco-cabeca.js?v=202611111519"></script>
-<script src="aulas.js?v=202611111519"></script>
+<script src="bancos.js?v=202611111523"></script>
+<script src="banco-farmaco.js?v=202611111523"></script>
+<script src="banco-imagino.js?v=202611111523"></script>
+<script src="banco-cabeca.js?v=202611111523"></script>
+<script src="periodos.js?v=202611111523"></script>
+<script src="aulas.js?v=202611111523"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -264,6 +278,12 @@ const CORES = {
   inter:  ['#c63d58','#fbe7eb','#952b41'],
   farmaco:['#167487','#e0f1f4','#0f5563'],
   imagino:['#3c4a66','#e7eaf1','#283248'],
+  /* 3º período (rascunho 11/11) */
+  cirsup:  ['#2f7a3e','#e3f2e6','#1f5a2c'],
+  diagbucal:['#1f6fb2','#e2eefa','#15528a'],
+  integral:['#8a6a00','#f7f0d6','#654d00'],
+  extconv: ['#5b6a2a','#eef1e0','#424e1d'],
+  socorros:['#b03030','#fbe6e6','#842222'],
   cabeca: ['#8c2f39','#f7e6e8','#6a2029']
 };
 const IC = {
@@ -282,11 +302,22 @@ const IC = {
   trofeu:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9 17h6"/></svg>'
 };
 
-let MAT = ler('jogo-mat','bases'); if (!BANCOS[MAT]) MAT = 'bases';
+/* ---------- PERÍODOS (rascunho 11/11): o site abre no período atual; o aluno troca e o aparelho lembra ---------- */
+const PER = window.PERIODOS || { atual: 2, lista: [{ n: 2, nome: '2º período' }] };
+const infoMat = id => MATERIAS.find(m => m.id === id);
+const periodoDe = id => (infoMat(id) || {}).periodo || 2;
+const visivel = m => m.pronto && (BANCOS[m.id] || m.periodo >= 3); /* matéria nova aparece mesmo sem questões */
+const matsDoPeriodo = n => MATERIAS.filter(m => visivel(m) && (m.periodo || 2) === n);
+let PERIODO = ler('jogo-periodo', PER.atual); if (!PER.lista.some(p => p.n === PERIODO)) PERIODO = PER.atual;
+
+let MAT = ler('jogo-mat', null); if (!infoMat(MAT) || !visivel(infoMat(MAT))) MAT = ((matsDoPeriodo(PERIODO)[0]) || {id:'bases'}).id;
 let partida = null; /* {modo, itens:[{q,ordem,certa,resp,conf,riscadas,pulou}], i} */
 let ultimaVista = -1;
 
-const banco = () => BANCOS[MAT];
+/* matéria sem banco de questões (período novo): um "banco" vazio com os dados da grade */
+const bancoVazio = m => ({ materia: m.materia || m.nome, curta: m.curta || m.nome, codigo: m.codigo, prof: '', proxima: '', modos: [], q: [], revisao: [], vazio: true });
+const banco = () => BANCOS[MAT] || bancoVazio(infoMat(MAT) || { nome: MAT });
+const temQuestoes = () => !!(BANCOS[MAT] && (BANCOS[MAT].q || []).length);
 const modos = () => banco().modos || [];
 const errosDe = () => ler('jogo-erros-'+MAT, []);
 function pinta(){
@@ -361,26 +392,74 @@ function partes(){
 /* ---------- INÍCIO: escolher a matéria ---------- */
 function inicio(){
   partida = null; ultimaVista = -1;
+  const per = PER.lista.find(p => p.n === PERIODO) || PER.lista[0];
+  const mats = matsDoPeriodo(PERIODO);
   tela(`
   <div class="topo"><span class="marca">Simulado do simulado</span></div>
-  <div class="ola"><h1>Qual matéria hoje?</h1><p>Odontologia, 2º período. Uma questão por vez, com a resposta na hora.</p></div>
-  <ul class="lista">${MATERIAS.filter(m => m.pronto && BANCOS[m.id]).map(m => {
-    const b = BANCOS[m.id], c = (CORES[m.id]||['#2346a8'])[0], melhor = ler('jogo-melhor-'+m.id, null);
-    const nome = esc(m.nome.replace(/\s*\(bônus\)/i,''));
-    return `<li><button class="mat aperta" data-mat="${m.id}" style="--c:${c}"><span class="aba"></span><span class="txt"><b>${nome}${m.bonus?'<span class="bonus">bônus</span>':''}</b><small>${esc(b.proxima||'')}</small></span><span class="nota">${melhor!==null ? nota1(melhor)+'<em>melhor</em>' : IC.seta.replace('<svg','<svg width="22" height="22"')}</span></button></li>`; }).join('')}</ul>
+  <div class="ola"><h1>Qual matéria hoje?</h1><p>Odontologia. Escolha o período e a matéria.</p></div>
+  ${PER.lista.length > 1 ? `<div class="periodos" role="tablist" aria-label="Período">${PER.lista.map(p => `<button class="per aperta" role="tab" data-per="${p.n}" aria-selected="${p.n===PERIODO}"><b>${esc(p.nome)}</b><small>${esc(p.curto||'')}</small></button>`).join('')}</div>` : ''}
+  <h2 class="per-tit">${esc(per.titulo || per.nome)}</h2>
+  ${per.aviso ? `<p class="aviso-periodo">${esc(per.aviso)}</p>` : ''}
+  <ul class="lista" role="tabpanel" aria-label="${esc(per.nome)}">${mats.map(m => {
+    const b = BANCOS[m.id], c = (CORES[m.id]||['#2346a8'])[0], melhor = b ? ler('jogo-melhor-'+m.id, null) : null;
+    const nome = esc((m.nome||'').replace(/\s*\(bônus\)/i,''));
+    const nAulas = ((window.AULAS||{})[m.id]||[]).length;
+    const sub = b ? (b.proxima||'') : [m.codigo, m.ch, nAulas ? (nAulas===1 ? '1 aula' : nAulas+' aulas') : ''].filter(Boolean).join(', ');
+    const selo = m.bonus ? '<span class="bonus">bônus</span>' : m.eletiva ? '<span class="prev">eletiva</span>' : '';
+    return `<li><button class="mat aperta" data-mat="${m.id}" style="--c:${c}"><span class="aba"></span><span class="txt"><b>${nome}${selo}</b><small>${esc(sub)}</small></span><span class="nota">${melhor!==null ? nota1(melhor)+'<em>melhor</em>' : IC.seta.replace('<svg','<svg width="22" height="22"')}</span></button></li>`; }).join('')}</ul>
   <a class="sisao aperta" href="https://labrafa.github.io/dentolingu/#milhao"><span style="color:var(--cinza)">${IC.trofeu}</span><span><b>Show do Sisão</b><small>Jogo de perguntas, só pela diversão (o prêmio é de mentirinha)</small></span></a>`);
   app.querySelectorAll('[data-mat]').forEach(el => el.onclick = () => { MAT = el.dataset.mat; grava('jogo-mat', MAT); materia(); });
+  app.querySelectorAll('[data-per]').forEach(el => el.onclick = () => { PERIODO = +el.dataset.per; grava('jogo-periodo', PERIODO); inicio(); });
+}
+
+/* ---------- AULAS E MATERIAL em toda matéria (rascunho 11/11) ---------- */
+const materialDe = () => ((window.MATERIAL || {})[MAT] || []);
+function itemAulas(){
+  const n = aulasDe().length;
+  return `<button class="item" id="aulas"><span class="ic">${IC.fala}</span><span class="t"><b>Aulas</b><small>${n===0 ? 'As aulas aparecem aqui quando a transcrição chegar' : n===1 ? 'Transcrição e resumo da aula de '+esc(aulasDe()[0].data) : n+' aulas transcritas, com resumo'}</small></span><span class="seta">${IC.seta}</span></button>`;
+}
+function itemMaterial(){
+  const n = materialDe().length + aulasDe().filter(a => slidesDa(a).length).length;
+  if (!n) return '';
+  return `<button class="item" id="material"><span class="ic">${IC.folha}</span><span class="t"><b>Material</b><small>${n ? 'Slides e material das aulas' : 'O material aparece aqui quando o professor passar'}</small></span><span class="seta">${IC.seta}</span></button>`;
+}
+function ligaAulasMaterial(){
+  if ($('#aulas')) $('#aulas').onclick = () => aulasDe().length === 1 ? verAula(0) : listaAulas();
+  if ($('#material')) $('#material').onclick = listaMaterial;
+}
+/* matéria sem questões (período novo): nome, código, carga horária, previsão e Aulas; o simulado aparece quando houver banco */
+function materiaSemQuestoes(){
+  const m = infoMat(MAT) || {}, b = banco();
+  tela(`
+  <div class="topo"><button class="voltar" id="vol">${IC.esq}Matérias</button></div>
+  <nav class="trocar" aria-label="Trocar de matéria">${matsDoPeriodo(periodoDe(MAT)).map(x => `<button class="chip aperta" data-mat="${x.id}" aria-current="${x.id===MAT}">${esc((BANCOS[x.id]||{}).curta || x.curta || x.nome)}</button>`).join('')}</nav>
+  <header class="cabeca">
+    <h1>${esc(b.materia)}</h1>
+    <p class="prof">${[m.codigo, m.ch].filter(Boolean).map(esc).join(', ')}${m.eletiva ? ', eletiva' : ''}</p>
+    ${m.intro ? `<p class="intro-mat"><b>O que costuma ter (previsão):</b> ${esc(m.intro)}</p>` : ''}
+    ${m.previsao ? `<p class="quando">${esc(((PER.lista.find(p => p.n === periodoDe(MAT)) || {}).titulo) || 'Previsão pela grade')}</p>` : ''}
+  </header>
+  <div class="menu">
+    ${itemAulas()}
+    ${itemMaterial()}
+    ${(b.revisao||[]).length ? `<button class="item" id="rev"><span class="ic">${IC.livro}</span><span class="t"><b>Ler o resumo</b><small>O que mais importa, em tópicos curtos</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+  </div>`);
+  $('#vol').onclick = inicio;
+  app.querySelectorAll('[data-mat]').forEach(el => el.onclick = () => { MAT = el.dataset.mat; grava('jogo-mat', MAT); materia(); });
+  if ($('#rev')) $('#rev').onclick = resumo;
+  ligaAulasMaterial();
 }
 
 /* ---------- TELA DA MATÉRIA ---------- */
 function materia(){
   partida = null; ultimaVista = -1; pinta();
+  if (!temQuestoes()) return materiaSemQuestoes();
   const b = banco(), {completo, sm1, sm2, erros, temas} = partes();
   const nErr = erros ? poolDe(erros).length : 0, nSm1 = sm1 ? poolDe(sm1).length : 0, nSm2 = sm2 ? poolDe(sm2).length : 0;
   const melhor = ler('jogo-melhor-'+MAT, null);
   tela(`
   <div class="topo"><button class="voltar" id="vol">${IC.esq}Matérias</button></div>
-  <nav class="trocar" aria-label="Trocar de matéria">${MATERIAS.filter(m=>m.pronto && BANCOS[m.id]).map(m => `<button class="chip aperta" data-mat="${m.id}" aria-current="${m.id===MAT}">${esc(BANCOS[m.id].curta || m.nome)}</button>`).join('')}</nav>
+  <nav class="trocar" aria-label="Trocar de matéria">${matsDoPeriodo(periodoDe(MAT)).map(m => `<button class="chip aperta" data-mat="${m.id}" aria-current="${m.id===MAT}">${esc((BANCOS[m.id]||{}).curta || m.curta || m.nome)}</button>`).join('')}</nav>
   <header class="cabeca">
     <h1>${esc(b.materia)}</h1>
     <p class="prof">${esc(nomeProf(b.prof))}${melhor!==null ? `, melhor nota ${nota1(melhor)}` : ''}</p>
@@ -393,7 +472,8 @@ function materia(){
     ${temas.length ? `<button class="item" id="temas"><span class="ic">${IC.alvo}</span><span class="t"><b>Treinar um assunto</b><small>${temas.length} assuntos para escolher</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${erros ? `<button class="item" data-go="${erros.id}" ${nErr?'':'disabled'}><span class="ic">${IC.volta}</span><span class="t"><b>Revisar meus erros</b><small>${nErr ? nErr+(nErr===1?' questão guardada':' questões guardadas') : 'Quando você errar, a questão aparece aqui'}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     <button class="item" id="rev"><span class="ic">${IC.livro}</span><span class="t"><b>Ler o resumo</b><small>O que mais cai, em tópicos curtos</small></span><span class="seta">${IC.seta}</span></button>
-    ${aulasDe().length ? `<button class="item" id="aulas"><span class="ic">${IC.fala}</span><span class="t"><b>Aulas</b><small>${aulasDe().length===1 ? 'Transcrição e resumo da aula de '+esc(aulasDe()[0].data) : aulasDe().length+' aulas transcritas, com resumo'}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${itemAulas()}
+    ${itemMaterial()}
   </div>
   <section class="bloco"><h2>Meu desempenho</h2>${desempenhoHtml()}</section>
   ${maisCaemHtml()}
@@ -404,7 +484,7 @@ function materia(){
   app.querySelectorAll('[data-go]').forEach(el => el.onclick = () => comeca(ms.find(m => m.id === el.dataset.go)));
   if ($('#temas')) $('#temas').onclick = listaTemas;
   $('#rev').onclick = resumo;
-  if ($('#aulas')) $('#aulas').onclick = () => aulasDe().length === 1 ? verAula(0) : listaAulas();
+  ligaAulasMaterial();
   if ($('#fracos')) $('#fracos').onclick = () => comeca(modoFracos());
   app.querySelectorAll('[data-cai]').forEach(el => el.onclick = () => comeca({ id:'cai-'+el.dataset.cai, nome:el.dataset.cai, temas:[el.dataset.cai], cai:true }));
 }
@@ -566,9 +646,9 @@ function resumo(){
   tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
   <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Resumo</h1><p>${esc(b.materia)}</p></div>
   <section class="bloco rev">${(b.revisao||[]).map(r => `<h2>${esc(r.t)}</h2><ul>${r.i.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`).join('')}</section>
-  <div class="rodape"><button class="botao aperta" id="go">Fazer simulado</button></div>`);
+  ${temQuestoes() ? `<div class="rodape"><button class="botao aperta" id="go">Fazer simulado</button></div>` : ''}`);
   $('#vol').onclick = materia;
-  $('#go').onclick = () => comeca(partes().completo);
+  if ($('#go')) $('#go').onclick = () => comeca(partes().completo);
 }
 
 /* ---------- AULAS (rascunho 11/11: transcrição da aula + resumos, dados em aulas.js) ---------- */
@@ -580,33 +660,66 @@ function listaAulas(){
   const b = banco(), as = aulasDe();
   tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
   <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Aulas</h1><p>${esc(b.materia)}</p></div>
-  <div class="menu">${as.map((a,k) => `<button class="item" data-aula="${k}"><span class="ic">${IC.fala}</span><span class="t"><b>${esc(a.titulo)}</b><small>${esc(a.data)}, ${esc(a.palestrante)}</small></span><span class="seta">${IC.seta}</span></button>`).join('')}</div>`);
+  ${as.length ? `<div class="menu">${as.map((a,k) => `<button class="item" data-aula="${k}"><span class="ic">${IC.fala}</span><span class="t"><b>${esc(a.titulo)}</b><small>${esc(a.data)}, ${esc(a.professor || a.palestrante || '')}</small></span><span class="seta">${IC.seta}</span></button>`).join('')}</div>` : `<section class="bloco"><p class="vazio">As aulas aparecem aqui quando a transcrição chegar. Cada aula vem com resumo em texto, resumo em tópicos com as imagens, a transcrição limpa e os slides.</p></section>`}`);
   $('#vol').onclick = materia;
   app.querySelectorAll('[data-aula]').forEach(el => el.onclick = () => verAula(+el.dataset.aula));
 }
 function verAula(k, aba){
   const as = aulasDe(), a = as[k]; if (!a) return materia();
   aba = aba || ler('jogo-aula-aba', 'texto');
-  if (!['texto','topicos','transcricao'].includes(aba)) aba = 'texto';
+  if (!['texto','topicos','transcricao','slides'].includes(aba)) aba = 'texto';
   grava('jogo-aula-aba', aba);
-  const ABAS = [['texto','Resumo em texto'],['topicos','Resumo em tópicos'],['transcricao','Transcrição completa']];
+  const ABAS = [['texto','Resumo em texto'],['topicos','Resumo em tópicos'],['transcricao','Transcrição completa'],['slides','Slides e material']];
   let corpo = '';
   const timg = a.resumoTextoImg || {};
-  if (aba === 'texto') corpo = `<section class="bloco aula">${a.resumoTexto.map((p,i) => `<p>${negrito(p)}</p>${(timg[i]||[]).map(figAula).join('')}`).join('')}</section>`;
-  else if (aba === 'topicos') corpo = `<section class="bloco aula">${a.resumoTopicos.map(s => `<h2>${esc(s.t)}</h2><ul>${s.i.map(x => x && x.img ? `<li class="figli">${figAula(x)}</li>` : `<li>${negrito(x)}</li>`).join('')}</ul>${(s.img||[]).map(figAula).join('')}`).join('')}</section>`;
+  if (aba === 'texto') corpo = `<section class="bloco aula">${(a.resumoTexto||[]).map((p,i) => `<p>${negrito(p)}</p>${(timg[i]||[]).map(figAula).join('')}`).join('')}</section>`;
+  else if (aba === 'topicos') corpo = `<section class="bloco aula">${(a.resumoTopicos||[]).map(s => `<h2>${esc(s.t)}</h2><ul>${s.i.map(x => x && x.img ? `<li class="figli">${figAula(x)}</li>` : `<li>${negrito(x)}</li>`).join('')}</ul>${(s.img||[]).map(figAula).join('')}`).join('')}</section>`;
+  else if (aba === 'slides') corpo = slidesHtml(a);
   else corpo = `${a.aviso ? `<p class="aviso-aula">${esc(a.aviso)}</p>` : ''}
     <section class="bloco aula"><button class="abretudo" id="abretudo">Abrir todas as partes</button>
-    ${a.transcricao.map((s,i) => `<details${i===0?' open':''}><summary>${esc(s.t)}</summary>${s.p.map(p => `<p>${negrito(p)}</p>`).join('')}</details>`).join('')}</section>
+    ${(a.transcricao||[]).map((s,i) => `<details${i===0?' open':''}><summary>${esc(s.t)}</summary>${s.p.map(p => `<p>${negrito(p)}</p>`).join('')}</details>`).join('')}</section>
     ${a.tirado && a.tirado.length ? `<section class="bloco aula tirado"><h2>O que foi tirado da transcrição</h2><ul>${a.tirado.map(x => `<li>${esc(x)}</li>`).join('')}</ul></section>` : ''}`;
+  const FALTA = { texto: a.resumoTexto, topicos: a.resumoTopicos, transcricao: a.transcricao };
+  if (aba !== 'slides' && !(FALTA[aba] || []).length) corpo = `<section class="bloco"><p class="vazio">Esta parte da aula ainda não ficou pronta.</p></section>`;
   tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${as.length>1 ? 'Aulas' : esc(banco().curta||'Voltar')}</button></div>
   <header class="cabeca"><h1>${esc(a.titulo)}</h1><p class="prof">Aula de ${esc(a.data)}</p></header>
-  <section class="creditos"><p><b>Palestra:</b> ${esc(a.palestrante)}, ${esc(a.data)}</p><p><b>Gravação e transcrição:</b> ${esc(a.gravacao)}</p>${a.creditos ? `<p class="obrigado">${esc(a.creditos)}</p>` : ''}</section>
+  <section class="creditos"><p><b>${a.professor ? 'Professor(a)' : 'Palestra'}:</b> ${esc(a.professor || a.palestrante || 'a confirmar')}, ${esc(a.data)}</p><p><b>Gravação e transcrição:</b> ${esc(a.gravacao || 'a confirmar')}</p>${a.creditos ? `<p class="obrigado">${esc(a.creditos)}</p>` : ''}</section>
   <nav class="trocar" aria-label="Parte da aula">${ABAS.map(([id,nome]) => `<button class="chip aperta" data-aba="${id}" aria-current="${id===aba}">${nome}</button>`).join('')}</nav>
   ${corpo}`);
   $('#vol').onclick = as.length > 1 ? listaAulas : materia;
   app.querySelectorAll('[data-aba]').forEach(el => el.onclick = () => verAula(k, el.dataset.aba));
   app.querySelectorAll('[data-zoom]').forEach(el => el.onclick = () => abreZoom(el.dataset.zoom, el.dataset.alt));
   if ($('#abretudo')) $('#abretudo').onclick = ev => { const ds = app.querySelectorAll('.aula details'); const abrir = [...ds].some(d => !d.open); ds.forEach(d => d.open = abrir); ev.target.textContent = abrir ? 'Fechar todas as partes' : 'Abrir todas as partes'; };
+}
+
+/* slides da aula: { img, cap, cr } vira figura com zoom; { t, url } vira link que abre em outra aba */
+/* sem "slides" na aula: junta as imagens que já estão nos resumos (fotos dos slides) */
+function slidesDa(a){
+  if ((a.slides || []).length) return a.slides;
+  const vistas = new Set(), out = [];
+  const poe = f => { if (f && f.img && !vistas.has(f.img)) { vistas.add(f.img); out.push(f); } };
+  Object.values(a.resumoTextoImg || {}).forEach(l => (l || []).forEach(poe));
+  (a.resumoTopicos || []).forEach(s => { (s.i || []).forEach(x => { if (x && x.img) poe(x); }); (s.img || []).forEach(poe); });
+  return out;
+}
+function slidesHtml(a){
+  const s = slidesDa(a);
+  if (!s.length) return `<section class="bloco"><p class="vazio">Os slides desta aula ainda não chegaram.</p></section>`;
+  const figs = s.filter(x => x.img), links = s.filter(x => !x.img && x.url);
+  return `${figs.length ? `<section class="bloco aula">${figs.map(figAula).join('')}</section>` : ''}
+  ${links.length ? `<div class="menu">${links.map(x => `<a class="item" href="${esc(x.url)}" target="_blank" rel="noopener"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(x.t||'Material')}</b>${x.desc ? `<small>${esc(x.desc)}</small>` : ''}</span><span class="seta">${IC.seta}</span></a>`).join('')}</div>` : ''}`;
+}
+function listaMaterial(){
+  const b = banco(), as = aulasDe(), mat = materialDe();
+  const comSlides = as.map((a,k) => ({a,k})).filter(x => slidesDa(x.a).length);
+  tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
+  <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Material</h1><p>${esc(b.materia)}</p></div>
+  ${comSlides.length || mat.length ? `<div class="menu">
+    ${comSlides.map(x => `<button class="item" data-slides="${x.k}"><span class="ic">${IC.fala}</span><span class="t"><b>Slides: ${esc(x.a.titulo)}</b><small>${esc(x.a.data)}</small></span><span class="seta">${IC.seta}</span></button>`).join('')}
+    ${mat.map(x => `<a class="item" href="${esc(x.url)}" target="_blank" rel="noopener"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(x.t)}</b><small>${esc([x.data, x.desc].filter(Boolean).join(', '))}</small></span><span class="seta">${IC.seta}</span></a>`).join('')}
+  </div>` : `<section class="bloco"><p class="vazio">O material aparece aqui quando o professor passar.</p></section>`}`);
+  $('#vol').onclick = materia;
+  app.querySelectorAll('[data-slides]').forEach(el => el.onclick = () => verAula(+el.dataset.slides, 'slides'));
 }
 
 pinta();
