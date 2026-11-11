@@ -205,6 +205,26 @@ p{margin:0}
 .rev h2:first-child{margin-top:0}
 .rev ul{margin:0;padding-left:20px}.rev li{margin:6px 0}
 
+/* ---------- aulas (rascunho 11/11) ---------- */
+.creditos{border-left:6px solid var(--cor);background:var(--branco);border-radius:var(--raio);padding:14px 16px;margin-bottom:14px;font-size:15px}
+.creditos p{margin:0 0 4px}
+.creditos .obrigado{margin-top:8px;color:var(--cor-escuro);font-weight:700}
+.aviso-aula{font-size:14px;color:var(--cinza);background:#fff7d6;border-radius:12px;padding:10px 14px;margin-bottom:14px;line-height:1.5}
+.aula p{margin:0 0 14px;line-height:1.75;overflow-wrap:break-word}
+.aula p:last-child{margin-bottom:0}
+.aula h2{font-size:19px;margin:22px 0 8px}
+.aula h2:first-child{margin-top:0}
+.aula ul{margin:0;padding-left:20px}.aula li{margin:7px 0;line-height:1.55}
+.aula details{border-top:1px solid var(--linha);padding:2px 0}
+.aula details:first-of-type{border-top:0}
+.aula summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 0;font-family:'Gabarito';font-weight:800;font-size:17px}
+.aula summary::-webkit-details-marker{display:none}
+.aula summary::before{content:"+";flex:0 0 26px;height:26px;border-radius:50%;background:var(--cor-claro);color:var(--cor);display:grid;place-items:center;font-size:18px;line-height:1}
+.aula details[open] summary::before{content:"−"}
+.aula details[open]{padding-bottom:12px}
+.aula .abretudo{background:none;border:0;color:var(--cor);font-weight:700;padding:6px 0;min-height:40px;margin-bottom:6px}
+.aula .tirado{font-size:14px;color:var(--cinza)}
+
 footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px;max-width:640px;margin:0 auto}
 
 @media (min-width:700px){.ola h1{font-size:40px}.palco{padding-top:24px}}
@@ -216,9 +236,10 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611111434"></script>
-<script src="banco-farmaco.js?v=202611111434"></script>
-<script src="banco-imagino.js?v=202611111434"></script>
+<script src="bancos.js?v=202611111511"></script>
+<script src="banco-farmaco.js?v=202611111511"></script>
+<script src="banco-imagino.js?v=202611111511"></script>
+<script src="aulas.js?v=202611111511"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -249,6 +270,7 @@ const IC = {
   tesoura:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 7.5L20 18M8.5 16.5L20 6"/></svg>',
   luz:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg>',
   pula:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5l7 7-7 7M13 5l7 7-7 7"/></svg>',
+  fala:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3M9 21h6"/></svg>',
   trofeu:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9 17h6"/></svg>'
 };
 
@@ -363,6 +385,7 @@ function materia(){
     ${temas.length ? `<button class="item" id="temas"><span class="ic">${IC.alvo}</span><span class="t"><b>Treinar um assunto</b><small>${temas.length} assuntos para escolher</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${erros ? `<button class="item" data-go="${erros.id}" ${nErr?'':'disabled'}><span class="ic">${IC.volta}</span><span class="t"><b>Revisar meus erros</b><small>${nErr ? nErr+(nErr===1?' questão guardada':' questões guardadas') : 'Quando você errar, a questão aparece aqui'}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     <button class="item" id="rev"><span class="ic">${IC.livro}</span><span class="t"><b>Ler o resumo</b><small>O que mais cai, em tópicos curtos</small></span><span class="seta">${IC.seta}</span></button>
+    ${aulasDe().length ? `<button class="item" id="aulas"><span class="ic">${IC.fala}</span><span class="t"><b>Aulas</b><small>${aulasDe().length===1 ? 'Transcrição e resumo da aula de '+esc(aulasDe()[0].data) : aulasDe().length+' aulas transcritas, com resumo'}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
   </div>
   <section class="bloco"><h2>Meu desempenho</h2>${desempenhoHtml()}</section>
   ${maisCaemHtml()}
@@ -373,6 +396,7 @@ function materia(){
   app.querySelectorAll('[data-go]').forEach(el => el.onclick = () => comeca(ms.find(m => m.id === el.dataset.go)));
   if ($('#temas')) $('#temas').onclick = listaTemas;
   $('#rev').onclick = resumo;
+  if ($('#aulas')) $('#aulas').onclick = () => aulasDe().length === 1 ? verAula(0) : listaAulas();
   if ($('#fracos')) $('#fracos').onclick = () => comeca(modoFracos());
   app.querySelectorAll('[data-cai]').forEach(el => el.onclick = () => comeca({ id:'cai-'+el.dataset.cai, nome:el.dataset.cai, temas:[el.dataset.cai], cai:true }));
 }
@@ -537,6 +561,40 @@ function resumo(){
   <div class="rodape"><button class="botao aperta" id="go">Fazer simulado</button></div>`);
   $('#vol').onclick = materia;
   $('#go').onclick = () => comeca(partes().completo);
+}
+
+/* ---------- AULAS (rascunho 11/11: transcrição da aula + resumos, dados em aulas.js) ---------- */
+const aulasDe = () => ((window.AULAS || {})[MAT] || []);
+const negrito = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+function listaAulas(){
+  const b = banco(), as = aulasDe();
+  tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
+  <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Aulas</h1><p>${esc(b.materia)}</p></div>
+  <div class="menu">${as.map((a,k) => `<button class="item" data-aula="${k}"><span class="ic">${IC.fala}</span><span class="t"><b>${esc(a.titulo)}</b><small>${esc(a.data)}, ${esc(a.palestrante)}</small></span><span class="seta">${IC.seta}</span></button>`).join('')}</div>`);
+  $('#vol').onclick = materia;
+  app.querySelectorAll('[data-aula]').forEach(el => el.onclick = () => verAula(+el.dataset.aula));
+}
+function verAula(k, aba){
+  const as = aulasDe(), a = as[k]; if (!a) return materia();
+  aba = aba || ler('jogo-aula-aba', 'texto');
+  if (!['texto','topicos','transcricao'].includes(aba)) aba = 'texto';
+  grava('jogo-aula-aba', aba);
+  const ABAS = [['texto','Resumo em texto'],['topicos','Resumo em tópicos'],['transcricao','Transcrição completa']];
+  let corpo = '';
+  if (aba === 'texto') corpo = `<section class="bloco aula">${a.resumoTexto.map(p => `<p>${negrito(p)}</p>`).join('')}</section>`;
+  else if (aba === 'topicos') corpo = `<section class="bloco aula">${a.resumoTopicos.map(s => `<h2>${esc(s.t)}</h2><ul>${s.i.map(x => `<li>${negrito(x)}</li>`).join('')}</ul>`).join('')}</section>`;
+  else corpo = `${a.aviso ? `<p class="aviso-aula">${esc(a.aviso)}</p>` : ''}
+    <section class="bloco aula"><button class="abretudo" id="abretudo">Abrir todas as partes</button>
+    ${a.transcricao.map((s,i) => `<details${i===0?' open':''}><summary>${esc(s.t)}</summary>${s.p.map(p => `<p>${negrito(p)}</p>`).join('')}</details>`).join('')}</section>
+    ${a.tirado && a.tirado.length ? `<section class="bloco aula tirado"><h2>O que foi tirado da transcrição</h2><ul>${a.tirado.map(x => `<li>${esc(x)}</li>`).join('')}</ul></section>` : ''}`;
+  tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${as.length>1 ? 'Aulas' : esc(banco().curta||'Voltar')}</button></div>
+  <header class="cabeca"><h1>${esc(a.titulo)}</h1><p class="prof">Aula de ${esc(a.data)}</p></header>
+  <section class="creditos"><p><b>Palestra:</b> ${esc(a.palestrante)}, ${esc(a.data)}</p><p><b>Gravação e transcrição:</b> ${esc(a.gravacao)}</p>${a.creditos ? `<p class="obrigado">${esc(a.creditos)}</p>` : ''}</section>
+  <nav class="trocar" aria-label="Parte da aula">${ABAS.map(([id,nome]) => `<button class="chip aperta" data-aba="${id}" aria-current="${id===aba}">${nome}</button>`).join('')}</nav>
+  ${corpo}`);
+  $('#vol').onclick = as.length > 1 ? listaAulas : materia;
+  app.querySelectorAll('[data-aba]').forEach(el => el.onclick = () => verAula(k, el.dataset.aba));
+  if ($('#abretudo')) $('#abretudo').onclick = ev => { const ds = app.querySelectorAll('.aula details'); const abrir = [...ds].some(d => !d.open); ds.forEach(d => d.open = abrir); ev.target.textContent = abrir ? 'Fechar todas as partes' : 'Abrir todas as partes'; };
 }
 
 pinta();
