@@ -165,6 +165,12 @@ p{margin:0}
 .figq img{display:block;width:100%;height:auto;max-height:48vh;object-fit:contain}
 .figq .lupa{position:absolute;right:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 10px;pointer-events:none}
 .retorno .figq{margin:10px 0 8px}
+.figaula{margin:12px 0 18px}
+.figaula .figq{margin:0 0 6px;background:#fff}
+.figaula .figq img{max-height:none}
+.figaula figcaption{font-size:14px;line-height:1.4;color:var(--cinza)}
+.figaula figcaption small{display:block;font-size:12px;opacity:.8;margin-top:2px}
+.aula li.figli{list-style:none;margin-left:-20px}
 .zoom{position:fixed;inset:0;z-index:50;background:rgba(10,12,16,.94);display:flex;align-items:center;justify-content:center;padding:12px;cursor:zoom-out;animation:sobe .2s ease-out}
 .zoom img{max-width:100%;max-height:100%;object-fit:contain;touch-action:pinch-zoom}
 .zoom .fecha{position:absolute;top:10px;right:12px;color:#fff;background:rgba(255,255,255,.14);border-radius:999px;padding:8px 14px;font-weight:700;font-size:15px}
@@ -236,10 +242,11 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611111511"></script>
-<script src="banco-farmaco.js?v=202611111511"></script>
-<script src="banco-imagino.js?v=202611111511"></script>
-<script src="aulas.js?v=202611111511"></script>
+<script src="bancos.js?v=202611111519"></script>
+<script src="banco-farmaco.js?v=202611111519"></script>
+<script src="banco-imagino.js?v=202611111519"></script>
+<script src="banco-cabeca.js?v=202611111519"></script>
+<script src="aulas.js?v=202611111519"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -256,7 +263,8 @@ const CORES = {
   carie:  ['#7442c2','#efe8fa','#553094'],
   inter:  ['#c63d58','#fbe7eb','#952b41'],
   farmaco:['#167487','#e0f1f4','#0f5563'],
-  imagino:['#3c4a66','#e7eaf1','#283248']
+  imagino:['#3c4a66','#e7eaf1','#283248'],
+  cabeca: ['#8c2f39','#f7e6e8','#6a2029']
 };
 const IC = {
   play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg>',
@@ -566,6 +574,8 @@ function resumo(){
 /* ---------- AULAS (rascunho 11/11: transcrição da aula + resumos, dados em aulas.js) ---------- */
 const aulasDe = () => ((window.AULAS || {})[MAT] || []);
 const negrito = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+/* figura no meio do resumo: toque amplia (mesmo zoom das questões) */
+const figAula = f => `<figure class="figaula"><button type="button" class="figq" data-zoom="${esc(f.img)}" data-alt="${esc(f.cap||'')}" aria-label="Ampliar a imagem"><img src="${esc(f.img)}" alt="${esc(f.cap||'')}" loading="lazy" decoding="async"><span class="lupa">⤢ Ampliar</span></button><figcaption>${esc(f.cap||'')}${f.cr ? `<small>${esc(f.cr)}</small>` : ''}</figcaption></figure>`;
 function listaAulas(){
   const b = banco(), as = aulasDe();
   tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
@@ -581,8 +591,9 @@ function verAula(k, aba){
   grava('jogo-aula-aba', aba);
   const ABAS = [['texto','Resumo em texto'],['topicos','Resumo em tópicos'],['transcricao','Transcrição completa']];
   let corpo = '';
-  if (aba === 'texto') corpo = `<section class="bloco aula">${a.resumoTexto.map(p => `<p>${negrito(p)}</p>`).join('')}</section>`;
-  else if (aba === 'topicos') corpo = `<section class="bloco aula">${a.resumoTopicos.map(s => `<h2>${esc(s.t)}</h2><ul>${s.i.map(x => `<li>${negrito(x)}</li>`).join('')}</ul>`).join('')}</section>`;
+  const timg = a.resumoTextoImg || {};
+  if (aba === 'texto') corpo = `<section class="bloco aula">${a.resumoTexto.map((p,i) => `<p>${negrito(p)}</p>${(timg[i]||[]).map(figAula).join('')}`).join('')}</section>`;
+  else if (aba === 'topicos') corpo = `<section class="bloco aula">${a.resumoTopicos.map(s => `<h2>${esc(s.t)}</h2><ul>${s.i.map(x => x && x.img ? `<li class="figli">${figAula(x)}</li>` : `<li>${negrito(x)}</li>`).join('')}</ul>${(s.img||[]).map(figAula).join('')}`).join('')}</section>`;
   else corpo = `${a.aviso ? `<p class="aviso-aula">${esc(a.aviso)}</p>` : ''}
     <section class="bloco aula"><button class="abretudo" id="abretudo">Abrir todas as partes</button>
     ${a.transcricao.map((s,i) => `<details${i===0?' open':''}><summary>${esc(s.t)}</summary>${s.p.map(p => `<p>${negrito(p)}</p>`).join('')}</details>`).join('')}</section>
@@ -594,6 +605,7 @@ function verAula(k, aba){
   ${corpo}`);
   $('#vol').onclick = as.length > 1 ? listaAulas : materia;
   app.querySelectorAll('[data-aba]').forEach(el => el.onclick = () => verAula(k, el.dataset.aba));
+  app.querySelectorAll('[data-zoom]').forEach(el => el.onclick = () => abreZoom(el.dataset.zoom, el.dataset.alt));
   if ($('#abretudo')) $('#abretudo').onclick = ev => { const ds = app.querySelectorAll('.aula details'); const abrir = [...ds].some(d => !d.open); ds.forEach(d => d.open = abrir); ev.target.textContent = abrir ? 'Fechar todas as partes' : 'Abrir todas as partes'; };
 }
 

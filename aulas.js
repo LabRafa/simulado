@@ -2,7 +2,8 @@
    Uma entrada por aula. Campos:
    - data, titulo, palestrante, gravacao
    - resumoTexto: parágrafos (o que aconteceu na aula, em ordem)
-   - resumoTopicos: [{t:'título', i:['item', ...]}]  (**negrito** vira <b>)
+   - resumoTopicos: [{t:'título', i:['item', {img, cap, cr}, ...]}]  (**negrito** vira <b>; objeto com img = figura no meio dos itens)
+   - resumoTextoImg: {índice do parágrafo: [{img, cap, cr}]}  (figuras depois daquele parágrafo)
    - transcricao: [{t:'título da parte', p:['parágrafo', ...]}]  (fala da professora, limpa)
    - tirado: o que foi tirado da transcrição automática, pra conferir
    Fonte da Imaginologia: transcrição automática que a Isadora mandou (10/11/2026),
@@ -29,12 +30,37 @@ window.AULAS.imagino = [{
     'Para levar: radiopaco é claro e radiolúcido é escuro. Nem todo escuro é lesão, então é preciso conhecer o normal. As quatro perguntas mostram o comportamento da lesão. E o diagnóstico se fecha com imagem e histopatologia juntas.'
   ],
 
+  resumoTextoImg: {
+    2: [
+      { img: 'img/aulas/imagino/s04-quebra-cabeca.jpg', cap: 'Slide da palestra: diagnóstico é um quebra-cabeça', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Jonas' }
+    ],
+    3: [
+      { img: 'img/aulas/imagino/s13-panoramica-esquema.jpg', cap: 'Slide da palestra: estruturas radiolúcidas e radiopacas da panorâmica', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Jonas' },
+      { img: 'img/aulas/imagino/s15-tres-exames.jpg', cap: 'Slide da palestra: os três exames', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Jonas' }
+    ],
+    4: [
+      { img: 'img/aulas/imagino/s21-borda.jpg', cap: 'Slide da palestra: como é a borda?', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
+      { img: 'img/aulas/imagino/s24-vizinhos.jpg', cap: 'Slide da palestra: o que a lesão faz com os vizinhos', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' }
+    ],
+    5: [
+      { img: 'img/aulas/imagino/s29-nem-toda-lesao.jpg', cap: 'Slide da palestra: lesão na mucosa com panorâmica normal', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
+      { img: 'img/aulas/imagino/desafio1-4-perguntas.jpg', cap: 'Desafio 1: lesão no ápice de um dente com cárie', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
+      { img: 'img/aulas/imagino/desafio2.jpg', cap: 'Desafio 2: lesão multilocular, de bordas corticalizadas, afastando os dentes', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
+      { img: 'img/aulas/imagino/desafio-extra.jpg', cap: 'Desafio extra: panorâmica com áreas marcadas de a a f (fonte do slide: Lopes, Handem, Capelozza, 2016)', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' }
+    ],
+    6: [
+      { img: 'img/aulas/imagino/s37-conduta.jpg', cap: 'Slide da palestra: a hipótese diagnóstica define a conduta', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
+      { img: 'img/aulas/imagino/s44-displasia.jpg', cap: 'Slide mostrado depois do fim da gravação: displasia cemento-óssea periapical nas 3 fases', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Jonas' }
+    ]
+  },
+
   resumoTopicos: [
     { t: 'Diagnóstico = quebra-cabeça', i: [
       '**Clínica:** anamnese, exame clínico (volume, cor), testes (vitalidade, mobilidade)',
       '**Imagem:** características da lesão e efeito nos vizinhos (dentes, osso, canal mandibular, nervo alveolar inferior)',
       '**Histopatológico:** biópsia; o patologista também precisa da imagem',
-      'Nenhuma peça fecha sozinha; a aula foi sobre a **imagem**'
+      'Nenhuma peça fecha sozinha; a aula foi sobre a **imagem**',
+      { img: 'img/aulas/imagino/s04-quebra-cabeca.jpg', cap: 'Slide da palestra: clínica + imagem + biópsia = diagnóstico. "Hoje: a peça do meio."', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Jonas' }
     ]},
     { t: 'Radiopaco x radiolúcido', i: [
       '**Radiopaco = claro:** mais denso, barra o raio X',
@@ -45,6 +71,8 @@ window.AULAS.imagino = [{
     ]},
     { t: 'Conhecer o normal', i: [
       'Sem conhecer a anatomia, dá-se diagnóstico de patologia ao que é normal',
+      { img: 'img/aulas/imagino/s13-panoramica-esquema.jpg', cap: 'Slide da palestra: estruturas da panorâmica. Radiolúcidas: 1 seio maxilar, 2 cavidade nasal, 3 canal mandibular, 4 forame mentual. Radiopacas: 5 palato duro, 6 base da mandíbula, 7 côndilo', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Jonas' },
+      { img: 'img/aulas/imagino/s14-panoramica-real.jpg', cap: 'Slide da palestra: as mesmas estruturas numa panorâmica real (forame mentual, canal mandibular, seio maxilar...). "Normal ou lesão?"', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Jonas' },
       '**Forame mentual:** circular, radiolúcido, perto dos ápices dos pré-molares inferiores',
       'Erro clássico: confundir o forame com **lesão periapical inflamatória**',
       'Saída: nova radiografia **variando a angulação horizontal**; se a imagem sai do ápice, é o forame',
@@ -55,68 +83,92 @@ window.AULAS.imagino = [{
       '**Periapical:** informação inicial, detalhe de poucos dentes',
       '**Panorâmica:** visão geral, triagem inicial',
       '**Tomografia:** quando ainda há dúvida, mais detalhe da região',
-      '**Achados incidentais:** a panorâmica acha lesão que não dá sintoma'
+      '**Achados incidentais:** a panorâmica acha lesão que não dá sintoma',
+      { img: 'img/aulas/imagino/s15-tres-exames.jpg', cap: 'Slide da palestra: periapical (detalhe de poucos dentes), panorâmica (visão geral) e tomografia TCFC (3D, em cortes)', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Jonas' }
     ]},
     { t: 'As 4 perguntas', i: [
       '1. **Onde está?** (localização)',
       '2. **Clara ou escura?** (densidade)',
       '3. **Como é a borda?** (limites)',
-      '4. **O que faz com os vizinhos?** (efeitos)'
+      '4. **O que faz com os vizinhos?** (efeitos)',
+      { img: 'img/aulas/imagino/desafio1-4-perguntas.jpg', cap: 'Desafio 1 da palestra: as 4 perguntas aplicadas a uma lesão escura, de borda corticalizada, no ápice de um dente com cárie', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' }
     ]},
     { t: '1. Onde está?', i: [
       'Coroa de dente incluso → **cisto dentígero**',
       'Ao lado da raiz → **cisto periodontal lateral**',
-      'Área de extração → **cisto residual** (era radicular, o dente saiu e a lesão ficou)'
+      'Área de extração → **cisto residual** (era radicular, o dente saiu e a lesão ficou)',
+      { img: 'img/aulas/imagino/s18-onde-esta.jpg', cap: 'Slide da palestra: onde fica cada cisto (radicular, residual, periodontal lateral, dentígero, de erupção, gengival, ceratocisto)', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' }
     ]},
     { t: '2. Clara ou escura?', i: [
       '**Radiolúcida:** ex. cisto (interior líquido)',
       '**Radiopaca:** mais mineralizada',
-      '**Mista:** radiolúcida com focos radiopacos dentro'
+      '**Mista:** radiolúcida com focos radiopacos dentro',
+      { img: 'img/aulas/imagino/s19-clara-escura.jpg', cap: 'Slide da palestra: radiolúcida (escura, ex. cisto), radiopaca (clara, ex. odontoma) e mista (claro + escuro)', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' }
     ]},
     { t: '3. Como é a borda?', i: [
       '**Corticalizada:** linha branca em volta (osso mais denso, como a cortical)',
       '**Bem definida:** dá pra ver onde termina',
       '**Difusa:** borrada, não se sabe onde termina → **sinal de alerta**',
-      '**Unilocular:** uma cavidade · **Multilocular:** várias, com septos (mesmo incompletos)'
+      { img: 'img/aulas/imagino/s21-borda.jpg', cap: 'Slide da palestra: corticalizada (linha branca, cresce devagar), bem definida (intermediária) e difusa (borrada, sinal de alerta)', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
+      { img: 'img/aulas/imagino/s22-limites.jpg', cap: 'Slide da palestra: os mesmos três limites em radiografias reais', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
+      '**Unilocular:** uma cavidade · **Multilocular:** várias, com septos (mesmo incompletos)',
+      { img: 'img/aulas/imagino/s23-uni-multilocular.jpg', cap: 'Slide da palestra: unilocular (uma cavidade) x multilocular (várias cavidades separadas por septos), em esquema e na radiografia', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' }
     ]},
     { t: '4. O que faz com os vizinhos?', i: [
       '**Deslocamento dentário:** empurra os dentes',
       '**Reabsorção radicular:** raízes "cortadas", mais curtas',
+      { img: 'img/aulas/imagino/s25-deslocamento-reabsorcao.jpg', cap: 'Slide da palestra: deslocamento dentário (dente empurrado para dentro do seio maxilar, seta) e reabsorção radicular (raízes "cortadas" retas sobre a lesão)', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
       '**Abaulamento da cortical:** estufa o osso, cortical fina',
       '**Rompimento da cortical:** comportamento mais agressivo',
+      { img: 'img/aulas/imagino/s26-abaulamento-rompimento.jpg', cap: 'Slide da palestra: abaulamento da cortical na panorâmica (contorno "estufado", fino como casca de ovo) e rompimento da cortical lingual na tomografia (setas)', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
       'Deslocar e abaular = crescimento lento',
-      'Maligna: **dentes flutuantes** (destrói o osso em vez de deslocar)'
+      { img: 'img/aulas/imagino/s24-vizinhos.jpg', cap: 'Slide da palestra: empurra dentes, encurta raízes, estufa o osso, rompe o osso. Deslocar e abaular = crescimento lento; romper = mais agressivo', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
+      'Maligna: **dentes flutuantes** (destrói o osso em vez de deslocar)',
+      { img: 'img/aulas/imagino/s27-juntando-pistas.jpg', cap: 'Slide da palestra: juntando as pistas. Tranquila = borda corticada e desloca os dentes; suspeita = borda difusa e rompe a cortical', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' }
     ]},
     { t: 'Analogias (nenhuma é patognomônica)', i: [
       'Bolhas de sabão → **ameloblastoma**',
       'Septos retinhos (raquete de tênis) → **mixoma odontogênico**',
       'Dentículos → **odontoma**',
       'Raios de sol → **osteossarcoma**',
-      'Roído de traça → **lesões agressivas, malignas**'
+      'Roído de traça → **lesões agressivas, malignas**',
+      { img: 'img/aulas/imagino/s28-analogias.jpg', cap: 'Slide da palestra: bolhas de sabão, raquete de tênis, dentículos, raios de sol e roído de traça. Nenhuma é patognomônica', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' }
     ]},
     { t: 'Nem toda lesão aparece na imagem', i: [
       'Lesão grave de mucosa pode ter panorâmica normal',
       'Pode aparecer se infiltrar o osso, mas pode não aparecer',
-      'Imagem normal não dispensa investigação → **biópsia**'
+      'Imagem normal não dispensa investigação → **biópsia**',
+      { img: 'img/aulas/imagino/s29-nem-toda-lesao.jpg', cap: 'Slide da palestra: lesão na mucosa no exame clínico e panorâmica sem alteração óssea. Imagem normal pode até ser maligna', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' }
     ]},
     { t: 'O paciente também conta', i: [
       '**Idade, sexo, etnia**, local e história ajudam a hipótese',
       'Mesma imagem, pacientes diferentes, hipóteses diferentes',
-      '"**Quando ouvir cascos, pense em cavalos, não em zebras**": primeiro o mais comum'
+      { img: 'img/aulas/imagino/s34-paciente.jpg', cap: 'Slide da palestra: idade, sexo, raça/etnia, local e história. Massas radiopacas em vários quadrantes: mulher negra de meia-idade x menino de 10 anos', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
+      '"**Quando ouvir cascos, pense em cavalos, não em zebras**": primeiro o mais comum',
+      { img: 'img/aulas/imagino/s35-cascos.jpg', cap: 'Slide da palestra: pistas da imagem → pistas do paciente → hipóteses (principal + diferenciais) → biópsia confirma', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' }
     ]},
     { t: 'A hipótese define a conduta', i: [
       '**Nenhuma lesão nasce grande:** cedo = tratamento simples; tarde = cirurgia maior, até mutiladora',
+      { img: 'img/aulas/imagino/s36-nasce-grande.jpg', cap: 'Slide da palestra: a lesão pequena no início (tratamento simples), meses depois (cirurgia maior) e anos depois (desloca dentes, cirurgia extensa)', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
       '**Acompanhar:** controle clínico e radiográfico',
       '**Tratar a causa:** lesão periapical inflamatória → canal ou extração',
+      { img: 'img/aulas/imagino/s37-conduta.jpg', cap: 'Slide da palestra: acompanhar, tratar a causa ou cirurgia o quanto antes, com exemplos de cada', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
       '**Cirurgia:** lesões que exigem remoção com margem (ex. ameloblastoma)',
+      { img: 'img/aulas/imagino/s38-ameloblastoma-antes-depois.jpg', cap: 'Slide da palestra: ameloblastoma antes (lesão multilocular extensa na mandíbula) e depois (ressecção, reconstrução com osso do ilíaco, placa e implantes)', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
       '**Na dúvida, biópsia**'
     ]},
     { t: 'Fichas das lesões', i: [
       '**Lesão periapical inflamatória:** ápice de dente sem vitalidade (cárie ou trauma), radiolúcida, bem definida, pode ser corticalizada; diferencial com forame mentual e displasia cemento-óssea inicial (o teste de vitalidade orienta)',
+      { img: 'img/aulas/imagino/s40-periapical.jpg', cap: 'Slide da palestra: lesão periapical inflamatória, em esquema e na periapical (A), com a ficha: localização, densidade, limites, efeitos', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
       '**Cisto dentígero:** coroa de dente incluso (3º molar, canino), radiolúcido, unilocular, bem definido e corticalizado, pode deslocar o dente; diferenciais: folículo aumentado, ceratocisto, ameloblastoma',
+      { img: 'img/aulas/imagino/s41-dentigero.jpg', cap: 'Slide da palestra: cisto dentígero em volta da coroa de um dente incluso, em esquema e na panorâmica (3º molar inferior)', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Jonas' },
       '**Espaço pericoronário de 4 a 6 mm:** já não é mais normal, pensar em cisto',
       '**Ameloblastoma:** posterior de mandíbula, radiolúcido, uni ou multilocular, bem definido, abaula a cortical, reabsorve raízes; benigno, mas sai com margem de segurança',
-      '**Odontoma:** vários dentículos, radiopaco com halo radiolúcido, limites bem definidos (a gravação acaba aqui)'
+      { img: 'img/aulas/imagino/s42-ameloblastoma.jpg', cap: 'Slide da palestra: ameloblastoma multilocular ("bolhas") encostando nas raízes, em esquema e na radiografia', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Jonas' },
+      '**Odontoma:** vários dentículos, radiopaco com halo radiolúcido, limites bem definidos (a gravação acaba aqui)',
+      { img: 'img/aulas/imagino/s43-odontoma.jpg', cap: 'Slide da palestra: odontoma com vários dentículos sobre um dente que não erupcionou, em esquema e na radiografia (B)', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Isadora' },
+      { img: 'img/aulas/imagino/s44-displasia.jpg', cap: 'Slide mostrado depois do fim da gravação: displasia cemento-óssea periapical nas 3 fases (inicial escura, intermediária, madura clara), dentes com vitalidade preservada', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Jonas' },
+      { img: 'img/aulas/imagino/s45-radiopacidades-apice.jpg', cap: 'Slide mostrado depois do fim da gravação: radiopacidades no ápice e condutas (displasia, osteíte condensante, osteoesclerose idiopática, hipercementose, cementoblastoma)', cr: 'Slide: Profa. Mariana (IMA Radiologia) · foto: Jonas' }
     ]}
   ],
 
