@@ -216,9 +216,9 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611111002"></script>
-<script src="banco-farmaco.js?v=202611111002"></script>
-<script src="banco-imagino.js?v=202611111002"></script>
+<script src="bancos.js?v=202611111005"></script>
+<script src="banco-farmaco.js?v=202611111005"></script>
+<script src="banco-imagino.js?v=202611111005"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -277,7 +277,7 @@ function sorteia(m){
   const pool = poolDe(m);
   if (m.sm1todo || m.sm2todo) return pool.map(q => ({q, ordem:[0,1,2,3,4]}));
   let esc10;
-  if (m.erros) esc10 = mistura(pool).slice(0,10);
+  if (m.erros || m.cai) esc10 = mistura(pool).slice(0,10);
   else {
     const sm1 = pool.filter(q => q.sm1), sm2 = pool.filter(q => q.sm2);
     const n1 = Math.min(sm1.length, Math.floor(Math.random()*3)); /* 0, 1 ou 2 do SM1, nunca mais */
@@ -304,6 +304,17 @@ function desempenhoHtml(){
   return `<div class="desemp">${d.map(x => `<div class="dl"><div class="lin"><span>${esc(x.tema)}</span><small>${Math.round(x.pct*100)}%, ${x.a} de ${x.t}</small></div><div class="trilho" aria-hidden="true"><div class="enche" style="width:${Math.max(4,Math.round(x.pct*100))}%;background:${corPct(x.pct)}"></div></div></div>`).join('')}</div>
   ${fracos.length ? `<button class="fracos" id="fracos"><b>Treinar meus pontos fracos</b><small>10 questões de ${esc(fracos.slice(0,3).map(x=>x.tema).join(', '))}</small></button>` : `<p class="vazio" style="margin-top:12px">${d.some(x=>x.t>=MIN_TENT) ? 'Nenhum tema abaixo de 70 % ainda. Continue assim.' : 'Depois de 3 questões de um tema ele entra na conta dos pontos fracos.'}</p>`}
   <p class="vazio" style="margin-top:10px;font-size:13px">Seus dados ficam guardados só neste celular.</p>`;
+}
+/* Rafael 11/11: temas que mais caem nas provas (contagem das questões que caíram no SM1 e no SM2) */
+function maisCaem(){
+  const c = {};
+  banco().q.forEach(q => { if (q && (q.sm1 || q.sm2) && q.tema) { const t = q.tema; c[t] = c[t] || {tema:t, n:0, s1:0, s2:0}; c[t].n++; if (q.sm1) c[t].s1++; if (q.sm2) c[t].s2++; } });
+  return Object.values(c).sort((x,y) => y.n - x.n || x.tema.localeCompare(y.tema));
+}
+function maisCaemHtml(){
+  const d = maisCaem(); if (!d.length) return '';
+  const max = d[0].n;
+  return `<section class="bloco"><h2>Temas que mais caem</h2><p class="vazio" style="margin-bottom:10px;font-size:14px">Contando as questões que caíram nos simulados oficiais. Toque num tema pra treinar.</p><div class="desemp">${d.slice(0,8).map(x => `<button class="dl aperta" data-cai="${esc(x.tema)}" style="all:unset;display:block;cursor:pointer;width:100%"><div class="lin"><span>${esc(x.tema)}</span><small>${x.n} ${x.n===1?'questão':'questões'}${x.s1&&x.s2?' (SM1 e SM2)':x.s1?' (SM1)':' (SM2)'}</small></div><div class="trilho" aria-hidden="true"><div class="enche" style="width:${Math.round(x.n/max*100)}%;background:var(--c, #6c3fc5)"></div></div></button>`).join('')}</div></section>`;
 }
 function modoFracos(){
   const temas = desempenho().filter(x => x.t >= MIN_TENT && x.pct < .7).slice(0,3).map(x => x.tema);
@@ -354,6 +365,7 @@ function materia(){
     <button class="item" id="rev"><span class="ic">${IC.livro}</span><span class="t"><b>Ler o resumo</b><small>O que mais cai, em tópicos curtos</small></span><span class="seta">${IC.seta}</span></button>
   </div>
   <section class="bloco"><h2>Meu desempenho</h2>${desempenhoHtml()}</section>
+  ${maisCaemHtml()}
   ${nSm1 || nSm2 ? `<section class="bloco legenda">${nSm1 ? '<span><i class="tag sm1">SM1</i>a questão caiu igual no simulado 1</span>' : ''}${nSm2 ? '<span><i class="tag sm2">SM2</i>a questão caiu igual no simulado 2</span>' : ''}${nSm1 ? '<span><i class="tag par">parecida</i>semelhante a uma do simulado 1</span>' : ''}</section>` : ''}`);
   const {ms} = partes();
   $('#vol').onclick = inicio;
@@ -362,6 +374,7 @@ function materia(){
   if ($('#temas')) $('#temas').onclick = listaTemas;
   $('#rev').onclick = resumo;
   if ($('#fracos')) $('#fracos').onclick = () => comeca(modoFracos());
+  app.querySelectorAll('[data-cai]').forEach(el => el.onclick = () => comeca({ id:'cai-'+el.dataset.cai, nome:el.dataset.cai, temas:[el.dataset.cai], cai:true }));
 }
 
 /* ---------- TREINAR UM ASSUNTO ---------- */
