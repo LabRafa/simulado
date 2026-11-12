@@ -256,12 +256,12 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611121533"></script>
-<script src="banco-farmaco.js?v=202611121533"></script>
-<script src="banco-imagino.js?v=202611121533"></script>
-<script src="banco-cabeca.js?v=202611121533"></script>
-<script src="periodos.js?v=202611121533"></script>
-<script src="aulas.js?v=202611121533"></script>
+<script src="bancos.js?v=202611121536"></script>
+<script src="banco-farmaco.js?v=202611121536"></script>
+<script src="banco-imagino.js?v=202611121536"></script>
+<script src="banco-cabeca.js?v=202611121536"></script>
+<script src="periodos.js?v=202611121536"></script>
+<script src="aulas.js?v=202611121536"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -520,7 +520,7 @@ function listaTemas(){
 function comeca(m){
   if (!m) return;
   const vistasAgora = vistasDe();
-  const itens = sorteia(m).map(it => ({...it, nova: !vistasAgora.has(it.q.id), certa: it.ordem.indexOf(it.q.a), resp:null, conf:false, riscadas:[], pulou:false, dica:false}));
+  const itens = sorteia(m).map(it => ({...it, nova: !(m.sm1todo || m.sm2todo) && !vistasAgora.has(it.q.id), certa: it.ordem.indexOf(it.q.a), resp:null, conf:false, riscadas:[], pulou:false, dica:false}));
   if (!itens.length) return;
   partida = { modo:m, itens, i:0 }; ultimaVista = -1;
   questao();
