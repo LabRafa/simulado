@@ -482,7 +482,7 @@ function inicio(){
     const sub = b ? (b.proxima||'') : [m.codigo, m.ch, nAulas ? (nAulas===1 ? '1 aula' : nAulas+' aulas') : ''].filter(Boolean).join(', ');
     const selo = m.bonus ? '<span class="bonus">bônus</span>' : m.eletiva ? '<span class="prev">eletiva</span>' : '';
     return `<li><button class="mat aperta" data-mat="${m.id}" style="--c:${c}"><span class="aba"></span>${ICMAT[m.id] ? `<span class="icmat" aria-hidden="true">${ICMAT[m.id]}</span>` : ''}<span class="txt"><b>${nome}${selo}</b><small>${esc(sub)}</small></span><span class="nota">${melhor!==null ? nota1(melhor)+'<em>melhor</em>' : IC.seta.replace('<svg','<svg width="22" height="22"')}</span></button></li>`; }).join('')}</ul>
-  <a class="sisao aperta" href="https://labrafa.github.io/dentolingu/#milhao"><span style="color:var(--cinza)">${IC.trofeu}</span><span><b>Show do Sisão</b><small>Jogo de perguntas, só pela diversão (o prêmio é de mentirinha)</small></span></a>`);
+  <!-- Show do Sisão fora do ar (Rafael 12/11): volta como Show do Milhão da Odonto -->`);
   app.querySelectorAll('[data-mat]').forEach(el => el.onclick = () => { MAT = el.dataset.mat; grava('jogo-mat', MAT); materia(); });
   app.querySelectorAll('[data-per]').forEach(el => el.onclick = () => { PERIODO = +el.dataset.per; grava('jogo-periodo', PERIODO); inicio(); });
 }
