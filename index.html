@@ -255,12 +255,12 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611121519"></script>
-<script src="banco-farmaco.js?v=202611121519"></script>
-<script src="banco-imagino.js?v=202611121519"></script>
-<script src="banco-cabeca.js?v=202611121519"></script>
-<script src="periodos.js?v=202611121519"></script>
-<script src="aulas.js?v=202611121519"></script>
+<script src="bancos.js?v=202611121522"></script>
+<script src="banco-farmaco.js?v=202611121522"></script>
+<script src="banco-imagino.js?v=202611121522"></script>
+<script src="banco-cabeca.js?v=202611121522"></script>
+<script src="periodos.js?v=202611121522"></script>
+<script src="aulas.js?v=202611121522"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -318,7 +318,9 @@ let ultimaVista = -1;
 const bancoVazio = m => ({ materia: m.materia || m.nome, curta: m.curta || m.nome, codigo: m.codigo, prof: '', proxima: '', modos: [], q: [], revisao: [], vazio: true });
 const banco = () => BANCOS[MAT] || bancoVazio(infoMat(MAT) || { nome: MAT });
 const temQuestoes = () => !!(BANCOS[MAT] && (BANCOS[MAT].q || []).length);
-const modos = () => banco().modos || [];
+/* Rafael 12/11: "Simulado de caso real" em toda matéria que tiver questão com paciente (ctx com idade/paciente) */
+const ehCaso = q => q && q.ctx && /\d+\s*anos|paciente/i.test(q.ctx);
+const modos = () => { const b = banco(), ms = (b.modos || []).slice(); if (!ms.some(m => m.casos) && (b.q || []).filter(ehCaso).length >= 3) ms.splice(1, 0, { id: 't-casos', nome: 'Simulado de caso real', sub: 'Só questões com paciente: idade, dente, história e a conduta.', temas: null, casos: true }); return ms; };
 const errosDe = () => ler('jogo-erros-'+MAT, []);
 function pinta(){
   const c = CORES[MAT] || ['#2346a8','#e6ecfa','#1a3480'];
@@ -332,7 +334,7 @@ function poolDe(m){
   if (m.sm1todo) return b.q.filter(q => q.sm1 && (!m.prefixo || q.id.startsWith(m.prefixo))).sort((x,y)=>x.id.localeCompare(y.id,'pt',{numeric:true}));
   if (m.img) return b.q.filter(q => q.img);
   if (m.af) return b.q.filter(q => q.af && q.af.length);
-  if (m.casos) return b.q.filter(q => q.ctx && /\d+\s*anos|paciente/i.test(q.ctx)); /* Rafael 12/11: simulado de caso real */
+  if (m.casos) return b.q.filter(ehCaso); /* Rafael 12/11: simulado de caso real */
   return m.temas ? b.q.filter(q => m.temas.includes(q.tema)) : b.q.slice();
 }
 function sorteia(m){
@@ -386,8 +388,9 @@ function partes(){
   const ms = modos();
   const completo = ms.find(m => m.id === 'completo') || ms[0];
   const sm1 = ms.find(m => m.sm1todo), sm2 = ms.find(m => m.sm2todo), erros = ms.find(m => m.erros);
-  const temas = ms.filter(m => m !== completo && m !== sm1 && m !== sm2 && m !== erros && poolDe(m).length >= 3);
-  return {ms, completo, sm1, sm2, erros, temas};
+  const casos = ms.find(m => m.casos);
+  const temas = ms.filter(m => m !== completo && m !== sm1 && m !== sm2 && m !== erros && m !== casos && poolDe(m).length >= 3);
+  return {ms, completo, sm1, sm2, erros, temas, casos};
 }
 
 /* ---------- INÍCIO: escolher a matéria ---------- */
@@ -455,7 +458,7 @@ function materiaSemQuestoes(){
 function materia(){
   partida = null; ultimaVista = -1; pinta();
   if (!temQuestoes()) return materiaSemQuestoes();
-  const b = banco(), {completo, sm1, sm2, erros, temas} = partes();
+  const b = banco(), {completo, sm1, sm2, erros, temas, casos} = partes();
   const nErr = erros ? poolDe(erros).length : 0, nSm1 = sm1 ? poolDe(sm1).length : 0, nSm2 = sm2 ? poolDe(sm2).length : 0;
   const melhor = ler('jogo-melhor-'+MAT, null);
   tela(`
@@ -470,6 +473,7 @@ function materia(){
   <div class="menu">
     ${sm1 && nSm1 ? `<button class="item" data-go="${sm1.id}"><span class="ic">${IC.folha}</span><span class="t"><b>Prova do SM1</b><small>As ${nSm1} questões que caíram, na ordem da prova</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${sm2 && nSm2 ? `<button class="item" data-go="${sm2.id}"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(sm2.nome||'Prova do SM2')}</b><small>${esc(sm2.sub||('As '+nSm2+' questões, com gabarito comentado'))}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${casos && poolDe(casos).length ? `<button class="item" data-go="${casos.id}"><span class="ic">${IC.alvo}</span><span class="t"><b>Simulado de caso real</b><small>${poolDe(casos).length} casos com paciente, idade, dente e conduta</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${temas.length ? `<button class="item" id="temas"><span class="ic">${IC.alvo}</span><span class="t"><b>Treinar um assunto</b><small>${temas.length} assuntos para escolher</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${erros ? `<button class="item" data-go="${erros.id}" ${nErr?'':'disabled'}><span class="ic">${IC.volta}</span><span class="t"><b>Revisar meus erros</b><small>${nErr ? nErr+(nErr===1?' questão guardada':' questões guardadas') : 'Quando você errar, a questão aparece aqui'}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     <button class="item" id="rev"><span class="ic">${IC.livro}</span><span class="t"><b>Ler o resumo</b><small>O que mais cai, em tópicos curtos</small></span><span class="seta">${IC.seta}</span></button>
