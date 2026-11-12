@@ -256,12 +256,12 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611121536"></script>
-<script src="banco-farmaco.js?v=202611121536"></script>
-<script src="banco-imagino.js?v=202611121536"></script>
-<script src="banco-cabeca.js?v=202611121536"></script>
-<script src="periodos.js?v=202611121536"></script>
-<script src="aulas.js?v=202611121536"></script>
+<script src="bancos.js?v=202611121544"></script>
+<script src="banco-farmaco.js?v=202611121544"></script>
+<script src="banco-imagino.js?v=202611121544"></script>
+<script src="banco-cabeca.js?v=202611121544"></script>
+<script src="periodos.js?v=202611121544"></script>
+<script src="aulas.js?v=202611121544"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -364,7 +364,7 @@ const nomeProf = s => { s = String(s||''); if (s !== s.toUpperCase()) return s; 
 const tela = html => { app.innerHTML = html; window.scrollTo(0,0); };
 
 /* ---------- DESEMPENHO (fica guardado só neste aparelho) ---------- */
-const MIN_TENT = 3;
+const MIN_TENT = 1;
 function desempenho(){
   const st = ler('jogo-stats-'+MAT, {});
   return Object.entries(st).map(([tema,v]) => ({tema, t:v.t, a:v.a, pct: v.t ? v.a/v.t : 0})).sort((x,y) => x.pct - y.pct || y.t - x.t);
