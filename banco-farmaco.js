@@ -41,7 +41,6 @@
     proxima: 'SM2 quinta 12/11, na sala, no horário da aula',
     modos: [
       { id: 'completo', nome: 'Simulado completo', sub: '10 questões sorteadas de toda a matéria.', temas: null },
-      { id: 't-caderno', nome: 'Caderno de decisões (Gustavo, 12/11)', sub: 'Os 5 casos do estudo dirigido que o professor mandou, em questões.', temas: ['Caderno de decisões'] },
       { id: 't-casos', nome: 'Simulação de caso real', sub: 'Só questões com paciente: idade, dente, história e a conduta.', temas: null, casos: true },
       { id: 'sm1ver', nome: 'Prova do SM1', sub: 'As 10 questões que caíram no SM1, na ordem da prova.', temas: null, sm1todo: true, prefixo: 'fa' },
       tema('t-farmaco', 'Farmacocinética e farmacodinâmica', 'ADME, primeira passagem, índice terapêutico, tolerância.', ['Farmacocinética', 'Farmacodinâmica']),
@@ -399,74 +398,6 @@
         o: ['Está indicada: endocardite prévia é alto risco (amoxicilina 2 g, 30 a 60 minutos antes).', 'É obrigatória para todo idoso.', 'Nunca é indicada em exodontia.', 'Substitui a anestesia local.', 'É feita com anticolinérgico.'], a: 0,
         w: 'A profilaxia de endocardite é só para alto risco: endocardite prévia, prótese de válvula e algumas cardiopatias congênitas. Idade sozinha não indica. Esquema: amoxicilina 2 g, dose única, 30 a 60 minutos antes.', f: 'Caso clínico de treino', net: true }
 
-      ,{ id: "cd01", tema: "Caderno de decisões", ctx: "Ana toma o remédio por via oral e Bruno recebe o mesmo remédio na veia.", p: "Por que pela boca chega menos remédio ao sangue?",
-        o: ["Porque ele é absorvido no intestino e passa pelo fígado antes (efeito de primeira passagem).", "Porque o estômago elimina o remédio pelas fezes antes de absorver qualquer parte.", "Porque a via oral sempre tem biodisponibilidade de 100%.", "Porque o rim elimina tudo antes de o remédio chegar ao sangue.", "Porque na via oral o remédio não sofre absorção."], a: 0,
-        w: "Pela boca o fármaco é absorvido no intestino e passa pelo fígado antes de cair na circulação: parte é metabolizada (primeira passagem) e a biodisponibilidade fica menor e variável. Na veia não há absorção nem primeira passagem: biodisponibilidade de 100%.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd02", tema: "Caderno de decisões", ctx: "Ana tem a função renal muito reduzida, e o remédio é eliminado principalmente pelo rim.", p: "Qual o risco principal para Ana?",
-        o: ["Acúmulo do fármaco e toxicidade, porque ela elimina menos (meia-vida aumenta).", "O remédio deixa de fazer efeito porque é eliminado rápido demais.", "Nenhum, porque a eliminação não interfere no efeito.", "Alergia ao remédio, causada pelo rim.", "Só o efeito de primeira passagem fica maior."], a: 0,
-        w: "Se a eliminação é renal e o rim funciona mal, o fármaco sai devagar, acumula e pode chegar a níveis tóxicos, principalmente em doses repetidas. Por isso a dose precisa ser individualizada.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd03", tema: "Caderno de decisões", ctx: "No caso da Ana, você explica que o problema dela está no caminho do remédio no corpo, e não em como ele age no receptor.", p: "Essa diferença é entre:",
-        o: ["Farmacocinética (o que o corpo faz com o fármaco) e farmacodinâmica (o que o fármaco faz no corpo).", "Farmacodinâmica e farmacocinética, com os conceitos ao contrário.", "Absorção e biodisponibilidade, que são a mesma coisa.", "Índice terapêutico e janela terapêutica.", "Primeira passagem e tolerância."], a: 0,
-        w: "Absorção, distribuição, metabolismo e eliminação (ADME) são farmacocinética. Mecanismo de ação, receptor e efeito são farmacodinâmica. O rim da Ana mexe na farmacocinética.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd04", tema: "Caderno de decisões", ctx: "O professor pergunta qual conceito relaciona a dose tóxica com a dose eficaz, e por que ele sozinho não define a dose da Ana.", p: "Qual a resposta correta?",
-        o: ["Índice terapêutico; ele é uma média da população e não considera o rim da Ana, então a dose precisa ser individualizada.", "Biodisponibilidade; ela define sozinha a dose de qualquer paciente.", "Tolerância; ela mostra exatamente a dose para quem tem rim fraco.", "Meia-vida; ela é igual em todas as pessoas.", "Índice terapêutico; ele já vem ajustado para cada paciente."], a: 0,
-        w: "Índice terapêutico = dose tóxica ÷ dose eficaz. É um dado médio e não leva em conta a eliminação reduzida de um paciente específico. Por isso, sozinho, não define a dose da Ana.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd05", tema: "Caderno de decisões", ctx: "Planejamento da extração do 26 (1º molar superior), anestesiando o dente e os tecidos vestibular e palatino.", p: "Qual combinação cobre esses territórios?",
-        o: ["Alveolar superior posterior (dente e vestibular) + palatino maior (palato), complementando a raiz mesiovestibular se precisar.", "Alveolar inferior + lingual.", "Mentual + incisivo.", "Só o nasopalatino.", "Bucal + alveolar inferior."], a: 0,
-        w: "No 1º molar superior, o alveolar superior posterior pega a polpa e a vestibular dos molares; o palatino maior pega o palato. A raiz mesiovestibular pode receber o alveolar superior médio e pedir complemento.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd06", tema: "Caderno de decisões", ctx: "Mesmo com o bloqueio do alveolar superior posterior, o paciente sente na raiz mesiovestibular do 26.", p: "Por que isso pode acontecer?",
-        o: ["Porque essa raiz pode ser inervada pelo alveolar superior médio, que o bloqueio posterior não pega.", "Porque o palatino maior inerva essa raiz.", "Porque o nervo alveolar inferior chega até o 26.", "Porque a maxila é osso denso e não deixa o anestésico passar.", "Porque o anestésico sempre falha em molar superior."], a: 0,
-        w: "A raiz mesiovestibular do 1º molar superior pode receber o alveolar superior médio (nem todo mundo tem esse nervo). Complementa com infiltração na região.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd07", tema: "Caderno de decisões", ctx: "Extração do 46 (1º molar inferior): você faz o bloqueio do alveolar inferior com o lingual.", p: "O que ainda falta anestesiar?",
-        o: ["A gengiva vestibular dos molares, pelo nervo bucal.", "O palato, pelo palatino maior.", "Nada, o bloqueio do alveolar inferior pega tudo.", "A papila incisiva, pelo nasopalatino.", "O lábio superior, pelo infraorbitário."], a: 0,
-        w: "O alveolar inferior pega a polpa; o lingual, a gengiva lingual e parte da língua. A gengiva vestibular dos molares inferiores é do nervo bucal, que precisa de injeção à parte.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd08", tema: "Caderno de decisões", ctx: "Você lista os nervos do caso: alveolar superior posterior, palatino maior, alveolar inferior, lingual e bucal.", p: "Como eles se dividem no trigêmeo?",
-        o: ["Os superiores são do V2 (maxilar) e os inferiores do V3 (mandibular).", "Todos são do V1 (oftálmico).", "Os superiores são do V3 e os inferiores do V2.", "Todos são do nervo facial.", "Só o lingual é do trigêmeo."], a: 0,
-        w: "Alveolar superior posterior e palatino maior saem do nervo maxilar (V2). Alveolar inferior, lingual e bucal saem do nervo mandibular (V3).",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd09", tema: "Caderno de decisões", ctx: "Planejamento de um procedimento curto e de outro prolongado.", p: "Por que a bupivacaína não é automaticamente a melhor escolha?",
-        o: ["Porque dura muito: num procedimento curto deixa lábio e língua dormentes por horas, e ela é mais cardiotóxica.", "Porque ela tem efeito curto demais para qualquer procedimento.", "Porque ela não é um anestésico local.", "Porque ela é um éster com muita alergia.", "Porque só pode ser usada em crianças."], a: 0,
-        w: "A bupivacaína é amida de longa duração: boa para procedimento prolongado e dor pós-operatória. No curto, uma de duração intermediária (lidocaína, mepivacaína) basta, sem anestesia de tecido mole por horas.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd10", tema: "Caderno de decisões", ctx: "Você explica ao colega o que o vasoconstritor faz no local da injeção.", p: "Qual efeito está correto?",
-        o: ["Contrai os vasos, o anestésico demora a ser absorvido, dura mais, sangra menos e intoxica menos.", "Dilata os vasos para o anestésico chegar mais rápido ao sangue.", "Aumenta a potência química do anestésico.", "Diminui a duração da anestesia.", "Não muda nada no local, só no coração."], a: 0,
-        w: "Vasoconstrição local segura o anestésico no lugar: mais duração, menos sangramento e menor toxicidade sistêmica.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd11", tema: "Caderno de decisões", ctx: "Você relaciona os efeitos da epinefrina aos receptores adrenérgicos.", p: "Qual par está correto?",
-        o: ["Alfa-1 nos vasos (vasoconstrição) e beta-1 no coração (aumento da frequência e da força).", "Beta-1 nos vasos (vasoconstrição) e alfa-1 no coração.", "Muscarínico nos vasos e nicotínico no coração.", "Alfa-2 no coração (bradicardia) e beta-2 na pele.", "Só receptor muscarínico."], a: 0,
-        w: "Na mucosa, a vasoconstrição é pelo alfa-1. No coração, o beta-1 aumenta frequência e contratilidade. Por isso a dose de vasoconstritor importa no cardiopata.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd12", tema: "Caderno de decisões", ctx: "Paciente hipertenso e ansioso; ainda faltam os sinais vitais e a lista de medicamentos. Uma das opções é a prilocaína.", p: "Qual risco específico da prilocaína e quais informações faltam?",
-        o: ["Metemoglobinemia em dose alta; faltam a pressão aferida e a lista de medicamentos.", "Paralisia facial; faltam a cor do dente e a idade.", "Alergia certa em todos; falta só o peso.", "Hipoglicemia; faltam exames de sangue antigos.", "Nenhum risco; não falta nada."], a: 0,
-        w: "A prilocaína em dose alta pode causar metemoglobinemia (orto-toluidina), com cianose. Para individualizar no hipertenso, é preciso aferir a pressão e conhecer os medicamentos em uso.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd13", tema: "Caderno de decisões", ctx: "Relato A: no dia seguinte a várias tentativas de bloqueio mandibular, dor e dificuldade de abrir a boca. Relato B: logo após a injeção, assimetria facial e o olho não fecha.", p: "Quais hipóteses são compatíveis?",
-        o: ["A: trismo (trauma no pterigóideo medial). B: paralisia facial transitória (anestésico na parótida, nervo facial).", "A: paralisia facial. B: trismo.", "A e B: alergia ao anestésico.", "A: metemoglobinemia. B: hematoma no palato.", "A: parestesia do lingual. B: síncope."], a: 0,
-        w: "Várias punções no espaço pterigomandibular podem lesar o pterigóideo medial: trismo. Agulha profunda demais no bloqueio deposita anestésico na parótida, onde passa o facial: paralisia facial transitória (proteger o olho).",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd14", tema: "Caderno de decisões", ctx: "Depois de duas tentativas sem efeito, o colega quer injetar de novo no mesmo ponto, sem reavaliar.", p: "Por que isso não é uma boa estratégia?",
-        o: ["Aumenta o trauma, o risco de hematoma e trismo e a dose acumulada, e a falha continua se a técnica estiver errada.", "Porque o anestésico sempre funciona na terceira vez.", "Porque repetir diminui a dose total.", "Porque não há nenhum risco, só perda de tempo.", "Porque a agulha fica mais afiada a cada tentativa."], a: 0,
-        w: "Repetir sem rever referências e técnica soma trauma, dose e risco de complicação. O certo é reavaliar (referências, contato ósseo, técnica alternativa como Gow-Gates ou Vazirani-Akinosi).",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd15", tema: "Caderno de decisões", ctx: "Caso A: pulpite irreversível sintomática, sem febre nem edema difuso, com tratamento endodôntico hoje. Caso B: infecção odontogênica com febre e mal-estar.", p: "Sobre o antibiótico, o correto é:",
-        o: ["No A não está indicado (resolve o tratamento endodôntico); no B entra como apoio, sem dispensar drenagem e remoção da causa.", "Antibiótico para os dois, como a anotação dizia.", "Antibiótico só no A.", "Nenhum dos dois precisa tratar a causa se tomar antibiótico.", "No B o antibiótico substitui a drenagem."], a: 0,
-        w: "Pulpite sem sinais sistêmicos não precisa de antibiótico: trata-se a causa. Com febre e mal-estar (sinais sistêmicos), o antibiótico é adjuvante, mas drenar e remover a causa continua sendo o principal.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd16", tema: "Caderno de decisões", ctx: "Na mesma anotação aparecem AINE, corticoide e benzodiazepínico.", p: "Qual associação está correta?",
-        o: ["AINE: dor e inflamação. Corticoide: anti-inflamatório potente (edema). Benzodiazepínico: ansiedade. Nenhum substitui tratar a causa ou a anestesia.", "Os três substituem a anestesia local.", "Benzodiazepínico é antibiótico.", "Corticoide serve para ansiedade.", "AINE trata a infecção sozinho."], a: 0,
-        w: "Cada classe tem um objetivo: AINE contra dor e inflamação (COX), corticoide contra inflamação e edema (fosfolipase A2), benzodiazepínico contra ansiedade (GABA). Nenhum trata a causa nem anestesia.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
-      ,{ id: "cd17", tema: "Caderno de decisões", ctx: "A anotação diz só \"antibiótico para ambos\" e \"analgésico quando doer\".", p: "O que falta para virar uma prescrição individualizada?",
-        o: ["Dados do paciente (alergias, idade, peso, gestação, rim, fígado, remédios em uso) e do medicamento (nome, concentração, forma, via, dose, intervalo, duração e quantidade).", "Só o nome do paciente.", "Só a cor do comprimido.", "Nada, a anotação já basta.", "Só o preço na farmácia."], a: 0,
-        w: "Prescrição exige saber quem é o paciente e escrever o medicamento completo. Sem inventar posologia: ela depende desses dados.",
-        f: "Caderno de Decisões Clínicas do Prof. Gustavo (12/11/2026)" }
     ]
   };
 })();
