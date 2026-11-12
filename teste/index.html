@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#eef1f5">
+<title>Simulado do simulado</title>
+<meta name="description" content="Treino no formato da prova da Estácio, uma questão por vez, com resposta na hora.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;700;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* Plano: fundo porcelana neutro; a cor vem da MATÉRIA (como as abas de uma escala de cor).
+   Elemento memorável: a bolinha do gabarito que se preenche como caneta. O resto, quieto. */
+:root{
+  --porcelana:#eef1f5; --branco:#ffffff; --grafite:#1a2233; --cinza:#5b6578; --linha:#d8dee8;
+  --certo:#13824f; --certo-claro:#e2f4ea; --errado:#cf3434; --errado-claro:#fdeaea;
+  --sm1:#2346a8; --sm2:#7a3db8; --par:#1e9e5a;
+  --cor:#2346a8; --cor-claro:#e6ecfa; --cor-escuro:#1a3480;
+  --raio:16px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--porcelana);color:var(--grafite);font-family:'Atkinson Hyperlegible',Arial,sans-serif;font-size:17px;line-height:1.55;overflow-x:hidden}
+h1,h2,h3,h4,.g{font-family:'Gabarito','Atkinson Hyperlegible',Arial,sans-serif;letter-spacing:-.01em;line-height:1.15}
+button,a{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--cor);outline-offset:3px}
+.palco{max-width:640px;margin:0 auto;padding:12px 16px calc(28px + env(safe-area-inset-bottom))}
+p{margin:0}
+
+/* toque: o botão afunda (sombra sólida que some) */
+.aperta{transition:transform .12s ease, box-shadow .12s ease, background-color .2s, border-color .2s}
+.aperta:active:not(:disabled){transform:translateY(3px)}
+
+/* ---------- topo ---------- */
+.topo{display:flex;align-items:center;gap:10px;min-height:48px;margin-bottom:10px}
+.voltar{display:inline-flex;align-items:center;gap:6px;background:none;border:0;padding:10px 10px 10px 2px;min-height:44px;font-weight:700;color:var(--cinza)}
+.voltar svg{width:20px;height:20px}
+.marca{font-family:'Gabarito';font-weight:900;font-size:19px}
+
+/* ---------- tela inicial ---------- */
+.ola{margin:18px 0 18px}
+.ola h1{font-size:34px;font-weight:900;margin:0 0 6px}
+.ola p{color:var(--cinza)}
+.lista{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.mat{display:flex;align-items:stretch;width:100%;text-align:left;background:var(--branco);border:0;border-radius:var(--raio);padding:0;overflow:hidden;box-shadow:0 3px 0 var(--linha)}
+.mat:active{box-shadow:0 0 0 var(--linha)}
+.mat .aba{flex:0 0 14px;background:var(--c)}
+.mat .icmat{flex:0 0 52px;height:52px;align-self:center;margin-left:12px;border-radius:16px;background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c);display:flex;align-items:center;justify-content:center}
+.mat .icmat svg{width:40px;height:40px}
+.mat .icmat + .txt{padding-left:12px}
+/* variantes de teste do cartão de matéria (frontend-design, 12/11) */
+body.vB .mat .aba{display:none}
+body.vB .mat .icmat{background:var(--c);color:#fff;flex-basis:56px;height:56px;margin-left:14px;border-radius:18px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}
+body.vB .mat .icmat svg{width:40px;height:40px}
+body.vC .mat{position:relative}
+body.vC .mat .aba{display:none}
+body.vC .mat .icmat{position:absolute;left:-14px;top:50%;transform:translateY(-50%) rotate(-8deg);width:auto;height:auto;margin:0;background:none;color:var(--c);opacity:.16}
+body.vC .mat .icmat svg{width:104px;height:104px}
+body.vC .mat .icmat + .txt{padding-left:74px}
+body.vC .mat::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--c)}
+
+.mat .txt{flex:1;min-width:0;padding:14px 12px 14px 16px}
+.mat b{display:block;font-family:'Gabarito';font-weight:800;font-size:20px;line-height:1.2}
+.mat small{display:block;color:var(--cinza);font-size:14px;margin-top:3px}
+.mat .nota{flex:0 0 auto;align-self:center;margin-right:16px;text-align:center;font-family:'Gabarito';font-weight:800;font-size:22px;color:var(--c)}
+.mat .nota em{display:block;font-style:normal;font-family:'Atkinson Hyperlegible';font-weight:400;font-size:11px;color:var(--cinza)}
+.mat .bonus{display:inline-block;font-family:'Atkinson Hyperlegible';font-size:12px;font-weight:700;background:var(--c);color:#fff;border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:3px}
+.sisao{display:flex;align-items:center;gap:12px;margin-top:22px;padding:14px 16px;border:2px dashed var(--linha);border-radius:var(--raio);text-decoration:none}
+.sisao b{display:block}.sisao small{color:var(--cinza)}
+
+/* ---------- tela da matéria ---------- */
+.cabeca{border-left:6px solid var(--cor);padding:2px 0 2px 14px;margin:6px 0 18px}
+.cabeca h1{font-size:28px;font-weight:900;margin:0 0 6px}
+.cabeca .prof{color:var(--cinza);font-size:15px;margin-bottom:10px}
+.cabeca .quando{display:inline-block;background:var(--cor-claro);color:var(--cor-escuro);font-weight:700;border-radius:10px;padding:6px 10px;font-size:14px}
+.trocar{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 12px;padding:2px 16px 6px}
+.trocar::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:2px solid var(--linha);background:var(--branco);border-radius:999px;padding:7px 14px;min-height:40px;font-size:15px;font-weight:700;white-space:nowrap}
+.chip[aria-current="true"]{background:var(--grafite);border-color:var(--grafite);color:#fff}
+.grande{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--cor);color:#fff;border:0;border-radius:var(--raio);padding:18px;min-height:76px;box-shadow:0 5px 0 var(--cor-escuro);margin-bottom:16px}
+.grande:active{box-shadow:0 1px 0 var(--cor-escuro)!important;transform:translateY(4px)!important}
+.grande .ic{flex:0 0 46px;height:46px;border-radius:50%;background:#fff;color:var(--cor);display:grid;place-items:center}
+.grande .ic svg{width:22px;height:22px;margin-left:3px}
+.grande b{display:block;font-family:'Gabarito';font-weight:800;font-size:22px}
+.grande small{display:block;opacity:.9;font-size:14px}
+.menu{background:var(--branco);border-radius:var(--raio);overflow:hidden;margin-bottom:16px}
+.item{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--linha);padding:14px 16px;min-height:64px;transition:background-color .15s}
+.item:first-child{border-top:0}
+.item:active:not(:disabled){background:var(--cor-claro)}
+.item:disabled{opacity:.5;cursor:default}
+.item .ic{flex:0 0 40px;height:40px;border-radius:12px;background:var(--cor-claro);color:var(--cor);display:grid;place-items:center}
+.item .ic svg{width:20px;height:20px}
+.item span.t{flex:1;min-width:0}
+.item b{display:block;font-size:17px}
+.item small{display:block;color:var(--cinza);font-size:14px;line-height:1.35}
+.item .seta{flex:0 0 18px;color:var(--cinza)}
+.bloco{background:var(--branco);border-radius:var(--raio);padding:18px 16px;margin-bottom:16px}
+.bloco h2{font-size:20px;margin:0 0 12px}
+.vazio{color:var(--cinza);font-size:15px}
+.desemp{display:grid;gap:12px}
+.dl .lin{display:flex;justify-content:space-between;gap:10px;font-size:15px;margin-bottom:4px}
+.dl .lin span{min-width:0}
+.dl .lin small{color:var(--cinza);white-space:nowrap}
+.trilho{height:10px;border-radius:999px;background:var(--porcelana);overflow:hidden}
+.enche{height:100%;border-radius:999px}
+.fracos{margin-top:14px;width:100%;background:var(--grafite);color:#fff;border:0;border-radius:12px;padding:13px 14px;min-height:52px;text-align:left;box-shadow:0 4px 0 #000}
+.fracos:active{box-shadow:0 0 0 #000;transform:translateY(4px)}
+.fracos b{display:block}.fracos small{opacity:.8}
+.legenda{display:grid;gap:6px;font-size:14px;color:var(--cinza)}
+.tag{display:inline-block;padding:1px 9px;border-radius:999px;font-size:12px;font-weight:700;color:#fff;font-style:normal;margin-right:6px;vertical-align:1px;line-height:1.6}
+.tag.sm1{background:var(--sm1)}.tag.sm2{background:var(--sm2)}.tag.par{background:var(--par)}
+.nota-sm1{font-size:14px;font-weight:700;color:var(--sm1)}
+.nota-sm2{font-size:14px;font-weight:700;color:var(--sm2)}
+.nota-par{font-size:14px;font-weight:700;color:var(--par)}
+
+/* ---------- prova ---------- */
+.barra{position:sticky;top:0;z-index:5;background:var(--porcelana);padding:8px 0 10px;margin:-12px 0 8px}
+.barraL{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px}
+.fechar{display:inline-flex;align-items:center;gap:4px;background:none;border:0;padding:8px 8px 8px 0;min-height:44px;color:var(--cinza);font-weight:700}
+.fechar svg{width:20px;height:20px}
+.ponto{font-family:'Gabarito';font-weight:800;font-size:20px}
+.ponto small{font-family:'Atkinson Hyperlegible';font-weight:400;font-size:13px;color:var(--cinza)}
+.trilha{display:flex;gap:4px;margin-top:4px}
+.seg{flex:1;height:30px;border:0;background:none;padding:0;position:relative}
+.seg::before{content:"";position:absolute;left:0;right:0;top:12px;height:6px;border-radius:999px;background:var(--linha);transition:background-color .3s, transform .2s}
+.seg.ok::before{background:var(--certo)}
+.seg.no::before{background:var(--errado)}
+.seg.pul::before{background:repeating-linear-gradient(90deg,var(--cinza) 0 4px,transparent 4px 7px)}
+.seg.atual::before{transform:scaleY(1.8);background:var(--cor)}
+.seg.atual.ok::before{background:var(--certo)}.seg.atual.no::before{background:var(--errado)}
+.folha{background:var(--branco);border-radius:20px;padding:18px 16px 20px}
+.folha.entra{animation:entra .32s cubic-bezier(.2,.8,.2,1)}
+@keyframes entra{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.qcab{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;margin-bottom:12px}
+.qcab h2{font-size:22px;margin:0}
+.qcab .tema{color:var(--cinza);font-size:14px}
+.qcab .nova{margin-left:auto;font-size:12px;font-weight:700;color:var(--cor);background:var(--cor-claro);border-radius:999px;padding:2px 9px;letter-spacing:.2px}
+.enun{overflow-wrap:break-word}
+.enun p{margin:0 0 12px}
+.afs{list-style:none;padding:0;margin:0 0 12px;display:grid;gap:8px}
+.afs li{display:flex;gap:10px;background:var(--porcelana);border-radius:12px;padding:10px 12px}
+.afs li b{flex:0 0 auto;font-family:'Gabarito';font-weight:800;color:var(--cor);min-width:22px}
+.afs li span{min-width:0}
+.afs li.porque{background:none;padding:0 12px;font-family:'Gabarito';font-weight:800;color:var(--cor)}
+.ops{display:grid;gap:10px;margin-top:14px}
+.op{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;background:var(--branco);border:2px solid var(--linha);border-radius:14px;padding:12px 14px;min-height:56px;box-shadow:0 3px 0 var(--linha);transition:transform .12s ease, box-shadow .12s ease, border-color .2s, background-color .2s, opacity .2s}
+.op:active:not(:disabled){transform:translateY(3px);box-shadow:0 0 0 var(--linha)}
+.op .txt{min-width:0;overflow-wrap:break-word;padding-top:3px}
+/* a bolinha do gabarito */
+.bola{flex:0 0 34px;height:34px;border-radius:50%;border:2px solid var(--grafite);display:grid;place-items:center;font-family:'Gabarito';font-weight:800;font-size:16px;position:relative;overflow:hidden;isolation:isolate}
+.bola::before{content:"";position:absolute;inset:-2px;border-radius:50%;background:var(--cor);transform:scale(0);transition:transform .28s cubic-bezier(.3,1.4,.5,1);z-index:-1}
+.op[aria-checked="true"]{border-color:var(--cor);background:var(--cor-claro);box-shadow:0 3px 0 var(--cor)}
+.op[aria-checked="true"] .bola{border-color:var(--cor);color:#fff}
+.op[aria-checked="true"] .bola::before{transform:scale(1)}
+.op.riscada{opacity:.4}
+.op.riscada .txt{text-decoration:line-through;text-decoration-color:var(--errado);text-decoration-thickness:2px}
+.op:disabled{cursor:default}
+.op.certa{border-color:var(--certo);background:var(--certo-claro);box-shadow:0 3px 0 var(--certo);opacity:1}
+.op.certa .bola{border-color:var(--certo);color:#fff}
+.op.certa .bola::before{background:var(--certo);transform:scale(1)}
+.op.errada{border-color:var(--errado);background:var(--errado-claro);box-shadow:0 3px 0 var(--errado)}
+.op.errada .bola{border-color:var(--errado);color:#fff}
+.op.errada .bola::before{background:var(--errado);transform:scale(1)}
+.op.apagada{opacity:.55}
+.op.certa.anim .bola{animation:pula .45s cubic-bezier(.3,1.6,.5,1)}
+.op.errada.anim{animation:treme .4s ease}
+@keyframes pula{0%{transform:scale(.6)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes treme{0%,100%{transform:none}20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.ferr{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.fer{display:inline-flex;align-items:center;gap:6px;background:var(--porcelana);border:0;border-radius:999px;padding:8px 14px;min-height:44px;font-size:15px;transition:transform .12s, background-color .15s}
+.fer:active:not(:disabled){transform:scale(.95)}
+.fer:disabled{opacity:.45;cursor:default}
+.fer svg{width:17px;height:17px}
+.dicaBox{margin-top:12px;background:#fff7d6;border-radius:12px;padding:12px 14px;font-size:15px}
+.dicaBox ul{margin:6px 0 0;padding-left:18px}
+/* imagem da questão: toque amplia em tela cheia */
+.figq{display:block;width:100%;margin:0 0 14px;padding:0;border:0;border-radius:12px;overflow:hidden;background:#23272e;position:relative;cursor:zoom-in}
+.figq img{display:block;width:100%;height:auto;max-height:48vh;object-fit:contain}
+.figq .lupa{position:absolute;right:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 10px;pointer-events:none}
+.retorno .figq{margin:10px 0 8px}
+.figaula{margin:12px 0 18px}
+.figaula .figq{margin:0 0 6px;background:#fff}
+.figaula .figq img{max-height:none}
+.figaula figcaption{font-size:14px;line-height:1.4;color:var(--cinza)}
+.figaula figcaption small{display:block;font-size:12px;opacity:.8;margin-top:2px}
+.aula li.figli{list-style:none;margin-left:-20px}
+.zoom{position:fixed;inset:0;z-index:50;background:rgba(10,12,16,.94);display:flex;align-items:center;justify-content:center;padding:12px;cursor:zoom-out;animation:sobe .2s ease-out}
+.zoom img{max-width:100%;max-height:100%;object-fit:contain;touch-action:pinch-zoom}
+.zoom .fecha{position:absolute;top:10px;right:12px;color:#fff;background:rgba(255,255,255,.14);border-radius:999px;padding:8px 14px;font-weight:700;font-size:15px}
+.retorno{margin-top:16px;border-radius:14px;padding:14px 16px;animation:sobe .3s ease-out}
+.retorno.ok{background:var(--certo-claro)}
+.retorno.no{background:var(--errado-claro)}
+.retorno h3{margin:0 0 6px;font-size:20px}
+.retorno.ok h3{color:var(--certo)}.retorno.no h3{color:var(--errado)}
+.retorno p{margin:0 0 6px}
+.retorno .fonte{font-size:13px;color:var(--cinza);margin:0}
+@keyframes sobe{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.rodape{position:sticky;bottom:0;z-index:4;padding:12px 0 calc(10px + env(safe-area-inset-bottom));background:linear-gradient(rgba(238,241,245,0),var(--porcelana) 30%)}
+.botao{width:100%;background:var(--cor);color:#fff;border:0;border-radius:14px;padding:15px;min-height:58px;font-family:'Gabarito';font-weight:800;font-size:19px;box-shadow:0 5px 0 var(--cor-escuro);transition:transform .12s ease, box-shadow .12s ease, background-color .2s}
+.botao:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 var(--cor-escuro)}
+.botao:disabled{background:#c3cad6;box-shadow:0 5px 0 #aab2c0;cursor:default}
+.botao.claro{background:var(--branco);color:var(--grafite);box-shadow:0 4px 0 var(--linha);border:2px solid var(--linha)}
+
+/* ---------- resultado ---------- */
+.res{text-align:center;padding:26px 16px 22px}
+.res .nota{font-family:'Gabarito';font-weight:900;font-size:88px;line-height:1;color:var(--cor);animation:surge .5s cubic-bezier(.3,1.5,.5,1)}
+@keyframes surge{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.res .de{font-size:17px;margin:8px 0 4px}
+.res .msg{color:var(--cinza)}
+.bolinhas{display:flex;justify-content:center;gap:6px;margin:14px 0 0;flex-wrap:wrap}
+.bolinhas i{width:18px;height:18px;border-radius:50%;border:2px solid var(--linha)}
+.bolinhas i.c{background:var(--certo);border-color:var(--certo)}
+.bolinhas i.e{background:var(--errado);border-color:var(--errado)}
+.pilha{display:grid;gap:12px;margin:0 0 16px}
+.rq{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--linha)}
+.rq:first-of-type{border-top:0}
+.rq .n{flex:0 0 30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:'Gabarito';font-weight:800;font-size:14px}
+.rq .n.c{background:var(--certo)}.rq .n.e{background:var(--errado)}
+.rq div{min-width:0;font-size:15px}
+.rq small{color:var(--cinza)}
+
+/* ---------- resumo ---------- */
+.rev h2{font-size:19px;margin:20px 0 8px}
+.rev h2:first-child{margin-top:0}
+.rev ul{margin:0;padding-left:20px}.rev li{margin:6px 0}
+
+/* ---------- aulas (rascunho 11/11) ---------- */
+.creditos{border-left:6px solid var(--cor);background:var(--branco);border-radius:var(--raio);padding:14px 16px;margin-bottom:14px;font-size:15px}
+.creditos p{margin:0 0 4px}
+.creditos .obrigado{margin-top:8px;color:var(--cor-escuro);font-weight:700}
+.aviso-aula{font-size:14px;color:var(--cinza);background:#fff7d6;border-radius:12px;padding:10px 14px;margin-bottom:14px;line-height:1.5}
+.aula p{margin:0 0 14px;line-height:1.75;overflow-wrap:break-word}
+.aula p:last-child{margin-bottom:0}
+.aula h2{font-size:19px;margin:22px 0 8px}
+.aula h2:first-child{margin-top:0}
+.aula ul{margin:0;padding-left:20px}.aula li{margin:7px 0;line-height:1.55}
+.aula details{border-top:1px solid var(--linha);padding:2px 0}
+.aula details:first-of-type{border-top:0}
+.aula summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 0;font-family:'Gabarito';font-weight:800;font-size:17px}
+.aula summary::-webkit-details-marker{display:none}
+.aula summary::before{content:"+";flex:0 0 26px;height:26px;border-radius:50%;background:var(--cor-claro);color:var(--cor);display:grid;place-items:center;font-size:18px;line-height:1}
+.aula details[open] summary::before{content:"−"}
+.aula details[open]{padding-bottom:12px}
+.aula .abretudo{background:none;border:0;color:var(--cor);font-weight:700;padding:6px 0;min-height:40px;margin-bottom:6px}
+.aula .tirado{font-size:14px;color:var(--cinza)}
+
+/* ---------- períodos (rascunho 11/11) ---------- */
+.periodos{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--branco);border-radius:var(--raio);padding:6px;margin:0 0 16px;box-shadow:0 3px 0 var(--linha)}
+.per{border:0;background:none;border-radius:12px;padding:10px 4px;min-height:60px;text-align:center;min-width:0}
+.per b{display:block;font-family:'Gabarito';font-weight:800;font-size:clamp(13px,3.9vw,16px);line-height:1.15;overflow-wrap:anywhere}
+.per small{display:block;font-size:12px;line-height:1.2;color:var(--cinza)}
+.per[aria-selected="true"]{background:var(--grafite);color:#fff}
+.per[aria-selected="true"] small{color:#fff;opacity:.85}
+.per-tit{font-size:22px;font-weight:900;margin:0 0 6px}
+.aviso-periodo{font-size:14px;color:var(--cinza);background:var(--branco);border:2px dashed var(--linha);border-radius:12px;padding:10px 14px;margin:0 0 12px;line-height:1.45}
+.intro-mat{color:var(--grafite);font-size:16px;margin:0 0 10px}
+.mat .prev{display:inline-block;font-family:'Atkinson Hyperlegible';font-size:12px;font-weight:700;border:1.5px solid var(--c);color:var(--c);border-radius:999px;padding:0 8px;margin-left:6px;vertical-align:3px}
+a.item{text-decoration:none}
+
+/* ---------- estudar por cor (rascunho 12/11: estomatologia) ---------- */
+.cores-nav .chip{display:inline-flex;align-items:center;gap:7px}
+.cores-nav .chip i{width:14px;height:14px;border-radius:50%;background:var(--fx);box-shadow:inset 0 0 0 1px rgba(0,0,0,.18);flex:0 0 14px}
+.corsec{background:var(--branco);border-radius:var(--raio);overflow:hidden;margin-bottom:18px;scroll-margin-top:12px}
+.corsec .faixa{background:var(--fx);color:var(--fxt);padding:14px 16px 12px}
+.corsec .faixa h2{font-size:21px;font-weight:900;margin:0 0 4px}
+.corsec .faixa p{font-size:14.5px;line-height:1.45;opacity:.95}
+.corsec .treina{display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 32px);margin:14px 16px 4px;background:var(--fx);color:var(--fxt);border:0;border-radius:12px;padding:12px;min-height:50px;font-family:'Gabarito';font-weight:800;font-size:17px;box-shadow:0 4px 0 rgba(0,0,0,.22)}
+.corsec .treina:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.22)}
+.corsec .treina svg{width:16px;height:16px}
+.corsec .treina:disabled{opacity:.5;cursor:default}
+.lesao{border-top:1px solid var(--linha);padding:14px 16px 12px}
+.lesao:first-of-type{border-top:0}
+.lesao h3{font-size:18px;margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.lesao h3::before{content:"";flex:0 0 10px;height:10px;border-radius:50%;background:var(--fx);box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.lesao .figq{margin:0 0 4px}
+.lesao .figq img{max-height:42vh}
+.lesao .leg{font-size:13.5px;color:var(--cinza);margin:0 0 8px;line-height:1.4}
+.lesao ul{margin:0;padding-left:20px}
+.lesao li{margin:5px 0;line-height:1.5;font-size:16px}
+.lesao .fonte{font-size:12.5px;color:var(--cinza);margin:8px 0 0;line-height:1.4;overflow-wrap:anywhere}
+.topo-cor[hidden]{display:none}
+.topo-cor{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:6;background:var(--grafite);color:#fff;border:0;border-radius:999px;padding:10px 14px;min-height:44px;font-weight:700;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+
+footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px;max-width:640px;margin:0 auto}
+
+@media (min-width:700px){.ola h1{font-size:40px}.palco{padding-top:24px}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body class="vB">
+<script>try{var e=new URLSearchParams(location.search).get("estilo");if(e)document.body.className={a:"",b:"vB",c:"vC"}[e.toLowerCase()]||"vB"}catch(_){}</script>
+<div class="palco" id="app"></div>
+<footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
+<script src="bancos.js?v=202611121845"></script>
+<script src="banco-farmaco.js?v=202611121845"></script>
+<script src="banco-imagino.js?v=202611121845"></script>
+<script src="banco-cabeca.js?v=202611121845"></script>
+<script src="banco-estomato.js?v=202611121845"></script>
+<script src="banco-legal.js?v=202611121845"></script>
+<script src="periodos.js?v=202611121845"></script>
+<script src="aulas.js?v=202611121845"></script>
+<script>
+const $ = s => document.querySelector(s);
+const app = $('#app');
+const L = ['A','B','C','D','E'], ROM = ['I','II','III','IV','V'];
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ler = (k,p) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : p; } catch(e) { return p; } };
+const grava = (k,v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} };
+const mistura = a => { const b=a.slice(); for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; };
+const nota1 = n => (n/10).toFixed(1).replace('.',',');
+
+/* cor de cada matéria, como as abas de uma escala de cor */
+const CORES = {
+  bases:  ['#b8650f','#fbefe0','#8a4a08'],
+  carie:  ['#7442c2','#efe8fa','#553094'],
+  inter:  ['#c63d58','#fbe7eb','#952b41'],
+  farmaco:['#167487','#e0f1f4','#0f5563'],
+  imagino:['#3c4a66','#e7eaf1','#283248'],
+  /* 3º período (rascunho 11/11) */
+  cirsup:  ['#2f7a3e','#e3f2e6','#1f5a2c'],
+  diagbucal:['#1f6fb2','#e2eefa','#15528a'],
+  integral:['#8a6a00','#f7f0d6','#654d00'],
+  extconv: ['#5b6a2a','#eef1e0','#424e1d'],
+  socorros:['#b03030','#fbe6e6','#842222'],
+  cabeca: ['#8c2f39','#f7e6e8','#6a2029'],
+  estomato:['#a8456b','#f8e7ee','#7d3050'],
+  legal:   ['#4a4e69','#ebecf3','#33364a']
+};
+const ICMAT = { /* ícones Healthicons (healthicons.org, domínio público CC0) */
+  bases:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.7725 8.30157L21.2628 7.4536L22.2435 9.15216C23.5684 8.71843 25.0646 9.25298 25.7921 10.504L30.3148 18.2808C31.1477 19.7131 30.6576 21.5421 29.2202 22.366L28.3717 22.8524L29.0488 24.161L26.3749 25.5233L25.7658 24.346L25.0986 24.7284C23.6611 25.5523 21.8206 25.0592 20.9877 23.6269L18.0659 18.6028C15.503 20.0769 13.7356 21.7229 12.7876 23.6052C11.9897 25.1894 11.7274 27.0311 12.1688 29.2423C13.6009 28.4506 15.2478 28 17 28C20.2697 28 23.1729 29.5692 24.9975 31.9957L37.0836 25.1846L38.0764 26.9208L26.0342 33.707C26.6534 35.0078 27 36.4634 27 38C27 38.6849 26.9311 39.3538 26.8 40H40C40.5523 40 41 40.4477 41 41C41 41.5523 40.5523 42 40 42H7.83209C7.2969 40.7751 7 39.4222 7 38C7 35.0046 8.31701 32.3168 10.4036 30.484C9.64219 27.5566 9.85852 24.9748 11.0013 22.7056C12.1866 20.3521 14.3072 18.4589 17.0605 16.8739L16.465 15.85C15.825 14.7496 15.9661 13.4149 16.7178 12.4819L15.6565 10.6436L17.1648 9.78542L15.9236 7.55799L18.5536 6.11401L19.7725 8.30157ZM28.5796 19.2754L24.0569 11.4985C23.7793 11.0211 23.1658 10.8567 22.6866 11.1314L18.5651 13.4938C18.0859 13.7684 17.9226 14.3781 18.2002 14.8555L22.7229 22.6323C23.0005 23.1098 23.614 23.2742 24.0932 22.9995L28.2147 20.6371C28.6939 20.3625 28.8572 19.7528 28.5796 19.2754ZM24.7485 40C24.9125 39.362 25 38.6922 25 38C25 36.8203 24.7447 35.7003 24.2862 34.6921L19.4822 37.3994L18.4895 35.6632L23.236 32.9883C21.7697 31.1661 19.521 30 17 30C12.5817 30 9 33.5817 9 38C9 38.6922 9.08747 39.362 9.25153 40H24.7485Z" fill="currentColor"/> </svg>',
+  carie:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M23.5592 11.1258C23.7585 10.9692 32.0804 4.49515 37.5808 10.8727C40.6004 14.3739 40.3444 18.0063 39.2239 21.5635L35.2816 32.8565C34.1289 36.783 33.307 37.9951 31.2874 39.701C30.0886 40.7135 28.7366 38.9646 27.3138 37.1239C26.0812 35.5293 24.7954 33.8658 23.5098 33.8697C22.203 33.8737 20.8965 35.5398 19.6465 37.1338C18.2048 38.9724 16.8383 40.715 15.6331 39.701C13.1996 37.6532 12.1324 34.8237 11.0169 30.2829C10.8022 29.4087 10.4755 28.3602 10.1153 27.2039C8.60445 22.3544 6.50278 15.6083 9.58534 11.8657C13.3919 7.24419 18.12 6.50021 23.5088 11.0887L23.5592 11.1258ZM20.9001 11.6004C19.0357 10.3193 17.4509 9.91183 16.1308 10.0157C14.5088 10.1432 12.8241 11.0794 11.1291 13.1373C9.85439 14.6849 9.72465 17.2994 10.4119 20.7151C10.7392 22.3418 11.2167 23.9892 11.6976 25.5539C11.8013 25.8915 11.9067 26.2298 12.0112 26.565C12.3755 27.7341 12.7283 28.8661 12.9592 29.8058C13.9804 33.9629 14.8687 36.1971 16.48 37.7712C16.8126 37.4619 17.2333 36.965 17.7899 36.2597C17.8766 36.1497 17.9666 36.0348 18.0593 35.9164C18.6295 35.1885 19.3048 34.3262 19.9937 33.6369C20.7255 32.9047 21.9352 31.8745 23.5038 31.8697C25.0796 31.8649 26.2861 32.9118 27.003 33.6389C27.6819 34.3276 28.3478 35.1901 28.9098 35.918C29.0017 36.037 29.0908 36.1524 29.1767 36.2629C29.7219 36.9638 30.1349 37.4586 30.4615 37.7681C31.1093 37.1824 31.5294 36.6934 31.8929 36.0853C32.3622 35.3003 32.7993 34.2118 33.3626 32.2931C33.372 32.2609 33.3823 32.229 33.3934 32.1973L37.3253 20.934C37.8394 19.2943 38.1005 17.797 37.9642 16.3899C37.8315 15.0193 37.3116 13.6229 36.0662 12.1789C34.0017 9.78507 31.4653 9.74886 29.0724 10.4904C27.8673 10.8638 26.7857 11.42 25.9936 11.8956C25.6964 12.074 25.4459 12.2375 25.2515 12.3701L29.0925 15.1943C29.5374 15.5215 29.6329 16.1474 29.3057 16.5923C28.9786 17.0373 28.3526 17.1328 27.9077 16.8056L22.4829 12.8168C22.4078 12.769 22.3352 12.7158 22.2657 12.6571L21.1076 11.8056C21.0267 11.7461 20.9574 11.6768 20.9001 11.6004ZM16.1293 38.0449L16.1332 38.043C16.1305 38.0443 16.1292 38.0449 16.1293 38.0449Z" fill="currentColor"/> </svg>',
+  inter:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M16 8.02165C17.9626 8.17095 19.712 9.08283 20.9525 10.4616L23.1212 8.29297L24.5354 9.70718L22.0951 12.1475C22.583 13.137 22.8571 14.2508 22.8571 15.4286C22.8571 17.7509 23.6721 19.8829 25.0316 21.5542L27.2928 19.293L28.7071 20.7072L26.4458 22.9685C28.1171 24.3279 30.2491 25.1429 32.5714 25.1429C33.2266 25.1429 33.862 25.2277 34.4672 25.387L36.134 22.5L37.8661 23.5L36.3292 26.162C38.5256 27.4525 40 29.8398 40 32.5714C40 33.6589 39.7663 34.6917 39.3465 35.6225L41.9641 37.1338L40.9641 38.8658L38.2851 37.3191C36.9225 38.9572 34.8687 40 32.5714 40C32.3804 40 32.19 39.9978 32 39.9935V43H30V39.8671C26.9279 39.5476 24.0239 38.662 21.3944 37.3166L19.866 39.9639L18.1339 38.9639L19.6525 36.3337C17.6783 35.111 15.8901 33.6166 14.3403 31.9025L11.7072 34.5356L10.2929 33.1214L13.055 30.3593C11.4173 28.2218 10.1227 25.8074 9.25381 23.1985L6.25879 24.001L5.74115 22.0691L8.7001 21.2763C8.24257 19.4021 8 17.4437 8 15.4286C8 14.7476 8.09162 14.0881 8.26322 13.4616L5.5 11.8662L6.5 10.1342L9.05552 11.6096C10.1197 9.83753 11.902 8.54591 14 8.13723V5H16V8.02165ZM15.4286 10C12.4305 10 10 12.4305 10 15.4286C10 27.8944 20.1056 38 32.5714 38C35.5695 38 38 35.5695 38 32.5714C38 29.5733 35.5695 27.1429 32.5714 27.1429C26.1018 27.1429 20.8571 21.8982 20.8571 15.4286C20.8571 12.4305 18.4267 10 15.4286 10ZM15 15C14.4477 15 14 15.4477 14 16C14 16.5523 14.4477 17 15 17C15.5523 17 16 16.5523 16 16C16 15.4477 15.5523 15 15 15ZM12 16C12 14.3431 13.3431 13 15 13C16.6569 13 18 14.3431 18 16C18 17.6569 16.6569 19 15 19C13.3431 19 12 17.6569 12 16ZM23 30C23 29.4477 23.4477 29 24 29C24.5523 29 25 29.4477 25 30C25 30.5523 24.5523 31 24 31C23.4477 31 23 30.5523 23 30ZM24 27C22.3431 27 21 28.3431 21 30C21 31.6569 22.3431 33 24 33C25.6569 33 27 31.6569 27 30C27 28.3431 25.6569 27 24 27ZM19 24C19 25.1046 18.1046 26 17 26C15.8954 26 15 25.1046 15 24C15 22.8954 15.8954 22 17 22C18.1046 22 19 22.8954 19 24ZM32 34C33.1046 34 34 33.1046 34 32C34 30.8954 33.1046 30 32 30C30.8954 30 30 30.8954 30 32C30 33.1046 30.8954 34 32 34Z" fill="currentColor"/> </svg>',
+  farmaco:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M6.81815 13.364C6.36628 13.8159 6.36628 14.5485 6.81815 15.0004C7.27002 15.4523 8.00264 15.4523 8.45451 15.0004L9.27321 14.1817L13.3636 18.2721L10.0909 21.5449C9.63899 21.9968 9.63899 22.7294 10.0909 23.1813C10.5427 23.6332 11.2753 23.6332 11.7272 23.1813L13.3632 21.5452L27.2727 35.455C28.9501 37.1325 31.4015 37.5646 33.4775 36.7511L34.6361 37.9097C35.242 38.5156 36.1002 38.7153 36.8724 38.5088L39.5455 41.182C39.9973 41.6339 40.7299 41.6339 41.1818 41.182C41.6337 40.7301 41.6337 39.9975 41.1818 39.5456L38.5083 36.872C38.7142 36.1001 38.5144 35.2425 37.9089 34.6369L36.7504 33.4784C37.564 31.4022 37.132 28.9506 35.4545 27.273L21.545 13.3632L23.1817 11.7265C23.6336 11.2746 23.6336 10.542 23.1817 10.0901C22.7299 9.63824 21.9972 9.63824 21.5454 10.0901L18.2726 13.3629L14.1823 9.27248L14.9999 8.4548C15.4518 8.00292 15.4518 7.27028 14.9999 6.8184C14.5481 6.36652 13.8155 6.36652 13.3636 6.8184L6.81815 13.364ZM16.8584 14.7772L12.7681 10.6867L10.6874 12.7674L14.7778 16.8579L16.8584 14.7772ZM20.1308 14.7775L14.7774 20.131L19.1834 24.5371L24.5368 19.1835L20.1308 14.7775ZM20.8197 26.1735L23.2743 28.6281L25.133 26.7694C25.5849 26.3175 26.3175 26.3175 26.7694 26.7694C27.2213 27.2213 27.2213 27.9539 26.7694 28.4058L24.9107 30.2645L26.5466 31.9005L28.4055 30.0416C28.8574 29.5897 29.59 29.5897 30.0419 30.0416C30.4937 30.4935 30.4937 31.2261 30.0419 31.678L28.183 33.5369L28.6869 34.0408C29.785 35.1389 31.3899 35.4213 32.7487 34.888L34.8875 32.7492C35.4208 31.3903 35.1384 29.7854 34.0403 28.6873L26.1731 20.8199L20.8197 26.1735ZM36.5224 36.0829C36.514 36.0718 36.5047 36.0612 36.4947 36.0512L35.6706 35.227C35.601 35.3045 35.529 35.3805 35.4545 35.455C35.3799 35.5296 35.3038 35.6017 35.2262 35.6714L36.0503 36.4955C36.0605 36.5056 36.0712 36.5149 36.0823 36.5234C36.1328 36.4337 36.1963 36.3492 36.2727 36.2728C36.3489 36.1967 36.433 36.1333 36.5224 36.0829Z" fill="currentColor"/> </svg>',
+  imagino:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M29 9C29 11.7614 26.7614 14 24 14C21.2386 14 19 11.7614 19 9C19 6.23858 21.2386 4 24 4C26.7614 4 29 6.23858 29 9ZM27 9C27 10.6569 25.6569 12 24 12C22.3431 12 21 10.6569 21 9C21 7.34315 22.3431 6 24 6C25.6569 6 27 7.34315 27 9Z" fill="currentColor"/> <path d="M16.9998 41V34H18.9998V41C18.9998 41.5523 19.4475 42 19.9998 42H20.0865C20.6037 42 21.0356 41.6056 21.0824 41.0905L21.727 34H23.7353L23.0742 41.2716C23.069 41.3288 23.0622 41.3856 23.0539 41.4417C23.0357 41.5647 23.0101 41.6851 22.9776 41.8025C22.6242 43.0798 21.4549 44 20.0865 44H19.9998C18.3429 44 16.9998 42.6569 16.9998 41Z" fill="currentColor"/> <path d="M26.9171 41.0905L26.2725 34H24.2642L24.9253 41.2716C24.9305 41.3288 24.9373 41.3856 24.9456 41.4417C24.9638 41.5647 24.9894 41.6851 25.0219 41.8025C25.3753 43.0798 26.5446 44 27.913 44H27.9998C29.6566 44 30.9998 42.6569 30.9998 41V34H28.9998V41C28.9998 41.5523 28.552 42 27.9998 42H27.913C27.3958 42 26.9639 41.6056 26.9171 41.0905Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M11 15C10.4477 15 10 15.4477 10 16V31C10 31.5523 10.4477 32 11 32H37C37.5523 32 38 31.5523 38 31V16C38 15.4477 37.5523 15 37 15H11ZM12 17V30H19.5C19.5 29.4424 19.7591 28.9572 20.0276 28.6006C20.3086 28.2276 20.6796 27.8883 21.0794 27.6016C21.6252 27.2103 22.2986 26.865 23 26.6678V24.5H22.2C21.5973 24.5 20.7535 24.8642 19.9433 25.3552C19.5638 25.5852 19.2337 25.8167 18.9984 25.9911C18.8812 26.0778 18.7888 26.1495 18.727 26.1984C18.6961 26.2228 18.673 26.2415 18.6582 26.2535L18.6426 26.2663L18.6399 26.2684C18.6399 26.2684 18.6402 26.2682 18 25.5C17.3598 24.7318 17.3601 24.7315 17.3601 24.7315L17.3614 24.7305L17.3638 24.7285L17.3713 24.7223L17.3966 24.7016C17.4179 24.6843 17.448 24.66 17.4863 24.6297C17.5627 24.5693 17.6719 24.4847 17.8079 24.3839C18.0788 24.1833 18.4612 23.9148 18.9067 23.6448C19.7465 23.1358 21.0027 22.5 22.2 22.5H23V20.5H22.5C21.9309 20.5 21.1909 20.6992 20.5292 20.9398C20.212 21.0552 19.937 21.1709 19.7421 21.2576C19.6449 21.3007 19.5685 21.3363 19.5176 21.3605C19.4922 21.3725 19.4732 21.3817 19.4613 21.3875L19.4487 21.3937L19.447 21.3945C19.447 21.3945 19.4472 21.3944 19 20.5C18.5528 19.6056 18.5531 19.6054 18.5531 19.6054L18.5564 19.6038L18.5629 19.6006L18.5844 19.59C18.6025 19.5812 18.6279 19.5689 18.6601 19.5536C18.7245 19.5231 18.816 19.4805 18.9298 19.4299C19.1567 19.3291 19.4755 19.1948 19.8458 19.0602C20.5591 18.8008 21.5691 18.5 22.5 18.5H23V17H12ZM25 24.5H26.1C26.8489 24.5 27.6186 24.8663 28.2631 25.3186C28.5735 25.5364 28.8285 25.7556 29.0048 25.9197C29.0925 26.0012 29.1594 26.0679 29.2026 26.1122C29.2241 26.1343 29.2397 26.1507 29.2488 26.1605L29.2574 26.1697C29.2574 26.1697 29.2567 26.169 30 25.5C30.7433 24.831 30.7429 24.8306 30.7429 24.8306L30.7414 24.829L30.7389 24.8262L30.7318 24.8184L30.7097 24.7946C30.6915 24.7751 30.6663 24.7485 30.6346 24.716C30.5711 24.6509 30.4809 24.5613 30.367 24.4553C30.1403 24.2444 29.814 23.9636 29.4119 23.6814C28.6314 23.1337 27.4511 22.5 26.1 22.5H25V20.5H25.75C26.4443 20.5 27.1193 20.7011 27.6432 20.9216C27.9003 21.0299 28.1092 21.1378 28.2509 21.2169C28.3215 21.2564 28.3747 21.2882 28.408 21.3087C28.4247 21.3189 28.4363 21.3263 28.4427 21.3304L28.4457 21.3323C28.4457 21.3323 28.4453 21.3321 29 20.5C29.5547 19.6679 29.5542 19.6676 29.5542 19.6676L29.5527 19.6666L29.5501 19.6649L29.5432 19.6604L29.5228 19.6472C29.5063 19.6366 29.484 19.6225 29.4562 19.6054C29.4007 19.5712 29.323 19.5249 29.2256 19.4706C29.0315 19.3622 28.7559 19.2201 28.4193 19.0784C27.7557 18.7989 26.8057 18.5 25.75 18.5H25V17H36V30H28.5C28.5 29.4379 28.2324 28.9452 27.9641 28.5875C27.6803 28.2092 27.3054 27.8606 26.9007 27.5663C26.3675 27.1785 25.6989 26.8257 25 26.6391V24.5ZM26.4929 30C26.4797 29.967 26.4457 29.8964 26.3641 29.7875C26.2259 29.6033 26.0071 29.3894 25.7243 29.1837C25.1478 28.7645 24.4937 28.5117 24.032 28.5004C23.4877 28.5464 22.8052 28.8252 22.2449 29.227C21.9657 29.4272 21.7556 29.6307 21.6252 29.8038C21.5496 29.9043 21.5184 29.9694 21.5063 30H26.4929Z" fill="currentColor"/> </svg>',
+  cabeca:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M39 6C40.6569 6 42 7.34315 42 9V39C42 40.6569 40.6569 42 39 42H9L8.8457 41.9961C7.26055 41.9158 6 40.6051 6 39V9C6 7.34315 7.34315 6 9 6H39ZM9 8C8.44771 8 8 8.44772 8 9V39C8 39.5523 8.44772 40 9 40H14.2744V32.9756C14.2743 31.9523 13.7816 30.9313 13.001 30.0029C11.1297 27.7776 10 24.8806 10 21.7188C10 14.6453 15.6119 9.75 22.3975 9.75C25.575 9.75002 28.5696 10.4289 30.8369 11.9922C33.1444 13.5833 34.6187 16.0392 34.7803 19.3682C34.7927 19.6245 34.8534 19.848 34.9531 20.0273L37.8184 25.1807C38.4304 26.2815 37.7144 27.6497 36.4609 27.7734L34.0859 28.0068V34.8809C34.0859 36.5377 32.7428 37.8809 31.0859 37.8809H28.3594V40H39C39.5523 40 40 39.5523 40 39V9C40 8.44771 39.5523 8 39 8H9ZM22.3975 11.75C16.5938 11.75 12 15.8687 12 21.7188C12 24.3976 12.9552 26.8416 14.5312 28.7158C15.4817 29.8462 16.2743 31.309 16.2744 32.9756V40H26.3594V37.8799C24.9634 37.8426 23.7055 37.7007 22.5869 37.4131C22.5189 37.396 22.452 37.3774 22.3857 37.3594C22.3515 37.3499 22.3172 37.3408 22.2832 37.3311C20.6887 36.8804 19.5935 36.1664 18.8496 35.3086C17.9642 34.2874 17.6696 33.1694 17.5176 32.3789C17.3685 31.6037 17.3012 30.9299 17.2666 30.4229C17.2494 30.1701 17.2396 29.9582 17.2334 29.8008C17.2302 29.72 17.2288 29.6601 17.2266 29.6123C17.2254 29.5886 17.2242 29.5733 17.2236 29.5654C17.2116 29.4693 17.2051 29.3378 17.2002 29.2578C17.194 29.1571 17.1872 29.0569 17.1768 28.959C17.1666 28.8641 17.1537 28.7869 17.1406 28.7295C17.0894 28.6809 17.0234 28.6206 16.9316 28.5371C16.7338 28.3569 16.4595 28.1044 16.1875 27.8057C15.6727 27.2402 15.0002 26.33 15 25.1904C15.0001 24.1084 15.8121 22.6904 17.5 22.6904L17.7021 22.6982C18.6101 22.7705 19.1709 23.3218 19.5 23.7363C19.8529 23.2919 20.4722 22.6903 21.5 22.6904C23.1879 22.6904 23.9999 24.1084 24 25.1904C23.9998 26.2769 23.4565 27.1237 23.0498 27.666C22.9452 27.8055 22.8417 27.9347 22.7539 28.0439C22.6618 28.1585 22.592 28.2452 22.5342 28.3223C22.5211 28.3397 22.51 28.3561 22.5 28.3701V30.001C22.5 30.5355 22.5136 31.1952 22.7266 31.6768C22.8212 31.8904 22.9317 32.0101 23.0508 32.0781C23.126 32.121 23.2505 32.1681 23.4531 32.1797C23.4821 31.9336 23.5661 31.7023 23.6953 31.5C23.4798 31.1626 23.3864 30.744 23.4727 30.3125L23.5537 29.9102C23.7469 28.9449 24.5947 28.25 25.5791 28.25C26.0094 28.2501 26.4292 28.3847 26.7793 28.6348L26.791 28.6426C26.8973 28.7185 26.9944 28.8051 27.084 28.8984C27.4664 28.4993 28.0043 28.25 28.6006 28.25C29.1704 28.2501 29.6862 28.4782 30.0645 28.8467C30.1404 28.7728 30.2226 28.7047 30.3096 28.6426L30.3213 28.6348C30.6715 28.3847 31.0911 28.2501 31.5215 28.25C31.7164 28.25 31.9058 28.2779 32.0859 28.3291V27.7812C32.0859 26.8814 32.7686 26.1275 33.6641 26.0391L35.8857 25.8193L33.2051 20.999C32.9321 20.5081 32.807 19.9755 32.7822 19.4658C32.6503 16.7468 31.4854 14.8689 29.7012 13.6387C27.8765 12.3806 25.3256 11.75 22.3975 11.75ZM21.5 24.6904C21.3614 24.6904 21.2454 24.7376 21.0186 25.04C20.9619 25.1156 20.9097 25.1925 20.8447 25.2861C20.786 25.3707 20.7089 25.4812 20.627 25.583C20.5163 25.7204 20.1387 26.1904 19.5 26.1904C18.8613 26.1904 18.4837 25.7204 18.373 25.583C18.2911 25.4812 18.214 25.3707 18.1553 25.2861C18.0903 25.1925 18.0381 25.1156 17.9814 25.04C17.7546 24.7376 17.6386 24.6904 17.5 24.6904C17.3029 24.6904 17.2005 24.7603 17.1328 24.8389C17.0459 24.94 17.0001 25.0813 17 25.1904C17.0002 25.5504 17.2301 25.9802 17.666 26.459C17.8694 26.6823 18.083 26.8798 18.2783 27.0576C18.3698 27.1409 18.4717 27.2331 18.5537 27.3125C18.5989 27.3563 18.689 27.4437 18.7734 27.5537L18.8545 27.6709L18.9385 27.8271C19.0121 27.9837 19.0562 28.1375 19.085 28.2588C19.1255 28.4299 19.1496 28.6016 19.165 28.7461C19.1806 28.8923 19.1899 29.0316 19.1963 29.1357C19.1997 29.1908 19.2016 29.2315 19.2041 29.2676C19.2066 29.3039 19.208 29.3174 19.208 29.3174C19.2218 29.4283 19.2277 29.6017 19.2324 29.7217C19.2384 29.8735 19.2465 30.063 19.2617 30.2871C19.2923 30.7356 19.3524 31.3259 19.4824 32.002C19.6096 32.6632 19.816 33.3711 20.3604 33.999C20.7379 34.4344 21.3261 34.8835 22.2812 35.2314C22.3001 35.237 22.3192 35.2423 22.3379 35.249C22.5003 35.3073 22.669 35.3611 22.8438 35.4111C23.1015 35.4833 23.3808 35.5505 23.6846 35.6074L23.6836 35.6104C24.8231 35.8328 26.1887 35.9204 27.8232 35.8848C27.8618 35.8839 27.9 35.8852 27.9375 35.8887C27.994 35.8831 28.0514 35.8809 28.1094 35.8809H31.0859C31.6382 35.8809 32.0859 35.4331 32.0859 34.8809V34.6836C31.9207 34.7261 31.7484 34.75 31.5713 34.75C31.1409 34.7499 30.7213 34.6154 30.3711 34.3652L30.3594 34.3574C30.2629 34.2885 30.1736 34.2112 30.0908 34.1279C29.7104 34.5116 29.1835 34.7499 28.6006 34.75C28.004 34.75 27.4664 34.5 27.084 34.1006C26.9942 34.1941 26.8975 34.2814 26.791 34.3574L26.7793 34.3652C26.4292 34.6153 26.0094 34.7499 25.5791 34.75C25.014 34.75 24.4943 34.5203 24.1172 34.1426C23.3366 34.2483 22.64 34.1474 22.0586 33.8154C21.4748 33.482 21.1163 32.9785 20.8984 32.4863C20.487 31.5564 20.5 30.4667 20.5 30.001V28.1904C20.5001 27.8928 20.6063 27.6526 20.6787 27.5146C20.7568 27.3659 20.8536 27.23 20.9346 27.1221C21.0172 27.0119 21.1119 26.8948 21.1953 26.791C21.2831 26.6818 21.3676 26.576 21.4502 26.4658C21.7933 26.0084 21.9998 25.6036 22 25.1904C21.9999 25.0813 21.9541 24.94 21.8672 24.8389C21.8164 24.7799 21.746 24.7255 21.6309 24.7021L21.5 24.6904ZM25.0615 32.25C24.986 32.25 24.9295 32.3195 24.9443 32.3936L25.0244 32.7959C25.0775 33.0599 25.3097 33.25 25.5791 33.25C25.6967 33.2499 25.8115 33.2129 25.9072 33.1445L25.9189 33.1367C26.0197 33.0647 26.0967 32.9632 26.1387 32.8467L26.3535 32.25H25.0615ZM28.084 32.25C28.0381 32.25 28.0002 32.2871 28 32.333V32.6504C28.0002 32.9816 28.2694 33.25 28.6006 33.25C28.9316 33.2497 29.2 32.9814 29.2002 32.6504V32.333C29.2 32.2873 29.1629 32.2503 29.1172 32.25H28.084ZM31.0117 32.8467C31.0537 32.9633 31.1306 33.0647 31.2314 33.1367L31.2432 33.1445C31.339 33.2129 31.4536 33.2499 31.5713 33.25C31.7978 33.25 31.9964 33.1148 32.0859 32.915V32.25H30.7969L31.0117 32.8467ZM25.5791 29.75C25.3097 29.75 25.0775 29.9401 25.0244 30.2041L24.9443 30.6064C24.9295 30.6805 24.986 30.75 25.0615 30.75H26.3535L26.1387 30.1533C26.0967 30.0368 26.0197 29.9353 25.9189 29.8633L25.9072 29.8555C25.8115 29.7871 25.6967 29.7501 25.5791 29.75ZM28.6006 29.75C28.2694 29.75 28.0002 30.0184 28 30.3496V30.667C28.0002 30.7129 28.0381 30.75 28.084 30.75H29.1172C29.1629 30.7497 29.2 30.7127 29.2002 30.667V30.3496C29.2 30.0186 28.9316 29.7503 28.6006 29.75ZM31.5215 29.75C31.4038 29.7501 31.2891 29.7871 31.1934 29.8555L31.1816 29.8633C31.0808 29.9353 31.0039 30.0367 30.9619 30.1533L30.7471 30.75H32.0391C32.056 30.75 32.0715 30.7455 32.0859 30.7393V30.2529L32.0762 30.2041C32.0231 29.9401 31.7908 29.7501 31.5215 29.75Z" fill="currentColor"/> </svg>',
+  estomato:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M24 14.1818C15.2 10.2545 7 18.5453 4 24C7 28.3636 15.2 36 24 36C32.8 36 41 28.3636 44 24C41 18.5454 33 9.81822 24 14.1818ZM41.6044 23.8759C40.1404 21.5563 37.8704 18.8812 35.1456 17.0765C32.0369 15.0175 28.5484 14.1992 24.8725 15.9814C24.3415 16.2389 23.7239 16.2487 23.1849 16.0081C19.5922 14.4048 16.066 15.2261 12.9057 17.2555C10.1567 19.0209 7.8594 21.6083 6.39928 23.8805C7.87025 25.7409 10.1705 28.0471 12.9679 29.9951C16.3101 32.3223 20.1618 34 24 34C27.8382 34 31.6899 32.3223 35.0321 29.9951C37.8319 28.0455 40.1336 25.737 41.6044 23.8759Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5552 23.9581C15.6832 24.9918 19.7444 26 24 26C28.1964 26 32.2037 24.9628 35.3345 23.9229C32.1553 22.912 28.0661 22 24 22C19.8856 22 15.7482 22.9338 12.5552 23.9581ZM9.03371 23.0988C12.4476 21.7291 18.2022 20 24 20C29.7006 20 35.3594 21.6717 38.7926 23.0297C39.6211 23.3574 39.5703 24.5234 38.736 24.8357C35.4141 26.079 29.9194 28 24 28C17.9609 28 12.3638 26.1057 9.0651 24.8259C8.26067 24.5138 8.23291 23.4201 9.03371 23.0988Z" fill="currentColor"/> </svg>',
+  legal:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M25 10.1707C25.4922 10.3446 25.9254 10.6434 26.2616 11.0288L34.2521 9.0312C34.2677 9.02721 34.2834 9.02359 34.2992 9.02035C34.5282 8.97326 34.7564 9.00886 34.9515 9.10771C34.9972 9.13084 35.0411 9.15744 35.0827 9.18725C35.1936 9.26671 35.2887 9.369 35.3601 9.48939L40.0543 17H42V17.0029C41.9998 17.6925 41.9178 18.3617 41.7637 19C40.9312 22.4505 37.9947 25 34.5 25C31.0053 25 28.0689 22.4505 27.2363 19C27.0821 18.3608 27 17.6906 27 17L28.474 17L32.1789 11.6111L26.9986 12.9061C26.9995 12.9373 27 12.9686 27 13C27 14.3062 26.1652 15.4175 25 15.8293V38H28V40H34V42H14V40H20V38H23V15.8293C22.3419 15.5967 21.7891 15.1409 21.4327 14.5529L15.587 16.1118L20.185 23.2178H21.1199L21.1199 23.2207C21.1196 23.9102 21.0376 24.5794 20.8836 25.2178C20.051 28.6682 17.1146 31.2178 13.6199 31.2178C10.1252 31.2178 7.18874 28.6682 6.35616 25.2178C6.20191 24.5785 6.11987 23.9084 6.11987 23.2178L7.32813 23.2178L13.1831 14.9233C13.3181 14.732 13.5161 14.5941 13.7424 14.5338L21.0277 12.591C21.1811 11.4656 21.9586 10.5388 23 10.1707V6H25V10.1707ZM37.6958 17L34.4602 11.8231L30.901 17.0001L37.6958 17ZM17.8028 23.2178L13.964 17.2851L9.77619 23.2178L17.8028 23.2178ZM39.6903 19C38.9209 21.3852 36.8163 23 34.5 23C32.1838 23 30.0792 21.3852 29.3097 19.0001L39.6903 19ZM18.8102 25.2178C18.0407 27.603 15.9361 29.2178 13.6199 29.2178C11.3037 29.2178 9.19907 27.603 8.42957 25.2178L18.8102 25.2178ZM24 14C24.5523 14 25 13.5523 25 13C25 12.4477 24.5523 12 24 12C23.4477 12 23 12.4477 23 13C23 13.5523 23.4477 14 24 14Z" fill="currentColor"/> </svg>',
+  cirsup:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M40 8H8V40H40V8ZM8 6C6.89543 6 6 6.89543 6 8V40C6 41.1046 6.89543 42 8 42H40C41.1046 42 42 41.1046 42 40V8C42 6.89543 41.1046 6 40 6H8Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M10 34H20V36H10V34Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M28 34H32V36H28V34Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M22 34H26V36H22V34Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M34 34H38V36H34V34Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M16.8284 28H21.5516C22.5979 28 23.6026 27.59 24.3501 26.858L28 23.2842V22.8284C28 21.7676 28.4214 20.7501 29.1716 20L30.8607 18.3109L28.2548 16.5736L16.8284 28ZM12 30L28 14L34 18L30.5858 21.4142C30.2107 21.7893 30 22.298 30 22.8284V23.2842C30 23.8219 29.7835 24.337 29.3993 24.7132L25.7494 28.2871C24.628 29.3851 23.1211 30 21.5516 30H12Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M26.7071 21.2929C27.0976 21.6834 27.0976 22.3166 26.7071 22.7071L23.7071 25.7071C23.3166 26.0976 22.6834 26.0976 22.2929 25.7071C21.9024 25.3166 21.9024 24.6834 22.2929 24.2929L25.2929 21.2929C25.6834 20.9024 26.3166 20.9024 26.7071 21.2929Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M36.7071 8.1075L29.1075 15.7071L27.6933 14.2929L35.2929 6.69328L36.7071 8.1075Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M38.2071 12.3925C38.5976 12.783 38.5976 13.4162 38.2071 13.8067L32.7071 19.3067L31.2929 17.8925L36.7929 12.3925C37.1834 12.002 37.8166 12.002 38.2071 12.3925Z" fill="currentColor"/> </svg>',
+  diagbucal:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M24 24H20V18L24 18V14H30V18H34V24H30V28H24V24ZM22 22V20L26 20V16H28V20H32V22H28V26H26V22H22Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M26.9999 36C35.2842 36 41.9999 29.2843 41.9999 21C41.9999 12.7157 35.2842 6 26.9999 6C18.7156 6 11.9999 12.7157 11.9999 21C11.9999 24.7823 13.3998 28.2375 15.7096 30.876L13.8168 32.7689L11.1095 32.6479L4.58569 39.1716L8.82833 43.4143L15.3 36.9426L15.2956 34.1185L17.1239 32.2903C19.7624 34.6001 23.2177 36 26.9999 36ZM26.9999 34C34.1796 34 39.9999 28.1797 39.9999 21C39.9999 13.8203 34.1796 8 26.9999 8C19.8202 8 13.9999 13.8203 13.9999 21C13.9999 28.1797 19.8202 34 26.9999 34ZM8.82833 40.5858L7.41412 39.1716L11.9005 34.6852L13.2966 34.7477L13.2987 36.1155L8.82833 40.5858Z" fill="currentColor"/> </svg>',
+  integral:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M22.2544 12.6476C22.9806 13.2696 24.0452 13.2905 24.7952 12.6981L24.7976 12.6962L24.8031 12.692C24.8124 12.6848 24.8293 12.6719 24.8535 12.6537C24.9019 12.6172 24.9794 12.5601 25.0831 12.4869C25.291 12.3402 25.6017 12.1308 25.9936 11.8956C26.7857 11.42 27.8673 10.8638 29.0724 10.4904C31.4653 9.74886 34.0017 9.78507 36.0662 12.1789C37.3116 13.6229 37.8315 15.0193 37.9642 16.3899C38.0606 17.3856 37.9581 18.4265 37.7077 19.5311C36.3868 18.5682 34.7598 18 33 18C28.5817 18 25 21.5817 25 26C25 30.3582 28.485 33.9025 32.8203 33.998C32.4952 34.9239 32.201 35.57 31.8929 36.0853C31.5294 36.6934 31.1093 37.1824 30.4615 37.7681C30.1349 37.4586 29.7219 36.9638 29.1767 36.2629C29.0908 36.1525 29.0018 36.0371 28.9099 35.9182L28.9098 35.918L28.9098 35.918C28.3478 35.1901 27.6819 34.3276 27.003 33.6389C26.2861 32.9118 25.0796 31.8649 23.5038 31.8697C21.9352 31.8745 20.7255 32.9047 19.9937 33.6369C19.3048 34.3262 18.6294 35.1885 18.0593 35.9164C17.9666 36.0348 17.8766 36.1497 17.7899 36.2597C17.2333 36.965 16.8126 37.4619 16.48 37.7712C14.8687 36.1971 13.9804 33.9629 12.9592 29.8058C12.7283 28.8661 12.3756 27.7341 12.0112 26.5651L12.0112 26.565C11.9067 26.2298 11.8013 25.8915 11.6976 25.5539C11.2167 23.9892 10.7392 22.3418 10.4119 20.7151C9.72465 17.2994 9.85439 14.6849 11.1291 13.1373C12.8241 11.0794 14.5088 10.1432 16.1308 10.0157C17.7598 9.88754 19.7916 10.5379 22.2544 12.6476ZM35.0116 33.745C33.9903 36.9793 33.1461 38.1311 31.2874 39.701C30.0886 40.7135 28.7366 38.9646 27.3138 37.1239C26.0812 35.5293 24.7954 33.8658 23.5098 33.8697C22.203 33.8737 20.8965 35.5398 19.6465 37.1338C18.2048 38.9724 16.8383 40.715 15.6331 39.701C13.1996 37.6532 12.1324 34.8237 11.0169 30.2829C10.8022 29.4087 10.4755 28.3602 10.1153 27.2039C8.60445 22.3544 6.50278 15.6083 9.58534 11.8657C13.4029 7.23082 18.1474 6.49593 23.5556 11.1286C23.5556 11.1286 32.0135 4.41755 37.5808 10.8727C40.4801 14.2345 40.3596 17.7171 39.3536 21.138C40.3863 22.4856 41 24.1711 41 26C41 29.7235 38.4562 32.8529 35.0116 33.745ZM39 26C39 29.3137 36.3137 32 33 32C29.6863 32 27 29.3137 27 26C27 22.6863 29.6863 20 33 20C36.3137 20 39 22.6863 39 26ZM33 22C32.4477 22 32 22.4477 32 23V25H30C29.4477 25 29 25.4477 29 26C29 26.5523 29.4477 27 30 27H32V29C32 29.5523 32.4477 30 33 30C33.5523 30 34 29.5523 34 29V27H36C36.5523 27 37 26.5523 37 26C37 25.4477 36.5523 25 36 25H34V23C34 22.4477 33.5523 22 33 22Z" fill="currentColor"/> </svg>',
+  extconv:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M17 24C20.8675 24 24 20.8675 24 17C24 13.1325 20.8675 10 17 10C13.1325 10 10 13.1325 10 17C10 20.8675 13.1325 24 17 24ZM22 17C22 19.7629 19.7629 22 17 22C14.2371 22 12 19.7629 12 17C12 14.2371 14.2371 12 17 12C19.7629 12 22 14.2371 22 17Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M4 38V32.4C4 28.144 12.6612 26 17 26C19.8862 26 24.6851 26.9487 27.5749 28.8368C29.6346 28.2798 31.8936 28 33.5 28C35.3579 28 37.851 28.3742 39.9092 29.1307C40.9364 29.5084 41.9189 30.004 42.6622 30.6463C43.4108 31.2931 44 32.1676 44 33.2667V38H4ZM6 32.4C6 32.0826 6.14556 31.6486 6.76618 31.0846C7.39908 30.5095 8.37322 29.9511 9.60682 29.4645C12.076 28.4906 15.0766 28 17 28C18.9234 28 21.924 28.4906 24.3932 29.4645C25.6268 29.9511 26.6009 30.5095 27.2338 31.0846C27.8544 31.6486 28 32.0826 28 32.4V36H6V32.4ZM29.3532 30.4692C30.8657 30.1565 32.3834 30 33.5 30C35.1465 30 37.4034 30.3405 39.2191 31.0079C40.1288 31.3423 40.8643 31.736 41.3546 32.1597C41.8398 32.5789 42 32.947 42 33.2667V36H30V32.4C30 31.6991 29.7651 31.0554 29.3532 30.4692Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M39 20.5C39 23.5387 36.5387 26 33.5 26C30.4613 26 28 23.5387 28 20.5C28 17.4612 30.4613 15 33.5 15C36.5387 15 39 17.4612 39 20.5ZM33.5 24C35.4342 24 37 22.4342 37 20.5C37 18.5658 35.4342 17 33.5 17C31.5658 17 30 18.5658 30 20.5C30 22.4342 31.5658 24 33.5 24Z" fill="currentColor"/> </svg>',
+  socorros:'<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M39 8H9C8.44771 8 8 8.44772 8 9V39C8 39.5523 8.44772 40 9 40H39C39.5523 40 40 39.5523 40 39V9C40 8.44772 39.5523 8 39 8ZM9 6C7.34315 6 6 7.34315 6 9V39C6 40.6569 7.34315 42 9 42H39C40.6569 42 42 40.6569 42 39V9C42 7.34315 40.6569 6 39 6H9Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M20.4888 16.3299C18.8459 16.6137 17.6486 18.0059 17.4535 19.6617L16 32H32L30.5445 19.645C30.3504 17.9974 29.1644 16.6076 27.5302 16.3218C25.0797 15.8934 23.0381 15.8894 20.4888 16.3299ZM21.7302 20.6478C21.7987 20.0998 21.4099 19.6 20.8619 19.5315C20.3139 19.463 19.8141 19.8517 19.7456 20.3998L18.8409 27.6379C18.7723 28.1859 19.1611 28.6857 19.7091 28.7542C20.2571 28.8227 20.7569 28.434 20.8254 27.8859L21.7302 20.6478Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M22.4744 18.0768C23.3452 18.6959 23.8565 19.7614 23.7147 20.8959L22.81 28.134C22.7163 28.8836 22.3536 29.5338 21.8309 30H29.7506L28.5583 19.879C28.4559 19.0099 27.8543 18.4088 27.1858 18.2919C25.5147 17.9998 24.076 17.9246 22.4744 18.0768ZM30.5445 19.645C30.3504 17.9974 29.1644 16.6076 27.5302 16.3218C25.0797 15.8934 23.0381 15.8894 20.4888 16.3299C18.8459 16.6137 17.6486 18.0059 17.4535 19.6617L16 32H32L30.5445 19.645ZM21.7302 20.6478L20.8254 27.8859C20.7569 28.434 20.2571 28.8227 19.7091 28.7542C19.1611 28.6857 18.7723 28.1859 18.8409 27.6379L19.7456 20.3998C19.8141 19.8517 20.3139 19.463 20.8619 19.5315C21.4099 19.6 21.7987 20.0998 21.7302 20.6478Z" fill="currentColor"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M33 36H15V34H33V36Z" fill="currentColor"/> <path d="M13 24C13 24.3371 13.0152 24.6706 13.0448 25H10V23H13.0448C13.0152 23.3294 13 23.6629 13 24Z" fill="currentColor"/> <path d="M15.0124 17.6563C14.6285 18.1991 14.2927 18.7782 14.0109 19.3875L11.3756 17.866L12.3756 16.134L15.0124 17.6563Z" fill="currentColor"/> <path d="M19.3875 14.0109C18.7782 14.2927 18.1991 14.6286 17.6563 15.0124L16.134 12.3757L17.866 11.3757L19.3875 14.0109Z" fill="currentColor"/> <path d="M24 13C23.6629 13 23.3294 13.0152 23 13.0448V10H25V13.0448C24.6706 13.0152 24.3371 13 24 13Z" fill="currentColor"/> <path d="M30.3437 15.0124C29.8009 14.6286 29.2218 14.2927 28.6125 14.0109L30.134 11.3757L31.866 12.3757L30.3437 15.0124Z" fill="currentColor"/> <path d="M33.9891 19.3875C33.7073 18.7782 33.3715 18.1991 32.9876 17.6563L35.6244 16.134L36.6244 17.866L33.9891 19.3875Z" fill="currentColor"/> <path d="M35 24C35 23.6629 34.9848 23.3294 34.9552 23H38V25H34.9552C34.9848 24.6706 35 24.3371 35 24Z" fill="currentColor"/> </svg>'
+};
+const IC = {
+  prova1:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><text x="12" y="18" text-anchor="middle" font-size="9" font-weight="800" fill="currentColor" stroke="none" font-family="Arial">1</text></svg>',
+  prova2:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><text x="12" y="18" text-anchor="middle" font-size="9" font-weight="800" fill="currentColor" stroke="none" font-family="Arial">2</text></svg>',
+  esteto:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6 6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>',
+  play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg>',
+  folha:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>',
+  alvo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>',
+  volta:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 4v4h4"/></svg>',
+  livro:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2z"/><path d="M4 20a2 2 0 0 0 2 2h13v-4"/></svg>',
+  seta:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>',
+  esq:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  tesoura:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 7.5L20 18M8.5 16.5L20 6"/></svg>',
+  luz:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg>',
+  pula:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5l7 7-7 7M13 5l7 7-7 7"/></svg>',
+  fala:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3M9 21h6"/></svg>',
+  paleta:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0 0 18c1.1 0 1.8-.8 1.8-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.8-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10" cy="7" r="1.2" fill="currentColor"/><circle cx="14.5" cy="7" r="1.2" fill="currentColor"/><circle cx="17" cy="11" r="1.2" fill="currentColor"/></svg>',
+  trofeu:'<svgviewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="28" height="28"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9 17h6"/></svg>'
+};
+
+/* ---------- PERÍODOS (rascunho 11/11): o site abre no período atual; o aluno troca e o aparelho lembra ---------- */
+const PER = window.PERIODOS || { atual: 2, lista: [{ n: 2, nome: '2º período' }] };
+const infoMat = id => MATERIAS.find(m => m.id === id);
+const perDe = m => (m && m.periodos) || [(m && m.periodo) || 2]; /* matéria pode estar em mais de uma aba (ex.: estomatologia no 2º e em Especialidades) */
+const periodoDe = id => { const ps = perDe(infoMat(id)); return ps.includes(PERIODO) ? PERIODO : ps[0]; };
+const visivel = m => m.pronto && (BANCOS[m.id] || m.periodo >= 3); /* matéria nova aparece mesmo sem questões */
+const matsDoPeriodo = n => MATERIAS.filter(m => visivel(m) && perDe(m).includes(n));
+let PERIODO = ler('jogo-periodo', PER.atual); if (!PER.lista.some(p => p.n === PERIODO)) PERIODO = PER.atual;
+
+let MAT = ler('jogo-mat', null); if (!infoMat(MAT) || !visivel(infoMat(MAT))) MAT = ((matsDoPeriodo(PERIODO)[0]) || {id:'bases'}).id;
+let partida = null; /* {modo, itens:[{q,ordem,certa,resp,conf,riscadas,pulou}], i} */
+let ultimaVista = -1;
+
+/* matéria sem banco de questões (período novo): um "banco" vazio com os dados da grade */
+const bancoVazio = m => ({ materia: m.materia || m.nome, curta: m.curta || m.nome, codigo: m.codigo, prof: '', proxima: '', modos: [], q: [], revisao: [], vazio: true });
+const banco = () => BANCOS[MAT] || bancoVazio(infoMat(MAT) || { nome: MAT });
+const temQuestoes = () => !!(BANCOS[MAT] && (BANCOS[MAT].q || []).length);
+/* Rafael 12/11: "Simulação de caso real" em toda matéria que tiver questão com paciente (ctx com idade/paciente) */
+/* Rafael 12/11: questões já respondidas ficam gravadas neste aparelho; as novas ganham selo e têm um modo só delas */
+const vistasDe = () => new Set(ler('jogo-vistas-'+MAT, []));
+const ehCaso = q => q && q.ctx && /\d+\s*anos|paciente/i.test(q.ctx);
+const modos = () => { const b = banco(), ms = (b.modos || []).slice(); if (!ms.some(m => m.casos) && (b.q || []).filter(ehCaso).length >= 3) ms.splice(1, 0, { id: 't-casos', nome: 'Simulação de caso real', sub: 'Só questões com paciente: idade, dente, história e a conduta.', temas: null, casos: true }); if (!ms.some(m => m.novas)) ms.push({ id: 't-novas', nome: 'Questões que nunca fiz', sub: 'Só as que você ainda não respondeu neste aparelho.', temas: null, novas: true }); return ms; };
+const errosDe = () => ler('jogo-erros-'+MAT, []);
+function pinta(){
+  const c = CORES[MAT] || ['#2346a8','#e6ecfa','#1a3480'];
+  const r = document.documentElement.style;
+  r.setProperty('--cor', c[0]); r.setProperty('--cor-claro', c[1]); r.setProperty('--cor-escuro', c[2]);
+}
+function poolDe(m){
+  const b = banco();
+  if (m.erros) { const e = errosDe(); return b.q.filter(q => e.includes(q.id)); }
+  if (m.sm2todo) return b.q.filter(q => q.sm2 && (!m.prefixo || q.id.startsWith(m.prefixo))).sort((x,y)=>x.id.localeCompare(y.id,'pt',{numeric:true}));
+  if (m.sm1todo) return b.q.filter(q => q.sm1 && (!m.prefixo || q.id.startsWith(m.prefixo))).sort((x,y)=>x.id.localeCompare(y.id,'pt',{numeric:true}));
+  if (m.img) return b.q.filter(q => q.img);
+  if (m.af) return b.q.filter(q => q.af && q.af.length);
+  if (m.novas) { const v = vistasDe(); return b.q.filter(q => !v.has(q.id)); }
+  if (m.casos) return b.q.filter(ehCaso); /* Rafael 12/11: simulado de caso real */
+  if (m.cor) return b.q.filter(q => q.cor === m.cor); /* Rafael 12/11: treinar só uma cor de lesão (estomatologia) */
+  return m.temas ? b.q.filter(q => m.temas.includes(q.tema)) : b.q.slice();
+}
+function sorteia(m){
+  const pool = poolDe(m);
+  if (m.sm1todo || m.sm2todo) return pool.map(q => ({q, ordem:[0,1,2,3,4]}));
+  let esc10;
+  if (m.erros || m.cai || m.novas) esc10 = mistura(pool).slice(0,10);
+  else {
+    const sm1 = pool.filter(q => q.sm1), sm2 = pool.filter(q => q.sm2);
+    const n1 = Math.min(sm1.length, Math.floor(Math.random()*3)); /* 0, 1 ou 2 do SM1, nunca mais */
+    const n2 = Math.min(sm2.length, Math.floor(Math.random()*3)); /* 0, 1 ou 2 do SM2, nunca mais */
+    const pegas = mistura(sm1).slice(0,n1).concat(mistura(sm2).slice(0,n2));
+    const v = vistasDe(), resto = mistura(pool.filter(q => !q.sm1 && !q.sm2));
+    const ordenado = resto.filter(q => !v.has(q.id)).concat(resto.filter(q => v.has(q.id))); /* primeiro as que nunca viu */
+    esc10 = mistura(pegas.concat(ordenado.slice(0, 10-pegas.length)));
+  }
+  return esc10.map(q => ({ q, ordem: (q.fixa || q.af) ? [0,1,2,3,4] : mistura([0,1,2,3,4]) }));
+}
+const nomeProf = s => { s = String(s||''); if (s !== s.toUpperCase()) return s; return 'Prof. ' + s.toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase()); };
+const tela = html => { app.innerHTML = html; window.scrollTo(0,0); };
+
+/* ---------- DESEMPENHO (fica guardado só neste aparelho) ---------- */
+const MIN_TENT = 1;
+function desempenho(){
+  const st = ler('jogo-stats-'+MAT, {});
+  return Object.entries(st).map(([tema,v]) => ({tema, t:v.t, a:v.a, pct: v.t ? v.a/v.t : 0})).sort((x,y) => x.pct - y.pct || y.t - x.t);
+}
+const corPct = p => p >= .8 ? 'var(--certo)' : p >= .5 ? '#d99a00' : 'var(--errado)';
+function desempenhoHtml(){
+  const d = desempenho();
+  if (!d.length) return `<p class="vazio">Faça um simulado e aqui aparece quanto você acerta em cada tema, do que mais erra pro que mais acerta.</p>`;
+  const fracos = d.filter(x => x.t >= MIN_TENT && x.pct < .7);
+  return `<div class="desemp">${d.map(x => `<div class="dl"><div class="lin"><span>${esc(x.tema)}</span><small>${Math.round(x.pct*100)}%, ${x.a} de ${x.t}</small></div><div class="trilho" aria-hidden="true"><div class="enche" style="width:${Math.max(4,Math.round(x.pct*100))}%;background:${corPct(x.pct)}"></div></div></div>`).join('')}</div>
+  ${fracos.length ? `<button class="fracos" id="fracos"><b>Treinar meus pontos fracos</b><small>10 questões de ${esc(fracos.slice(0,3).map(x=>x.tema).join(', '))}</small></button>` : `<p class="vazio" style="margin-top:12px">${d.some(x=>x.t>=MIN_TENT) ? 'Nenhum tema abaixo de 70 % ainda. Continue assim.' : 'Depois de 3 questões de um tema ele entra na conta dos pontos fracos.'}</p>`}
+  <p class="vazio" style="margin-top:10px;font-size:13px">Seus dados ficam guardados só neste celular.</p>`;
+}
+/* Rafael 11/11: temas que mais caem nas provas (contagem das questões que caíram no SM1 e no SM2) */
+function maisCaem(){
+  const c = {};
+  banco().q.forEach(q => { if (q && (q.sm1 || q.sm2) && q.tema) { const t = q.tema; c[t] = c[t] || {tema:t, n:0, s1:0, s2:0}; c[t].n++; if (q.sm1) c[t].s1++; if (q.sm2) c[t].s2++; } });
+  return Object.values(c).sort((x,y) => y.n - x.n || x.tema.localeCompare(y.tema));
+}
+function maisCaemHtml(){
+  const d = maisCaem(); if (!d.length) return '';
+  const max = d[0].n;
+  return `<section class="bloco"><h2>Temas que mais caem</h2><p class="vazio" style="margin-bottom:10px;font-size:14px">Contando as questões que caíram nos simulados oficiais. Toque num tema pra treinar.</p><div class="desemp">${d.slice(0,8).map(x => `<button class="dl aperta" data-cai="${esc(x.tema)}" style="all:unset;display:block;cursor:pointer;width:100%"><div class="lin"><span>${esc(x.tema)}</span><small>${x.n} ${x.n===1?'questão':'questões'}${x.s1&&x.s2?' (SM1 e SM2)':x.s1?' (SM1)':' (SM2)'}</small></div><div class="trilho" aria-hidden="true"><div class="enche" style="width:${Math.round(x.n/max*100)}%;background:var(--c, #6c3fc5)"></div></div></button>`).join('')}</div></section>`;
+}
+function modoFracos(){
+  const temas = desempenho().filter(x => x.t >= MIN_TENT && x.pct < .7).slice(0,3).map(x => x.tema);
+  return { id:'fracos', nome:'Pontos fracos', temas };
+}
+function partes(){
+  const ms = modos();
+  const completo = ms.find(m => m.id === 'completo') || ms[0];
+  const sm1 = ms.find(m => m.sm1todo), sm2 = ms.find(m => m.sm2todo), erros = ms.find(m => m.erros);
+  const casos = ms.find(m => m.casos), novas = ms.find(m => m.novas);
+  const temas = ms.filter(m => m !== completo && m !== sm1 && m !== sm2 && m !== erros && m !== casos && m !== novas && !m.cor && poolDe(m).length >= 3); /* modos por cor ficam na tela "Estudar por cor" */
+  return {ms, completo, sm1, sm2, erros, temas, casos, novas};
+}
+
+/* ---------- INÍCIO: escolher a matéria ---------- */
+function inicio(){
+  partida = null; ultimaVista = -1;
+  const per = PER.lista.find(p => p.n === PERIODO) || PER.lista[0];
+  const mats = matsDoPeriodo(PERIODO);
+  tela(`
+  <div class="topo"><span class="marca">Simulado do simulado</span></div>
+  <div class="ola"><h1>Qual matéria hoje?</h1><p>Odontologia. Escolha o período e a matéria.</p></div>
+  ${PER.lista.length > 1 ? `<div class="periodos" role="tablist" aria-label="Período">${PER.lista.map(p => `<button class="per aperta" role="tab" data-per="${p.n}" aria-selected="${p.n===PERIODO}"><b>${esc(p.nome)}</b><small>${esc(p.curto||'')}</small></button>`).join('')}</div>` : ''}
+  <h2 class="per-tit">${esc(per.titulo || per.nome)}</h2>
+  ${per.aviso ? `<p class="aviso-periodo">${esc(per.aviso)}</p>` : ''}
+  <ul class="lista" role="tabpanel" aria-label="${esc(per.nome)}">${mats.map(m => {
+    const b = BANCOS[m.id], c = (CORES[m.id]||['#2346a8'])[0], melhor = b ? ler('jogo-melhor-'+m.id, null) : null;
+    const nome = esc((m.nome||'').replace(/\s*\(bônus\)/i,''));
+    const nAulas = ((window.AULAS||{})[m.id]||[]).length;
+    const sub = b ? (b.proxima||'') : [m.codigo, m.ch, nAulas ? (nAulas===1 ? '1 aula' : nAulas+' aulas') : ''].filter(Boolean).join(', ');
+    const selo = m.bonus ? '<span class="bonus">bônus</span>' : m.eletiva ? '<span class="prev">eletiva</span>' : '';
+    return `<li><button class="mat aperta" data-mat="${m.id}" style="--c:${c}"><span class="aba"></span>${ICMAT[m.id] ? `<span class="icmat" aria-hidden="true">${ICMAT[m.id]}</span>` : ''}<span class="txt"><b>${nome}${selo}</b><small>${esc(sub)}</small></span><span class="nota">${melhor!==null ? nota1(melhor)+'<em>melhor</em>' : IC.seta.replace('<svg','<svg width="22" height="22"')}</span></button></li>`; }).join('')}</ul>
+  <a class="sisao aperta" href="https://labrafa.github.io/dentolingu/#milhao"><span style="color:var(--cinza)">${IC.trofeu}</span><span><b>Show do Sisão</b><small>Jogo de perguntas, só pela diversão (o prêmio é de mentirinha)</small></span></a>`);
+  app.querySelectorAll('[data-mat]').forEach(el => el.onclick = () => { MAT = el.dataset.mat; grava('jogo-mat', MAT); materia(); });
+  app.querySelectorAll('[data-per]').forEach(el => el.onclick = () => { PERIODO = +el.dataset.per; grava('jogo-periodo', PERIODO); inicio(); });
+}
+
+/* ---------- AULAS E MATERIAL em toda matéria (rascunho 11/11) ---------- */
+const materialDe = () => ((window.MATERIAL || {})[MAT] || []);
+function itemAulas(){
+  const n = aulasDe().length;
+  return `<button class="item" id="aulas"><span class="ic">${IC.fala}</span><span class="t"><b>Aulas</b><small>${n===0 ? 'As aulas aparecem aqui quando a transcrição chegar' : n===1 ? 'Transcrição e resumo da aula de '+esc(aulasDe()[0].data) : n+' aulas transcritas, com resumo'}</small></span><span class="seta">${IC.seta}</span></button>`;
+}
+function itemMaterial(){
+  const n = materialDe().length + aulasDe().filter(a => slidesDa(a).length).length;
+  if (!n) return '';
+  return `<button class="item" id="material"><span class="ic">${IC.folha}</span><span class="t"><b>Material</b><small>${n ? 'Slides e material das aulas' : 'O material aparece aqui quando o professor passar'}</small></span><span class="seta">${IC.seta}</span></button>`;
+}
+function ligaAulasMaterial(){
+  if ($('#aulas')) $('#aulas').onclick = () => aulasDe().length === 1 ? verAula(0) : listaAulas();
+  if ($('#material')) $('#material').onclick = listaMaterial;
+}
+/* matéria sem questões (período novo): nome, código, carga horária, previsão e Aulas; o simulado aparece quando houver banco */
+function materiaSemQuestoes(){
+  const m = infoMat(MAT) || {}, b = banco();
+  tela(`
+  <div class="topo"><button class="voltar" id="vol">${IC.esq}Matérias</button></div>
+  <nav class="trocar" aria-label="Trocar de matéria">${matsDoPeriodo(periodoDe(MAT)).map(x => `<button class="chip aperta" data-mat="${x.id}" aria-current="${x.id===MAT}">${esc((BANCOS[x.id]||{}).curta || x.curta || x.nome)}</button>`).join('')}</nav>
+  <header class="cabeca">
+    <h1>${esc(b.materia)}</h1>
+    <p class="prof">${[m.codigo, m.ch].filter(Boolean).map(esc).join(', ')}${m.eletiva ? ', eletiva' : ''}</p>
+    ${m.intro ? `<p class="intro-mat"><b>O que costuma ter (previsão):</b> ${esc(m.intro)}</p>` : ''}
+    ${m.previsao ? `<p class="quando">${esc(((PER.lista.find(p => p.n === periodoDe(MAT)) || {}).titulo) || 'Previsão pela grade')}</p>` : ''}
+  </header>
+  <div class="menu">
+    ${itemAulas()}
+    ${itemMaterial()}
+    ${(b.revisao||[]).length ? `<button class="item" id="rev"><span class="ic">${IC.livro}</span><span class="t"><b>Ler o resumo</b><small>O que mais importa, em tópicos curtos</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+  </div>`);
+  $('#vol').onclick = inicio;
+  app.querySelectorAll('[data-mat]').forEach(el => el.onclick = () => { MAT = el.dataset.mat; grava('jogo-mat', MAT); materia(); });
+  if ($('#rev')) $('#rev').onclick = resumo;
+  ligaAulasMaterial();
+}
+
+/* ---------- TELA DA MATÉRIA ---------- */
+function materia(){
+  partida = null; ultimaVista = -1; pinta();
+  if (!temQuestoes()) return materiaSemQuestoes();
+  const b = banco(), {completo, sm1, sm2, erros, temas, casos, novas} = partes();
+  const nErr = erros ? poolDe(erros).length : 0, nSm1 = sm1 ? poolDe(sm1).length : 0, nSm2 = sm2 ? poolDe(sm2).length : 0;
+  const melhor = ler('jogo-melhor-'+MAT, null);
+  tela(`
+  <div class="topo"><button class="voltar" id="vol">${IC.esq}Matérias</button></div>
+  <nav class="trocar" aria-label="Trocar de matéria">${matsDoPeriodo(periodoDe(MAT)).map(m => `<button class="chip aperta" data-mat="${m.id}" aria-current="${m.id===MAT}">${esc((BANCOS[m.id]||{}).curta || m.curta || m.nome)}</button>`).join('')}</nav>
+  <header class="cabeca">
+    <h1>${esc(b.materia)}</h1>
+    <p class="prof">${esc(nomeProf(b.prof))}${melhor!==null ? `, melhor nota ${nota1(melhor)}` : ''}</p>
+    ${b.proxima ? `<p class="quando">${esc(b.proxima)}</p>` : ''}
+  </header>
+  <button class="grande aperta" data-go="${completo.id}"><span class="ic">${IC.play}</span><span><b>Fazer simulado</b><small>10 questões sorteadas, nota de 0 a 1</small></span></button>
+  <div class="menu">
+    ${sm1 && nSm1 ? `<button class="item" data-go="${sm1.id}"><span class="ic">${IC.folha}</span><span class="t"><b>Prova do SM1</b><small>As ${nSm1} questões que caíram, na ordem da prova</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${sm2 && nSm2 ? `<button class="item" data-go="${sm2.id}"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(sm2.nome||'Prova do SM2')}</b><small>${esc(sm2.sub||('As '+nSm2+' questões, com gabarito comentado'))}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${casos && poolDe(casos).length ? `<button class="item" data-go="${casos.id}"><span class="ic">${IC.esteto}</span><span class="t"><b>Simulação de caso real</b><small>${poolDe(casos).length} casos com paciente, idade, dente e conduta</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${novas ? (n => `<button class="item" data-go="${novas.id}" ${n?'':'disabled'}><span class="ic">${IC.play}</span><span class="t"><b>Questões que nunca fiz</b><small>${n ? n+(n===1?' questão nova pra você':' questões novas pra você') : 'Você já respondeu todas, parabéns!'}</small></span><span class="seta">${IC.seta}</span></button>`)(poolDe(novas).length) : ''}
+    ${temas.length ? `<button class="item" id="temas"><span class="ic">${IC.alvo}</span><span class="t"><b>Treinar um assunto</b><small>${temas.length} assuntos para escolher</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${erros ? `<button class="item" data-go="${erros.id}" ${nErr?'':'disabled'}><span class="ic">${IC.volta}</span><span class="t"><b>Revisar meus erros</b><small>${nErr ? nErr+(nErr===1?' questão guardada':' questões guardadas') : 'Quando você errar, a questão aparece aqui'}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${(b.estudo||[]).length ? `<button class="item" id="porcor"><span class="ic">${IC.paleta}</span><span class="t"><b>Estudar por cor</b><small>${(b.estudo||[]).length} grupos de lesões, com foto, e treino só de uma cor</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    <button class="item" id="rev"><span class="ic">${IC.livro}</span><span class="t"><b>Ler o resumo</b><small>O que mais cai, em tópicos curtos</small></span><span class="seta">${IC.seta}</span></button>
+    ${itemAulas()}
+    ${itemMaterial()}
+  </div>
+  <section class="bloco"><h2>Meu desempenho</h2>${desempenhoHtml()}</section>
+  ${maisCaemHtml()}
+  ${nSm1 || nSm2 ? `<section class="bloco legenda">${nSm1 ? '<span><i class="tag sm1">SM1</i>a questão caiu igual no simulado 1</span>' : ''}${nSm2 ? '<span><i class="tag sm2">SM2</i>a questão caiu igual no simulado 2</span>' : ''}${nSm1 ? '<span><i class="tag par">parecida</i>semelhante a uma do simulado 1</span>' : ''}</section>` : ''}`);
+  const {ms} = partes();
+  $('#vol').onclick = inicio;
+  app.querySelectorAll('[data-mat]').forEach(el => el.onclick = () => { MAT = el.dataset.mat; grava('jogo-mat', MAT); materia(); });
+  app.querySelectorAll('[data-go]').forEach(el => el.onclick = () => comeca(ms.find(m => m.id === el.dataset.go)));
+  if ($('#temas')) $('#temas').onclick = listaTemas;
+  $('#rev').onclick = resumo;
+  if ($('#porcor')) $('#porcor').onclick = () => estudoCor();
+  ligaAulasMaterial();
+  if ($('#fracos')) $('#fracos').onclick = () => comeca(modoFracos());
+  app.querySelectorAll('[data-cai]').forEach(el => el.onclick = () => comeca({ id:'cai-'+el.dataset.cai, nome:el.dataset.cai, temas:[el.dataset.cai], cai:true }));
+}
+
+/* ---------- TREINAR UM ASSUNTO ---------- */
+function listaTemas(){
+  const b = banco(), {temas: temas0, casos} = partes();
+  const temas = (casos && poolDe(casos).length ? [casos] : []).concat(temas0); /* Rafael 12/11: caso real fora e dentro do Treinar */
+  tela(`
+  <div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
+  <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Treinar um assunto</h1><p>Escolha o tema. Até 10 questões só dele.</p></div>
+  <div class="menu">${temas.map(m => `<button class="item" data-go="${m.id}"><span class="t"><b>${esc(m.nome)}</b><small>${poolDe(m).length} questões</small></span><span class="seta">${IC.seta}</span></button>`).join('')}</div>`);
+  $('#vol').onclick = materia;
+  app.querySelectorAll('[data-go]').forEach(el => el.onclick = () => comeca(temas.find(m => m.id === el.dataset.go)));
+}
+
+/* ---------- PROVA ---------- */
+function comeca(m){
+  if (!m) return;
+  const vistasAgora = vistasDe();
+  const itens = sorteia(m).map(it => ({...it, nova: !(m.sm1todo || m.sm2todo) && !vistasAgora.has(it.q.id), certa: it.ordem.indexOf(it.q.a), resp:null, conf:false, riscadas:[], pulou:false, dica:false}));
+  if (!itens.length) return;
+  partida = { modo:m, itens, i:0 }; ultimaVista = -1;
+  questao();
+}
+const acertos = () => partida.itens.filter(it => it.conf && it.resp === it.certa).length;
+function trilhaHtml(){
+  return `<div class="trilha">${partida.itens.map((it,k) => {
+    const c = it.conf ? (it.resp===it.certa?' ok':' no') : (it.pulou?' pul':'');
+    return `<button class="seg${c}${k===partida.i?' atual':''}" data-ir="${k}" aria-label="Ir para a questão ${k+1}${it.conf?(it.resp===it.certa?', certa':', errada'):''}"${k===partida.i?' aria-current="step"':''}></button>`; }).join('')}</div>`;
+}
+const figHtml = (src, alt) => `<button type="button" class="figq" data-zoom="${esc(src)}" data-alt="${esc(alt)}" aria-label="Ampliar a imagem"><img src="${esc(src)}" alt="${esc(alt)}" loading="eager" decoding="async"><span class="lupa">⤢ Ampliar</span></button>`;
+function abreZoom(src, alt){
+  const z = document.createElement('div'); z.className = 'zoom'; z.setAttribute('role','dialog'); z.setAttribute('aria-label','Imagem ampliada');
+  z.innerHTML = `<img src="${esc(src)}" alt="${esc(alt)}"><span class="fecha">Fechar ✕</span>`;
+  const fecha = () => { z.remove(); document.removeEventListener('keydown', esc_); };
+  const esc_ = ev => { if (ev.key === 'Escape') fecha(); };
+  z.onclick = fecha; document.addEventListener('keydown', esc_); document.body.appendChild(z);
+}
+function enunciadoHtml(q){
+  if (q.af && q.af.length) return `<div class="enun"><p>${esc(q.ctx)}</p><ul class="afs">${q.af.map((t,k)=>(q.ar&&k===1?'<li class="porque">PORQUE</li>':'')+`<li><b>${ROM[k]}.</b><span>${esc(t)}</span></li>`).join('')}</ul>${q.p?`<p>${esc(q.p)}</p>`:''}</div>`;
+  return `<div class="enun"><p>${esc(q.ctx)}${q.p?' '+esc(q.p):''}</p></div>`;
+}
+function questao(anima){
+  const P = partida, it = P.itens[P.i], q = it.q, total = P.itens.length;
+  const respondidas = P.itens.filter(x => x.conf).length;
+  const nova = ultimaVista !== P.i; ultimaVista = P.i;
+  const marca = q.sm2 ? '<p class="nota-sm2">(questão do simulado 2)</p>' : q.sm1 ? '<p class="nota-sm1">(questão do simulado 1)</p>' : q.sm1par ? '<p class="nota-par">(semelhante à do SM1)</p>' : '';
+  app.innerHTML = `
+  <div class="barra">
+    <div class="barraL"><button class="fechar" id="sair">${IC.x}Sair</button><span class="ponto" aria-live="polite">${nota1(acertos())} <small>de ${nota1(total)}</small></span></div>
+    ${trilhaHtml()}
+  </div>
+  <section class="folha${nova?' entra':''}">
+    <div class="qcab"><h2>Questão ${P.i+1} de ${total}</h2><span class="tema">${esc(q.tema)}</span>${partida.itens[partida.i].nova ? '<span class="nova" title="Você nunca respondeu esta questão">nova</span>' : ''}</div>
+    ${marca ? `<div style="margin:-6px 0 10px">${marca}</div>` : ''}
+    ${q.img ? figHtml(q.img, q.alt || 'Imagem da questão') : ''}
+    ${enunciadoHtml(q)}
+    <div class="ops" role="radiogroup" aria-label="Alternativas">${it.ordem.map((o,k) => {
+      let cls = '';
+      if (it.conf) { if (k===it.certa) cls=' certa'; else if (k===it.resp) cls=' errada'; else cls=' apagada'; if (anima && (k===it.certa || k===it.resp)) cls+=' anim'; }
+      else if (it.riscadas.includes(k)) cls=' riscada';
+      return `<button class="op${cls}" role="radio" data-op="${k}" aria-checked="${it.resp===k}" ${it.conf?'disabled':''}><span class="bola">${L[k]}</span><span class="txt">${esc(q.o[o])}</span></button>`; }).join('')}</div>
+    ${it.conf ? `
+      <div class="retorno ${it.resp===it.certa?'ok':'no'}" role="status">
+        <h3>${it.resp===it.certa ? 'Acertou. Mais 0,1' : 'Errou. A certa é a '+L[it.certa]}</h3>
+        <p>${esc(q.w)}</p>${q.imgw ? figHtml(q.imgw, 'A mesma imagem com a resposta marcada') : ''}${(q.net||q.f)?`<p class="fonte">${q.net?'Questão de pesquisa. ':''}${esc(q.f||'')}</p>`:''}
+      </div>` : `
+      <div class="ferr">
+        <button class="fer" id="riscar" ${it.riscadas.length?'disabled':''}>${IC.tesoura}Riscar 2 erradas</button>
+        <button class="fer" id="dica" aria-expanded="${it.dica}">${IC.luz}${it.dica?'Esconder resumo':'Resumo do tema'}</button>
+        <button class="fer" id="pular">${IC.pula}Pular</button>
+      </div>
+      ${it.dica ? dicaHtml(q) : ''}`}
+  </section>
+  <div class="rodape">${it.conf
+    ? `<button class="botao aperta" id="prox">${respondidas===total ? 'Ver minha nota' : 'Próxima questão'}</button>`
+    : `<button class="botao aperta" id="conf" ${it.resp===null?'disabled':''}>${it.resp===null ? 'Escolha uma alternativa' : 'Confirmar a letra '+L[it.resp]}</button>`}</div>`;
+  if (nova) window.scrollTo(0,0);
+  /* Rafael 11/11: confirm() não abre em alguns navegadores; confirmação no próprio botão */
+  $('#sair').onclick = () => materia(); /* Rafael 11/11: sair na hora, sem confirmação */
+  app.querySelectorAll('[data-ir]').forEach(el => el.onclick = () => { P.i = +el.dataset.ir; questao(); });
+  app.querySelectorAll('[data-op]').forEach(el => el.onclick = () => escolhe(+el.dataset.op));
+  if ($('#riscar')) $('#riscar').onclick = () => { it.riscadas = mistura([0,1,2,3,4].filter(k => k!==it.certa && k!==it.resp)).slice(0,2); questao(); };
+  if ($('#dica')) $('#dica').onclick = () => { it.dica = !it.dica; questao(); };
+  if ($('#pular')) $('#pular').onclick = () => { it.pulou = true; P.i = proximaLivre(P.i); questao(); };
+  app.querySelectorAll('[data-zoom]').forEach(el => el.onclick = () => abreZoom(el.dataset.zoom, el.dataset.alt));
+  if ($('#conf')) $('#conf').onclick = confirma;
+  if ($('#prox')) $('#prox').onclick = () => { if (P.itens.every(x => x.conf)) resultado(); else { P.i = proximaLivre(P.i); questao(); } };
+}
+/* escolher sem redesenhar a tela: a bolinha se preenche ali mesmo */
+function escolhe(k){
+  const it = partida.itens[partida.i];
+  if (it.conf) return;
+  it.resp = k; it.riscadas = it.riscadas.filter(x => x !== k);
+  app.querySelectorAll('[data-op]').forEach(el => {
+    const n = +el.dataset.op;
+    el.setAttribute('aria-checked', n===k);
+    el.classList.toggle('riscada', it.riscadas.includes(n));
+  });
+  const b = $('#conf'); if (b) { b.disabled = false; b.textContent = 'Confirmar a letra '+L[k]; }
+}
+function proximaLivre(i){ const t = partida.itens.length; for (let s=1;s<=t;s++){ const k=(i+s)%t; if(!partida.itens[k].conf) return k; } return i; }
+function dicaHtml(q){
+  const r = (banco().revisao||[]); const tema = (q.tema||'').toLowerCase();
+  let itens = []; r.forEach(sec => sec.i.forEach(x => { if (x.toLowerCase().includes(tema.split(' ')[0])) itens.push(x); }));
+  if (!itens.length) itens = (r[0] ? r[0].i.slice(0,3) : []);
+  return `<div class="dicaBox"><b>Resumo: ${esc(q.tema)}</b><ul>${itens.slice(0,4).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+}
+function confirma(){
+  const it = partida.itens[partida.i];
+  if (it.resp === null || it.conf) return;
+  it.conf = true;
+  const e = new Set(errosDe());
+  if (it.resp === it.certa) e.delete(it.q.id); else e.add(it.q.id);
+  grava('jogo-erros-'+MAT, [...e]);
+  { const v = vistasDe(); v.add(it.q.id); grava('jogo-vistas-'+MAT, [...v]); }
+  const st = ler('jogo-stats-'+MAT, {}); const t = it.q.tema || 'Geral';
+  st[t] = st[t] || {t:0, a:0}; st[t].t++; if (it.resp === it.certa) st[t].a++;
+  grava('jogo-stats-'+MAT, st);
+  questao(true);
+  const r = document.querySelector('.retorno');
+  if (r && r.getBoundingClientRect().bottom > innerHeight - 90) r.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'center'});
+}
+document.addEventListener('keydown', ev => {
+  if (!partida || !$('.folha') || ev.target.tagName === 'INPUT') return;
+  const it = partida.itens[partida.i]; const k = 'abcde'.indexOf(ev.key.toLowerCase());
+  if (k >= 0 && ev.key.length === 1 && !it.conf) escolhe(k);
+  else if (ev.key === 'Enter' && ev.target.tagName !== 'BUTTON') { const b = $('#conf') || $('#prox'); if (b && !b.disabled) b.click(); }
+});
+
+/* ---------- RESULTADO ---------- */
+function resultado(){
+  const P = partida, total = P.itens.length, c = acertos();
+  const pct = c/total;
+  if (!P.modo.sm1todo && !P.modo.sm2todo && !P.modo.erros && total===10) { const m = ler('jogo-melhor-'+MAT, null); if (m===null || c>m) grava('jogo-melhor-'+MAT, c); }
+  const msg = pct>=0.8 ? 'Mandou muito. Tá pronto pra prova.' : pct>=0.5 ? 'Bom caminho. Refaz as que errou que fixa.' : 'Normal no começo. Lê o resumo e tenta de novo.';
+  const nErr = P.itens.filter(x => x.resp !== x.certa).length;
+  partida = null;
+  tela(`
+  <div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(banco().curta||'Voltar')}</button></div>
+  <section class="bloco res">
+    <p class="vazio">${esc(P.modo.nome)}</p>
+    <div class="nota">${(c/10).toFixed(1).replace('.',',')}</div>
+    <p class="de"><b>${c} de ${total}</b> certas</p>
+    <p class="msg">${msg}</p>
+    <div class="bolinhas" aria-hidden="true">${P.itens.map(it => `<i class="${it.resp===it.certa?'c':'e'}"></i>`).join('')}</div>
+  </section>
+  <div class="pilha">
+    ${nErr ? `<button class="botao aperta" id="refaz">Refazer as ${nErr} que errei</button>` : ''}
+    <button class="botao aperta ${nErr?'claro':''}" id="novo">Novo simulado</button>
+  </div>
+  <section class="bloco"><h2>Questão por questão</h2>${P.itens.map((it,k) => `<div class="rq"><span class="n ${it.resp===it.certa?'c':'e'}">${k+1}</span><div><b>${it.resp===it.certa?'Certa':'Errada'}</b>, <small>${esc(it.q.tema)}</small><br><small>Certa: ${L[it.certa]}. ${esc(it.q.w)}</small></div></div>`).join('')}</section>`);
+  $('#vol').onclick = materia;
+  if ($('#refaz')) $('#refaz').onclick = () => { const erradas = P.itens.filter(x => x.resp !== x.certa).map(x => ({...x, resp:null, conf:false, riscadas:[], pulou:false, dica:false})); partida = { modo:{nome:'Refazer as que errei', erros:true}, itens:erradas, i:0 }; ultimaVista = -1; questao(); };
+  $('#novo').onclick = () => comeca(P.modo.erros || P.modo.sm1todo || P.modo.sm2todo ? partes().completo : P.modo);
+}
+
+/* ---------- RESUMO ---------- */
+function resumo(){
+  const b = banco();
+  tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
+  <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Resumo</h1><p>${esc(b.materia)}</p></div>
+  <section class="bloco rev">${(b.revisao||[]).map(r => `<h2>${esc(r.t)}</h2><ul>${r.i.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`).join('')}</section>
+  ${temQuestoes() ? `<div class="rodape"><button class="botao aperta" id="go">Fazer simulado</button></div>` : ''}`);
+  $('#vol').onclick = materia;
+  if ($('#go')) $('#go').onclick = () => comeca(partes().completo);
+}
+
+/* ---------- ESTUDAR POR COR (rascunho 12/11: banco.estudo = [{cor, hex, nome, intro, lesoes:[{nome, img, legenda, pontos, fonte}]}]) ---------- */
+const textoSobre = hex => { const h = String(hex||'').replace('#',''); if (h.length < 6) return '#fff'; const [r,g,b] = [0,2,4].map(i => parseInt(h.substr(i,2),16)/255); return (0.299*r + 0.587*g + 0.114*b) > 0.6 ? '#1a2233' : '#fff'; };
+function modoDaCor(c){ return modos().find(m => m.cor === c) || { id:'cor-'+c, nome:'Lesões: '+c, cor:c }; }
+function estudoCor(alvo){
+  const b = banco(), secs = b.estudo || [];
+  tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
+  <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Estudar por cor</h1><p>A primeira pergunta diante de uma lesão: qual é a cor? Cada grupo tem as lesões com foto (toque para ampliar) e um treino só daquela cor.</p></div>
+  <nav class="trocar cores-nav" aria-label="Ir para a cor">${secs.map((s,k) => `<button class="chip aperta" data-ir-cor="${k}" style="--fx:${esc(s.hex)}"><i></i>${esc(s.curta||s.nome)}</button>`).join('')}</nav>
+  ${secs.map((s,k) => { const n = poolDe(modoDaCor(s.cor)).length; return `<section class="corsec" id="cor-${k}" style="--fx:${esc(s.hex)};--fxt:${textoSobre(s.hex)}">
+    <header class="faixa"><h2>${esc(s.nome)}</h2>${s.intro ? `<p>${esc(s.intro)}</p>` : ''}</header>
+    ${(s.lesoes||[]).map(l => `<article class="lesao"><h3>${esc(l.nome)}</h3>
+      ${l.img ? figHtml(l.img, l.legenda || l.nome).replace('loading="eager"','loading="lazy"') : ''}${l.img && l.legenda ? `<p class="leg">${esc(l.legenda)}</p>` : ''}
+      <ul>${(l.pontos||[]).map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+      ${l.fonte ? `<p class="fonte">Fonte: ${esc(l.fonte)}</p>` : ''}</article>`).join('')}
+    <button class="treina aperta" data-cor="${esc(s.cor)}" ${n?'':'disabled'}>${IC.play}${n ? `Treinar só essa cor (${n} ${n===1?'questão':'questões'})` : 'Sem questões desta cor ainda'}</button>
+    <div style="height:12px"></div>
+  </section>`; }).join('')}
+  <button class="topo-cor" id="subir" aria-label="Voltar ao topo">↑ Cores</button>`);
+  $('#vol').onclick = materia;
+  $('#subir').onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+  $('#subir').hidden = true; /* o botão de subir só aparece depois de rolar */
+  if (!window._subirCor) { window._subirCor = true; addEventListener('scroll', () => { const s = $('#subir'); if (s) s.hidden = scrollY < 700; }, {passive:true}); }
+  /* fotos com carregamento preguiçoso mudam a altura da página: rola de novo depois que carregam */
+  const vaiPara = k => { const s = document.getElementById('cor-'+k); if (!s) return; s.scrollIntoView({block:'start'}); [250, 700, 1500].forEach(t => setTimeout(() => s.scrollIntoView({block:'start'}), t)); };
+  app.querySelectorAll('[data-ir-cor]').forEach(el => el.onclick = () => vaiPara(el.dataset.irCor));
+  app.querySelectorAll('[data-cor]').forEach(el => el.onclick = () => comeca(modoDaCor(el.dataset.cor)));
+  app.querySelectorAll('[data-zoom]').forEach(el => el.onclick = () => abreZoom(el.dataset.zoom, el.dataset.alt));
+  if (alvo != null) vaiPara(alvo);
+}
+
+/* ---------- AULAS (rascunho 11/11: transcrição da aula + resumos, dados em aulas.js) ---------- */
+const aulasDe = () => ((window.AULAS || {})[MAT] || []);
+const negrito = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+/* figura no meio do resumo: toque amplia (mesmo zoom das questões) */
+const figAula = f => `<figure class="figaula"><button type="button" class="figq" data-zoom="${esc(f.img)}" data-alt="${esc(f.cap||'')}" aria-label="Ampliar a imagem"><img src="${esc(f.img)}" alt="${esc(f.cap||'')}" loading="lazy" decoding="async"><span class="lupa">⤢ Ampliar</span></button><figcaption>${esc(f.cap||'')}${f.cr ? `<small>${esc(f.cr)}</small>` : ''}</figcaption></figure>`;
+function listaAulas(){
+  const b = banco(), as = aulasDe();
+  tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
+  <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Aulas</h1><p>${esc(b.materia)}</p></div>
+  ${as.length ? `<div class="menu">${as.map((a,k) => `<button class="item" data-aula="${k}"><span class="ic">${IC.fala}</span><span class="t"><b>${esc(a.titulo)}</b><small>${esc(a.data)}, ${esc(a.professor || a.palestrante || '')}</small></span><span class="seta">${IC.seta}</span></button>`).join('')}</div>` : `<section class="bloco"><p class="vazio">As aulas aparecem aqui quando a transcrição chegar. Cada aula vem com resumo em texto, resumo em tópicos com as imagens, a transcrição limpa e os slides.</p></section>`}`);
+  $('#vol').onclick = materia;
+  app.querySelectorAll('[data-aula]').forEach(el => el.onclick = () => verAula(+el.dataset.aula));
+}
+function verAula(k, aba){
+  const as = aulasDe(), a = as[k]; if (!a) return materia();
+  aba = aba || ler('jogo-aula-aba', 'texto');
+  if (!['texto','topicos','transcricao','slides'].includes(aba)) aba = 'texto';
+  grava('jogo-aula-aba', aba);
+  const ABAS = [['texto','Resumo em texto'],['topicos','Resumo em tópicos'],['transcricao','Transcrição completa'],['slides','Slides e material']];
+  let corpo = '';
+  const timg = a.resumoTextoImg || {};
+  if (aba === 'texto') corpo = `<section class="bloco aula">${(a.resumoTexto||[]).map((p,i) => `<p>${negrito(p)}</p>${(timg[i]||[]).map(figAula).join('')}`).join('')}</section>`;
+  else if (aba === 'topicos') corpo = `<section class="bloco aula">${(a.resumoTopicos||[]).map(s => `<h2>${esc(s.t)}</h2><ul>${s.i.map(x => x && x.img ? `<li class="figli">${figAula(x)}</li>` : `<li>${negrito(x)}</li>`).join('')}</ul>${(s.img||[]).map(figAula).join('')}`).join('')}</section>`;
+  else if (aba === 'slides') corpo = slidesHtml(a);
+  else corpo = `${a.aviso ? `<p class="aviso-aula">${esc(a.aviso)}</p>` : ''}
+    <section class="bloco aula"><button class="abretudo" id="abretudo">Abrir todas as partes</button>
+    ${(a.transcricao||[]).map((s,i) => `<details${i===0?' open':''}><summary>${esc(s.t)}</summary>${s.p.map(p => `<p>${negrito(p)}</p>`).join('')}</details>`).join('')}</section>
+    ${a.tirado && a.tirado.length ? `<section class="bloco aula tirado"><h2>O que foi tirado da transcrição</h2><ul>${a.tirado.map(x => `<li>${esc(x)}</li>`).join('')}</ul></section>` : ''}`;
+  const FALTA = { texto: a.resumoTexto, topicos: a.resumoTopicos, transcricao: a.transcricao };
+  if (aba !== 'slides' && !(FALTA[aba] || []).length) corpo = `<section class="bloco"><p class="vazio">Esta parte da aula ainda não ficou pronta.</p></section>`;
+  tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${as.length>1 ? 'Aulas' : esc(banco().curta||'Voltar')}</button></div>
+  <header class="cabeca"><h1>${esc(a.titulo)}</h1><p class="prof">Aula de ${esc(a.data)}</p></header>
+  <section class="creditos"><p><b>${a.professor ? 'Professor(a)' : 'Palestra'}:</b> ${esc(a.professor || a.palestrante || 'a confirmar')}, ${esc(a.data)}</p><p><b>Gravação e transcrição:</b> ${esc(a.gravacao || 'a confirmar')}</p>${a.creditos ? `<p class="obrigado">${esc(a.creditos)}</p>` : ''}</section>
+  <nav class="trocar" aria-label="Parte da aula">${ABAS.map(([id,nome]) => `<button class="chip aperta" data-aba="${id}" aria-current="${id===aba}">${nome}</button>`).join('')}</nav>
+  ${corpo}`);
+  $('#vol').onclick = as.length > 1 ? listaAulas : materia;
+  app.querySelectorAll('[data-aba]').forEach(el => el.onclick = () => verAula(k, el.dataset.aba));
+  app.querySelectorAll('[data-zoom]').forEach(el => el.onclick = () => abreZoom(el.dataset.zoom, el.dataset.alt));
+  if ($('#abretudo')) $('#abretudo').onclick = ev => { const ds = app.querySelectorAll('.aula details'); const abrir = [...ds].some(d => !d.open); ds.forEach(d => d.open = abrir); ev.target.textContent = abrir ? 'Fechar todas as partes' : 'Abrir todas as partes'; };
+}
+
+/* slides da aula: { img, cap, cr } vira figura com zoom; { t, url } vira link que abre em outra aba */
+/* sem "slides" na aula: junta as imagens que já estão nos resumos (fotos dos slides) */
+function slidesDa(a){
+  if ((a.slides || []).length) return a.slides;
+  const vistas = new Set(), out = [];
+  const poe = f => { if (f && f.img && !vistas.has(f.img)) { vistas.add(f.img); out.push(f); } };
+  Object.values(a.resumoTextoImg || {}).forEach(l => (l || []).forEach(poe));
+  (a.resumoTopicos || []).forEach(s => { (s.i || []).forEach(x => { if (x && x.img) poe(x); }); (s.img || []).forEach(poe); });
+  return out;
+}
+function slidesHtml(a){
+  const s = slidesDa(a);
+  if (!s.length) return `<section class="bloco"><p class="vazio">Os slides desta aula ainda não chegaram.</p></section>`;
+  const figs = s.filter(x => x.img), links = s.filter(x => !x.img && x.url);
+  return `${figs.length ? `<section class="bloco aula">${figs.map(figAula).join('')}</section>` : ''}
+  ${links.length ? `<div class="menu">${links.map(x => `<a class="item" href="${esc(x.url)}" target="_blank" rel="noopener"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(x.t||'Material')}</b>${x.desc ? `<small>${esc(x.desc)}</small>` : ''}</span><span class="seta">${IC.seta}</span></a>`).join('')}</div>` : ''}`;
+}
+function listaMaterial(){
+  const b = banco(), as = aulasDe(), mat = materialDe();
+  const comSlides = as.map((a,k) => ({a,k})).filter(x => slidesDa(x.a).length);
+  tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
+  <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Material</h1><p>${esc(b.materia)}</p></div>
+  ${comSlides.length || mat.length ? `<div class="menu">
+    ${comSlides.map(x => `<button class="item" data-slides="${x.k}"><span class="ic">${IC.fala}</span><span class="t"><b>Slides: ${esc(x.a.titulo)}</b><small>${esc(x.a.data)}</small></span><span class="seta">${IC.seta}</span></button>`).join('')}
+    ${mat.map(x => `<a class="item" href="${esc(x.url)}" target="_blank" rel="noopener"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(x.t)}</b><small>${esc([x.data, x.desc].filter(Boolean).join(', '))}</small></span><span class="seta">${IC.seta}</span></a>`).join('')}
+  </div>` : `<section class="bloco"><p class="vazio">O material aparece aqui quando o professor passar.</p></section>`}`);
+  $('#vol').onclick = materia;
+  app.querySelectorAll('[data-slides]').forEach(el => el.onclick = () => verAula(+el.dataset.slides, 'slides'));
+}
+
+pinta();
+inicio();
+</script>
+</body>
+</html>
