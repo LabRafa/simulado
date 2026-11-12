@@ -321,9 +321,9 @@ let ultimaVista = -1;
 const bancoVazio = m => ({ materia: m.materia || m.nome, curta: m.curta || m.nome, codigo: m.codigo, prof: '', proxima: '', modos: [], q: [], revisao: [], vazio: true });
 const banco = () => BANCOS[MAT] || bancoVazio(infoMat(MAT) || { nome: MAT });
 const temQuestoes = () => !!(BANCOS[MAT] && (BANCOS[MAT].q || []).length);
-/* Rafael 12/11: "Simulado de caso real" em toda matéria que tiver questão com paciente (ctx com idade/paciente) */
+/* Rafael 12/11: "Simulação de caso real" em toda matéria que tiver questão com paciente (ctx com idade/paciente) */
 const ehCaso = q => q && q.ctx && /\d+\s*anos|paciente/i.test(q.ctx);
-const modos = () => { const b = banco(), ms = (b.modos || []).slice(); if (!ms.some(m => m.casos) && (b.q || []).filter(ehCaso).length >= 3) ms.splice(1, 0, { id: 't-casos', nome: 'Simulado de caso real', sub: 'Só questões com paciente: idade, dente, história e a conduta.', temas: null, casos: true }); return ms; };
+const modos = () => { const b = banco(), ms = (b.modos || []).slice(); if (!ms.some(m => m.casos) && (b.q || []).filter(ehCaso).length >= 3) ms.splice(1, 0, { id: 't-casos', nome: 'Simulação de caso real', sub: 'Só questões com paciente: idade, dente, história e a conduta.', temas: null, casos: true }); return ms; };
 const errosDe = () => ler('jogo-erros-'+MAT, []);
 function pinta(){
   const c = CORES[MAT] || ['#2346a8','#e6ecfa','#1a3480'];
@@ -476,7 +476,7 @@ function materia(){
   <div class="menu">
     ${sm1 && nSm1 ? `<button class="item" data-go="${sm1.id}"><span class="ic">${IC.folha}</span><span class="t"><b>Prova do SM1</b><small>As ${nSm1} questões que caíram, na ordem da prova</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${sm2 && nSm2 ? `<button class="item" data-go="${sm2.id}"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(sm2.nome||'Prova do SM2')}</b><small>${esc(sm2.sub||('As '+nSm2+' questões, com gabarito comentado'))}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
-    ${casos && poolDe(casos).length ? `<button class="item" data-go="${casos.id}"><span class="ic">${IC.esteto}</span><span class="t"><b>Simulado de caso real</b><small>${poolDe(casos).length} casos com paciente, idade, dente e conduta</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${casos && poolDe(casos).length ? `<button class="item" data-go="${casos.id}"><span class="ic">${IC.esteto}</span><span class="t"><b>Simulação de caso real</b><small>${poolDe(casos).length} casos com paciente, idade, dente e conduta</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${temas.length ? `<button class="item" id="temas"><span class="ic">${IC.alvo}</span><span class="t"><b>Treinar um assunto</b><small>${temas.length} assuntos para escolher</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${erros ? `<button class="item" data-go="${erros.id}" ${nErr?'':'disabled'}><span class="ic">${IC.volta}</span><span class="t"><b>Revisar meus erros</b><small>${nErr ? nErr+(nErr===1?' questão guardada':' questões guardadas') : 'Quando você errar, a questão aparece aqui'}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     <button class="item" id="rev"><span class="ic">${IC.livro}</span><span class="t"><b>Ler o resumo</b><small>O que mais cai, em tópicos curtos</small></span><span class="seta">${IC.seta}</span></button>
