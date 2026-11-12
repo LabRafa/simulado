@@ -41,6 +41,7 @@
     proxima: 'SM2 quinta 12/11, na sala, no horário da aula',
     modos: [
       { id: 'completo', nome: 'Simulado completo', sub: '10 questões sorteadas de toda a matéria.', temas: null },
+      { id: 't-casos', nome: 'Simulado de caso real', sub: 'Só questões com paciente: idade, dente, história e a conduta.', temas: null, casos: true },
       { id: 'sm1ver', nome: 'Prova do SM1', sub: 'As 10 questões que caíram no SM1, na ordem da prova.', temas: null, sm1todo: true, prefixo: 'fa' },
       tema('t-farmaco', 'Farmacocinética e farmacodinâmica', 'ADME, primeira passagem, índice terapêutico, tolerância.', ['Farmacocinética', 'Farmacodinâmica']),
       tema('t-anest', 'Anestésicos locais e vasoconstritores', 'Ésteres e amidas, estrutura química, bupivacaína, vasoconstritor.', ['Anestésicos locais', 'Vasoconstritores']),

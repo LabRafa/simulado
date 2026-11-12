@@ -255,12 +255,12 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611121518"></script>
-<script src="banco-farmaco.js?v=202611121518"></script>
-<script src="banco-imagino.js?v=202611121518"></script>
-<script src="banco-cabeca.js?v=202611121518"></script>
-<script src="periodos.js?v=202611121518"></script>
-<script src="aulas.js?v=202611121518"></script>
+<script src="bancos.js?v=202611121519"></script>
+<script src="banco-farmaco.js?v=202611121519"></script>
+<script src="banco-imagino.js?v=202611121519"></script>
+<script src="banco-cabeca.js?v=202611121519"></script>
+<script src="periodos.js?v=202611121519"></script>
+<script src="aulas.js?v=202611121519"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -332,6 +332,7 @@ function poolDe(m){
   if (m.sm1todo) return b.q.filter(q => q.sm1 && (!m.prefixo || q.id.startsWith(m.prefixo))).sort((x,y)=>x.id.localeCompare(y.id,'pt',{numeric:true}));
   if (m.img) return b.q.filter(q => q.img);
   if (m.af) return b.q.filter(q => q.af && q.af.length);
+  if (m.casos) return b.q.filter(q => q.ctx && /\d+\s*anos|paciente/i.test(q.ctx)); /* Rafael 12/11: simulado de caso real */
   return m.temas ? b.q.filter(q => m.temas.includes(q.tema)) : b.q.slice();
 }
 function sorteia(m){
