@@ -20,7 +20,7 @@
   const F_AHA = 'AHA 2021, Prevention of Viridans Group Streptococcal Infective Endocarditis (Wilson et al., Circulation 2021)';
   const F_RDC = 'ANVISA, RDC 20/2011 (prescrição e dispensação de antimicrobianos; regras mantidas pela RDC 471/2021)';
   const F_344 = 'Portaria SVS/MS 344/1998 (lista B1 e Notificação de Receita B)';
-  const SM2 = n => 'SM2 de 12/11/2026 (Prof. Gustavo Holderbaum), questão ' + n + ' (questão original da prova)';
+  const SM2 = n => 'SM2 de 12/11/2026 (Prof. Gustavo Holderbaum), questão ' + n + ' (questão original da prova; gabarito oficial do professor, prova A 0108064)';
   const AR = [
     'As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.',
     'As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.',
