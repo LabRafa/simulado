@@ -256,12 +256,13 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611121544"></script>
-<script src="banco-farmaco.js?v=202611121544"></script>
-<script src="banco-imagino.js?v=202611121544"></script>
-<script src="banco-cabeca.js?v=202611121544"></script>
-<script src="periodos.js?v=202611121544"></script>
-<script src="aulas.js?v=202611121544"></script>
+<script src="bancos.js?v=202611121616"></script>
+<script src="banco-farmaco.js?v=202611121616"></script>
+<script src="banco-imagino.js?v=202611121616"></script>
+<script src="banco-cabeca.js?v=202611121616"></script>
+<script src="banco-estomato.js"></script>
+<script src="periodos.js?v=202611121616"></script>
+<script src="aulas.js?v=202611121616"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -285,7 +286,8 @@ const CORES = {
   integral:['#8a6a00','#f7f0d6','#654d00'],
   extconv: ['#5b6a2a','#eef1e0','#424e1d'],
   socorros:['#b03030','#fbe6e6','#842222'],
-  cabeca: ['#8c2f39','#f7e6e8','#6a2029']
+  cabeca: ['#8c2f39','#f7e6e8','#6a2029'],
+  estomato:['#a8456b','#f8e7ee','#7d3050']
 };
 const IC = {
   prova1:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><text x="12" y="18" text-anchor="middle" font-size="9" font-weight="800" fill="currentColor" stroke="none" font-family="Arial">1</text></svg>',
