@@ -17,7 +17,9 @@ window.PERIODOS = {
     { n: 2, nome: '2º período', curto: 'em curso', titulo: '2º período',
       aviso: 'Em curso: SM2 agora, AV de 23 a 26/11.' },
     { n: 3, nome: '3º período', curto: 'começa em 2027.1', titulo: '3º período (começa em 2027.1, nada foi dado ainda)',
-      aviso: 'Matérias previstas pela grade do curso, a confirmar quando sair o horário. Ainda não tem questões: as aulas entram aqui quando forem dadas.' }
+      aviso: 'Matérias previstas pela grade do curso, a confirmar quando sair o horário. Ainda não tem questões: as aulas entram aqui quando forem dadas.' },
+    { n: 99, nome: 'Especialidades', curto: 'além da grade', titulo: 'Especialidades da odontologia',
+      aviso: 'Treino por especialidade, com fonte em cada questão. Entram mais especialidades quando tiver conteúdo.' }
   ]
 };
 

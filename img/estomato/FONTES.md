@@ -69,3 +69,29 @@ Não encontradas no Commons com licença aberta e foto boa (ficaram só em quest
 - Consenso OMS sobre desordens orais potencialmente malignas (Warnakulasuriya 2021): https://pubmed.ncbi.nlm.nih.gov/33128420/
 - StatPearls (NCBI Bookshelf, acesso aberto): Oral Leukoplakia NBK442013, Oral Candidiasis NBK545282, Oral Lichen Planus NBK578201, Geographic Tongue NBK554466, Recurrent Aphthous Stomatitis NBK431059, Herpetic Gingivostomatitis NBK526068, Pyogenic Granuloma NBK556077, Mucocele and Ranula NBK560855, Actinic Cheilitis NBK551553 (endereço: https://www.ncbi.nlm.nih.gov/books/NBKxxxxx/)
 - Artigos open access no PMC: língua geográfica e psoríase (An Bras Dermatol 2016, PMC4999097), língua fissurada (PMC9969861), tórus (PMC3941621), Fordyce (PMC11174180), herpes labial (PMC9867007), lesões reacionais (PMC7269285), língua pilosa negra (PMC4138463), tatuagem por amálgama (PMC10442241), lesões pigmentadas, Brasil (PMC3505710), leucoedema (PMC2571748), queratose friccional (PMC6405791), estomatite protética (PMC9967389), eritroplasia (PMC9545979), épulis fissurado (PMC12068180); lesões brancas benignas (StatPearls, PMID 34033358)
+
+## Fotos novas do "Estudar por cor" (12/11/2026)
+
+Baixadas do Wikimedia Commons (upload.wikimedia.org; as grandes pela miniatura oficial de 1280 px, porque o Commons limitou o download do original com erro 429), licença conferida na página de cada arquivo. Redimensionadas para no máximo 1000 px; a versão `-resposta` acrescenta a faixa escura com o nome. As de CC BY-SA mantêm a mesma licença nas versões derivadas.
+
+| Arquivo | Questões / estudo | Arquivo original no Commons | Autor | Licença |
+|---|---|---|---|---|
+| img/estomato/liquen-erosivo.jpg (+ -resposta) | es63; estudo "branco + vermelho" | [Erosive lichen planus.jpg](https://commons.wikimedia.org/wiki/File:Erosive_lichen_planus.jpg) | Syed Wali Peeran | CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0 |
+| img/estomato/melanose-fisiologica.jpg (+ -resposta) | es69; estudo "marrons e negras" | [Hyperpigmentation of the gum.jpg](https://commons.wikimedia.org/wiki/File:Hyperpigmentation_of_the_gum.jpg) | Shaimaa Abdellatif | CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0 |
+| img/estomato/melanose-fumante.jpg (+ -resposta) | es70; estudo "marrons e negras" | [Smoker milanosis.jpg](https://commons.wikimedia.org/wiki/File:Smoker_milanosis.jpg) | Shaimaa Abdellatif | CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0 |
+| img/estomato/varicosidade-sublingual.jpg (+ -resposta) | es76; estudo "azuis" | [Caviar tongue grade 1.png](https://commons.wikimedia.org/wiki/File:Caviar_tongue_grade_1.png) | Hedström L, Albrektsson M, Bergh H. | CC BY 4.0 — https://creativecommons.org/licenses/by/4.0 |
+| img/estomato/lesao-vascular-labio.jpg (+ -resposta) | es77; estudo "azuis" (hemangioma/malformação vascular) | [Venous lake 1.jpg](https://commons.wikimedia.org/wiki/File:Venous_lake_1.jpg) | Dr. Thomas P. Habif, MD (permissão via OTRS) | GFDL 1.2+ / CC BY-SA 3.0 — http://creativecommons.org/licenses/by-sa/3.0/ |
+
+Fotos antigas reaproveitadas no estudo por cor: leucoplasia, candidiase-palato, liquen-plano, lingua-geografica-1, granuloma-piogenico, eritroleucoplasia, lingua-pilosa-1, tatuagem-amalgama, mucocele, fibroma-labio, torus-palatino, lingua-fissurada-1, afta (também na es88), herpes-labial-1, carcinoma-lingua.
+
+### Descartadas nesta rodada (com o motivo)
+
+| Arquivo no Commons | Motivo |
+|---|---|
+| Smoker's melanosis.jpg | Mancha pouco nítida na mucosa do lábio; preferida "Smoker milanosis.jpg", na gengiva (local típico) |
+| GINGIVAL DEPIGMENTATION PREOP.jpg | Foto borrada e escura; preferida "Hyperpigmentation of the gum.jpg" |
+| Facies inferior linguae.JPG | Mostra veias NORMAIS do ventre da língua, não varicosidade: ensinaria errado |
+| Sublingual varices.gif | Pequena, varicosidade pouco visível, com setas desenhadas |
+| Median Glossitis.jpg | Rosto de criança e lesão pouco clara |
+| Angular Cheilitis.jpeg | Desfocada, fissura quase invisível |
+| Amalgam induced lichen planus 02.jpg | Baixada mas não usada (o assunto não entrou no banco) |
