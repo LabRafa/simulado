@@ -42,7 +42,7 @@
     proxima: 'SM2 quinta 12/11, na sala, no horário da aula',
     modos: [
       { id: 'completo', nome: 'Simulado completo', sub: '10 questões sorteadas de toda a matéria.', temas: null },
-      { id: 't-real', nome: 'Nervos com imagem REAL (teste)', sub: 'Só as 20 novas com foto real.', temas: null, real: true },
+      { id: 't-real', nome: 'Nervos com imagem REAL (teste)', sub: 'Só as 20 novas com foto real.', temas: null, real: true, img: true },
       { id: 't-nervos', nome: 'Nervos com imagem', sub: 'Desenhos com um nervo aceso de cada vez: qual é, por onde sai e o que anestesia.', temas: ['Nervos com imagem'], img: true },
       { id: 't-casos', nome: 'Simulação de caso real', sub: 'Só questões com paciente: idade, dente, história e a conduta.', temas: null, casos: true },
       { id: 'sm1ver', nome: 'Prova do SM1', sub: 'As 10 questões que caíram no SM1, na ordem da prova.', temas: null, sm1todo: true, prefixo: 'fa' },
