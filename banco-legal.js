@@ -205,7 +205,7 @@ window.BANCOS = window.BANCOS || {};
         f: INTERPOL },
 
       { id: 'ol08', tema: 'Identificação humana',
-        ctx: 'O protocolo DVI tem quatro fases: exame da cena, dados post mortem (PM), dados ante mortem (AM) e reconciliação.',
+        ctx: 'O protocolo DVI (identificação de vítimas de desastre) tem quatro fases: exame da cena, dados post mortem (PM, o que se acha no corpo), dados ante mortem (AM, o que foi registrado em vida) e reconciliação (comparar os dois).',
         p: 'Em qual fase entram o prontuário e as radiografias que o dentista da vítima guardava?',
         o: ['Exame da cena', 'Dados post mortem', 'Dados ante mortem', 'Reconciliação', 'Nenhuma: prontuário não é usado'],
         a: 2,
@@ -773,7 +773,7 @@ window.BANCOS = window.BANCOS || {};
         ctx: 'Num acidente como o do voo 2283, um corpo chega sem polpas digitais aproveitáveis, mas com a boca preservada e restaurações visíveis.',
         p: 'Pelo protocolo da INTERPOL, qual outro identificador primário o perito pode usar logo, comparando com o prontuário do dentista da vítima?',
         o: ['Reconhecimento visual por um parente',
-            'Comparação odontológica (dados ante mortem x post mortem)',
+            'Comparação odontológica (registros feitos em vida x achados no corpo)',
             'A cor da roupa',
             'O relato de testemunhas',
             'Nenhum: só resta esperar o DNA'],
