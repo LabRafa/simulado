@@ -300,7 +300,7 @@ window.BANCOS = window.BANCOS || {};
         ctx: 'Antes de fotografar e moldar uma marca de mordida recente, o perito faz um passo que pode ser o mais valioso.',
         p: 'Qual é esse passo, segundo a literatura atual?',
         o: ['Lavar bem a região com álcool',
-            'Coletar com swab o material da região, pois a saliva pode ser fonte de DNA',
+            'Coletar com swab (haste com algodão estéril, tipo um cotonete) o material da região, pois a saliva pode ser fonte de DNA',
             'Esperar a marca sumir para medir a cicatriz',
             'Pedir ao suspeito que morda isopor e comparar o desenho',
             'Nenhum: marca de mordida não tem utilidade nenhuma'],

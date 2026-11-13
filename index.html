@@ -282,7 +282,8 @@ a.item{text-decoration:none}
 .lesao .fonte{font-size:12.5px;color:var(--cinza);margin:8px 0 0;line-height:1.4;overflow-wrap:anywhere}
 
 /* Rafael 13/11: bolinhas de voltar/avançar (o voltar do celular saía pro WhatsApp) */
-.navb{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;width:46px;height:46px;border-radius:50%;border:0;background:var(--grafite);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;line-height:1;box-shadow:0 4px 12px rgba(0,0,0,.22);opacity:.88;cursor:pointer}
+.navb{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;width:46px;height:46px;border-radius:50%;border:0;background:var(--grafite);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;line-height:1;box-shadow:0 4px 12px rgba(0,0,0,.18);opacity:.55;cursor:pointer;transition:opacity .15s}
+.navb:hover,.navb:active,.navb:focus-visible{opacity:.95}
 .navb:active{transform:scale(.92)}
 .navb:focus-visible{outline:3px solid #6c3fc5;outline-offset:2px}
 .navb[hidden]{display:none}
@@ -303,14 +304,14 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611130838"></script>
-<script src="banco-farmaco.js?v=202611130838"></script>
-<script src="banco-imagino.js?v=202611130838"></script>
-<script src="banco-cabeca.js?v=202611130838"></script>
-<script src="banco-estomato.js?v=202611130838"></script>
-<script src="banco-legal.js?v=202611130838"></script>
-<script src="periodos.js?v=202611130838"></script>
-<script src="aulas.js?v=202611130838"></script>
+<script src="bancos.js?v=202611130839"></script>
+<script src="banco-farmaco.js?v=202611130839"></script>
+<script src="banco-imagino.js?v=202611130839"></script>
+<script src="banco-cabeca.js?v=202611130839"></script>
+<script src="banco-estomato.js?v=202611130839"></script>
+<script src="banco-legal.js?v=202611130839"></script>
+<script src="periodos.js?v=202611130839"></script>
+<script src="aulas.js?v=202611130839"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
