@@ -280,8 +280,16 @@ a.item{text-decoration:none}
 .lesao ul{margin:0;padding-left:20px}
 .lesao li{margin:5px 0;line-height:1.5;font-size:16px}
 .lesao .fonte{font-size:12.5px;color:var(--cinza);margin:8px 0 0;line-height:1.4;overflow-wrap:anywhere}
+
+/* Rafael 13/11: bolinhas de voltar/avançar (o voltar do celular saía pro WhatsApp) */
+.navb{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;width:46px;height:46px;border-radius:50%;border:0;background:var(--grafite);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;line-height:1;box-shadow:0 4px 12px rgba(0,0,0,.22);opacity:.88;cursor:pointer}
+.navb:active{transform:scale(.92)}
+.navb:focus-visible{outline:3px solid #6c3fc5;outline-offset:2px}
+.navb[hidden]{display:none}
+#navVolta{left:12px}#navVai{right:12px}
+body.com-rodape .navb{bottom:calc(92px + env(safe-area-inset-bottom))}
 .topo-cor[hidden]{display:none}
-.topo-cor{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:6;background:var(--grafite);color:#fff;border:0;border-radius:999px;padding:10px 14px;min-height:44px;font-weight:700;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.topo-cor{position:fixed;right:50%;transform:translateX(50%);bottom:calc(16px + env(safe-area-inset-bottom));z-index:6;background:var(--grafite);color:#fff;border:0;border-radius:999px;padding:10px 14px;min-height:44px;font-weight:700;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
 
 footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px;max-width:640px;margin:0 auto}
 
@@ -294,14 +302,14 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611122257"></script>
-<script src="banco-farmaco.js?v=202611122257"></script>
-<script src="banco-imagino.js?v=202611122257"></script>
-<script src="banco-cabeca.js?v=202611122257"></script>
-<script src="banco-estomato.js?v=202611122257"></script>
-<script src="banco-legal.js?v=202611122257"></script>
-<script src="periodos.js?v=202611122257"></script>
-<script src="aulas.js?v=202611122257"></script>
+<script src="bancos.js?v=202611130833"></script>
+<script src="banco-farmaco.js?v=202611130833"></script>
+<script src="banco-imagino.js?v=202611130833"></script>
+<script src="banco-cabeca.js?v=202611130833"></script>
+<script src="banco-estomato.js?v=202611130833"></script>
+<script src="banco-legal.js?v=202611130833"></script>
+<script src="periodos.js?v=202611130833"></script>
+<script src="aulas.js?v=202611130833"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -834,6 +842,43 @@ function listaMaterial(){
   app.querySelectorAll('[data-slides]').forEach(el => el.onclick = () => verAula(+el.dataset.slides, 'slides'));
 }
 
+
+/* ---------- VOLTAR / AVANÇAR (Rafael 13/11): cada tela entra no histórico do navegador,
+   então o voltar do celular volta pra tela anterior em vez de sair do site; e há bolinhas na tela ---------- */
+const NAV = { pilha: [], pos: -1, repete: false };
+const argsLimpos = a => Array.from(a).map(x => (x === null || typeof x !== 'object') ? x : undefined);
+function navAtualiza(){
+  let v = document.getElementById('navVolta'), f = document.getElementById('navVai');
+  if (!v) {
+    v = document.createElement('button'); v.id = 'navVolta'; v.className = 'navb'; v.setAttribute('aria-label','Voltar para a tela anterior'); v.textContent = '‹';
+    f = document.createElement('button'); f.id = 'navVai'; f.className = 'navb'; f.setAttribute('aria-label','Avançar para a próxima tela'); f.textContent = '›';
+    v.onclick = () => history.back(); f.onclick = () => history.forward();
+    document.body.append(v, f);
+  }
+  v.hidden = NAV.pos <= 0; f.hidden = NAV.pos >= NAV.pilha.length - 1;
+  document.body.classList.toggle('com-rodape', !!document.querySelector('#app .rodape'));
+}
+function navMarca(nome, args){
+  if (NAV.repete) return navAtualiza();
+  const e = { nome, args, MAT, partida }, cur = NAV.pilha[NAV.pos];
+  if (cur && cur.nome === nome && cur.MAT === MAT && cur.partida === partida && JSON.stringify(cur.args) === JSON.stringify(args)) { NAV.pilha[NAV.pos] = e; return navAtualiza(); }
+  NAV.pilha = NAV.pilha.slice(0, NAV.pos + 1); NAV.pilha.push(e); NAV.pos++;
+  try { (NAV.pos === 0 ? history.replaceState : history.pushState).call(history, { nav: NAV.pos }, ''); } catch (_) {}
+  navAtualiza();
+}
+const NAV_FN = { inicio:()=>inicio, materia:()=>materia, listaTemas:()=>listaTemas, resumo:()=>resumo, estudoCor:()=>estudoCor, listaAulas:()=>listaAulas, verAula:()=>verAula, listaMaterial:()=>listaMaterial, resultado:()=>resultado, prova:()=>questao };
+Object.keys(NAV_FN).forEach(n => {
+  const alvo = n === 'prova' ? 'questao' : n, orig = window[alvo];
+  window[alvo] = function(){ const a = n === 'prova' ? [] : argsLimpos(arguments); const r = orig.apply(this, arguments); navMarca(n, a); return r; };
+});
+addEventListener('popstate', ev => {
+  const k = ev.state && typeof ev.state.nav === 'number' ? ev.state.nav : 0, e = NAV.pilha[k];
+  if (!e) return;
+  document.querySelectorAll('.zoom').forEach(z => z.remove());
+  NAV.pos = k; NAV.repete = true;
+  try { MAT = e.MAT; partida = e.partida; if (e.nome === 'prova') questao(); else NAV_FN[e.nome]().apply(null, e.args); } finally { NAV.repete = false; }
+  navAtualiza();
+});
 pinta();
 /* link direto (12/11): ?m=farmaco abre a matéria; ?m=farmaco&modo=t-nervos já começa o simulado daquele modo */
 (function(){ try {
