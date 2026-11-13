@@ -54,13 +54,27 @@ window.BANCOS = window.BANCOS || {};
     especialidade: true,
     /* Rafael 13/11: dicionário (palavra difícil sublinhada; toca e abre a explicação, sem internet) */
     glossario: {
-      "swab": { "d": "Haste com algodão (ou outra fibra) estéril, parecida com um cotonete, usada para coletar material de uma superfície, como saliva, sangue ou células. Na foto, a coleta de células da bochecha por dentro da boca.", "img": "img/legal/swab.jpg", "alt": "Homem esfregando um swab na parte de dentro da bochecha", "fonte": "Marinha dos EUA, domínio público (Wikimedia Commons)" },
+      "swab": {
+            "d": "Haste com algodão (ou outra fibra) estéril, parecida com um cotonete, usada para coletar material de uma superfície, como saliva, sangue ou células. Na foto, a coleta de células da bochecha por dentro da boca.",
+            "img": "img/legal/swab.jpg",
+            "alt": "Homem esfregando um swab na parte de dentro da bochecha",
+            "fonte": "Marinha dos EUA, domínio público (Wikimedia Commons)"
+      },
       "DNA": "O material genético da pessoa. Pode ser recuperado de saliva, sangue, polpa do dente e ossos, e comparado com o de familiares ou com uma amostra de referência.",
       "ante mortem": "\"Antes da morte\". Na identificação são os registros feitos em vida: prontuário do dentista, radiografias, fotos, digitais e DNA de parentes.",
       "post mortem": "\"Depois da morte\". São os dados colhidos no corpo da vítima: exame dos dentes, radiografias, digitais e DNA.",
-      "DVI": "Sigla em inglês de Disaster Victim Identification, identificação de vítimas de desastre. É o protocolo da INTERPOL usado em tragédias com muitas vítimas.",
-      "INTERPOL": "Organização Internacional de Polícia Criminal, que reúne as polícias de 196 países. Publica o guia de identificação de vítimas de desastre (DVI).",
-      "NIST": "National Institute of Standards and Technology, o instituto oficial de padrões e medidas do governo dos Estados Unidos.",
+      "DVI": {
+            "d": "Sigla em inglês de Disaster Victim Identification, identificação de vítimas de desastre. É o protocolo da INTERPOL usado em tragédias com muitas vítimas.",
+            "bib": "interpol"
+      },
+      "INTERPOL": {
+            "d": "Organização Internacional de Polícia Criminal, que reúne as polícias de 196 países. Publica o guia de identificação de vítimas de desastre (DVI).",
+            "bib": "interpol"
+      },
+      "NIST": {
+            "d": "National Institute of Standards and Technology, o instituto oficial de padrões e medidas do governo dos Estados Unidos.",
+            "bib": "nist"
+      },
       "odontograma": "O mapa dos dentes no prontuário, onde o dentista marca o que cada dente tem: restaurações, ausências, próteses, tratamentos.",
       "necropsia": "Exame do cadáver para descobrir a causa da morte e ajudar a identificar a vítima. Também chamada de autópsia.",
       "perícia": "Exame técnico feito por um especialista para esclarecer um fato para a Justiça, a polícia ou um órgão administrativo. Termina num laudo.",
@@ -69,8 +83,14 @@ window.BANCOS = window.BANCOS || {};
       "odontolegal": "Que tem a ver com a Odontologia Legal, a área da odontologia que serve à Justiça (perícias, identificação, documentos, ética).",
       "laudo": "Documento escrito em que o perito descreve o que examinou, como examinou e a que conclusão chegou.",
       "prontuário": "Tudo o que o dentista registra do paciente: anamnese, exames, odontograma, radiografias, tratamentos feitos e documentos assinados.",
-      "CEO": "Código de Ética Odontológica (Resolução CFO-118/2012): as regras de conduta que todo cirurgião-dentista tem que seguir.",
-      "CFO": "Conselho Federal de Odontologia. Regula a profissão no país e publica as resoluções, como o Código de Ética.",
+      "CEO": {
+            "d": "Sigla do Código de Ética Odontológica (Resolução CFO-118/2012, em vigor desde 01/01/2013): as regras de conduta que todo cirurgião-dentista tem que seguir.",
+            "bib": "ceo"
+      },
+      "CFO": {
+            "d": "Conselho Federal de Odontologia. Regula a profissão no país e publica as resoluções, como o Código de Ética.",
+            "bib": "ceo"
+      },
       "CRO": "Conselho Regional de Odontologia. Cada estado tem o seu; é onde o dentista tem o registro (o \"número do CRO\") e é fiscalizado.",
       "TCLE": "Termo de Consentimento Livre e Esclarecido: o documento em que o paciente diz, por escrito, que entendeu e autoriza um procedimento ou o uso da sua imagem.",
       "CADE": "Conselho Administrativo de Defesa Econômica, órgão federal que combate práticas contra a livre concorrência.",
@@ -88,7 +108,10 @@ window.BANCOS = window.BANCOS || {};
       "negligência": "Erro por deixar de fazer o que devia: omissão, descuido.",
       "imprudência": "Erro por agir sem cautela, se arriscando sem necessidade.",
       "responsabilidade civil": "O dever de reparar (indenizar) o dano causado a alguém.",
-      "CDC": "Código de Defesa do Consumidor (Lei 8.078/1990). Também vale na relação entre paciente e dentista.",
+      "CDC": {
+            "d": "Código de Defesa do Consumidor (Lei 8.078/1990). Também vale na relação entre paciente e dentista.",
+            "bib": "cdc"
+      },
       "obrigação de resultado": "Quando o profissional se compromete com um resultado específico; se ele não acontece, presume-se a culpa. A Justiça costuma aplicar à odontologia estética.",
       "obrigação de meio": "Quando o profissional se compromete a usar todos os meios adequados, sem garantir o resultado.",
       "nexo": "Nexo causal: a ligação entre o ato do profissional e o dano. Sem nexo, não há responsabilidade.",
@@ -98,8 +121,82 @@ window.BANCOS = window.BANCOS || {};
       "sigilo": "O dever do dentista de não revelar o que soube do paciente pelo trabalho, salvo nas exceções da lei e do Código de Ética.",
       "atestado": "Documento em que o dentista afirma um fato, como a necessidade de afastamento. Só pode ser dado quando houve atendimento que o justifique.",
       "MPRJ": "Ministério Público do Estado do Rio de Janeiro.",
-      "reconhecimento visual": "Quando a família olha o corpo para dizer quem é. Para a INTERPOL, sozinho, não é um método confiável."
+      "reconhecimento visual": "Quando a família olha o corpo para dizer quem é. Para a INTERPOL, sozinho, não é um método confiável.",
+      "Código de Ética": {
+            "d": "O Código de Ética Odontológica (Resolução CFO-118/2012, em vigor desde 01/01/2013, alterada pela Resolução CFO-271/2025). Reúne os direitos e deveres do cirurgião-dentista: sigilo, prontuário, publicidade, honorários, relação com o paciente e com os colegas. Quem descumpre pode ser processado no CRO.",
+            "bib": "ceo"
+      },
+      "Lei 5.081": {
+            "d": "Lei 5.081/1966, que regula o exercício da Odontologia no Brasil e diz o que compete ao cirurgião-dentista, inclusive fazer perícia odontolegal.",
+            "bib": "l5081"
+      }
     },
+    /* Rafael 13/11: biblioteca da matéria (só documento oficial ou liberado) */
+    biblioteca: [
+      {
+            "id": "ceo",
+            "t": "Código de Ética Odontológica",
+            "desc": "Resolução CFO-118/2012, texto original publicado pelo CFO. Atenção: foi alterado pela Resolução CFO-271/2025 (logo abaixo).",
+            "url": "biblioteca/codigo-de-etica-odontologica-cfo-118-2012.pdf",
+            "fonte": "Conselho Federal de Odontologia"
+      },
+      {
+            "id": "r271",
+            "t": "Resolução CFO-271/2025",
+            "desc": "De 18/06/2025. Altera o Código de Ética depois da decisão do CADE (saiu a proibição de cartão de desconto).",
+            "url": "https://sistemas.cfo.org.br/visualizar/atos/RESOLU%C3%87%C3%83O/SEC/2025/271",
+            "fonte": "Conselho Federal de Odontologia"
+      },
+      {
+            "id": "r196",
+            "t": "Resolução CFO-196/2019",
+            "desc": "De 29/01/2019. Regras de selfie e de imagens de diagnóstico e de resultado nas redes sociais.",
+            "url": "https://sistemas.cfo.org.br/visualizar/atos/RESOLU%C3%87%C3%83O/SEC/2019/196",
+            "fonte": "Conselho Federal de Odontologia"
+      },
+      {
+            "id": "l5081",
+            "t": "Lei 5.081/1966",
+            "desc": "Regula o exercício da Odontologia. O art. 6º lista o que compete ao cirurgião-dentista, inclusive a perícia.",
+            "url": "https://www.planalto.gov.br/ccivil_03/leis/l5081.htm",
+            "fonte": "Planalto"
+      },
+      {
+            "id": "cdc",
+            "t": "Código de Defesa do Consumidor",
+            "desc": "Lei 8.078/1990, texto compilado. Vale também na relação paciente e dentista.",
+            "url": "https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm",
+            "fonte": "Planalto"
+      },
+      {
+            "id": "l13787",
+            "t": "Lei 13.787/2018",
+            "desc": "Digitalização e guarda do prontuário do paciente.",
+            "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13787.htm",
+            "fonte": "Planalto"
+      },
+      {
+            "id": "lgpd",
+            "t": "LGPD (Lei 13.709/2018)",
+            "desc": "Lei Geral de Proteção de Dados: dados de saúde são dados sensíveis.",
+            "url": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709compilado.htm",
+            "fonte": "Planalto"
+      },
+      {
+            "id": "interpol",
+            "t": "INTERPOL: identificação de vítimas de desastre (DVI)",
+            "desc": "Ficha oficial de 2023, em inglês: as fases do DVI e os identificadores primários.",
+            "url": "https://www.interpol.int/content/download/621/file/FS-02-DVI-2023-03-EN.pdf",
+            "fonte": "INTERPOL"
+      },
+      {
+            "id": "nist",
+            "t": "NIST: revisão sobre marcas de mordida",
+            "desc": "NISTIR 8352, de 07/03/2023, em inglês. Conclui que a análise de marca de mordida não tem base científica suficiente.",
+            "url": "https://doi.org/10.6028/NIST.IR.8352",
+            "fonte": "NIST (EUA)"
+      }
+    ],
     modos: [
       { id: 'completo', nome: 'Simulado completo', sub: '10 questões sorteadas de toda a Odontologia Legal.', temas: null },
       { id: 't-casos', nome: 'Casos reais', sub: 'Voo 2283, Brumadinho, Petrópolis, marca de mordida, ossada de Embu e uma decisão do STJ de 2026.', temas: ['Casos reais'] },
