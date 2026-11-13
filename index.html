@@ -301,6 +301,11 @@ body.com-rodape .rodape{padding-left:54px;padding-right:54px} /* 13/11: bolinhas
 .glvolta{background:none;border:0;padding:0 0 8px;min-height:36px;font-weight:700;color:var(--cinza);font-size:15px}
 .glbib{display:block;background:none;border:0;padding:4px 0 12px;font-size:14px;color:#6c3fc5;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .bibit{scroll-margin-top:20px}.bibit.alvo{outline:3px solid #6c3fc5;outline-offset:2px;border-radius:14px}
+.glpop{max-height:88vh;overflow:auto}
+.lei-txt{max-height:46vh;overflow:auto;margin:0 0 12px;padding:10px 12px;background:#f6f7fa;border-radius:12px;font-size:15px;line-height:1.5}
+.lei-txt .lin{display:block;margin:0 0 6px}.lei-txt .lin.marca{background:#fff3b0;border-radius:6px;padding:4px 6px;font-weight:600}
+.gl.lei{border-bottom-style:solid;border-bottom-width:1px}
+.mud{border-left:4px solid #6c3fc5;padding:2px 0 2px 12px;margin:0 0 16px}.mud .dt{font-size:13px;color:var(--cinza);font-weight:700}.mud h3{margin:2px 0 4px;font-size:17px}.mud p{margin:0 0 4px;line-height:1.5}.mud a{font-size:13px}
 .glfonte{font-size:12px!important;color:#6b7280;margin-top:-4px!important}
 .zoom{z-index:70!important}
 .dic dt{font-weight:800;font-size:17px;margin-top:14px}.dic dd{margin:4px 0 0;line-height:1.5}
@@ -318,14 +323,14 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611130853"></script>
-<script src="banco-farmaco.js?v=202611130853"></script>
-<script src="banco-imagino.js?v=202611130853"></script>
-<script src="banco-cabeca.js?v=202611130853"></script>
-<script src="banco-estomato.js?v=202611130853"></script>
-<script src="banco-legal.js?v=202611130853"></script>
-<script src="periodos.js?v=202611130853"></script>
-<script src="aulas.js?v=202611130853"></script>
+<script src="bancos.js?v=202611130905"></script>
+<script src="banco-farmaco.js?v=202611130905"></script>
+<script src="banco-imagino.js?v=202611130905"></script>
+<script src="banco-cabeca.js?v=202611130905"></script>
+<script src="banco-estomato.js?v=202611130905"></script>
+<script src="banco-legal.js?v=202611130905"></script>
+<script src="periodos.js?v=202611130905"></script>
+<script src="aulas.js?v=202611130905"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -342,32 +347,62 @@ function glossRx(){
   _glRx = new RegExp('(^|[^\\p{L}\\d])(' + termos.join('|') + ')(s?)(?![\\p{L}\\d])', 'giu');
   return _glRx;
 }
+let _leiRx = null, _leiMat = null;
+function leiRx(){
+  if (_leiMat === MAT) return _leiRx; _leiMat = MAT; _leiRx = null;
+  const L = (banco() || {}).leis; if (!L) return null;
+  const al = []; Object.entries(L).forEach(([k,v]) => (v.alias||[]).forEach(a => al.push([k,a])));
+  al.sort((x,y) => y[1].length - x[1].length);
+  _leiRx = { al, rx: new RegExp('(' + al.map(x => '(?:' + x[1] + ')').join('|') + '),?\\s*art(?:igo|\\.)\\s*(\\d+)[ºo°]?(?:\\s*,\\s*([IVXLC]+)\\b)?', 'g') };
+  return _leiRx;
+}
+/* "Lei 5.081/1966, art. 6º, VIII" vira link que abre o texto exato do artigo (Rafael 13/11) */
+function marcaLeis(s, guarda){
+  const R = leiRx(); if (!R) return s; const L = banco().leis;
+  return s.replace(R.rx, (m, nome, art, inc) => {
+    const ent = R.al.find(x => new RegExp('^(?:' + x[1] + ')$').test(nome)); if (!ent) return m;
+    const v = L[ent[0]]; if (!v.arts || !v.arts[art]) return m;
+    guarda.push('<span class="gl lei" role="button" tabindex="0" data-gl="' + esc('lei|' + ent[0] + '|' + art + '|' + (inc||'')) + '">' + m + '</span>');
+    return '\u0001' + (guarda.length - 1) + '\u0002';
+  });
+}
 function G(t, feitos, fora){
-  const s = esc(t), rx = glossRx(); if (!rx) return s;
+  const guarda = [], s0 = marcaLeis(esc(t), guarda), rx = glossRx();
+  const volta = x => x.replace(/\u0001(\d+)\u0002/g, (m, i) => guarda[+i]);
+  if (!rx) return volta(s0); const s = s0;
   const g = banco().glossario, chaves = Object.keys(g); feitos = feitos || _glVistos;
   return s.replace(rx, (m, pre, termo, plural) => {
     const k = chaves.find(c => esc(c).toLowerCase() === termo.toLowerCase());
     if (!k || feitos.has(k) || (fora && fora(k))) return m; feitos.add(k);
     return pre + '<span class="gl" role="button" tabindex="0" data-gl="' + esc(k) + '">' + termo + plural + '</span>';
-  });
+  }).replace(/\u0001(\d+)\u0002/g, (m, i) => guarda[+i]);
 }
 const _glPilha = [];
 function abreGlossario(k, novo){
-  const g = (banco() || {}).glossario || {}, v = g[k]; if (!v) return;
+  const g = (banco() || {}).glossario || {};
+  let v = g[k];
+  if (String(k).startsWith('lei|')) {
+    const [, lk, art, inc] = k.split('|'), L = ((banco() || {}).leis || {})[lk]; if (!L) return;
+    const linhas = String(L.arts[art] || '').split('\n');
+    const rx = inc ? new RegExp('^' + inc + '\\s*[-–]') : null;
+    v = { titulo: L.nome + ', art. ' + art + (+art < 10 ? 'º' : '') + (inc ? ', ' + inc : ''), html: linhas.map(l => '<span class="lin' + (rx && rx.test(l) ? ' marca' : '') + '">' + esc(l) + '</span>').join(''), bib: L.bib, rodape: 'Texto oficial: ' + L.fonte + '. Conferido em ' + L.conferido + '.' };
+  }
+  if (!v) return;
   const atual = document.querySelector('.glfundo');
   if (atual) { if (!novo && atual.dataset.k && atual.dataset.k !== k) _glPilha.push(atual.dataset.k); atual.remove(); } else _glPilha.length = 0;
   const imgs = (v && v.img) ? [].concat(v.img) : [];
   const bibDe = x => (g[x] && g[x].bib) || '';
   /* palavras da explicação também viram link (Rafael 13/11: "uma wiki"), menos a própria e as do mesmo documento */
-  const texto = G(glTxt(v), new Set([k]), x => x === k || (bibDe(k) && bibDe(x) === bibDe(k)));
+  const texto = v.html || G(glTxt(v), new Set([k]), x => x === k || (bibDe(k) && bibDe(x) === bibDe(k)));
   const doc = v.bib && ((banco().biblioteca || []).find(b => b.id === v.bib));
   const f = document.createElement('div'); f.className = 'glfundo'; f.dataset.k = k;
   f.innerHTML = '<div class="glpop" role="dialog" aria-label="O que é ' + esc(k) + '">'
-    + (_glPilha.length ? '<button type="button" class="glvolta">‹ ' + esc(_glPilha[_glPilha.length-1]) + '</button>' : '')
-    + '<h3>' + esc(k) + '</h3><p>' + texto + '</p>'
+    + (_glPilha.length ? '<button type="button" class="glvolta">‹ ' + esc(String(_glPilha[_glPilha.length-1]).startsWith('lei|') ? 'voltar' : _glPilha[_glPilha.length-1]) + '</button>' : '')
+    + '<h3>' + esc(v.titulo || k) + '</h3>' + (v.html ? '<div class="lei-txt">' + texto + '</div>' : '<p>' + texto + '</p>')
+    + (v.rodape ? '<p class="glfonte">' + esc(v.rodape) + '</p>' : '')
     + imgs.map(src => '<button type="button" class="glimg" data-zoom="' + esc(src) + '"><img src="' + esc(src) + '" alt="' + esc(v.alt || k) + '"><span>⤢ Ampliar</span></button>').join('')
     + (v.fonte ? '<p class="glfonte">Imagem: ' + esc(v.fonte) + '</p>' : '')
-    + (doc ? '<button type="button" class="glbib">📚 Ler o documento na Biblioteca</button>' : '')
+    + (doc ? '<button type="button" class="glbib">📚 ' + (v.html ? 'Ler a lei inteira' : 'Ler o documento') + ' na Biblioteca</button>' : '')
     + '<button type="button" class="glok">Entendi</button></div>';
   const fecha = () => { f.remove(); _glPilha.length = 0; };
   f.onclick = ev => {
@@ -377,7 +412,7 @@ function abreGlossario(k, novo){
     if (ev.target.closest('.glbib')) { fecha(); biblioteca(doc.id); return; }
     if (ev.target === f || ev.target.closest('.glok')) fecha();
   };
-  document.body.appendChild(f); f.querySelector('.glok').focus();
+  document.body.appendChild(f); f.querySelector('.glok').focus(); const mk = f.querySelector('.lin.marca'); if (mk) mk.scrollIntoView({block:'center'});
 }
 document.addEventListener('click', ev => { const el = ev.target.closest && ev.target.closest('.gl'); if (!el) return; ev.preventDefault(); ev.stopPropagation(); abreGlossario(el.dataset.gl); }, true);
 document.addEventListener('keydown', ev => { const el = ev.target.closest && ev.target.closest('.gl'); if (el && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); abreGlossario(el.dataset.gl); } if (ev.key === 'Escape') document.querySelectorAll('.glfundo').forEach(x => x.remove()); });
@@ -623,6 +658,7 @@ function materia(){
     ${temas.length ? `<button class="item" id="temas"><span class="ic">${IC.alvo}</span><span class="t"><b>Treinar um assunto</b><small>${temas.length} assuntos para escolher</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${erros ? `<button class="item" data-go="${erros.id}" ${nErr?'':'disabled'}><span class="ic">${IC.volta}</span><span class="t"><b>Revisar meus erros</b><small>${nErr ? nErr+(nErr===1?' questão guardada':' questões guardadas') : 'Quando você errar, a questão aparece aqui'}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.estudo||[]).length ? `<button class="item" id="porcor"><span class="ic">${IC.paleta}</span><span class="t"><b>Estudar por cor</b><small>${(b.estudo||[]).length} grupos de lesões, com foto, e treino só de uma cor</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${(b.mudancas||[]).length ? `<button class="item" id="mud"><span class="ic">${IC.livro}</span><span class="t"><b>Mudanças recentes</b><small>O que mudou nas leis e no Código de Ética, com data. Conferido em ${esc(b.atualizado||'')}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.biblioteca||[]).length ? `<button class="item" id="bib"><span class="ic">${IC.folha}</span><span class="t"><b>Biblioteca</b><small>${b.biblioteca.length} documentos oficiais pra ler na íntegra</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${b.glossario ? `<button class="item" id="dic"><span class="ic">${IC.livro}</span><span class="t"><b>Dicionário</b><small>${Object.keys(b.glossario).length} palavras difíceis explicadas. Nas questões, toque na palavra sublinhada</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     <button class="item" id="rev"><span class="ic">${IC.livro}</span><span class="t"><b>Ler o resumo</b><small>O que mais cai, em tópicos curtos</small></span><span class="seta">${IC.seta}</span></button>
@@ -640,6 +676,7 @@ function materia(){
   $('#rev').onclick = resumo;
   if ($('#dic')) $('#dic').onclick = dicionario;
   if ($('#bib')) $('#bib').onclick = () => biblioteca();
+  if ($('#mud')) $('#mud').onclick = mudancas;
   if ($('#porcor')) $('#porcor').onclick = () => estudoCor();
   ligaAulasMaterial();
   if ($('#fracos')) $('#fracos').onclick = () => comeca(modoFracos());
@@ -811,6 +848,14 @@ function resumo(){
   if ($('#go')) $('#go').onclick = () => comeca(partes().completo);
 }
 
+function mudancas(){
+  const b = banco(), item = x => `<article class="mud">${x.data ? `<div class="dt">${esc(x.data)}</div>` : ''}<h3>${esc(x.t)}</h3><p>${G(x.d)}</p>${x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">Fonte: ${esc(x.fonte||'link')}</a>` : ''}</article>`;
+  tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
+  <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Mudanças recentes</h1><p>O que mudou nas regras da odontologia, do mais novo pro mais antigo. Conferido em ${esc(b.atualizado||'')}; a Mônica confere todo mês.</p></div>
+  <section class="bloco">${(b.mudancas||[]).map(item).join('')}</section>
+  ${(b.podeMudar||[]).length ? `<section class="bloco"><h2>O que pode mudar</h2>${b.podeMudar.map(item).join('')}</section>` : ''}`);
+  $('#vol').onclick = materia;
+}
 function biblioteca(alvo){
   const b = banco(), docs = b.biblioteca || [];
   tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
@@ -954,7 +999,7 @@ function navMarca(nome, args){
   try { (NAV.pos === 0 ? history.replaceState : history.pushState).call(history, { nav: NAV.pos }, ''); } catch (_) {}
   navAtualiza();
 }
-const NAV_FN = { inicio:()=>inicio, materia:()=>materia, listaTemas:()=>listaTemas, resumo:()=>resumo, estudoCor:()=>estudoCor, listaAulas:()=>listaAulas, verAula:()=>verAula, listaMaterial:()=>listaMaterial, dicionario:()=>dicionario, biblioteca:()=>biblioteca, resultado:()=>resultado, prova:()=>questao };
+const NAV_FN = { inicio:()=>inicio, materia:()=>materia, listaTemas:()=>listaTemas, resumo:()=>resumo, estudoCor:()=>estudoCor, listaAulas:()=>listaAulas, verAula:()=>verAula, listaMaterial:()=>listaMaterial, dicionario:()=>dicionario, biblioteca:()=>biblioteca, mudancas:()=>mudancas, resultado:()=>resultado, prova:()=>questao };
 Object.keys(NAV_FN).forEach(n => {
   const alvo = n === 'prova' ? 'questao' : n, orig = window[alvo];
   window[alvo] = function(){ const a = n === 'prova' ? [] : argsLimpos(arguments); _glVistos.clear(); const r = orig.apply(this, arguments); navMarca(n, a); return r; };
