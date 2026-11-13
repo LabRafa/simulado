@@ -290,6 +290,17 @@ a.item{text-decoration:none}
 #navVolta{left:12px}#navVai{right:12px}
 body.com-rodape .navb{bottom:calc(20px + env(safe-area-inset-bottom))}
 body.com-rodape .rodape{padding-left:54px;padding-right:54px} /* 13/11: bolinhas ao lado do botão, sem cobrir */
+/* Rafael 13/11: dicionário */
+.gl{border-bottom:2px dotted currentColor;cursor:help;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.gl:focus-visible{outline:2px solid #6c3fc5;outline-offset:1px;border-radius:3px}
+.glfundo{position:fixed;inset:0;z-index:60;background:rgba(10,12,16,.45);display:flex;align-items:flex-end;justify-content:center;animation:sobe .18s ease-out}
+.glpop{background:#fff;color:#1a2233;width:100%;max-width:640px;border-radius:18px 18px 0 0;padding:20px 20px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -6px 24px rgba(0,0,0,.2)}
+.glpop h3{margin:0 0 8px;font-size:21px}.glpop p{margin:0 0 14px;font-size:17px;line-height:1.5}
+.glpop .glok{width:100%;min-height:48px;border:0;border-radius:12px;background:var(--grafite);color:#fff;font-weight:700;font-size:16px}
+.glimg{display:block;width:100%;padding:0;border:0;background:#f2f4f7;border-radius:12px;overflow:hidden;margin:0 0 10px;position:relative;cursor:zoom-in}.glimg img{display:block;width:100%;max-height:38vh;object-fit:contain}.glimg span{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;font-size:13px;padding:3px 8px;border-radius:999px}
+.glfonte{font-size:12px!important;color:#6b7280;margin-top:-4px!important}
+.zoom{z-index:70!important}
+.dic dt{font-weight:800;font-size:17px;margin-top:14px}.dic dd{margin:4px 0 0;line-height:1.5}
 .topo-cor[hidden]{display:none}
 .topo-cor{position:fixed;right:50%;transform:translateX(50%);bottom:calc(16px + env(safe-area-inset-bottom));z-index:6;background:var(--grafite);color:#fff;border:0;border-radius:999px;padding:10px 14px;min-height:44px;font-weight:700;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
 
@@ -304,19 +315,53 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611130840"></script>
-<script src="banco-farmaco.js?v=202611130840"></script>
-<script src="banco-imagino.js?v=202611130840"></script>
-<script src="banco-cabeca.js?v=202611130840"></script>
-<script src="banco-estomato.js?v=202611130840"></script>
-<script src="banco-legal.js?v=202611130840"></script>
-<script src="periodos.js?v=202611130840"></script>
-<script src="aulas.js?v=202611130840"></script>
+<script src="bancos.js?v=202611130845"></script>
+<script src="banco-farmaco.js?v=202611130845"></script>
+<script src="banco-imagino.js?v=202611130845"></script>
+<script src="banco-cabeca.js?v=202611130845"></script>
+<script src="banco-estomato.js?v=202611130845"></script>
+<script src="banco-legal.js?v=202611130845"></script>
+<script src="periodos.js?v=202611130845"></script>
+<script src="aulas.js?v=202611130845"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
 const L = ['A','B','C','D','E'], ROM = ['I','II','III','IV','V'];
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+/* Rafael 13/11: dicionário. banco.glossario = {termo: explicação}; G(texto) = esc + sublinha a 1ª ocorrência de cada termo */
+let _glRx = null, _glMat = null; const _glVistos = new Set(); /* cada termo sublinhado 1 vez por tela */
+const glTxt = v => typeof v === 'string' ? v : (v && v.d) || '';
+function glossRx(){
+  const g = (typeof banco === 'function' && banco() && banco().glossario) || null;
+  if (_glMat === MAT) return _glRx; _glMat = MAT; _glRx = null;
+  if (!g) return null;
+  const termos = Object.keys(g).sort((a,b) => b.length - a.length).map(t => esc(t).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  _glRx = new RegExp('(^|[^\\p{L}\\d])(' + termos.join('|') + ')(s?)(?![\\p{L}\\d])', 'giu');
+  return _glRx;
+}
+function G(t){
+  const s = esc(t), rx = glossRx(); if (!rx) return s;
+  const g = banco().glossario, chaves = Object.keys(g), feitos = _glVistos;
+  return s.replace(rx, (m, pre, termo, plural) => {
+    const k = chaves.find(c => esc(c).toLowerCase() === termo.toLowerCase());
+    if (!k || feitos.has(k)) return m; feitos.add(k);
+    return pre + '<span class="gl" role="button" tabindex="0" data-gl="' + esc(k) + '">' + termo + plural + '</span>';
+  });
+}
+function abreGlossario(k){
+  const v = ((banco() || {}).glossario || {})[k]; if (!v) return;
+  const imgs = (v && v.img) ? [].concat(v.img) : [];
+  const f = document.createElement('div'); f.className = 'glfundo';
+  f.innerHTML = '<div class="glpop" role="dialog" aria-label="O que é ' + esc(k) + '"><h3>' + esc(k) + '</h3><p>' + esc(glTxt(v)) + '</p>'
+    + imgs.map(src => '<button type="button" class="glimg" data-zoom="' + esc(src) + '"><img src="' + esc(src) + '" alt="' + esc(v.alt || k) + '"><span>⤢ Ampliar</span></button>').join('')
+    + (v.fonte ? '<p class="glfonte">Imagem: ' + esc(v.fonte) + '</p>' : '')
+    + '<button type="button" class="glok">Entendi</button></div>';
+  const fecha = () => f.remove();
+  f.onclick = ev => { const z = ev.target.closest('.glimg'); if (z) { abreZoom(z.dataset.zoom, v.alt || k); return; } if (ev.target === f || ev.target.closest('.glok')) fecha(); };
+  document.body.appendChild(f); f.querySelector('.glok').focus();
+}
+document.addEventListener('click', ev => { const el = ev.target.closest && ev.target.closest('.gl'); if (!el) return; ev.preventDefault(); ev.stopPropagation(); abreGlossario(el.dataset.gl); }, true);
+document.addEventListener('keydown', ev => { const el = ev.target.closest && ev.target.closest('.gl'); if (el && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); abreGlossario(el.dataset.gl); } if (ev.key === 'Escape') document.querySelectorAll('.glfundo').forEach(x => x.remove()); });
 const ler = (k,p) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : p; } catch(e) { return p; } };
 const grava = (k,v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} };
 const mistura = a => { const b=a.slice(); for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; };
@@ -559,6 +604,7 @@ function materia(){
     ${temas.length ? `<button class="item" id="temas"><span class="ic">${IC.alvo}</span><span class="t"><b>Treinar um assunto</b><small>${temas.length} assuntos para escolher</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${erros ? `<button class="item" data-go="${erros.id}" ${nErr?'':'disabled'}><span class="ic">${IC.volta}</span><span class="t"><b>Revisar meus erros</b><small>${nErr ? nErr+(nErr===1?' questão guardada':' questões guardadas') : 'Quando você errar, a questão aparece aqui'}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.estudo||[]).length ? `<button class="item" id="porcor"><span class="ic">${IC.paleta}</span><span class="t"><b>Estudar por cor</b><small>${(b.estudo||[]).length} grupos de lesões, com foto, e treino só de uma cor</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${b.glossario ? `<button class="item" id="dic"><span class="ic">${IC.livro}</span><span class="t"><b>Dicionário</b><small>${Object.keys(b.glossario).length} palavras difíceis explicadas. Nas questões, toque na palavra sublinhada</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     <button class="item" id="rev"><span class="ic">${IC.livro}</span><span class="t"><b>Ler o resumo</b><small>O que mais cai, em tópicos curtos</small></span><span class="seta">${IC.seta}</span></button>
     ${itemAulas()}
     ${itemMaterial()}
@@ -572,6 +618,7 @@ function materia(){
   app.querySelectorAll('[data-go]').forEach(el => el.onclick = () => comeca(ms.find(m => m.id === el.dataset.go)));
   if ($('#temas')) $('#temas').onclick = listaTemas;
   $('#rev').onclick = resumo;
+  if ($('#dic')) $('#dic').onclick = dicionario;
   if ($('#porcor')) $('#porcor').onclick = () => estudoCor();
   ligaAulasMaterial();
   if ($('#fracos')) $('#fracos').onclick = () => comeca(modoFracos());
@@ -614,8 +661,8 @@ function abreZoom(src, alt){
   z.onclick = fecha; document.addEventListener('keydown', esc_); document.body.appendChild(z);
 }
 function enunciadoHtml(q){
-  if (q.af && q.af.length) return `<div class="enun"><p>${esc(q.ctx)}</p><ul class="afs">${q.af.map((t,k)=>(q.ar&&k===1?'<li class="porque">PORQUE</li>':'')+`<li><b>${ROM[k]}.</b><span>${esc(t)}</span></li>`).join('')}</ul>${q.p?`<p>${esc(q.p)}</p>`:''}</div>`;
-  return `<div class="enun"><p>${esc(q.ctx)}${q.p?' '+esc(q.p):''}</p></div>`;
+  if (q.af && q.af.length) return `<div class="enun"><p>${G(q.ctx)}</p><ul class="afs">${q.af.map((t,k)=>(q.ar&&k===1?'<li class="porque">PORQUE</li>':'')+`<li><b>${ROM[k]}.</b><span>${G(t)}</span></li>`).join('')}</ul>${q.p?`<p>${G(q.p)}</p>`:''}</div>`;
+  return `<div class="enun"><p>${G(q.ctx)}${q.p?' '+G(q.p):''}</p></div>`;
 }
 function questao(anima){
   const P = partida, it = P.itens[P.i], q = it.q, total = P.itens.length;
@@ -636,11 +683,11 @@ function questao(anima){
       let cls = '';
       if (it.conf) { if (k===it.certa) cls=' certa'; else if (k===it.resp) cls=' errada'; else cls=' apagada'; if (anima && (k===it.certa || k===it.resp)) cls+=' anim'; }
       else if (it.riscadas.includes(k)) cls=' riscada';
-      return `<button class="op${cls}" role="radio" data-op="${k}" aria-checked="${it.resp===k}" ${it.conf?'disabled':''}><span class="bola">${L[k]}</span><span class="txt">${esc(q.o[o])}</span></button>`; }).join('')}</div>
+      return `<button class="op${cls}" role="radio" data-op="${k}" aria-checked="${it.resp===k}" ${it.conf?'disabled':''}><span class="bola">${L[k]}</span><span class="txt">${G(q.o[o])}</span></button>`; }).join('')}</div>
     ${it.conf ? `
       <div class="retorno ${it.resp===it.certa?'ok':'no'}" role="status">
         <h3>${it.resp===it.certa ? 'Acertou. Mais 0,1' : 'Errou. A certa é a '+L[it.certa]}</h3>
-        <p>${esc(q.w)}</p>${q.imgw ? figHtml(q.imgw, 'A mesma imagem com a resposta marcada') : ''}${(q.net||q.f)?`<p class="fonte">${q.net?'Questão de pesquisa. ':''}${esc(q.f||'')}</p>`:''}
+        <p>${G(q.w)}</p>${q.imgw ? figHtml(q.imgw, 'A mesma imagem com a resposta marcada') : ''}${(q.net||q.f)?`<p class="fonte">${q.net?'Questão de pesquisa. ':''}${esc(q.f||'')}</p>`:''}
       </div>` : `
       <div class="ferr">
         <button class="fer" id="riscar" ${it.riscadas.length?'disabled':''}>${IC.tesoura}Riscar 2 erradas</button>
@@ -681,7 +728,7 @@ function dicaHtml(q){
   const r = (banco().revisao||[]); const tema = (q.tema||'').toLowerCase();
   let itens = []; r.forEach(sec => sec.i.forEach(x => { if (x.toLowerCase().includes(tema.split(' ')[0])) itens.push(x); }));
   if (!itens.length) itens = (r[0] ? r[0].i.slice(0,3) : []);
-  return `<div class="dicaBox"><b>Resumo: ${esc(q.tema)}</b><ul>${itens.slice(0,4).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+  return `<div class="dicaBox"><b>Resumo: ${esc(q.tema)}</b><ul>${itens.slice(0,4).map(x=>`<li>${G(x)}</li>`).join('')}</ul></div>`;
 }
 function confirma(){
   const it = partida.itens[partida.i];
@@ -737,10 +784,20 @@ function resumo(){
   const b = banco();
   tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
   <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Resumo</h1><p>${esc(b.materia)}</p></div>
-  <section class="bloco rev">${(b.revisao||[]).map(r => `<h2>${esc(r.t)}</h2><ul>${r.i.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`).join('')}</section>
+  <section class="bloco rev">${(b.revisao||[]).map(r => `<h2>${esc(r.t)}</h2><ul>${r.i.map(x=>`<li>${G(x)}</li>`).join('')}</ul>`).join('')}</section>
   ${temQuestoes() ? `<div class="rodape"><button class="botao aperta" id="go">Fazer simulado</button></div>` : ''}`);
   $('#vol').onclick = materia;
   if ($('#go')) $('#go').onclick = () => comeca(partes().completo);
+}
+
+function dicionario(){
+  const b = banco(), g = b.glossario || {};
+  const ks = Object.keys(g).sort((x,y) => x.localeCompare(y, 'pt', {sensitivity:'base'}));
+  tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
+  <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Dicionário</h1><p>${esc(b.materia)}: as palavras que aparecem nas questões, explicadas.</p></div>
+  <section class="bloco"><dl class="dic">${ks.map(k => `<dt>${esc(k)}</dt><dd>${esc(glTxt(g[k]))}${g[k] && g[k].img ? [].concat(g[k].img).map(src => figHtml(src, g[k].alt || k).replace('loading="eager"','loading="lazy"')).join('') : ''}</dd>`).join('')}</dl></section>`);
+  $('#vol').onclick = materia;
+  app.querySelectorAll('[data-zoom]').forEach(el => el.onclick = () => abreZoom(el.dataset.zoom, el.dataset.alt));
 }
 
 /* ---------- ESTUDAR POR COR (rascunho 12/11: banco.estudo = [{cor, hex, nome, intro, lesoes:[{nome, img, legenda, pontos, fonte}]}]) ---------- */
@@ -868,10 +925,10 @@ function navMarca(nome, args){
   try { (NAV.pos === 0 ? history.replaceState : history.pushState).call(history, { nav: NAV.pos }, ''); } catch (_) {}
   navAtualiza();
 }
-const NAV_FN = { inicio:()=>inicio, materia:()=>materia, listaTemas:()=>listaTemas, resumo:()=>resumo, estudoCor:()=>estudoCor, listaAulas:()=>listaAulas, verAula:()=>verAula, listaMaterial:()=>listaMaterial, resultado:()=>resultado, prova:()=>questao };
+const NAV_FN = { inicio:()=>inicio, materia:()=>materia, listaTemas:()=>listaTemas, resumo:()=>resumo, estudoCor:()=>estudoCor, listaAulas:()=>listaAulas, verAula:()=>verAula, listaMaterial:()=>listaMaterial, dicionario:()=>dicionario, resultado:()=>resultado, prova:()=>questao };
 Object.keys(NAV_FN).forEach(n => {
   const alvo = n === 'prova' ? 'questao' : n, orig = window[alvo];
-  window[alvo] = function(){ const a = n === 'prova' ? [] : argsLimpos(arguments); const r = orig.apply(this, arguments); navMarca(n, a); return r; };
+  window[alvo] = function(){ const a = n === 'prova' ? [] : argsLimpos(arguments); _glVistos.clear(); const r = orig.apply(this, arguments); navMarca(n, a); return r; };
 });
 addEventListener('popstate', ev => {
   const k = ev.state && typeof ev.state.nav === 'number' ? ev.state.nav : 0, e = NAV.pilha[k];

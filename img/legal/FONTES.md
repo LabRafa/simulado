@@ -1,0 +1,2 @@
+# Imagens da Odonto Legal
+- swab.jpg: "US Navy 060628-N-6645H-025 ... performs a Buccal Swab Collection procedure", U.S. Navy (Photographer's Mate 3rd Class), domínio público, Wikimedia Commons, https://commons.wikimedia.org/wiki/File:US_Navy_060628-N-6645H-025_During_the_ship%27s_Bone_Marrow_Drive_and_Health_Expo,_Capt._Todd_A._Zecchin,_commanding_officer_USS_John_F._Kennedy_(CV_67),_performs_a_Buccal_Swab_Collection_procedure.jpg
