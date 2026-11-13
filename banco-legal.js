@@ -336,6 +336,13 @@ window.BANCOS = window.BANCOS || {};
     atualizado: '13/11/2026',
     mudancas: [
       {
+            "data": "14/10/2026",
+            "t": "CFO pede mais prazo para a RDC 1.002/2025 da Anvisa",
+            "d": "O prazo para clínicas e consultórios se adequarem às novas regras sanitárias termina em dezembro de 2026. O CFO pediu à Anvisa prorrogação ou flexibilização, levando em conta o porte do serviço e as diferenças regionais.",
+            "fonte": "Legismap (nota do CFO), 14/10/2026",
+            "url": "https://legismap.com.br/conteudos/artigos-e-noticias/o-conselho-federal-de-odontologia-e-o-prazo-de-adequacao-a-rdc-n-1-002-2025-da-anvisa"
+      },
+      {
             "data": "21/07/2026",
             "t": "Res. CFO-297/2026: PMMA proibido para fins estéticos",
             "d": "Proíbe o cirurgião-dentista de usar PMMA como preenchedor injetável com finalidade só estética; o uso reparador continua. Vale a partir da publicação.",
@@ -343,18 +350,64 @@ window.BANCOS = window.BANCOS || {};
             "url": "https://www.jornalopcao.com.br/saude/dentistas-ficam-proibidos-de-usar-pmma-para-fins-esteticos-resolucao-cita-risco-de-cegueira-e-outras-complicacoes-850312/"
       },
       {
-            "data": "10/07/2026",
-            "t": "Res. CFO-295/2026: sedação na Odontologia",
-            "d": "Regulamenta o uso de fármacos para sedação no consultório, os protocolos de segurança e as habilitações Básica e Avançada em Sedação. Publicada no DOU em 31/07/2026; revogou a Res. CFO-51/2004. Não mexe no Código de Ética.",
-            "fonte": "LegisWeb",
-            "url": "https://www.legisweb.com.br/legislacao/?id=498734"
+            "data": "16/07/2026",
+            "t": "Res. CFO-296/2026: registro de especialidade feita em residência",
+            "d": "A residência só dá direito ao registro de especialista se o programa seguir as normas do MEC e tiver autorização vigente da CNRMS. O CFO passa a avaliar o conteúdo da formação (currículo, carga horária prática, preceptoria), não só o nome do certificado. Pedido feito no CRO. Revogou as Res. CFO-27/2002, 39/2003, 70/2006 e 177/2016.",
+            "fonte": "Jacobs Consultoria (data de publicação informada: 16/07/2026)",
+            "url": "https://www.jacobsconsultoria.com.br/post/cfo-novas-regras-registro-de-especialidades-resid%C3%AAncias"
       },
       {
-            "data": "20/03/2026",
-            "t": "Res. CFO-286/2026: Cirurgia Estética Orofacial",
-            "d": "Reconhece a Cirurgia Estética Orofacial (CEOF), segundo o título publicado no Diário Oficial.",
-            "fonte": "Diário Oficial (via TSE), 06/04/2026",
-            "url": "https://sintse.tse.jus.br/documentos/2026/Abr/6/saude/resolucao-no-286-de-20-de-marco-de-2026-reconhece-a-cirurgia-estetica-orofacial-ceof-como"
+            "data": "10/07/2026",
+            "t": "Res. CFO-295/2026: novas regras de sedação",
+            "d": "Substitui a Res. CFO-51/2004. Cria a Habilitação Básica e a Avançada em Sedação em Odontologia; o curso da Avançada tem no mínimo 500 horas, com pelo menos 60 % de prática presencial supervisionada. Quem já faz sedação tem 180 dias da publicação para pedir a habilitação por experiência no CRO. Publicada no DOU em 31/07/2026. Não mexe no Código de Ética.",
+            "fonte": "CFO, notícia de 27/07/2026",
+            "url": "https://website.cfo.org.br/cfo-publica-nova-resolucao-e-atualiza-regras-para-habilitacao-em-sedacao-em-odontologia/",
+            "extra": [
+                  {
+                        "t": "LegisWeb, texto da resolução",
+                        "url": "https://www.legisweb.com.br/legislacao/?id=498734"
+                  }
+            ]
+      },
+      {
+            "data": "18/05/2026",
+            "t": "Lei 15.408/2026: Julho Neon, mês da saúde bucal",
+            "d": "Lei federal que cria o Julho Neon, mês de conscientização sobre saúde bucal, com campanhas em escolas e unidades básicas de saúde.",
+            "fonte": "Rádio Senado, 18/05/2026",
+            "url": "https://www12.senado.leg.br/radio/1/noticia/2026/05/18/julho-neon-nova-lei-cria-mes-dedicado-a-saude-bucal"
+      },
+      {
+            "data": "Março/2026",
+            "t": "Res. CFO-283 a 286/2026: estética e cabeça e pescoço",
+            "d": "A 284 afirma que a área de atuação do cirurgião-dentista abrange cabeça e pescoço, ligada à formação. A 285 abre exceção à Res. CFO-230/2020 (que proibia rinoplastia, blefaroplastia e ritidoplastia) para especialistas, inclusive em Harmonização Orofacial e Cirurgia Bucomaxilofacial. A 286 (20/03/2026) reconhece a Cirurgia Estética Orofacial (CEOF) como especialidade.",
+            "fonte": "ConJur, 08/04/2026",
+            "url": "https://conjur.com.br/2026-abr-08/cirurgias-esteticas-na-odontologia-o-que-realmente-mudou-com-as-novas-resolucoes-do-cfo/",
+            "extra": [
+                  {
+                        "t": "Res. CFO-286/2026 no Diário Oficial (via TSE)",
+                        "url": "https://sintse.tse.jus.br/documentos/2026/Abr/6/saude/resolucao-no-286-de-20-de-marco-de-2026-reconhece-a-cirurgia-estetica-orofacial-ceof-como"
+                  }
+            ]
+      },
+      {
+            "data": "15/12/2025",
+            "t": "RDC Anvisa 1.002/2025: regras sanitárias para a Odontologia",
+            "d": "Primeira norma da Anvisa só para a Odontologia: boas práticas de funcionamento de consultórios, clínicas, unidades móveis e escolares e laboratórios de prótese dentária, públicos ou privados (responsável técnico, licença sanitária, estrutura, equipamentos, esterilização, segurança do paciente, resíduos). Quem já funciona tem 360 dias para se adequar. Publicada no DOU em 16/12/2025.",
+            "fonte": "DOU, cópia da Prefeitura do Rio (PDF)",
+            "url": "https://vigilanciasanitaria.prefeitura.rio/wp-content/uploads/sites/84/2026/01/RDC-Anvisa-No-1.002-DE-15-DE-dezEMBRO-DE-2025-DOU-Imprensa-Nacional.pdf",
+            "extra": [
+                  {
+                        "t": "Legismap: aprovação pela Anvisa (10/12/2025)",
+                        "url": "https://legismap.com.br/conteudos/artigos-e-noticias/anvisa-aprova-marco-historico-para-servicos-odontologicos-em-alinhamento-com-novas-diretrizes-publicadas-pelo-cfo"
+                  }
+            ]
+      },
+      {
+            "data": "12/11/2025",
+            "t": "Res. CFO-277/2025: ambientes de trabalho na Odontologia",
+            "d": "Classifica os ambientes de assistência odontológica (consultórios, clínicas) pela complexidade dos procedimentos e define requisitos de organização e funcionamento. Feita com apoio técnico da Anvisa. Publicada em 14/11/2025.",
+            "fonte": "CFO, notícia de 18/11/2025",
+            "url": "https://website.cfo.org.br/cfo-esclarece-valorizacao-cfo-publica-resolucao-que-regulamenta-os-ambientes-de-trabalho-na-odontologia/"
       },
       {
             "data": "18/06/2025",
@@ -362,6 +415,13 @@ window.BANCOS = window.BANCOS || {};
             "d": "Cumprindo decisão do CADE de 2023, tirou do Código as proibições ligadas a cartão de desconto: alterou o art. 20 e o art. 44, XIV, e revogou o art. 32, XIII. Anunciar preço e serviço grátis continua proibido. Publicada no DOU em 24/06/2025.",
             "fonte": "Legismap",
             "url": "https://legismap.com.br/conteudos/artigos-e-noticias/em-cumprimento-a-decisao-do-cade-cfo-realiza-alteracoes-pontuais-no-codigo-de-etica"
+      },
+      {
+            "data": "02/04/2025",
+            "t": "Lei 15.116/2025: reconstrução dentária pelo SUS",
+            "d": "Cria o programa de reconstrução dentária pelo SUS para mulheres vítimas de violência doméstica. Os critérios de acesso dependem de regulamentação do governo federal.",
+            "fonte": "Diário Oficial (via TSE), 03/04/2025",
+            "url": "https://sintse.tse.jus.br/documentos/2025/Abr/3/saude/lei-no-15-116-de-2-de-abril-de-2025-institui-o-programa-de-reconstrucao-dentaria-para-mulheres"
       }
     ],
     podeMudar: [
@@ -388,6 +448,18 @@ window.BANCOS = window.BANCOS || {};
                         "url": "https://website.cfo.org.br/wp-content/uploads/2025/03/Nota-Tecnica-no-14-2025-CADE-CFO.pdf"
                   }
             ]
+      },
+      {
+            "t": "Sedação pode parar na Justiça",
+            "d": "Em 30/07/2026 o CFM, a AMB e a SBA anunciaram que vão à Justiça para suspender a Res. CFO-295/2026, dizendo que ela contraria a Lei do Ato Médico. Até a notícia, não havia decisão judicial.",
+            "fonte": "Futuro da Saúde, 31/07/2026",
+            "url": "https://futurodasaude.com.br/cfm-justica-resolucao-sedacao-dentistas/"
+      },
+      {
+            "t": "Prazo da RDC 1.002/2025",
+            "d": "O prazo de adequação termina em dezembro de 2026 e o CFO pediu prorrogação à Anvisa. Se a Anvisa não prorrogar, as regras passam a ser cobradas na fiscalização.",
+            "fonte": "Legismap (nota do CFO), 14/10/2026",
+            "url": "https://legismap.com.br/conteudos/artigos-e-noticias/o-conselho-federal-de-odontologia-e-o-prazo-de-adequacao-a-rdc-n-1-002-2025-da-anvisa"
       }
     ],
     modos: [
