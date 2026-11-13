@@ -323,14 +323,14 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611130905"></script>
-<script src="banco-farmaco.js?v=202611130905"></script>
-<script src="banco-imagino.js?v=202611130905"></script>
-<script src="banco-cabeca.js?v=202611130905"></script>
-<script src="banco-estomato.js?v=202611130905"></script>
-<script src="banco-legal.js?v=202611130905"></script>
-<script src="periodos.js?v=202611130905"></script>
-<script src="aulas.js?v=202611130905"></script>
+<script src="bancos.js?v=202611130914"></script>
+<script src="banco-farmaco.js?v=202611130914"></script>
+<script src="banco-imagino.js?v=202611130914"></script>
+<script src="banco-cabeca.js?v=202611130914"></script>
+<script src="banco-estomato.js?v=202611130914"></script>
+<script src="banco-legal.js?v=202611130914"></script>
+<script src="periodos.js?v=202611130914"></script>
+<script src="aulas.js?v=202611130914"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -849,7 +849,7 @@ function resumo(){
 }
 
 function mudancas(){
-  const b = banco(), item = x => `<article class="mud">${x.data ? `<div class="dt">${esc(x.data)}</div>` : ''}<h3>${esc(x.t)}</h3><p>${G(x.d)}</p>${x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">Fonte: ${esc(x.fonte||'link')}</a>` : ''}</article>`;
+  const b = banco(), item = x => `<article class="mud">${x.data ? `<div class="dt">${esc(x.data)}</div>` : ''}<h3>${esc(x.t)}</h3><p>${G(x.d)}</p>${x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">Fonte: ${esc(x.fonte||'link')}</a>` : ''}${(x.extra||[]).map(e => `<br><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.t)}</a>`).join('')}</article>`;
   tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
   <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Mudanças recentes</h1><p>O que mudou nas regras da odontologia, do mais novo pro mais antigo. Conferido em ${esc(b.atualizado||'')}; a Mônica confere todo mês.</p></div>
   <section class="bloco">${(b.mudancas||[]).map(item).join('')}</section>

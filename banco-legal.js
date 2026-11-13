@@ -368,14 +368,26 @@ window.BANCOS = window.BANCOS || {};
       {
             "t": "Código de Ética novo",
             "d": "Desde 20/02/2025 (Decisão CFO-07/2025) um grupo de trabalho do CFO revisa o Código de Ética e o Código de Processo Ético inteiros. Até hoje não há data de aprovação nem consulta pública publicada.",
-            "fonte": "Legismap",
-            "url": "https://legismap.com.br/conteudos/artigos-e-noticias/em-cumprimento-a-decisao-do-cade-cfo-realiza-alteracoes-pontuais-no-codigo-de-etica"
+            "fonte": "Legismap, notícia sobre a Res. CFO-271/2025",
+            "url": "https://legismap.com.br/conteudos/artigos-e-noticias/em-cumprimento-a-decisao-do-cade-cfo-realiza-alteracoes-pontuais-no-codigo-de-etica",
+            "extra": [
+                  {
+                        "t": "CFO, Decisão CFO-07/2025 (ato oficial que criou o grupo)",
+                        "url": "https://sistemas.cfo.org.br/visualizar/atos/DECIS%c3%83O/SEC/2025/07"
+                  }
+            ]
       },
       {
             "t": "Regras de publicidade",
-            "d": "Um grupo especial do CFO (Decisão CFO-05, de 18/02/2025) estuda o capítulo de anúncios e publicidade. Pode mudar o que vale para redes sociais.",
-            "fonte": "sistemas.cfo.org.br",
-            "url": "https://sistemas.cfo.org.br/visualizar/atos/DECIS%C3%83O/SEC/2025/05"
+            "d": "Pela Decisão CFO-05, de 18/02/2025, o CFO criou um grupo especial e temporário para atualizar o capítulo \"do Anúncio, da Propaganda e da Publicidade\" do Código de Ética e escrever a minuta do texto novo. O pano de fundo: em 06/03/2025 o CADE abriu inquérito contra o CFO e 24 CROs por publicações contra descontos na Black Friday (Nota Técnica 14/2025) e deu medida preventiva. Pode mudar o que vale para anúncio e redes sociais.",
+            "fonte": "CFO, Decisão CFO-05/2025 (ato oficial)",
+            "url": "https://sistemas.cfo.org.br/visualizar/atos/DECIS%C3%83O/SEC/2025/05",
+            "extra": [
+                  {
+                        "t": "CADE, Nota Técnica 14/2025 (PDF no site do CFO)",
+                        "url": "https://website.cfo.org.br/wp-content/uploads/2025/03/Nota-Tecnica-no-14-2025-CADE-CFO.pdf"
+                  }
+            ]
       }
     ],
     modos: [
