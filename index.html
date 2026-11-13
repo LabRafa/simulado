@@ -256,13 +256,13 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611122146"></script>
-<script src="banco-farmaco.js?v=202611122146"></script>
-<script src="banco-imagino.js?v=202611122146"></script>
-<script src="banco-cabeca.js?v=202611122146"></script>
-<script src="banco-estomato.js?v=202611122146"></script>
-<script src="periodos.js?v=202611122146"></script>
-<script src="aulas.js?v=202611122146"></script>
+<script src="bancos.js?v=202611122147"></script>
+<script src="banco-farmaco.js?v=202611122147"></script>
+<script src="banco-imagino.js?v=202611122147"></script>
+<script src="banco-cabeca.js?v=202611122147"></script>
+<script src="banco-estomato.js?v=202611122147"></script>
+<script src="periodos.js?v=202611122147"></script>
+<script src="aulas.js?v=202611122147"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -745,7 +745,16 @@ function listaMaterial(){
 }
 
 pinta();
-inicio();
+/* link direto (12/11): ?m=farmaco abre a matéria; ?m=farmaco&modo=t-nervos já começa o simulado daquele modo */
+(function(){ try {
+  const u = new URLSearchParams(location.search), mid = u.get('m'), mo = u.get('modo');
+  if (mid && infoMat(mid) && visivel(infoMat(mid))) {
+    MAT = mid; grava('jogo-mat', MAT);
+    const alvo = mo && modos().find(x => x.id === mo);
+    if (alvo && sorteia(alvo).length) return comeca(alvo);
+    return materia();
+  }
+} catch(e) {} inicio(); })();
 </script>
 </body>
 </html>
