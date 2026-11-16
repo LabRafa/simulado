@@ -14,7 +14,7 @@ html,body{margin:0;height:100%;background:#0d1b3e;overflow:hidden}
 @media (orientation:portrait){.mseta{top:auto;bottom:calc(4vh + 40px);transform:none;width:64px;height:64px;font-size:30px}#me{left:22vw}#md{right:22vw}}
 #mdica{position:fixed;z-index:20;max-width:min(86vw,420px);background:#0d1b3e;color:#fff;font:15px/1.4 system-ui,sans-serif;padding:10px 12px;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.4);display:none}#mdica small{display:block;margin-top:6px;color:#9fb3e0;font-size:13px}
 </style></head><body>
-<div id="caixa"><iframe id="palco" src="slides.html" allow="fullscreen" title="Apresentação"></iframe></div>
+<div id="caixa"><iframe id="palco" src="about:blank" allow="fullscreen" title="Apresentação"></iframe></div>
 <button class="mseta" id="me" aria-label="Slide anterior">&#10094;</button><button class="mseta" id="md" aria-label="Próximo slide">&#10095;</button>
 <div id="mdica"></div>
 <div id="vire">📱↻ Vire o celular para ver maior</div>
@@ -22,7 +22,7 @@ html,body{margin:0;height:100%;background:#0d1b3e;overflow:hidden}
 const f=document.getElementById('palco');
 function ajusta(){const c=document.getElementById('caixa'),s=Math.min(c.clientWidth/1600,c.clientHeight/900);f.style.transform='translate(-50%,-50%) scale('+s+')';}
 addEventListener('resize',ajusta);ajusta();
-if(location.hash)f.src='slides.html'+location.hash;
+f.src='slides.html?n='+Date.now()+location.hash;
 f.addEventListener('load',()=>{try{const d=f.contentWindow.document,st=d.createElement('style');st.textContent='.navseta{display:none!important}';d.head.appendChild(st);f.contentWindow.focus()}catch(e){}});
 document.getElementById('me').onclick=()=>{try{f.contentWindow.tras()}catch(e){}};
 document.getElementById('md').onclick=()=>{try{f.contentWindow.frente()}catch(e){}};
