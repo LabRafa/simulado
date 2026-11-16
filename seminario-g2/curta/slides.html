@@ -280,7 +280,7 @@ a.termo{cursor:pointer} a.termo::before{content:'↗'}
         <filter id="suave"><feGaussianBlur stdDeviation="6"/></filter>
         <filter id="borda"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="9"/><feGaussianBlur stdDeviation="1.6"/></filter>
       </defs>
-      <image href="img/dente.jpg" width="840" height="1380"/>
+      <image href="../img/dente.jpg" width="840" height="1380"/>
       <filter id="borrafrente" x="-10%" y="-10%" width="120%" height="130%"><feGaussianBlur stdDeviation="22"/></filter><mask id="avanco" maskUnits="userSpaceOnUse" x="0" y="0" width="840" height="1380"><rect class="frente-carie" x="-40" y="-60" width="920" height="0" fill="#fff" filter="url(#borrafrente)"/></mask>
       <g class="c c0"><g class="brilho" fill="#ffd23f"><path d="M770,40 l12,26 l26,12 l-26,12 l-12,26 l-12,-26 l-26,-12 l26,-12z"/><path d="M150,170 l8,17 l17,8 l-17,8 l-8,17 l-8,-17 l-17,-8 l17,-8z"/></g></g>
       <!-- 1: manchas brancas (giz) no esmalte -->
@@ -296,7 +296,7 @@ a.termo{cursor:pointer} a.termo::before{content:'↗'}
         <path filter="url(#borda)" fill="url(#gCarie)" d="M488,112 C510,100 552,100 572,112 C578,160 566,215 560,262 C592,300 628,350 622,408 C616,452 586,486 560,512 C540,528 512,528 494,512 C466,486 430,452 424,408 C418,350 452,300 484,262 C478,215 466,160 488,112 Z"/>
       </g>
       <!-- 4: polpa inflamada (só dentro da polpa) -->
-      <g class="c c4" style="mix-blend-mode:multiply"><image class="pulsa" href="img/polpa-mascara.png" width="840" height="1380" opacity=".8"/></g>
+      <g class="c c4" style="mix-blend-mode:multiply"><image class="pulsa" href="../img/polpa-mascara.png" width="840" height="1380" opacity=".8"/></g>
       <!-- 5: abscesso na ponta da raiz -->
       <g class="c c5"><g font-family="Bahnschrift,Segoe UI" font-weight="700"><rect x="420" y="1095" width="400" height="104" rx="18" fill="#fff" stroke="#d62828" stroke-width="4"/><text x="620" y="1140" text-anchor="middle" font-size="31" fill="#7a0f18">as bactérias desceram</text><text x="620" y="1180" text-anchor="middle" font-size="31" fill="#7a0f18">pelo canal até a raiz</text><path d="M420,1150 L330,1205" stroke="#d62828" stroke-width="5" stroke-linecap="round"/></g><ellipse cx="222" cy="1282" rx="135" ry="105" fill="url(#gInflama)"/><g class="incha"><path filter="url(#borda)" d="M160,1280 C150,1236 196,1214 230,1222 C276,1230 296,1268 282,1304 C268,1338 222,1344 192,1330 C170,1320 164,1300 160,1280 Z" fill="url(#gPus)" opacity=".92"/><ellipse cx="208" cy="1262" rx="14" ry="9" fill="#fffbe0" opacity=".7"/></g></g>
       <g class="bichinho" id="bicho" transform="translate(760,250)"><g transform="scale(-1.25,1.25)">
