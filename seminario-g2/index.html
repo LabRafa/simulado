@@ -89,13 +89,17 @@ html,body{height:100%;background:var(--noite);color:var(--papel);font-family:Bah
 .bola{display:inline-grid;place-items:center;width:3.6vh;height:3.6vh;border-radius:50%;background:#e0573f;color:#fff;font-weight:700;font-size:1.9vh}
 .seta{width:3vw;height:.6vh;background:linear-gradient(90deg,#e0573f,#ff8a5c);transform:scaleX(0);transform-origin:left;transition:transform .6s}
 .seta.on{transform:scaleX(1)}
-.fotos-abs{position:absolute;left:6vw;right:4vw;top:40vh;display:flex;gap:1.4vw;height:34vh}
+.fotos-abs{position:absolute;left:6vw;right:4vw;top:37vh;display:flex;gap:1.4vw;height:30vh}
 .fotos-abs figure{margin:0;flex:1;position:relative;border-radius:1.6vh;overflow:hidden;background:#000;opacity:0;transform:translateY(3vh);transition:all .8s}
 .fotos-abs figure.on{opacity:1;transform:none}
 .fotos-abs img{width:100%;height:100%;object-fit:cover}
 .fotos-abs figcaption{position:absolute;left:0;right:0;bottom:0;padding:1vh 1vw;background:rgba(18,10,20,.82);font-size:1.8vh}
-.fato{position:absolute;left:6vw;right:4vw;bottom:6vh;font-size:2.3vh;line-height:1.4;color:#f6dcd4;opacity:0;transition:opacity .8s}
-.fato.on{opacity:1} .fato b{color:#ff8a5c;font-size:3vh} .fato span{display:inline-block;margin-left:.6vw;font-weight:700;color:#fff;background:#d62828;padding:.3vh .8vw;border-radius:.8vh}
+.credabs{position:absolute;left:6vw;bottom:1.2vh;font-size:1.3vh;color:#a07a74}
+.fatos{position:absolute;left:6vw;right:4vw;bottom:4.5vh;display:flex;gap:1.4vw}
+.fato{flex:1;background:#2a1018;border:.25vh solid #6b2a33;border-radius:1.4vh;padding:1.4vh 1.2vw;opacity:0;transform:translateY(2vh);transition:all .7s}
+.fato:nth-child(2){transition-delay:.35s}.fato:nth-child(3){transition-delay:.7s}
+.fato.on{opacity:1;transform:none} .fato b{display:block;color:#ff8a5c;font-size:2.7vh} .fato p{font-size:1.9vh;line-height:1.35;color:#f6dcd4;margin-top:.5vh} .fato i{display:block;font-size:1.4vh;color:#c9928a;margin-top:.6vh}
+.fato.urg{background:#7a0f18;border-color:#ff4d3a} .fato.urg b{color:#fff}
 /* MAPA MENTAL */
 #mapa{background:radial-gradient(110vh 80vh at 50% 55%,#182b5e 0%,var(--noite) 70%)}
 #mapa .sub{font-size:2.3vh;color:#c9d4ee;margin-top:1vh}
@@ -262,11 +266,15 @@ html,body{height:100%;background:var(--noite);color:var(--papel);font-family:Bah
   </div>
   <div class="fotos-abs">
     <figure data-k="0"><img src="img/molar-5-fistula-1o-molar-cariado.jpg" alt=""><figcaption>Abscesso com fístula na gengiva</figcaption></figure>
-    <figure data-k="1"><img src="img/abscesso-face-inchada.jpg" alt=""><figcaption>Flegmão: a infecção se espalhando</figcaption></figure>
-    <figure data-k="2"><img src="img/abscesso-tomografia.jpg" alt=""><figcaption>Tomografia: chegou ao seio maxilar</figcaption></figure>
+    <figure data-k="1"><img src="img/abscesso-celulite-facial-rosto-inchado.jpg" alt=""><figcaption>Celulite facial: o rosto inteiro inchado por um dente</figcaption></figure>
+    <figure data-k="2"><img src="img/abscesso-angina-de-ludwig-lingua-para-fora.jpg" alt=""><figcaption>Angina de Ludwig: o pescoço incha e empurra a língua</figcaption></figure>
   </div>
-  <div class="fato" data-k="4"><b>14 tipos</b> de infecção que se espalham a partir do dente, com mortalidade alta (Lou et al., 2024). Um homem de 65 anos com cáries sem tratamento morreu de sepse que começou na boca (Mikos et al., 2025). <span>Abscesso é urgência.</span></div>
-  <div class="pe">Grupo 2</div>
+  <div class="fatos">
+    <div class="fato" data-k="4"><b>14 caminhos</b><p>Uma revisão de 2024 encontrou 14 formas diferentes de a infecção do dente se espalhar pelo corpo: pescoço, tórax, coração, cérebro. Várias podem matar.</p><i>Lou et al., Infection, 2024</i></div>
+    <div class="fato" data-k="4"><b>Caso real, 2025</b><p>Homem de 65 anos com muitas cáries sem tratar. A infecção desceu para o pescoço, virou sepse (infecção generalizada) e ele morreu.</p><i>Mikos et al., Am J Case Rep, 2025</i></div>
+    <div class="fato urg" data-k="4"><b>Abscesso é urgência</b><p>Inchaço, pus ou febre por causa de um dente: dentista no mesmo dia. No SUS, procure a unidade de saúde ou o pronto-atendimento.</p></div>
+  </div>
+  <div class="credabs">Fotos: Commons (Damdent, CC BY-SA); Cureus 2025 (CC BY); Infect Drug Resist 2026 (CC BY-NC)</div><div class="pe">Grupo 2</div>
 </section>
 <section class="tela gen" data-passos="0" style="--c:#F5B800;--tc:#1d2433"><div class="faixa" style="background:#F5B800"></div><div class="topo" style="background:#F5B800"></div><div class="trilha"><span class="">Epidemiologia</span><span class="">Etiologia</span><span class="">Fatores de risco</span><span class="on">Prevenção</span><span class="">Caso</span></div><h2 class="t">Cárie: estratégias de prevenção</h2><div class="tags"><span class="tag" style="--i:0">Açúcar só nas refeições</span><span class="tag" style="--i:1">Pasta com flúor, <span class="num" data-v="2">2</span> minutos</span><span class="tag" style="--i:2">Fio dental</span><span class="tag" style="--i:3">Criança: sem mamadeira doce à noite</span><span class="tag" style="--i:4">Consulta conforme o risco</span></div><div class="fotos n2"><figure style="--i:0"><img src="img/escovacao.jpg" alt=""><figcaption>Escova, fio dental e escova interdental</figcaption></figure><figure style="--i:1"><img src="img/caso-autoexame-espelho.jpg" alt=""><figcaption>Escovar olhando no espelho</figcaption></figure></div><div class="texto"><span class="fr" style="--i:0">Para prevenir a cárie, o mais importante é controlar o açúcar e a placa. </span><span class="fr" style="--i:1">Doce e bebida açucarada de preferência junto das refeições principais, e não beliscando o dia todo. </span><span class="fr" style="--i:2">Escovar pelo menos duas vezes ao dia, com pasta com flúor, por uns dois minutos, e usar fio dental entre os dentes. </span><span class="fr" style="--i:3">Na criança, quantidade pequena de pasta, do tamanho de um grão de arroz até os 3 anos e de uma ervilha dos 3 aos 6, e nada de dormir com mamadeira doce. </span><span class="fr" style="--i:4">E consulta ao dentista com o intervalo que ele indicar para o risco de cada pessoa. </span></div><div class="cred">Foto: Milenafoto, CC BY-SA 3.0, via Wikimedia Commons · Foto: Bill Branson/NCI, domínio público</div><div class="pe">Grupo 2 · 10</div></section>
 <section class="tela gen" data-passos="0" style="--c:#F5B800;--tc:#1d2433"><div class="faixa" style="background:#F5B800"></div><div class="topo" style="background:#F5B800"></div><div class="trilha"><span class="">Epidemiologia</span><span class="">Etiologia</span><span class="">Fatores de risco</span><span class="">Prevenção</span><span class="on">Caso</span></div><h2 class="t">Caso: como a gente orientaria</h2><div class="tags"><span class="tag" style="--i:0">Criança de <span class="num" data-v="5">5</span> anos</span><span class="tag" style="--i:1">Mamadeira com açúcar à noite</span><span class="tag" style="--i:2">Mancha branca nos dentes</span></div><div class="fotos n1"><figure style="--i:0"><img src="img/caso-carie-mamadeira.jpg" alt=""><figcaption>Cárie precoce da infância (&quot;de mamadeira&quot;)</figcaption></figure></div><div class="texto"><span class="fr" style="--i:0">Imagine uma criança de 5 anos que dorme tomando mamadeira com achocolatado e já começou a ter manchas brancas nos dentes da frente, que é o começo do que a gente vê nesta foto. </span><span class="fr" style="--i:1">A gente explicaria à mãe que a mancha branca no dente ainda pode voltar atrás. </span><span class="fr" style="--i:2">A mamadeira da noite fica sem açúcar, um adulto ajuda a escovar antes de dormir com pasta com flúor do tamanho de um grão de ervilha, o doce fica para as refeições, e eles voltam ao dentista. </span><span class="fr" style="--i:3">A cárie começa sem dor, e a próxima doença também, só que é muito mais grave. </span></div><div class="cred">Foto: Zanwar KS et al., Cureus 2024, CC BY 4.0</div><div class="pe">Grupo 2 · 11</div></section>
