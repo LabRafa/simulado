@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Doenças orais · Grupo 2</title>
+<style>
+html,body{margin:0;height:100%;background:#0d1b3e;overflow:hidden}
+#caixa{position:fixed;inset:0;overflow:hidden;contain:strict}
+#palco{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:center;border:0;background:#f6f8fc}
+#vire{position:fixed;left:0;right:0;bottom:4vh;text-align:center;color:#fff;font:600 15px system-ui,sans-serif;opacity:.85;display:none}
+@media (orientation:portrait) and (max-width:900px){#vire{display:block}}
+.mseta{position:fixed;top:50%;transform:translateY(-50%);z-index:10;width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,.55);background:rgba(13,27,62,.35);color:#fff;font-size:24px;line-height:1;padding:0;-webkit-tap-highlight-color:transparent}
+.mseta:active{background:rgba(13,27,62,.7)}
+#me{left:8px}#md{right:8px}
+@media (orientation:portrait){.mseta{top:auto;bottom:calc(4vh + 40px);transform:none;width:64px;height:64px;font-size:30px}#me{left:22vw}#md{right:22vw}}
+#mdica{position:fixed;z-index:20;max-width:min(86vw,420px);background:#0d1b3e;color:#fff;font:15px/1.4 system-ui,sans-serif;padding:10px 12px;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.4);display:none}#mdica small{display:block;margin-top:6px;color:#9fb3e0;font-size:13px}
+</style></head><body>
+<div id="caixa"><iframe id="palco" src="about:blank" allow="fullscreen" title="Apresentação"></iframe></div>
+<button class="mseta" id="me" aria-label="Slide anterior">&#10094;</button><button class="mseta" id="md" aria-label="Próximo slide">&#10095;</button>
+<div id="mdica"></div>
+<div id="vire">📱↻ Vire o celular para ver maior</div>
+<script>
+const f=document.getElementById('palco');
+function ajusta(){const c=document.getElementById('caixa'),s=Math.min(c.clientWidth/1600,c.clientHeight/900);f.style.transform='translate(-50%,-50%) scale('+s+')';}
+addEventListener('resize',ajusta);ajusta();
+f.src='slides.html?n='+Date.now()+location.hash;
+f.addEventListener('load',()=>{try{const d=f.contentWindow.document,st=d.createElement('style');st.textContent='.navseta{display:none!important}';d.head.appendChild(st);f.contentWindow.focus()}catch(e){}});
+document.getElementById('me').onclick=()=>{try{f.contentWindow.tras()}catch(e){}};
+document.getElementById('md').onclick=()=>{try{f.contentWindow.frente()}catch(e){}};
+addEventListener('keydown',e=>{try{f.contentWindow.focus();f.contentWindow.dispatchEvent(new KeyboardEvent('keydown',{key:e.key,code:e.code,bubbles:true}))}catch(x){}});
+
+const md=document.getElementById('mdica');
+window.mostraDica=(txt,r,link)=>{const fr=f.getBoundingClientRect(),sc=fr.width/1600;md.textContent=txt;if(link){const m=document.createElement('small');m.textContent='Tem fonte: abre numa aba nova';md.appendChild(m);}md.style.display='block';const w=md.offsetWidth,h=md.offsetHeight;let x=Math.min(Math.max(8,fr.left+r.l*sc),innerWidth-w-8),y=fr.top+r.b*sc+8;if(y+h>innerHeight-8)y=Math.max(8,fr.top+r.t*sc-h-8);md.style.left=x+'px';md.style.top=y+'px';};
+window.escondeDica=()=>{md.style.display='none';};
+document.addEventListener('click',e=>{if(e.target===document.body||e.target.id==='caixa')escondeDica();});
+</script></body></html>
