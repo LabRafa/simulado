@@ -467,9 +467,9 @@ function contar(s){s.querySelectorAll('.num').forEach(n=>{const alvo=n.dataset.v
  setTimeout(()=>requestAnimationFrame(passo),700);});}
 
 (function(){const d=document.createElement('div');d.id='dica';document.body.appendChild(d);
-function mostra(t){d.textContent=t.dataset.dica;if(t.tagName==='A'){const m=document.createElement('small');m.textContent='Clique para abrir a fonte';d.appendChild(m);}
+function mostra(t){if(window.parent!==window&&window.parent.mostraDica){const r=t.getBoundingClientRect();window.parent.mostraDica(t.dataset.dica,{l:r.left,t:r.top,b:r.bottom},t.tagName==='A');return;}d.textContent=t.dataset.dica;if(t.tagName==='A'){const m=document.createElement('small');m.textContent='Clique para abrir a fonte';d.appendChild(m);}
 d.classList.add('on');const r=t.getBoundingClientRect(),w=d.offsetWidth,h=d.offsetHeight;let x=Math.min(Math.max(8,r.left),innerWidth-w-8),y=r.bottom+8;if(y+h>innerHeight-8)y=r.top-h-8;d.style.left=x+'px';d.style.top=y+'px';}
-function esconde(){d.classList.remove('on');}
+function esconde(){d.classList.remove('on');if(window.parent!==window&&window.parent.escondeDica)window.parent.escondeDica();}
 document.addEventListener('mouseover',e=>{const t=e.target.closest('.termo');t?mostra(t):esconde();});
 document.addEventListener('click',e=>{const t=e.target.closest('.termo');if(t&&t.tagName!=='A')mostra(t);},true);
 document.addEventListener('keydown',esconde);})();
