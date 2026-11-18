@@ -29,7 +29,7 @@ document.getElementById('md').onclick=()=>{try{f.contentWindow.frente()}catch(e)
 addEventListener('keydown',e=>{try{f.contentWindow.focus();f.contentWindow.dispatchEvent(new KeyboardEvent('keydown',{key:e.key,code:e.code,bubbles:true}))}catch(x){}});
 
 const md=document.getElementById('mdica');
-window.mostraDica=(txt,r,link)=>{const fr=f.getBoundingClientRect(),sc=fr.width/1600;md.innerHTML=txt;if(link){const m=document.createElement('small');m.textContent='Tem fonte: abre numa aba nova';md.appendChild(m);}md.style.display='block';const w=md.offsetWidth,h=md.offsetHeight;let x=Math.min(Math.max(8,fr.left+r.l*sc),innerWidth-w-8),y=fr.top+r.b*sc+8;if(y+h>innerHeight-8)y=Math.max(8,fr.top+r.t*sc-h-8);md.style.left=x+'px';md.style.top=y+'px';};
-window.escondeDica=()=>{md.style.display='none';};md.addEventListener('click',e=>{const t=e.target.closest('.termo');if(t){md.innerHTML=t.dataset.dica;e.stopPropagation();}});
+window.mostraDica=(txt,r,link)=>{clearTimeout(mdHT);const fr=f.getBoundingClientRect(),sc=fr.width/1600;md.innerHTML=txt;if(link){const m=document.createElement('small');m.textContent='Tem fonte: abre numa aba nova';md.appendChild(m);}md.style.display='block';const w=md.offsetWidth,h=md.offsetHeight;let x=Math.min(Math.max(8,fr.left+r.l*sc),innerWidth-w-8),y=fr.top+r.b*sc+8;if(y+h>innerHeight-8)y=Math.max(8,fr.top+r.t*sc-h-8);md.style.left=x+'px';md.style.top=y+'px';};
+window.var mdHT=null;escondeDica=()=>{clearTimeout(mdHT);mdHT=setTimeout(()=>{md.style.display='none';},700);};md.addEventListener('mouseenter',()=>{clearTimeout(mdHT);try{f.contentWindow.dicaFica&&f.contentWindow.dicaFica();}catch(e){}});md.addEventListener('mouseleave',()=>{escondeDica();});md.addEventListener('click',e=>{const t=e.target.closest('.termo');if(t){md.innerHTML=t.dataset.dica;e.stopPropagation();}});
 document.addEventListener('click',e=>{if(e.target===document.body||e.target.id==='caixa')escondeDica();});
 </script></body></html>
