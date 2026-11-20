@@ -64,6 +64,7 @@ body.vC .mat::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6p
 .mat .txt{flex:1;min-width:0;padding:14px 12px 14px 16px}
 .mat b{display:block;font-family:'Gabarito';font-weight:800;font-size:20px;line-height:1.2}
 .mat small{display:block;color:var(--cinza);font-size:14px;margin-top:3px}
+.mat .st{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:13px;color:var(--cinza)}.mat .st i{flex:0 0 64px;height:6px;border-radius:3px;background:var(--linha);overflow:hidden}.mat .st i b{display:block;height:100%;background:var(--c);font-size:0}.cabeca .stat{color:var(--cinza);font-size:14px;margin:8px 0 0}.cabeca .stat .barra{display:block;height:8px;border-radius:4px;background:var(--linha);margin-top:6px;max-width:320px;overflow:hidden}.cabeca .stat .barra b{display:block;height:100%;background:var(--cor)}
 .mat .nota{flex:0 0 auto;align-self:center;margin-right:16px;text-align:center;font-family:'Gabarito';font-weight:800;font-size:22px;color:var(--c)}
 .mat .nota em{display:block;font-style:normal;font-family:'Atkinson Hyperlegible';font-weight:400;font-size:11px;color:var(--cinza)}
 .mat .bonus{display:inline-block;font-family:'Atkinson Hyperlegible';font-size:12px;font-weight:700;background:var(--c);color:#fff;border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:3px}
@@ -479,6 +480,8 @@ const PER = window.PERIODOS || { atual: 2, lista: [{ n: 2, nome: '2º período' 
 const infoMat = id => MATERIAS.find(m => m.id === id);
 const perDe = m => (m && m.periodos) || [(m && m.periodo) || 2]; /* matéria pode estar em mais de uma aba (ex.: estomatologia no 2º e em Especialidades) */
 const periodoDe = id => { const ps = perDe(infoMat(id)); return ps.includes(PERIODO) ? PERIODO : ps[0]; };
+const ATUALIZADO = { bases: '19/11/2026', carie: '11/11/2026', inter: '20/11/2026', farmaco: '12/11/2026', imagino: '11/11/2026', legal: '13/11/2026', estomato: '12/11/2026', cabeca: '11/11/2026' }; /* Rafael 20/11: data em que cada matéria ganhou questões; atualizar ao mexer no banco */
+const progressoDe = id => { const b = BANCOS[id]; const qs = (b && b.q) || []; if (!qs.length) return null; const v = new Set(ler('jogo-vistas-'+id, [])); const feitas = qs.filter(q => v.has(q.id)).length; return { total: qs.length, feitas, pct: Math.floor(feitas * 100 / qs.length), data: (b.atualizadoEm || ATUALIZADO[id] || '') }; };
 const visivel = m => m.pronto && (BANCOS[m.id] || m.periodo >= 3); /* matéria nova aparece mesmo sem questões */
 const matsDoPeriodo = n => MATERIAS.filter(m => visivel(m) && perDe(m).includes(n));
 let PERIODO = ler('jogo-periodo', PER.atual); if (!PER.lista.some(p => p.n === PERIODO)) PERIODO = PER.atual;
@@ -589,7 +592,7 @@ function inicio(){
     const nAulas = ((window.AULAS||{})[m.id]||[]).length;
     const sub = b ? (b.proxima||'') : [m.codigo, m.ch, nAulas ? (nAulas===1 ? '1 aula' : nAulas+' aulas') : ''].filter(Boolean).join(', ');
     const selo = m.bonus ? '<span class="bonus">bônus</span>' : m.eletiva ? '<span class="prev">eletiva</span>' : '';
-    return `<li><button class="mat aperta" data-mat="${m.id}" style="--c:${c}"><span class="aba"></span>${ICMAT[m.id] ? `<span class="icmat" aria-hidden="true">${ICMAT[m.id]}</span>` : ''}<span class="txt"><b>${nome}${selo}</b><small>${esc(sub)}</small></span><span class="nota">${melhor!==null ? nota1(melhor)+'<em>melhor</em>' : IC.seta.replace('<svg','<svg width="22" height="22"')}</span></button></li>`; }).join('')}</ul>
+    return `<li><button class="mat aperta" data-mat="${m.id}" style="--c:${c}"><span class="aba"></span>${ICMAT[m.id] ? `<span class="icmat" aria-hidden="true">${ICMAT[m.id]}</span>` : ''}<span class="txt"><b>${nome}${selo}</b><small>${esc(sub)}</small>${(p => p ? `<small class="st"><i><b style="width:${p.pct}%">.</b></i>${p.total} questões · ${p.pct}% feito${p.data ? ' · atualizada ' + p.data.slice(0,5) : ''}</small>` : '')(progressoDe(m.id))}</span><span class="nota">${melhor!==null ? nota1(melhor)+'<em>melhor</em>' : IC.seta.replace('<svg','<svg width="22" height="22"')}</span></button></li>`; }).join('')}</ul>
   <!-- Show do Sisão fora do ar (Rafael 12/11): volta como Show do Milhão da Odonto -->`);
   app.querySelectorAll('[data-mat]').forEach(el => el.onclick = () => { MAT = el.dataset.mat; grava('jogo-mat', MAT); materia(); });
   app.querySelectorAll('[data-per]').forEach(el => el.onclick = () => { PERIODO = +el.dataset.per; grava('jogo-periodo', PERIODO); inicio(); });
@@ -647,6 +650,7 @@ function materia(){
     <h1>${esc(b.materia)}</h1>
     <p class="prof">${esc(nomeProf(b.prof))}${melhor!==null ? `, melhor nota ${nota1(melhor)}` : ''}</p>
     ${b.proxima ? `<p class="quando">${esc(b.proxima)}</p>` : ''}
+    ${(p => p ? `<p class="stat">${p.data ? 'Atualizada em ' + p.data + ' · ' : ''}${p.total} questões · você já fez ${p.feitas} (${p.pct}%)<span class="barra"><b style="width:${p.pct}%"></b></span></p>` : '')(progressoDe(MAT))}
   </header>
   <button class="grande aperta" data-go="${completo.id}"><span class="ic">${IC.play}</span><span><b>Fazer simulado</b><small>10 questões sorteadas, nota de 0 a 1</small></span></button>
   <div class="menu">
