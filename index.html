@@ -196,6 +196,7 @@ body.vC .mat::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6p
 .retorno h3{margin:0 0 6px;font-size:20px}
 .retorno.ok h3{color:var(--certo)}.retorno.no h3{color:var(--errado)}
 .retorno p{margin:0 0 6px}
+.imgfonte{font-size:12px;color:var(--cinza);margin:4px 0 10px;line-height:1.35}.bibq a{color:var(--cor-escuro,#1E5BD8);font-weight:700}
 .retorno .fonte{font-size:13px;color:var(--cinza);margin:0}
 @keyframes sobe{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .rodape{position:sticky;bottom:0;z-index:4;padding:12px 0 calc(10px + env(safe-area-inset-bottom));background:linear-gradient(rgba(238,241,245,0),var(--porcelana) 30%)}
@@ -324,14 +325,15 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611131006"></script>
-<script src="banco-farmaco.js?v=202611131006"></script>
-<script src="banco-imagino.js?v=202611131006"></script>
-<script src="banco-cabeca.js?v=202611131006"></script>
-<script src="banco-estomato.js?v=202611131006"></script>
-<script src="banco-legal.js?v=202611131006"></script>
-<script src="periodos.js?v=202611131006"></script>
-<script src="aulas.js?v=202611131006"></script>
+<script src="bancos.js?v=202611202100"></script>
+<script src="banco-farmaco.js?v=202611202100"></script>
+<script src="banco-imagino.js?v=202611202100"></script>
+<script src="banco-cabeca.js?v=202611202100"></script>
+<script src="banco-estomato.js?v=202611202100"></script>
+<script src="banco-legal.js?v=202611202100"></script>
+<script src="biblioteca.js?v=20261120"></script>
+<script src="periodos.js?v=202611202100"></script>
+<script src="aulas.js?v=202611202100"></script>
 <script>
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -480,7 +482,7 @@ const PER = window.PERIODOS || { atual: 2, lista: [{ n: 2, nome: '2º período' 
 const infoMat = id => MATERIAS.find(m => m.id === id);
 const perDe = m => (m && m.periodos) || [(m && m.periodo) || 2]; /* matéria pode estar em mais de uma aba (ex.: estomatologia no 2º e em Especialidades) */
 const periodoDe = id => { const ps = perDe(infoMat(id)); return ps.includes(PERIODO) ? PERIODO : ps[0]; };
-const ATUALIZADO = { bases: '19/11/2026', carie: '11/11/2026', inter: '20/11/2026', farmaco: '12/11/2026', imagino: '11/11/2026', legal: '13/11/2026', estomato: '12/11/2026', cabeca: '11/11/2026' }; /* Rafael 20/11: data em que cada matéria ganhou questões; atualizar ao mexer no banco */
+const ATUALIZADO = { bases: '19/11/2026', carie: '11/11/2026', inter: '20/11/2026', farmaco: '12/11/2026', imagino: '11/11/2026', legal: '13/11/2026', estomato: '20/11/2026', cabeca: '11/11/2026' }; /* Rafael 20/11: data em que cada matéria ganhou questões; atualizar ao mexer no banco */
 const progressoDe = id => { const b = BANCOS[id]; const qs = (b && b.q) || []; if (!qs.length) return null; const v = new Set(ler('jogo-vistas-'+id, [])); const feitas = qs.filter(q => v.has(q.id)).length; return { total: qs.length, feitas, pct: Math.floor(feitas * 100 / qs.length), data: (b.atualizadoEm || ATUALIZADO[id] || '') }; };
 const visivel = m => m.pronto && (BANCOS[m.id] || m.periodo >= 3); /* matéria nova aparece mesmo sem questões */
 const matsDoPeriodo = n => MATERIAS.filter(m => visivel(m) && perDe(m).includes(n));
@@ -714,6 +716,7 @@ function trilhaHtml(){
     const c = it.conf ? (it.resp===it.certa?' ok':' no') : (it.pulou?' pul':'');
     return `<button class="seg${c}${k===partida.i?' atual':''}" data-ir="${k}" aria-label="Ir para a questão ${k+1}${it.conf?(it.resp===it.certa?', certa':', errada'):''}"${k===partida.i?' aria-current="step"':''}></button>`; }).join('')}</div>`;
 }
+const bibLink = q => { if (!q.bib) return ''; const d = (banco().biblioteca || []).find(x => x.id === q.bib); if (!d) return ''; const url = d.url + (q.pg && /\.pdf($|#)/i.test(d.url) ? '#page=' + q.pg : ''); return `<p class="fonte bibq">📚 <a href="${esc(url)}" target="_blank" rel="noopener">Ver na Biblioteca: ${esc(d.t)}${q.pag ? ', p. ' + esc(String(q.pag)) : ''}</a></p>`; };
 const figHtml = (src, alt) => `<button type="button" class="figq" data-zoom="${esc(src)}" data-alt="${esc(alt)}" aria-label="Ampliar a imagem"><img src="${esc(src)}" alt="${esc(alt)}" loading="eager" decoding="async"><span class="lupa">⤢ Ampliar</span></button>`;
 function abreZoom(src, alt){
   const z = document.createElement('div'); z.className = 'zoom'; z.setAttribute('role','dialog'); z.setAttribute('aria-label','Imagem ampliada');
@@ -739,7 +742,7 @@ function questao(anima){
   <section class="folha${nova?' entra':''}">
     <div class="qcab"><h2>Questão ${P.i+1} de ${total}</h2><span class="tema">${esc(q.tema)}</span>${partida.itens[partida.i].nova ? '<span class="nova" title="Você nunca respondeu esta questão">nova</span>' : ''}</div>
     ${marca ? `<div style="margin:-6px 0 10px">${marca}</div>` : ''}
-    ${q.img ? figHtml(q.img, q.alt || 'Imagem da questão') : ''}
+    ${q.img ? figHtml(q.img, q.alt || 'Imagem da questão') + (q.imgf ? `<p class="imgfonte">Imagem: ${esc(q.imgf)}</p>` : '') : ''}
     ${enunciadoHtml(q)}
     <div class="ops" role="radiogroup" aria-label="Alternativas">${it.ordem.map((o,k) => {
       let cls = '';
@@ -749,7 +752,7 @@ function questao(anima){
     ${it.conf ? `
       <div class="retorno ${it.resp===it.certa?'ok':'no'}" role="status">
         <h3>${it.resp===it.certa ? 'Acertou. Mais 0,1' : 'Errou. A certa é a '+L[it.certa]}</h3>
-        <p>${G(q.w)}</p>${q.imgw ? figHtml(q.imgw, 'A mesma imagem com a resposta marcada') : ''}${(q.net||q.f)?`<p class="fonte">${q.net?'Questão de pesquisa. ':''}${esc(q.f||'')}</p>`:''}
+        <p>${G(q.w)}</p>${q.imgw ? figHtml(q.imgw, 'A mesma imagem com a resposta marcada') : ''}${(q.net||q.f)?`<p class="fonte">${q.net?'Questão de pesquisa. ':''}${esc(q.f||'')}</p>`:''}${bibLink(q)}
       </div>` : `
       <div class="ferr">
         <button class="fer" id="riscar" ${it.riscadas.length?'disabled':''}>${IC.tesoura}Riscar 2 erradas</button>
