@@ -43,6 +43,7 @@
 #lkin .texto h1{font-family:inherit;font-size:1.45em;line-height:1.25;margin:0 0 6px}#lkin .texto .fonte-doc{color:var(--suave);font-size:.72em;margin:0 0 28px;font-family:system-ui,sans-serif}
 #lkin .texto p{margin:0 0 .9em;text-align:justify}
 #lkin .texto p.tt{font-weight:700;text-align:left;margin-top:1.3em}
+#lkin .texto .lkfig{margin:1em 0 1.3em;text-align:center}#lkin .texto .lkfig img{max-width:100%;max-height:60vh;border-radius:6px;cursor:zoom-in;background:#fff}#lkin .texto .lkfig figcaption{font-family:system-ui,sans-serif;font-size:.72em;color:var(--suave);margin-top:6px;text-align:center;line-height:1.4}#lkin .texto .lkfig figcaption span{display:block;font-size:.9em;opacity:.85}#lkzoom{position:fixed;inset:0;z-index:10060;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;cursor:zoom-out}#lkzoom img{max-width:96vw;max-height:94vh}
 #lkin .texto .ind{font-family:system-ui,sans-serif;font-size:.8em;color:var(--suave);text-align:left;margin:.15em 0;line-height:1.4}#lkin .texto button.fig{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;width:100%;text-align:left;background:transparent;cursor:pointer;color:inherit}#lkin .texto .fig em{font-style:normal;font-weight:600;color:var(--cor,#1E5BD8);text-decoration:underline}#lkin .texto .figico{display:inline-block;width:14px;height:11px;border:1.6px solid currentColor;border-radius:2px;position:relative;flex:none}#lkin .texto .figico:after{content:'';position:absolute;left:2px;right:2px;bottom:1px;height:5px;background:linear-gradient(135deg,transparent 45%,currentColor 46%,currentColor 60%,transparent 61%)}#lkin .texto .fig:focus-visible{outline:2px solid var(--cor,#1E5BD8)}
 #lkin .texto p.fig,#lkin .texto button.fig{font-family:system-ui,sans-serif;font-size:.72em;color:var(--suave);text-align:left;border-left:3px solid var(--linha);padding:4px 10px;margin:.3em 0 1.1em}
 #lkin .sep{display:flex;align-items:center;gap:10px;color:var(--suave);font:600 12px system-ui,sans-serif;margin:26px 0 18px}#lkin .sep:before,#lkin .sep:after{content:'';flex:1;height:1px;background:var(--linha)}
@@ -122,6 +123,7 @@
     function vai(n, destaca) { n = Math.max(1, Math.min(pdf.numPages, n)); var d = paginas[n - 1]; area.scrollTo({ top: d.offsetTop - 12 }); atual = n; inPg.value = n; if (destaca) { var mk = document.createElement('div'); mk.className = 'marca'; d.appendChild(mk); setTimeout(function () { mk.remove(); }, 3400); } }
     function reescala(nova) { var rel = atual; escala = Math.max(0.4, Math.min(4, nova)); dimensiona(); paginas.forEach(function (d) { obs.unobserve(d); obs.observe(d); }); vai(rel); }
     el.addEventListener('click', function (e) {
+      var im = e.target.closest('.lkfig img'); if (im) { var z = document.createElement('div'); z.id = 'lkzoom'; z.innerHTML = '<img src="' + im.getAttribute('src') + '" alt="">'; z.onclick = function () { z.remove(); }; document.body.appendChild(z); return; }
       if (e.target.closest('.mini')) { vai(+e.target.closest('.mini').dataset.n, true); return; }
       var b = e.target.closest('[data-a]'); if (!b) return; var a = b.dataset.a;
       if (a === 'fecha') fecha(); if (a === 'ant') vai(atual - 1); if (a === 'prox') vai(atual + 1);
@@ -161,6 +163,7 @@
     document.addEventListener('keydown', tk);
     var dados; try { dados = await (await fetch(doc.texto)).json(); } catch (e) { art.innerHTML = '<p>Não consegui abrir o texto.</p>'; return; }
     var gl = function (s) { try { return (typeof G === 'function') ? G(s, new Set()) : esc(s); } catch (e) { return esc(s); } };
+    var figs = {}; if (doc.figuras) { try { figs = await (await fetch(doc.figuras)).json(); } catch (e) {} }
     var html = `<h1>${esc(dados.titulo)}</h1><p class="fonte-doc">${esc(dados.fonte)}</p>`;
     var paras = [];
     dados.paginas.forEach(function (pg) {
@@ -172,11 +175,11 @@
         var ult = paras[paras.length - 1];
         var continua = primeiro && ult && !ult.fig && !/[.:;!?)]$/.test(ult.txt) && /^[a-zà-ú(]/.test(x);
         if (continua) { ult.html += ' ' + marca.replace('class="pg"', 'class="pg meio"') + `<span class="sepin">p. ${esc(pg.imp || pg.pg)}</span> ` + ((typeof G === 'function') ? G(x, vistos) : esc(x)); ult.txt = x; primeiro = false; return; }
-        var fig = !lista && /^(Figura|Tabela|Quadro)\s*\d/.test(x);
+        var fig = !lista && /^(Fig(?:ura)?\.?|Tabela|Quadro)\s*\d/.test(x);
         if (lista && !/^(LISTA DE|SUM[ÁA]RIO)/i.test(x)) { paras.push({ fig: true, txt: x, html: (primeiro ? `<div class="sep">${pg.imp ? 'p. ' + esc(pg.imp) : 'página ' + pg.pg + ' do PDF'}</div>` : '') + marca + `<p class="ind">${esc(x)}</p>`, aberto: false }); primeiro = false; return; }
         var tt = !fig && /^(\d+(\.\d+)*\s+)?[A-ZÀ-Ú0-9 ,()\-–/]{6,}$/.test(x) && x.length < 90;
         var sep = primeiro ? `<div class="sep">${pg.imp ? 'p. ' + esc(pg.imp) : 'página ' + pg.pg + ' do PDF'}</div>` : '';
-        paras.push({ fig: fig, txt: x, html: sep + marca + (fig ? (temOriginal ? `<button type="button" class="fig" data-a="orig" data-pg="${pg.pg}"><span class="figico" aria-hidden="true"></span><span>${esc(x)}</span><em>Ver a figura no PDF original</em></button>` : `<p class="fig"><span class="figico" aria-hidden="true"></span>${esc(x)} <em>(figura no documento original)</em></p>`) : `<p${tt ? ' class="tt"' : ''}>`) + (fig ? '' : ((typeof G === 'function') ? G(x, vistos) : esc(x))), aberto: !fig });
+        paras.push({ fig: fig, txt: x, html: sep + marca + (fig ? (function(){ var nf = (x.match(/^Fig(?:ura)?\.?\s*(\d+)/) || [])[1]; var F = nf && figs[nf]; if (!F) return null; return `<figure class="lkfig"><img src="${esc(F.img)}" alt="${esc(x)}" loading="lazy"><figcaption>${esc(x)}<span>Fonte: ${esc(dados.titulo)}${pg.imp ? ', p. ' + esc(pg.imp) : ''}</span></figcaption></figure>`; })() || (temOriginal ? `<button type="button" class="fig" data-a="orig" data-pg="${pg.pg}"><span class="figico" aria-hidden="true"></span><span>${esc(x)}</span><em>Ver a figura no PDF original</em></button>` : `<p class="fig"><span class="figico" aria-hidden="true"></span>${esc(x)} <em>(figura no documento original)</em></p>`) : `<p${tt ? ' class="tt"' : ''}>`) + (fig ? '' : ((typeof G === 'function') ? G(x, vistos) : esc(x))), aberto: !fig });
         primeiro = false;
       });
     });

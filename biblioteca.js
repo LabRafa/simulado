@@ -6,7 +6,7 @@
   var B = window.BANCOS || {};
   var MANUAL = { id: 'manual-estomato-sp', t: 'Estomatologia para Clínicos da Atenção Básica (SMS São Paulo, 2017)',
     desc: 'Manual oficial da Prefeitura de São Paulo: lesões fundamentais, variações da normalidade, lesões, biópsia. Link do site da Prefeitura.',
-    url: 'https://www.prefeitura.sp.gov.br/cidade/secretarias/upload/saude/MANUALESTOMATOLOGIA.pdf', texto: 'biblioteca/manual-estomato-sp.json', fonte: 'Secretaria Municipal da Saúde de São Paulo' };
+    url: 'https://www.prefeitura.sp.gov.br/cidade/secretarias/upload/saude/MANUALESTOMATOLOGIA.pdf', texto: 'biblioteca/manual-estomato-sp.json', figuras: 'biblioteca/manual-estomato-sp-figuras.json', fonte: 'Secretaria Municipal da Saúde de São Paulo' };
   var add = function (k, docs) { if (!B[k]) return; var b = B[k]; b.biblioteca = (b.biblioteca || []).concat(docs.filter(function (d) { return !(b.biblioteca || []).some(function (x) { return x.id === d.id; }); })); };
   add('bases', [
     { id: 'plano-bases', t: 'Plano de ensino: Bases Morfológicas da Odontologia (ARA4190)', desc: 'Ementa, os 10 ciclos do conteúdo programático e a forma de avaliação.', url: 'biblioteca/plano-de-ensino-bases-ARA4190.pdf', texto: 'biblioteca/plano-de-ensino-bases-ARA4190.json', fonte: 'Estácio' },
