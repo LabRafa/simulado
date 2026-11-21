@@ -30,7 +30,27 @@
 #lpdf .busca{display:flex;gap:6px;align-items:center}#lpdf .busca input{width:150px;cursor:text}#lpdf .busca small{font-size:12px;opacity:.75;min-width:44px}
 #lpdf .prog{height:3px;background:linear-gradient(90deg,#6aa0ff,#9b7bff);width:0;transition:width .2s}
 @media (max-width:760px){#lpdf .miniaturas{display:none}#lpdf .busca input{width:90px}#lpdf .so-pc{display:none}#lpdf .paginas{padding:12px 6px 80px}}
-@media (prefers-reduced-motion:reduce){#lpdf,#lpdf *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}`;
+
+#lkin{position:fixed;inset:0;z-index:9990;display:flex;flex-direction:column;opacity:0;transition:opacity .25s;--fundo:#f6efe1;--tinta:#2b2418;--suave:#7a6c55;--linha:#e2d6bd;background:var(--fundo);color:var(--tinta)}
+#lkin.on{opacity:1}#lkin.claro{--fundo:#ffffff;--tinta:#1a2233;--suave:#5b6576;--linha:#e3e8f0}#lkin.escuro{--fundo:#121417;--tinta:#e7e2d6;--suave:#9a927f;--linha:#2a2d33}
+#lkin .bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--linha);background:color-mix(in srgb,var(--fundo) 88%,transparent);backdrop-filter:blur(8px)}
+#lkin .tit{flex:1;min-width:0;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#lkin button{font:inherit;color:inherit;background:color-mix(in srgb,var(--tinta) 8%,transparent);border:0;border-radius:10px;height:36px;min-width:36px;padding:0 10px;cursor:pointer}
+#lkin button:hover{background:color-mix(in srgb,var(--tinta) 15%,transparent)}#lkin button:focus-visible{outline:2px solid #c9862b}
+#lkin .prog{height:3px;background:var(--linha)}#lkin .prog b{display:block;height:100%;width:0;background:#c9862b;transition:width .15s}
+#lkin .rolo{flex:1;overflow:auto;scroll-behavior:smooth}
+#lkin .texto{max-width:680px;margin:0 auto;padding:34px 22px 120px;font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;font-size:var(--fs,19px);line-height:1.7;hyphens:auto}
+#lkin .texto h1{font-family:inherit;font-size:1.45em;line-height:1.25;margin:0 0 6px}#lkin .texto .fonte-doc{color:var(--suave);font-size:.72em;margin:0 0 28px;font-family:system-ui,sans-serif}
+#lkin .texto p{margin:0 0 .9em;text-align:justify}
+#lkin .texto p.tt{font-weight:700;text-align:left;margin-top:1.3em}
+#lkin .texto p.fig{font-family:system-ui,sans-serif;font-size:.72em;color:var(--suave);text-align:left;border-left:3px solid var(--linha);padding:4px 10px;margin:.3em 0 1.1em}
+#lkin .sep{display:flex;align-items:center;gap:10px;color:var(--suave);font:600 12px system-ui,sans-serif;margin:26px 0 18px}#lkin .sep:before,#lkin .sep:after{content:'';flex:1;height:1px;background:var(--linha)}
+#lkin .sepin{font:600 11px system-ui,sans-serif;color:var(--suave);border:1px solid var(--linha);border-radius:6px;padding:0 5px;margin:0 2px;vertical-align:2px}#lkin .alvo-p{animation:lkalvo 2.4s ease}@keyframes lkalvo{0%,40%{background:color-mix(in srgb,#ffcf33 30%,transparent)}100%{background:transparent}}
+#lkin .gl{border-bottom-color:#c9862b}
+#lkin .rodape{position:absolute;bottom:0;left:0;right:0;text-align:center;font:600 12px system-ui,sans-serif;color:var(--suave);padding:8px;background:linear-gradient(transparent,var(--fundo) 60%)}
+.glfundo{z-index:10050!important}
+@media (max-width:760px){#lkin .so-pc{display:none}#lkin .texto{padding:22px 16px 110px}}
+@media (prefers-reduced-motion:reduce){#lkin,#lkin *,#lpdf,#lpdf *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}`;
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   var lib = null;
   function carregaLib() {
@@ -121,10 +141,67 @@
     area.focus();
   };
 
+
+  /* MODO LEITURA (tipo Kindle): texto do documento com os balões do dicionário da matéria */
+  var temaK = (function () { try { return localStorage.getItem('lkin-tema') || 'sepia'; } catch (e) { return 'sepia'; } })();
+  var fsK = (function () { try { return +localStorage.getItem('lkin-fs') || 19; } catch (e) { return 19; } })();
+  window.abreLeitura = async function (doc, pagina) {
+    var el = document.createElement('div'); el.id = 'lkin'; if (temaK !== 'sepia') el.classList.add(temaK);
+    el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Leitura');
+    var temOriginal = doc.url && /\.pdf(#|$)/i.test(doc.url);
+    el.innerHTML = `<div class="bar"><button data-a="fecha" aria-label="Fechar">✕</button><div class="tit">${esc(doc.t || 'Documento')}</div>
+      <button data-a="menos" aria-label="Letra menor">A−</button><button data-a="mais" aria-label="Letra maior">A+</button>
+      <button data-a="tema" aria-label="Tema">◐</button>${temOriginal ? '<button data-a="orig" class="so-pc">PDF original</button>' : ''}</div>
+      <div class="prog"><b></b></div><div class="rolo"><article class="texto" style="--fs:${fsK}px"><p class="fonte-doc">carregando…</p></article></div><div class="rodape"></div>`;
+    document.body.appendChild(el); document.body.style.overflow = 'hidden'; requestAnimationFrame(function () { el.classList.add('on'); });
+    var $ = function (s) { return el.querySelector(s); }, rolo = $('.rolo'), art = $('.texto'), rod = $('.rodape');
+    function fecha() { el.classList.remove('on'); document.body.style.overflow = ''; document.removeEventListener('keydown', tk); setTimeout(function () { el.remove(); }, 250); }
+    function tk(e) { if (e.key === 'Escape' && !document.querySelector('.glfundo')) fecha(); }
+    document.addEventListener('keydown', tk);
+    var dados; try { dados = await (await fetch(doc.texto)).json(); } catch (e) { art.innerHTML = '<p>Não consegui abrir o texto.</p>'; return; }
+    var gl = function (s) { try { return (typeof G === 'function') ? G(s, new Set()) : esc(s); } catch (e) { return esc(s); } };
+    var html = `<h1>${esc(dados.titulo)}</h1><p class="fonte-doc">${esc(dados.fonte)}</p>`;
+    var paras = [];
+    dados.paginas.forEach(function (pg) {
+      var vistos = new Set(), primeiro = true;
+      pg.p.forEach(function (x) {
+        var marca = primeiro ? `<span class="pg" id="lk-${pg.pg}" data-pg="${pg.pg}" data-imp="${esc(pg.imp || '')}"></span>` : '';
+        var ult = paras[paras.length - 1];
+        var continua = primeiro && ult && !ult.fig && !/[.:;!?)]$/.test(ult.txt) && /^[a-zà-ú(]/.test(x);
+        if (continua) { ult.html += ' ' + marca.replace('class="pg"', 'class="pg meio"') + `<span class="sepin">p. ${esc(pg.imp || pg.pg)}</span> ` + ((typeof G === 'function') ? G(x, vistos) : esc(x)); ult.txt = x; primeiro = false; return; }
+        var fig = /^(Figura|Tabela|Quadro)\s*\d/.test(x);
+        var tt = !fig && /^(\d+(\.\d+)*\s+)?[A-ZÀ-Ú0-9 ,()\-–/]{6,}$/.test(x) && x.length < 90;
+        var sep = primeiro ? `<div class="sep">${pg.imp ? 'p. ' + esc(pg.imp) : 'página ' + pg.pg + ' do PDF'}</div>` : '';
+        paras.push({ fig: fig, txt: x, html: sep + marca + (fig ? `<p class="fig">🖼 ${esc(x)} <em>(imagem no documento original)</em></p>` : `<p${tt ? ' class="tt"' : ''}>`) + (fig ? '' : ((typeof G === 'function') ? G(x, vistos) : esc(x))), aberto: !fig });
+        primeiro = false;
+      });
+    });
+    html += paras.map(function (p) { return p.html + (p.aberto ? '</p>' : ''); }).join('');
+    art.innerHTML = html;
+    function onde() {
+      var max = rolo.scrollHeight - rolo.clientHeight; $('.prog b').style.width = (max > 0 ? Math.round(rolo.scrollTop * 100 / max) : 100) + '%';
+      var meio = rolo.scrollTop + rolo.clientHeight / 3, at = null; art.querySelectorAll('.pg').forEach(function (d) { if (d.offsetTop <= meio) at = d; });
+      rod.textContent = at ? (at.dataset.imp ? 'p. ' + at.dataset.imp : 'página ' + at.dataset.pg) + ' · ' + (max > 0 ? Math.round(rolo.scrollTop * 100 / max) : 100) + '% lido' : '';
+    }
+    rolo.addEventListener('scroll', function () { requestAnimationFrame(onde); });
+    el.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-a]'); if (!b) return; var a = b.dataset.a;
+      if (a === 'fecha') fecha();
+      if (a === 'mais' || a === 'menos') { fsK = Math.max(14, Math.min(28, fsK + (a === 'mais' ? 2 : -2))); art.style.setProperty('--fs', fsK + 'px'); try { localStorage.setItem('lkin-fs', fsK); } catch (er) {} }
+      if (a === 'tema') { var ord = ['sepia', 'claro', 'escuro']; temaK = ord[(ord.indexOf(temaK) + 1) % 3]; el.classList.remove('claro', 'escuro'); if (temaK !== 'sepia') el.classList.add(temaK); try { localStorage.setItem('lkin-tema', temaK); } catch (er) {} }
+      if (a === 'orig') { var base = new URL(doc.url, location.href); var atual = (function(){ var m = rolo.scrollTop + rolo.clientHeight/3, n = 1; art.querySelectorAll('.pg').forEach(function(d){ if (d.offsetTop <= m) n = +d.dataset.pg; }); return n; })(); if (base.origin === location.origin) window.abreLeitor(doc.url.split('#')[0], doc.t, atual); else window.open(base.href.split('#')[0] + '#page=' + atual, '_blank', 'noopener'); }
+    });
+    setTimeout(function () { var alvo = pagina && document.getElementById('lk-' + pagina); if (alvo) { rolo.style.scrollBehavior = 'auto'; rolo.scrollTop = alvo.offsetTop - 8; rolo.style.scrollBehavior = ''; var pp = alvo.closest('p') || alvo.nextElementSibling; if (pp) pp.classList.add('alvo-p'); } onde(); }, 60);
+  };
+
   /* qualquer link para PDF do PRÓPRIO site abre no leitor */
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href]'); if (!a || a.hasAttribute('download')) return;
     var u; try { u = new URL(a.getAttribute('href'), location.href); } catch (er) { return; }
+    var semHash = u.href.split('#')[0];
+    var docs = []; try { docs = (typeof banco === 'function' && banco().biblioteca) || []; } catch (er) {}
+    var doc = docs.find(function (d) { return d.texto && new URL(d.url, location.href).href.split('#')[0] === semHash; });
+    if (doc) { e.preventDefault(); window.abreLeitura(doc, parseInt((u.hash.match(/page=(\d+)/) || [])[1], 10) || 0); return; }
     if (u.origin !== location.origin || !/\.pdf$/i.test(u.pathname)) return;
     e.preventDefault();
     var pg = parseInt((u.hash.match(/page=(\d+)/) || [])[1], 10) || 1;
