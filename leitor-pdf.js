@@ -43,7 +43,8 @@
 #lkin .texto h1{font-family:inherit;font-size:1.45em;line-height:1.25;margin:0 0 6px}#lkin .texto .fonte-doc{color:var(--suave);font-size:.72em;margin:0 0 28px;font-family:system-ui,sans-serif}
 #lkin .texto p{margin:0 0 .9em;text-align:justify}
 #lkin .texto p.tt{font-weight:700;text-align:left;margin-top:1.3em}
-#lkin .texto p.fig{font-family:system-ui,sans-serif;font-size:.72em;color:var(--suave);text-align:left;border-left:3px solid var(--linha);padding:4px 10px;margin:.3em 0 1.1em}
+#lkin .texto .ind{font-family:system-ui,sans-serif;font-size:.8em;color:var(--suave);text-align:left;margin:.15em 0;line-height:1.4}#lkin .texto button.fig{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;width:100%;text-align:left;background:transparent;cursor:pointer;color:inherit}#lkin .texto .fig em{font-style:normal;font-weight:600;color:var(--cor,#1E5BD8);text-decoration:underline}#lkin .texto .figico{display:inline-block;width:14px;height:11px;border:1.6px solid currentColor;border-radius:2px;position:relative;flex:none}#lkin .texto .figico:after{content:'';position:absolute;left:2px;right:2px;bottom:1px;height:5px;background:linear-gradient(135deg,transparent 45%,currentColor 46%,currentColor 60%,transparent 61%)}#lkin .texto .fig:focus-visible{outline:2px solid var(--cor,#1E5BD8)}
+#lkin .texto p.fig,#lkin .texto button.fig{font-family:system-ui,sans-serif;font-size:.72em;color:var(--suave);text-align:left;border-left:3px solid var(--linha);padding:4px 10px;margin:.3em 0 1.1em}
 #lkin .sep{display:flex;align-items:center;gap:10px;color:var(--suave);font:600 12px system-ui,sans-serif;margin:26px 0 18px}#lkin .sep:before,#lkin .sep:after{content:'';flex:1;height:1px;background:var(--linha)}
 #lkin .sepin{font:600 11px system-ui,sans-serif;color:var(--suave);border:1px solid var(--linha);border-radius:6px;padding:0 5px;margin:0 2px;vertical-align:2px}#lkin .alvo-p{animation:lkalvo 2.4s ease}@keyframes lkalvo{0%,40%{background:color-mix(in srgb,#ffcf33 30%,transparent)}100%{background:transparent}}
 #lkin .gl{border-bottom-color:#c9862b}
@@ -164,15 +165,18 @@
     var paras = [];
     dados.paginas.forEach(function (pg) {
       var vistos = new Set(), primeiro = true;
+      var nfig = pg.p.filter(function (x) { return /^(Figura|Tabela|Quadro)\s*\d/.test(x); }).length;
+      var lista = pg.p.some(function (x) { return /^(LISTA DE|SUM[ÁA]RIO)/i.test(x); }) || nfig >= Math.max(3, pg.p.length / 2);
       pg.p.forEach(function (x) {
         var marca = primeiro ? `<span class="pg" id="lk-${pg.pg}" data-pg="${pg.pg}" data-imp="${esc(pg.imp || '')}"></span>` : '';
         var ult = paras[paras.length - 1];
         var continua = primeiro && ult && !ult.fig && !/[.:;!?)]$/.test(ult.txt) && /^[a-zà-ú(]/.test(x);
         if (continua) { ult.html += ' ' + marca.replace('class="pg"', 'class="pg meio"') + `<span class="sepin">p. ${esc(pg.imp || pg.pg)}</span> ` + ((typeof G === 'function') ? G(x, vistos) : esc(x)); ult.txt = x; primeiro = false; return; }
-        var fig = /^(Figura|Tabela|Quadro)\s*\d/.test(x);
+        var fig = !lista && /^(Figura|Tabela|Quadro)\s*\d/.test(x);
+        if (lista && !/^(LISTA DE|SUM[ÁA]RIO)/i.test(x)) { paras.push({ fig: true, txt: x, html: (primeiro ? `<div class="sep">${pg.imp ? 'p. ' + esc(pg.imp) : 'página ' + pg.pg + ' do PDF'}</div>` : '') + marca + `<p class="ind">${esc(x)}</p>`, aberto: false }); primeiro = false; return; }
         var tt = !fig && /^(\d+(\.\d+)*\s+)?[A-ZÀ-Ú0-9 ,()\-–/]{6,}$/.test(x) && x.length < 90;
         var sep = primeiro ? `<div class="sep">${pg.imp ? 'p. ' + esc(pg.imp) : 'página ' + pg.pg + ' do PDF'}</div>` : '';
-        paras.push({ fig: fig, txt: x, html: sep + marca + (fig ? `<p class="fig">🖼 ${esc(x)} <em>(imagem no documento original)</em></p>` : `<p${tt ? ' class="tt"' : ''}>`) + (fig ? '' : ((typeof G === 'function') ? G(x, vistos) : esc(x))), aberto: !fig });
+        paras.push({ fig: fig, txt: x, html: sep + marca + (fig ? (temOriginal ? `<button type="button" class="fig" data-a="orig" data-pg="${pg.pg}"><span class="figico" aria-hidden="true"></span><span>${esc(x)}</span><em>Ver a figura no PDF original</em></button>` : `<p class="fig"><span class="figico" aria-hidden="true"></span>${esc(x)} <em>(figura no documento original)</em></p>`) : `<p${tt ? ' class="tt"' : ''}>`) + (fig ? '' : ((typeof G === 'function') ? G(x, vistos) : esc(x))), aberto: !fig });
         primeiro = false;
       });
     });
@@ -189,7 +193,7 @@
       if (a === 'fecha') fecha();
       if (a === 'mais' || a === 'menos') { fsK = Math.max(14, Math.min(28, fsK + (a === 'mais' ? 2 : -2))); art.style.setProperty('--fs', fsK + 'px'); try { localStorage.setItem('lkin-fs', fsK); } catch (er) {} }
       if (a === 'tema') { var ord = ['sepia', 'claro', 'escuro']; temaK = ord[(ord.indexOf(temaK) + 1) % 3]; el.classList.remove('claro', 'escuro'); if (temaK !== 'sepia') el.classList.add(temaK); try { localStorage.setItem('lkin-tema', temaK); } catch (er) {} }
-      if (a === 'orig') { var base = new URL(doc.url, location.href); var atual = (function(){ var m = rolo.scrollTop + rolo.clientHeight/3, n = 1; art.querySelectorAll('.pg').forEach(function(d){ if (d.offsetTop <= m) n = +d.dataset.pg; }); return n; })(); if (base.origin === location.origin) window.abreLeitor(doc.url.split('#')[0], doc.t, atual); else window.open(base.href.split('#')[0] + '#page=' + atual, '_blank', 'noopener'); }
+      if (a === 'orig') { var base = new URL(doc.url, location.href); var atual = b.dataset.pg ? +b.dataset.pg : (function(){ var m = rolo.scrollTop + rolo.clientHeight/3, n = 1; art.querySelectorAll('.pg').forEach(function(d){ if (d.offsetTop <= m) n = +d.dataset.pg; }); return n; })(); if (base.origin === location.origin) window.abreLeitor(doc.url.split('#')[0], doc.t, atual); else window.open(base.href.split('#')[0] + '#page=' + atual, '_blank', 'noopener'); }
     });
     setTimeout(function () { var alvo = pagina && document.getElementById('lk-' + pagina); if (alvo) { rolo.style.scrollBehavior = 'auto'; rolo.scrollTop = alvo.offsetTop - 8; rolo.style.scrollBehavior = ''; var pp = alvo.closest('p') || alvo.nextElementSibling; if (pp) pp.classList.add('alvo-p'); } onde(); }, 60);
   };
