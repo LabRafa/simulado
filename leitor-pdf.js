@@ -43,7 +43,7 @@
 #lkin .texto h1{font-family:inherit;font-size:1.45em;line-height:1.25;margin:0 0 6px}#lkin .texto .fonte-doc{color:var(--suave);font-size:.72em;margin:0 0 28px;font-family:system-ui,sans-serif}
 #lkin .texto p{margin:0 0 .9em;text-align:justify}
 #lkin .texto p.tt{font-weight:700;text-align:left;margin-top:1.3em}
-#lkin .texto .lkfig{margin:1em 0 1.3em;text-align:center}#lkin .texto .lkfig img{max-width:100%;max-height:60vh;border-radius:6px;cursor:zoom-in;background:#fff}#lkin .texto .lkfig figcaption{font-family:system-ui,sans-serif;font-size:.72em;color:var(--suave);margin-top:6px;text-align:center;line-height:1.4}#lkin .texto .lkfig figcaption span{display:block;font-size:.9em;opacity:.85}#lkzoom{position:fixed;inset:0;z-index:10060;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;cursor:zoom-out}#lkzoom img{max-width:96vw;max-height:94vh}
+#lkin .texto .lkfig{margin:1em 0 1.3em;text-align:center}#lkin .texto .lkfig img{max-width:100%;height:auto;width:auto;max-height:60vh;border-radius:6px;cursor:zoom-in;background:#fff}#lkin .texto .lkfig figcaption{font-family:system-ui,sans-serif;font-size:.72em;color:var(--suave);margin-top:6px;text-align:center;line-height:1.4}#lkin .texto .lkfig figcaption span{display:block;font-size:.9em;opacity:.85}#lkzoom{position:fixed;inset:0;z-index:10060;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;cursor:zoom-out}#lkzoom img{max-width:96vw;max-height:94vh}
 #lkin .texto .ind{font-family:system-ui,sans-serif;font-size:.8em;color:var(--suave);text-align:left;margin:.15em 0;line-height:1.4}#lkin .texto button.fig{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;width:100%;text-align:left;background:transparent;cursor:pointer;color:inherit}#lkin .texto .fig em{font-style:normal;font-weight:600;color:var(--cor,#1E5BD8);text-decoration:underline}#lkin .texto .figico{display:inline-block;width:14px;height:11px;border:1.6px solid currentColor;border-radius:2px;position:relative;flex:none}#lkin .texto .figico:after{content:'';position:absolute;left:2px;right:2px;bottom:1px;height:5px;background:linear-gradient(135deg,transparent 45%,currentColor 46%,currentColor 60%,transparent 61%)}#lkin .texto .fig:focus-visible{outline:2px solid var(--cor,#1E5BD8)}
 #lkin .texto p.fig,#lkin .texto button.fig{font-family:system-ui,sans-serif;font-size:.72em;color:var(--suave);text-align:left;border-left:3px solid var(--linha);padding:4px 10px;margin:.3em 0 1.1em}
 #lkin .sep{display:flex;align-items:center;gap:10px;color:var(--suave);font:600 12px system-ui,sans-serif;margin:26px 0 18px}#lkin .sep:before,#lkin .sep:after{content:'';flex:1;height:1px;background:var(--linha)}
@@ -51,7 +51,24 @@
 #lkin .gl{border-bottom-color:#c9862b}
 #lkin .rodape{position:absolute;bottom:0;left:0;right:0;text-align:center;font:600 12px system-ui,sans-serif;color:var(--suave);padding:8px;background:linear-gradient(transparent,var(--fundo) 60%)}
 .glfundo{z-index:10050!important}
-@media (max-width:760px){#lkin .so-pc{display:none}#lkin .texto{padding:22px 16px 110px}}
+#lkin.livro .rolo{overflow:hidden;position:relative;scroll-behavior:auto;perspective:2200px}
+#lkin.livro .texto{max-width:none;margin:0;height:100%;box-sizing:border-box;padding:34px var(--lp,40px) 44px;column-gap:calc(var(--lp,40px)*2);column-fill:auto;will-change:transform}
+#lkin.livro .texto .lkfig,#lkin.livro .texto .sep,#lkin.livro .texto h1{break-inside:avoid}
+#lkin.livro .texto .lkfig img{max-height:calc(var(--alt,500px) - 150px)}
+#lkin.livro.duas .rolo:after{content:'';position:absolute;top:0;bottom:0;left:50%;width:60px;margin-left:-30px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(0,0,0,.07) 45%,rgba(0,0,0,.13) 50%,rgba(0,0,0,.07) 55%,transparent);z-index:3}
+#lkin .virar{display:none;position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:44px;height:64px;border-radius:12px;font-size:26px;line-height:1;opacity:.55}
+#lkin .virar:hover{opacity:1}#lkin.livro .virar{display:block}#lkin .virar.esq{left:6px}#lkin .virar.dir{right:6px}
+#lkin .folha,#lkin .capa{position:absolute;top:0;bottom:0;overflow:hidden;z-index:4;background:var(--fundo);pointer-events:none}
+#lkin .folha{transform-style:preserve-3d;transition:transform .62s cubic-bezier(.45,.05,.3,1);z-index:5}
+#lkin .folha .face{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;background:var(--fundo)}
+#lkin .folha .face.tras{transform:rotateY(180deg)}
+#lkin .folha .face .texto{position:absolute;top:0;margin:0}
+#lkin .folha .face:after{content:'';position:absolute;inset:0;pointer-events:none;transition:opacity .62s;opacity:0}
+#lkin .folha.ida .face.frente:after{background:linear-gradient(90deg,rgba(0,0,0,.18),transparent 30%)}
+#lkin .folha.volta .face.frente:after{background:linear-gradient(270deg,rgba(0,0,0,.18),transparent 30%)}
+#lkin .folha.girando .face:after{opacity:1}
+#lkin .folha.girando{box-shadow:0 0 40px rgba(0,0,0,.25)}
+@media (max-width:760px){#lkin.livro .virar{display:none}#lkin .so-pc{display:none}#lkin .texto{padding:22px 16px 110px}}
 @media (prefers-reduced-motion:reduce){#lkin,#lkin *,#lpdf,#lpdf *{transition:none!important;animation:none!important;scroll-behavior:auto!important}}`;
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   var lib = null;
@@ -154,11 +171,11 @@
     var temOriginal = doc.url && /\.pdf(#|$)/i.test(doc.url);
     el.innerHTML = `<div class="bar"><button data-a="fecha" aria-label="Fechar">✕</button><div class="tit">${esc(doc.t || 'Documento')}</div>
       <button data-a="menos" aria-label="Letra menor">A−</button><button data-a="mais" aria-label="Letra maior">A+</button>
-      <button data-a="tema" aria-label="Tema">◐</button>${temOriginal ? '<button data-a="orig" class="so-pc">PDF original</button>' : ''}</div>
-      <div class="prog"><b></b></div><div class="rolo"><article class="texto" style="--fs:${fsK}px"><p class="fonte-doc">carregando…</p></article></div><div class="rodape"></div>`;
+      <button data-a="tema" aria-label="Tema">◐</button><button data-a="livro" aria-pressed="false" aria-label="Modo livro">📖 Livro</button>${temOriginal ? '<button data-a="orig" class="so-pc">PDF original</button>' : ''}</div>
+      <div class="prog"><b></b></div><div class="rolo"><button class="virar esq" data-a="ant" aria-label="Página anterior">‹</button><button class="virar dir" data-a="prox" aria-label="Próxima página">›</button><article class="texto" style="--fs:${fsK}px"><p class="fonte-doc">carregando…</p></article></div><div class="rodape"></div>`;
     document.body.appendChild(el); document.body.style.overflow = 'hidden'; requestAnimationFrame(function () { el.classList.add('on'); });
     var $ = function (s) { return el.querySelector(s); }, rolo = $('.rolo'), art = $('.texto'), rod = $('.rodape');
-    function fecha() { el.classList.remove('on'); document.body.style.overflow = ''; document.removeEventListener('keydown', tk); setTimeout(function () { el.remove(); }, 250); }
+    function fecha() { el.classList.remove('on'); document.body.style.overflow = ''; document.removeEventListener('keydown', tk); document.removeEventListener('keydown', tkL); setTimeout(function () { el.remove(); }, 250); }
     function tk(e) { if (e.key === 'Escape' && !document.querySelector('.glfundo')) fecha(); }
     document.addEventListener('keydown', tk);
     var dados; try { dados = await (await fetch(doc.texto)).json(); } catch (e) { art.innerHTML = '<p>Não consegui abrir o texto.</p>'; return; }
@@ -179,13 +196,14 @@
         if (lista && !/^(LISTA DE|SUM[ÁA]RIO)/i.test(x)) { paras.push({ fig: true, txt: x, html: (primeiro ? `<div class="sep">${pg.imp ? 'p. ' + esc(pg.imp) : 'página ' + pg.pg + ' do PDF'}</div>` : '') + marca + `<p class="ind">${esc(x)}</p>`, aberto: false }); primeiro = false; return; }
         var tt = !fig && /^(\d+(\.\d+)*\s+)?[A-ZÀ-Ú0-9 ,()\-–/]{6,}$/.test(x) && x.length < 90;
         var sep = primeiro ? `<div class="sep">${pg.imp ? 'p. ' + esc(pg.imp) : 'página ' + pg.pg + ' do PDF'}</div>` : '';
-        paras.push({ fig: fig, txt: x, html: sep + marca + (fig ? (function(){ var nf = (x.match(/^Fig(?:ura)?\.?\s*(\d+)/) || [])[1]; var F = nf && figs[nf]; if (!F) return null; return `<figure class="lkfig"><img src="${esc(F.img)}" alt="${esc(x)}" loading="lazy"><figcaption>${esc(x)}<span>Fonte: ${esc(dados.titulo)}${pg.imp ? ', p. ' + esc(pg.imp) : ''}</span></figcaption></figure>`; })() || (temOriginal ? `<button type="button" class="fig" data-a="orig" data-pg="${pg.pg}"><span class="figico" aria-hidden="true"></span><span>${esc(x)}</span><em>Ver a figura no PDF original</em></button>` : `<p class="fig"><span class="figico" aria-hidden="true"></span>${esc(x)} <em>(figura no documento original)</em></p>`) : `<p${tt ? ' class="tt"' : ''}>`) + (fig ? '' : ((typeof G === 'function') ? G(x, vistos) : esc(x))), aberto: !fig });
+        paras.push({ fig: fig, txt: x, html: sep + marca + (fig ? (function(){ var nf = (x.match(/^Fig(?:ura)?\.?\s*(\d+)/) || [])[1]; var F = nf && figs[nf]; if (!F) return null; return `<figure class="lkfig"><img src="${esc(F.img)}" alt="${esc(x)}"${F.w ? ` width="${F.w}" height="${F.h}"` : ''} loading="lazy"><figcaption>${esc(x)}<span>Fonte: ${esc(dados.titulo)}${pg.imp ? ', p. ' + esc(pg.imp) : ''}</span></figcaption></figure>`; })() || (temOriginal ? `<button type="button" class="fig" data-a="orig" data-pg="${pg.pg}"><span class="figico" aria-hidden="true"></span><span>${esc(x)}</span><em>Ver a figura no PDF original</em></button>` : `<p class="fig"><span class="figico" aria-hidden="true"></span>${esc(x)} <em>(figura no documento original)</em></p>`) : `<p${tt ? ' class="tt"' : ''}>`) + (fig ? '' : ((typeof G === 'function') ? G(x, vistos) : esc(x))), aberto: !fig });
         primeiro = false;
       });
     });
     html += paras.map(function (p) { return p.html + (p.aberto ? '</p>' : ''); }).join('');
     art.innerHTML = html;
     function onde() {
+      if (L && L.on) return ondeLivro();
       var max = rolo.scrollHeight - rolo.clientHeight; $('.prog b').style.width = (max > 0 ? Math.round(rolo.scrollTop * 100 / max) : 100) + '%';
       var meio = rolo.scrollTop + rolo.clientHeight / 3, at = null; art.querySelectorAll('.pg').forEach(function (d) { if (d.offsetTop <= meio) at = d; });
       rod.textContent = at ? (at.dataset.imp ? 'p. ' + at.dataset.imp : 'página ' + at.dataset.pg) + ' · ' + (max > 0 ? Math.round(rolo.scrollTop * 100 / max) : 100) + '% lido' : '';
@@ -198,7 +216,65 @@
       if (a === 'tema') { var ord = ['sepia', 'claro', 'escuro']; temaK = ord[(ord.indexOf(temaK) + 1) % 3]; el.classList.remove('claro', 'escuro'); if (temaK !== 'sepia') el.classList.add(temaK); try { localStorage.setItem('lkin-tema', temaK); } catch (er) {} }
       if (a === 'orig') { var base = new URL(doc.url, location.href); var atual = b.dataset.pg ? +b.dataset.pg : (function(){ var m = rolo.scrollTop + rolo.clientHeight/3, n = 1; art.querySelectorAll('.pg').forEach(function(d){ if (d.offsetTop <= m) n = +d.dataset.pg; }); return n; })(); if (base.origin === location.origin) window.abreLeitor(doc.url.split('#')[0], doc.t, atual); else window.open(base.href.split('#')[0] + '#page=' + atual, '_blank', 'noopener'); }
     });
-    setTimeout(function () { var alvo = pagina && document.getElementById('lk-' + pagina); if (alvo) { rolo.style.scrollBehavior = 'auto'; rolo.scrollTop = alvo.offsetTop - 8; rolo.style.scrollBehavior = ''; var pp = alvo.closest('p') || alvo.nextElementSibling; if (pp) pp.classList.add('alvo-p'); } onde(); }, 60);
+
+    /* MODO LIVRO (Rafael, 21/11/2026: "um modo que passe as páginas como uma animação de livro") */
+    var L = { on: false, i: 0, n: 1, W: 0, duas: false, ocupado: false };
+    var pref = function () { try { return localStorage.getItem('lkin-livro') === '1'; } catch (e) { return false; } };
+    var semMov = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function mede() {
+      var W = rolo.clientWidth, H = rolo.clientHeight; L.W = W; L.duas = W >= 1000;
+      var lp = L.duas ? Math.max(48, Math.round((W - 2 * 640 - 0) / 4)) : Math.max(22, Math.round((W - 680) / 2));
+      if (!L.duas) lp = Math.min(Math.max(22, lp), 220); else lp = Math.min(lp, 140);
+      art.style.setProperty('--lp', lp + 'px'); art.style.setProperty('--alt', H + 'px');
+      art.style.width = W + 'px'; art.style.columnCount = L.duas ? 2 : 1;
+      el.classList.toggle('duas', L.duas);
+      L.n = Math.max(1, Math.round(art.scrollWidth / W));
+    }
+    function pagDoMarcador(m) { var x = m.getBoundingClientRect().left - art.getBoundingClientRect().left; return Math.max(0, Math.min(L.n - 1, Math.floor(x / L.W))); }
+    function mostra(i) { L.i = Math.max(0, Math.min(L.n - 1, i)); art.style.transform = 'translateX(' + (-L.i * L.W) + 'px)'; ondeLivro(); }
+    function ondeLivro() {
+      var at = null, x0 = L.i * L.W + L.W; art.querySelectorAll('.pg').forEach(function (d) { var x = d.getBoundingClientRect().left - art.getBoundingClientRect().left; if (x < x0) at = d; });
+      var pct = L.n > 1 ? Math.round(L.i * 100 / (L.n - 1)) : 100; $('.prog b').style.width = pct + '%';
+      rod.textContent = (at ? (at.dataset.imp ? 'p. ' + at.dataset.imp : 'página ' + at.dataset.pg) + ' · ' : '') + (L.i + 1) + ' de ' + L.n + ' · ' + pct + '% lido';
+    }
+    function clone(off, esq, larg) {
+      var f = document.createElement('div'); f.className = 'face'; var c = art.cloneNode(true); c.removeAttribute('id');
+      c.style.transform = 'translateX(' + (-off - esq) + 'px)'; c.style.left = '0'; f.appendChild(c); return f;
+    }
+    function vira(d) {
+      if (L.ocupado) return; var novo = L.i + d; if (novo < 0 || novo >= L.n) return;
+      var velho = L.i, W = L.W; if (semMov) { mostra(novo); return; }
+      L.ocupado = true;
+      var meia = L.duas ? W / 2 : W, ida = d > 0;
+      var folha = document.createElement('div'); folha.className = 'folha ' + (ida ? 'ida' : 'volta');
+      folha.style.width = meia + 'px'; folha.style.left = (ida ? W - meia : 0) + 'px'; folha.style.transformOrigin = ida ? 'left center' : 'right center';
+      var fr = clone(velho * W, ida ? W - meia : 0); fr.classList.add('frente'); folha.appendChild(fr);
+      if (L.duas) { var tr = clone(novo * W, ida ? 0 : W - meia); tr.classList.add('tras'); folha.appendChild(tr); }
+      var capa = null;
+      if (L.duas) { capa = document.createElement('div'); capa.className = 'capa'; capa.style.width = meia + 'px'; capa.style.left = (ida ? 0 : W - meia) + 'px'; capa.appendChild(clone(velho * W, ida ? 0 : W - meia)); rolo.appendChild(capa); }
+      rolo.appendChild(folha); mostra(novo);
+      void folha.offsetWidth; folha.classList.add('girando'); folha.style.transform = 'rotateY(' + (ida ? -180 : 180) + 'deg)'; if (!L.duas) { folha.style.transition = 'transform .55s cubic-bezier(.45,.05,.3,1), opacity .55s ease-in'; folha.style.opacity = '0'; }
+      setTimeout(function () { folha.remove(); if (capa) capa.remove(); L.ocupado = false; }, 660);
+    }
+    function liga(on, marcador) {
+      var m = marcador; if (!m) { if (L.on) { var x0 = L.i * L.W; art.querySelectorAll('.pg').forEach(function (d) { if (d.getBoundingClientRect().left - art.getBoundingClientRect().left <= x0 + 5) m = d; }); } else { var meio = rolo.scrollTop + 20; art.querySelectorAll('.pg').forEach(function (d) { if (d.offsetTop <= meio) m = d; }); } }
+      L.on = on; el.classList.toggle('livro', on); $('[data-a="livro"]').setAttribute('aria-pressed', on);
+      try { localStorage.setItem('lkin-livro', on ? '1' : '0'); } catch (e) {}
+      if (on) { art.querySelectorAll('img[loading]').forEach(function (im) { im.removeAttribute('loading'); }); rolo.scrollTop = 0; mede(); mostra(m ? pagDoMarcador(m) : 0); }
+      else { art.style.transform = ''; art.style.width = ''; art.style.columnCount = ''; el.classList.remove('duas'); if (m) { rolo.style.scrollBehavior = 'auto'; rolo.scrollTop = m.offsetTop - 8; rolo.style.scrollBehavior = ''; } onde(); }
+    }
+    el.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-a]');
+      if (b) { var a = b.dataset.a; if (a === 'livro') liga(!L.on); if (a === 'prox') vira(1); if (a === 'ant') vira(-1); if (L.on && (a === 'mais' || a === 'menos')) setTimeout(function () { var m = null, x0 = L.i * L.W; art.querySelectorAll('.pg').forEach(function (d) { if (d.getBoundingClientRect().left - art.getBoundingClientRect().left <= x0 + 5) m = d; }); mede(); mostra(m ? pagDoMarcador(m) : L.i); }, 30); return; }
+      if (!L.on || e.target.closest('.gl,a,button,img,.glfundo') || !e.target.closest('.rolo')) return;
+      var r = rolo.getBoundingClientRect(), x = e.clientX - r.left; if (x > r.width * .75) vira(1); else if (x < r.width * .25) vira(-1);
+    });
+    function tkL(e) { if (!L.on || !document.body.contains(el) || document.querySelector('.glfundo,#lkzoom')) return; if (['ArrowRight', 'PageDown', ' '].indexOf(e.key) >= 0) { e.preventDefault(); vira(1); } if (['ArrowLeft', 'PageUp'].indexOf(e.key) >= 0) { e.preventDefault(); vira(-1); } }
+    document.addEventListener('keydown', tkL);
+    var tx = null; rolo.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+    rolo.addEventListener('touchend', function (e) { if (!L.on || tx === null) return; var dx = e.changedTouches[0].clientX - tx; tx = null; if (Math.abs(dx) > 50) vira(dx < 0 ? 1 : -1); });
+    window.addEventListener('resize', function () { if (L.on && document.body.contains(el)) { var m = null, x0 = L.i * L.W; art.querySelectorAll('.pg').forEach(function (d) { if (d.getBoundingClientRect().left - art.getBoundingClientRect().left <= x0 + 5) m = d; }); mede(); mostra(m ? pagDoMarcador(m) : L.i); } });
+    setTimeout(function () { var alvo = pagina && document.getElementById('lk-' + pagina); if (alvo) { rolo.style.scrollBehavior = 'auto'; rolo.scrollTop = alvo.offsetTop - 8; rolo.style.scrollBehavior = ''; var pp = alvo.closest('p') || alvo.nextElementSibling; if (pp) pp.classList.add('alvo-p'); } onde(); if (pref()) liga(true, alvo || null); }, 60);
   };
 
   /* qualquer link para PDF do PRÓPRIO site abre no leitor */
