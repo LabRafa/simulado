@@ -331,6 +331,7 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <script src="banco-cabeca.js?v=202611202100"></script>
 <script src="banco-estomato.js?v=202611202100"></script>
 <script src="banco-legal.js?v=202611202100"></script>
+<script src="sm-numeros.js?v=202611220050"></script>
 <script src="revisao-sm1-inter.js?v=202611220040"></script>
 <script src="unir-bases.js?v=202611220045"></script>
 <script src="biblioteca.js?v=202611210100"></script>
@@ -737,7 +738,8 @@ function questao(anima){
   const P = partida, it = P.itens[P.i], q = it.q, total = P.itens.length;
   const respondidas = P.itens.filter(x => x.conf).length;
   const nova = ultimaVista !== P.i; ultimaVista = P.i;
-  const marca = q.sm2 ? '<p class="nota-sm2">(questão do simulado 2)</p>' : q.sm1 ? '<p class="nota-sm1">(questão do simulado 1)</p>' : q.sm1par ? '<p class="nota-par">(semelhante à do SM1)</p>' : '';
+  const nSM = k => { const l = banco().q.filter(x => x[k]).map(x => x.id).sort((a,b)=>a.localeCompare(b,'pt',{numeric:true})); const i = l.indexOf(q.id); return i >= 0 ? (i+1) + ' ' : ''; };
+  const marca = q.sm2 ? `<p class="nota-sm2">(questão ${nSM('sm2')}do simulado 2)</p>` : q.sm1 ? `<p class="nota-sm1">(questão ${nSM('sm1')}do simulado 1)</p>` : q.sm1par ? `<p class="nota-par">(semelhante à questão ${typeof q.sm1par === 'number' ? q.sm1par + ' ' : ''}do simulado 1)</p>` : '';
   app.innerHTML = `
   <div class="barra">
     <div class="barraL"><button class="fechar" id="sair">${IC.x}Sair</button><span class="ponto" aria-live="polite">${nota1(acertos())} <small>de ${nota1(total)}</small></span></div>
