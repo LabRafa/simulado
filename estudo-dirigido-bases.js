@@ -36,6 +36,6 @@
   Q.forEach(function (x, i) { x.id = 'ed' + (i + 1); x.f = F; B.q.push(x); });
   var ms = B.modos || (B.modos = []);
   if (!ms.some(function (m) { return m.id === 'b-ed'; }))
-    ms.splice(Math.min(1, ms.length), 0, { id: 'b-ed', nome: 'Estudo dirigido da AV (preparatório da prova final)', sub: 'Os 12 itens + os 2 casos da folha "Revisão Geral Integrada", com gabarito comentado.', temas: [T1, T2, T3, T4, T5] });
+    ms.splice(Math.min(1, ms.length), 0, { id: 'b-ed', nome: 'Estudo dirigido da AV (preparatório da prova final)', sub: 'Os 12 itens + os 2 casos da folha "Revisão Geral Integrada", com gabarito comentado. Vêm as 25 de uma vez.', temas: [T1, T2, T3, T4, T5], todas: true });
   if (B.resumoTema) { /* sem resumo próprio: mostra a mensagem padrão */ }
 })();

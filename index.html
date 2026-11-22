@@ -333,7 +333,7 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <script src="banco-legal.js?v=202611202100"></script>
 <script src="sm-numeros.js?v=202611220050"></script>
 <script src="revisao-sm1-inter.js?v=202611220040"></script>
-<script src="estudo-dirigido-bases.js?v=202611221300"></script>
+<script src="estudo-dirigido-bases.js?v=202611221305"></script>
 <script src="unir-bases.js?v=202611220045"></script>
 <script src="biblioteca.js?v=202611220100"></script>
 <script src="glossario-estomato.js?v=202611202240"></script>
@@ -528,6 +528,7 @@ function poolDe(m){
 function sorteia(m){
   const pool = poolDe(m);
   if (m.sm1todo || m.sm2todo) return pool.map(q => ({q, ordem:[0,1,2,3,4]}));
+  if (m.todas) return mistura(pool).map(q => ({q, ordem: (q.fixa || q.af) ? [0,1,2,3,4] : mistura([0,1,2,3,4])})); /* Rafael 22/11: modo que traz TODAS as questões (estudo dirigido) */
   let esc10;
   if (m.erros || m.cai || m.novas) esc10 = mistura(pool).slice(0,10);
   else {
