@@ -332,7 +332,7 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <script src="banco-estomato.js?v=202611202100"></script>
 <script src="banco-legal.js?v=202611202100"></script>
 <script src="revisao-sm1-inter.js?v=202611220040"></script>
-<script src="unir-bases.js?v=202611220020"></script>
+<script src="unir-bases.js?v=202611220045"></script>
 <script src="biblioteca.js?v=202611210100"></script>
 <script src="glossario-estomato.js?v=202611202240"></script>
 <script src="leitor-pdf.js?v=202611210100"></script>
@@ -794,10 +794,16 @@ function escolhe(k){
 }
 function proximaLivre(i){ const t = partida.itens.length; for (let s=1;s<=t;s++){ const k=(i+s)%t; if(!partida.itens[k].conf) return k; } return i; }
 function dicaHtml(q){
-  const r = (banco().revisao||[]); const tema = (q.tema||'').toLowerCase();
-  let itens = []; r.forEach(sec => sec.i.forEach(x => { if (x.toLowerCase().includes(tema.split(' ')[0])) itens.push(x); }));
-  if (!itens.length) itens = (r[0] ? r[0].i.slice(0,3) : []);
-  return `<div class="dicaBox"><b>Resumo: ${esc(q.tema)}</b><ul>${itens.slice(0,4).map(x=>`<li>${G(x)}</li>`).join('')}</ul></div>`;
+  /* Rafael 22/11: resumo tem que ser DO TEMA da pergunta; antes caía num resumo genérico (posição anatômica) */
+  const r = (banco().revisao||[]); const sa = s => String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+  const pal = sa(q.tema).split(/[^a-z]+/).filter(w => w.length >= 4).map(w => w.slice(0, Math.max(4, w.length-2)));
+  let itens = [];
+  const mapa = (banco().resumoTema || {})[q.tema];
+  if (mapa) { r.forEach(sec => { if (mapa.includes(sec.t)) itens.push(...sec.i); }); const f = itens.filter(x => pal.some(w => sa(x).includes(w))); if (f.length >= 2) itens = f.concat(itens.filter(x => !f.includes(x))); }
+  else r.forEach(sec => { if (pal.some(w => sa(sec.t).includes(w))) itens.push(...sec.i); });
+  if (!itens.length && !mapa) r.forEach(sec => sec.i.forEach(x => { if (pal.some(w => sa(x).includes(w))) itens.push(x); }));
+  if (!itens.length) return `<div class="dicaBox"><b>Resumo: ${esc(q.tema)}</b><p style="margin:6px 0 0">Ainda não tem resumo deste tema. A explicação aparece depois que você responder.</p></div>`;
+  return `<div class="dicaBox"><b>Resumo: ${esc(q.tema)}</b><ul>${itens.slice(0,5).map(x=>`<li>${G(x)}</li>`).join('')}</ul></div>`;
 }
 function confirma(){
   const it = partida.itens[partida.i];
