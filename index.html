@@ -334,7 +334,7 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <script src="sm-numeros.js?v=202611220050"></script>
 <script src="revisao-sm1-inter.js?v=202611220040"></script>
 <script src="unir-bases.js?v=202611220045"></script>
-<script src="biblioteca.js?v=202611210100"></script>
+<script src="biblioteca.js?v=202611220100"></script>
 <script src="glossario-estomato.js?v=202611202240"></script>
 <script src="leitor-pdf.js?v=202611210100"></script>
 <script src="periodos.js?v=202611202100"></script>
@@ -670,7 +670,7 @@ function materia(){
     ${erros ? `<button class="item" data-go="${erros.id}" ${nErr?'':'disabled'}><span class="ic">${IC.volta}</span><span class="t"><b>Revisar meus erros</b><small>${nErr ? nErr+(nErr===1?' questão guardada':' questões guardadas') : 'Quando você errar, a questão aparece aqui'}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.estudo||[]).length ? `<button class="item" id="porcor"><span class="ic">${IC.paleta}</span><span class="t"><b>Estudar por cor</b><small>${(b.estudo||[]).length} grupos de lesões, com foto, e treino só de uma cor</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.mudancas||[]).length ? `<button class="item" id="mud"><span class="ic">${IC.livro}</span><span class="t"><b>Mudanças recentes</b><small>O que mudou nas leis e no Código de Ética, com data. Conferido em ${esc(b.atualizado||'')}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
-    ${(b.biblioteca||[]).length ? `<button class="item" id="bib"><span class="ic">${IC.folha}</span><span class="t"><b>Biblioteca</b><small>${b.biblioteca.length} documentos oficiais pra ler na íntegra</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${(b.biblioteca||[]).length ? `<button class="item" id="bib"><span class="ic">${IC.folha}</span><span class="t"><b>Biblioteca</b><small>${b.biblioteca.length} ${MAT==='legal'?'documentos oficiais':'livros e estudos'} pra ler na íntegra</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${b.glossario ? `<button class="item" id="dic"><span class="ic">${IC.livro}</span><span class="t"><b>Dicionário</b><small>${Object.keys(b.glossario).length} palavras difíceis explicadas. Nas questões, toque na palavra sublinhada</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     <button class="item" id="rev"><span class="ic">${IC.livro}</span><span class="t"><b>Ler o resumo</b><small>O que mais cai, em tópicos curtos</small></span><span class="seta">${IC.seta}</span></button>
     ${itemAulas()}
@@ -878,7 +878,7 @@ function mudancas(){
 function biblioteca(alvo){
   const b = banco(), docs = b.biblioteca || [];
   tela(`<div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
-  <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Biblioteca</h1><p>${esc(b.materia)}: os documentos oficiais citados nas questões, na íntegra.</p></div>
+  <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Biblioteca</h1><p>${esc(b.materia)}: ${MAT==='legal'?'os documentos oficiais':'os livros e estudos'} citados nas questões, na íntegra.</p></div>
   <div class="menu">${docs.map(d => `<a class="item bibit${d.id===alvo?' alvo':''}" id="bib-${esc(d.id)}" href="${esc(d.url)}" target="_blank" rel="noopener"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(d.t)}</b><small>${esc(d.desc)}${d.fonte ? ' Fonte: '+esc(d.fonte)+'.' : ''}</small></span><span class="seta">${IC.seta}</span></a>`).join('')}</div>`);
   $('#vol').onclick = materia;
   if (alvo) { const el = document.getElementById('bib-'+alvo); if (el) setTimeout(() => el.scrollIntoView({block:'center'}), 50); }
