@@ -333,6 +333,7 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <script src="banco-legal.js?v=202611202100"></script>
 <script src="sm-numeros.js?v=202611220050"></script>
 <script src="revisao-sm1-inter.js?v=202611220040"></script>
+<script src="proximas-provas.js?v=202611221315"></script>
 <script src="estudo-dirigido-bases.js?v=202611221305"></script>
 <script src="unir-bases.js?v=202611220045"></script>
 <script src="biblioteca.js?v=202611220100"></script>
@@ -661,7 +662,7 @@ function materia(){
     ${b.proxima ? `<p class="quando">${esc(b.proxima)}</p>` : ''}
     ${(p => p ? `<p class="stat">${p.data ? 'Atualizada em ' + p.data + ' · ' : ''}${p.total} questões · você já fez ${p.feitas} (${p.pct}%)<span class="barra"><b style="width:${p.pct}%"></b></span></p>` : '')(progressoDe(MAT))}
   </header>
-  <button class="grande aperta" data-go="${completo.id}"><span class="ic">${IC.play}</span><span><b>Fazer simulado</b><small>10 questões sorteadas, nota de 0 a 1</small></span></button>
+  <button class="grande aperta" data-go="${completo.id}"><span class="ic">${IC.play}</span><span><b>${esc(window.rotuloTreino ? rotuloTreino(MAT) : 'Fazer simulado')}</b><small>10 questões sorteadas, nota de 0 a 1</small></span></button>
   <div class="menu">
     ${sm1 && nSm1 ? `<button class="item" data-go="${sm1.id}"><span class="ic">${IC.folha}</span><span class="t"><b>Prova do SM1</b><small>As ${nSm1} questões que caíram, na ordem da prova</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${sm2 && nSm2 ? `<button class="item" data-go="${sm2.id}"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(sm2.nome||'Prova do SM2')}</b><small>${esc(sm2.sub||('As '+nSm2+' questões, com gabarito comentado'))}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
