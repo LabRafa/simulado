@@ -334,8 +334,8 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <script src="sm-numeros.js?v=202611220050"></script>
 <script src="revisao-sm1-inter.js?v=202611220040"></script>
 <script src="proximas-provas.js?v=202611221315"></script>
-<script src="estudo-dirigido-bases.js?v=202611221305"></script>
-<script src="av-bases-2026-11-23.js?v=202611240925"></script>
+<script src="estudo-dirigido-bases.js?v=202611240935"></script>
+<script src="av-bases-2026-11-23.js?v=202611240935"></script>
 <script src="unir-bases.js?v=202611220045"></script>
 <script src="biblioteca.js?v=202611220100"></script>
 <script src="glossario-estomato.js?v=202611202240"></script>
@@ -582,8 +582,9 @@ function partes(){
   const completo = ms.find(m => m.id === 'completo') || ms[0];
   const sm1 = ms.find(m => m.sm1todo), sm2 = ms.find(m => m.sm2todo), erros = ms.find(m => m.erros);
   const casos = ms.find(m => m.casos), novas = ms.find(m => m.novas), imgs = ms.filter(m => m.img && !m.cor && poolDe(m).length >= 3);
-  const temas = ms.filter(m => m !== completo && m !== sm1 && m !== sm2 && m !== erros && m !== casos && m !== novas && !imgs.includes(m) && !m.cor && poolDe(m).length >= 3); /* modos por cor ficam na tela "Estudar por cor" */
-  return {ms, completo, sm1, sm2, erros, temas, casos, novas, imgs};
+  const dest = ms.filter(m => m.destaque && poolDe(m).length); /* Rafael 24/11/2026: prova da AV e estudo dirigido aparecem junto do SM1/SM2 */
+  const temas = ms.filter(m => m !== completo && m !== sm1 && m !== sm2 && m !== erros && m !== casos && m !== novas && !imgs.includes(m) && !dest.includes(m) && !m.cor && poolDe(m).length >= 3); /* modos por cor ficam na tela "Estudar por cor" */
+  return {ms, completo, sm1, sm2, erros, temas, casos, novas, imgs, dest};
 }
 
 /* ---------- INÍCIO: escolher a matéria ---------- */
@@ -651,7 +652,7 @@ function materiaSemQuestoes(){
 function materia(){
   partida = null; ultimaVista = -1; pinta();
   if (!temQuestoes()) return materiaSemQuestoes();
-  const b = banco(), {completo, sm1, sm2, erros, temas, casos, novas, imgs} = partes();
+  const b = banco(), {completo, sm1, sm2, erros, temas, casos, novas, imgs, dest} = partes();
   const nErr = erros ? poolDe(erros).length : 0, nSm1 = sm1 ? poolDe(sm1).length : 0, nSm2 = sm2 ? poolDe(sm2).length : 0;
   const melhor = ler('jogo-melhor-'+MAT, null);
   tela(`
@@ -667,6 +668,7 @@ function materia(){
   <div class="menu">
     ${sm1 && nSm1 ? `<button class="item" data-go="${sm1.id}"><span class="ic">${IC.folha}</span><span class="t"><b>Prova do SM1</b><small>As ${nSm1} questões que caíram, na ordem da prova</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${sm2 && nSm2 ? `<button class="item" data-go="${sm2.id}"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(sm2.nome||'Prova do SM2')}</b><small>${esc(sm2.sub||('As '+nSm2+' questões, com gabarito comentado'))}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${dest.map(m => `<button class="item" data-go="${m.id}"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(m.nome)}</b><small>${esc(m.sub||'')}</small></span><span class="seta">${IC.seta}</span></button>`).join('')}
     ${casos && poolDe(casos).length ? `<button class="item" data-go="${casos.id}"><span class="ic">${IC.esteto}</span><span class="t"><b>Simulação de caso real</b><small>${poolDe(casos).length} casos com paciente, idade, dente e conduta</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${imgs.map(m => `<button class="item" data-go="${m.id}"><span class="ic">${IC.foto || IC.olho || IC.play}</span><span class="t"><b>${esc(m.nome)}</b><small>${esc(m.sub || (poolDe(m).length+' questões com imagem'))}</small></span><span class="seta">${IC.seta}</span></button>`).join('')}
     ${novas ? (n => `<button class="item" data-go="${novas.id}" ${n?'':'disabled'}><span class="ic">${IC.play}</span><span class="t"><b>Questões que nunca fiz</b><small>${n ? n+(n===1?' questão nova pra você':' questões novas pra você') : 'Você já respondeu todas, parabéns!'}</small></span><span class="seta">${IC.seta}</span></button>`)(poolDe(novas).length) : ''}

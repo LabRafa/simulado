@@ -46,5 +46,5 @@
   Q.forEach(function (x, i) { x.id = 'av1123-' + (i + 1); x.tema = T; x.f = F; if (x.fixa === undefined) x.fixa = false; B.q.push(x); });
   var ms = B.modos || (B.modos = []);
   if (!ms.some(function (m) { return m.id === 'b-av1123'; }))
-    ms.splice(Math.min(1, ms.length), 0, { id: 'b-av1123', nome: 'Prova da AV de 23/11 (versão D)', sub: '9 questões da prova de verdade, no nível da AV, com gabarito comentado (montado pela Mônica, não é o oficial). Ótimo treino pra AVS.', temas: [T], todas: true });
+    ms.splice(Math.min(1, ms.length), 0, { id: 'b-av1123', nome: 'Prova da AV (23/11, versão D)', sub: '9 questões que caíram, com gabarito comentado (não é o oficial)', temas: [T], todas: true, destaque: true });
 })();
