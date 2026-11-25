@@ -334,6 +334,7 @@ body.com-rodape .rodape{padding-left:54px;padding-right:54px} /* 13/11: bolinhas
 .glbib{display:block;background:none;border:0;padding:4px 0 12px;font-size:14px;color:#6c3fc5;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .bibit{scroll-margin-top:20px}.bibit.alvo{outline:3px solid #6c3fc5;outline-offset:2px;border-radius:14px}
 .glpop{max-height:88vh;overflow:auto}
+.glvermais{width:100%;min-height:44px;margin:0 0 12px;border:1.5px solid var(--cor,#334);border-radius:12px;background:#fff;color:var(--cor,#334);font-weight:700;font-size:15px;cursor:pointer}.glleg{font-size:13px;color:#5b6475;margin:-6px 0 12px}
 .lei-txt.tabela{background:#fff;padding:0;max-height:none}.gtab{width:100%;border-collapse:collapse;font-size:14px}.gtab th{text-align:left;background:var(--cor-claro,#eef);color:var(--cor,#333);padding:8px 10px;font-weight:700}.gtab td{padding:8px 10px;border-top:1px solid #e6e8ee;vertical-align:top}
 .lei-txt{max-height:46vh;overflow:auto;margin:0 0 12px;padding:10px 12px;background:#f6f7fa;border-radius:12px;font-size:15px;line-height:1.5}
 .lei-txt .lin{display:block;margin:0 0 6px}.lei-txt .lin.marca{background:#fff3b0;border-radius:6px;padding:4px 6px;font-weight:600}
@@ -446,7 +447,8 @@ function abreGlossario(k, novo){
     + (_glPilha.length ? '<button type="button" class="glvolta">‹ ' + esc(String(_glPilha[_glPilha.length-1]).startsWith('lei|') ? 'voltar' : _glPilha[_glPilha.length-1]) + '</button>' : '')
     + '<h3>' + esc(v.titulo || k) + '</h3>' + (v.html ? (v.d ? '<p>' + G(v.d, new Set([k]), x => x === k) + '</p>' : '') + '<div class="lei-txt' + (v.d ? ' tabela' : '') + '">' + texto + '</div>' : '<p>' + texto + '</p>')
     + (v.rodape ? '<p class="glfonte">' + esc(v.rodape) + '</p>' : '')
-    + imgs.map(src => '<button type="button" class="glimg" data-zoom="' + esc(src) + '"><img src="' + esc(src) + '" alt="' + esc(v.alt || k) + '"><span>⤢ Ampliar</span></button>').join('')
+    + imgs.map((src, n) => '<button type="button" class="glimg' + (n ? ' glmais' : '') + '"' + (n ? ' hidden' : '') + ' data-zoom="' + esc(src) + '"><img src="' + esc(src) + '" alt="' + esc((v.alts && v.alts[n]) || v.alt || k) + '" loading="lazy"><span>⤢ Ampliar</span></button>' + (v.legs && v.legs[n] ? '<p class="glleg"' + (n ? ' hidden' : '') + '>' + esc(v.legs[n]) + '</p>' : '')).join('')
+    + (imgs.length > 1 ? '<button type="button" class="glvermais">🖼️ Ver mais ' + (imgs.length - 1) + (imgs.length === 2 ? ' imagem' : ' imagens') + '</button>' : '')
     + (v.fonte ? '<p class="glfonte">' + (imgs.length ? 'Imagem: ' : 'Fonte: ') + esc(v.fonte) + '</p>' : '')
     + (doc ? '<button type="button" class="glbib">📚 ' + (v.html ? 'Ler a lei inteira' : 'Ler o documento') + ' na Biblioteca</button>' : '')
     + '<button type="button" class="glok">Entendi</button></div>';
@@ -454,6 +456,7 @@ function abreGlossario(k, novo){
   f.onclick = ev => {
     if (ev.target.closest('.gl')) return;
     const z = ev.target.closest('.glimg'); if (z) { abreZoom(z.dataset.zoom, v.alt || k); return; }
+    if (ev.target.closest('.glvermais')) { f.querySelectorAll('.glmais,.glleg').forEach(x => x.hidden = false); ev.target.closest('.glvermais').remove(); return; }
     if (ev.target.closest('.glvolta')) { const ant = _glPilha.pop(); abreGlossario(ant, true); return; }
     if (ev.target.closest('.glbib')) { fecha(); biblioteca(doc.id); return; }
     if (ev.target === f || ev.target.closest('.glok')) fecha();
@@ -707,7 +710,6 @@ function materia(){
     ${(b.estudo||[]).length ? `<button class="item" id="porcor"><span class="ic">${IC.paleta}</span><span class="t"><b>Estudar por cor</b><small>${(b.estudo||[]).length} grupos de lesões, com foto, e treino só de uma cor</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.mudancas||[]).length ? `<button class="item" id="mud"><span class="ic">${IC.livro}</span><span class="t"><b>Mudanças recentes</b><small>O que mudou nas leis e no Código de Ética, com data. Conferido em ${esc(b.atualizado||'')}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.biblioteca||[]).length ? `<button class="item" id="bib"><span class="ic">${IC.folha}</span><span class="t"><b>Biblioteca</b><small>${b.biblioteca.length} ${MAT==='legal'?'documentos oficiais':'livros e estudos'} pra ler na íntegra</small></span><span class="seta">${IC.seta}</span></button>` : ''}
-    ${b.glossario ? `<button class="item" id="dic"><span class="ic">${IC.livro}</span><span class="t"><b>Dicionário</b><small>${Object.keys(b.glossario).length} palavras difíceis explicadas. Nas questões, toque na palavra sublinhada</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     <button class="item" id="rev"><span class="ic">${IC.livro}</span><span class="t"><b>Ler o resumo</b><small>O que mais cai, em tópicos curtos</small></span><span class="seta">${IC.seta}</span></button>
     ${itemAulas()}
     ${itemMaterial()}
@@ -1106,6 +1108,7 @@ pinta();
   const u = new URLSearchParams(location.search), mid = u.get('m'), mo = u.get('modo');
   if (mid && infoMat(mid) && visivel(infoMat(mid))) {
     MAT = mid; grava('jogo-mat', MAT);
+    if (u.get('tela') === 'treino') return menuTreinoAV(); /* Rafael 25/11: link direto pro Treinar pra AV */
     const alvo = mo && modos().find(x => x.id === mo);
     if (alvo && sorteia(alvo).length) return comeca(alvo);
     return materia();
