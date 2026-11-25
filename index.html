@@ -667,16 +667,8 @@ function materia(){
     ${b.proxima ? `<p class="quando">${esc(b.proxima)}</p>` : ''}
     ${(p => p ? `<p class="stat">${p.data ? 'Atualizada em ' + p.data + ' · ' : ''}${p.total} questões · você já fez ${p.feitas} (${p.pct}%)<span class="barra"><b style="width:${p.pct}%"></b></span></p>` : '')(progressoDe(MAT))}
   </header>
-  <button class="grande aperta" id="treinoav"><span class="ic">${IC.play}</span><span><b>${esc(window.rotuloTreino ? rotuloTreino(MAT) : 'Fazer simulado')}</b><small>10 questões sorteadas, nota de 0 a 1</small></span></button>
+  <button class="grande aperta" id="treinoav"><span class="ic">${IC.play}</span><span><b>${esc(window.rotuloTreino ? rotuloTreino(MAT) : 'Treinar pra AV')}</b><small>Simulados, provas anteriores, nível AV, casos, assuntos e seus erros</small></span></button>
   <div class="menu">
-    ${sm1 && nSm1 ? `<button class="item" data-go="${sm1.id}"><span class="ic">${IC.folha}</span><span class="t"><b>Prova do SM1</b><small>As ${nSm1} questões que caíram, na ordem da prova</small></span><span class="seta">${IC.seta}</span></button>` : ''}
-    ${sm2 && nSm2 ? `<button class="item" data-go="${sm2.id}"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(sm2.nome||'Prova do SM2')}</b><small>${esc(sm2.sub||('As '+nSm2+' questões, com gabarito comentado'))}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
-    ${dest.map(m => `<button class="item" data-go="${m.id}"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(m.nome)}</b><small>${esc(m.sub||'')}</small></span><span class="seta">${IC.seta}</span></button>`).join('')}
-    ${casos && poolDe(casos).length ? `<button class="item" data-go="${casos.id}"><span class="ic">${IC.esteto}</span><span class="t"><b>Simulação de caso real</b><small>${poolDe(casos).length} casos com paciente, idade, dente e conduta</small></span><span class="seta">${IC.seta}</span></button>` : ''}
-    ${imgs.map(m => `<button class="item" data-go="${m.id}"><span class="ic">${IC.foto || IC.olho || IC.play}</span><span class="t"><b>${esc(m.nome)}</b><small>${esc(m.sub || (poolDe(m).length+' questões com imagem'))}</small></span><span class="seta">${IC.seta}</span></button>`).join('')}
-    ${novas ? (n => `<button class="item" data-go="${novas.id}" ${n?'':'disabled'}><span class="ic">${IC.play}</span><span class="t"><b>Questões que nunca fiz</b><small>${n ? n+(n===1?' questão nova pra você':' questões novas pra você') : 'Você já respondeu todas, parabéns!'}</small></span><span class="seta">${IC.seta}</span></button>`)(poolDe(novas).length) : ''}
-    ${temas.length ? `<button class="item" id="temas"><span class="ic">${IC.alvo}</span><span class="t"><b>Treinar um assunto</b><small>${temas.length} assuntos para escolher</small></span><span class="seta">${IC.seta}</span></button>` : ''}
-    ${erros ? `<button class="item" data-go="${erros.id}" ${nErr?'':'disabled'}><span class="ic">${IC.volta}</span><span class="t"><b>Revisar meus erros</b><small>${nErr ? nErr+(nErr===1?' questão guardada':' questões guardadas') : 'Quando você errar, a questão aparece aqui'}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.estudo||[]).length ? `<button class="item" id="porcor"><span class="ic">${IC.paleta}</span><span class="t"><b>Estudar por cor</b><small>${(b.estudo||[]).length} grupos de lesões, com foto, e treino só de uma cor</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.mudancas||[]).length ? `<button class="item" id="mud"><span class="ic">${IC.livro}</span><span class="t"><b>Mudanças recentes</b><small>O que mudou nas leis e no Código de Ética, com data. Conferido em ${esc(b.atualizado||'')}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.biblioteca||[]).length ? `<button class="item" id="bib"><span class="ic">${IC.folha}</span><span class="t"><b>Biblioteca</b><small>${b.biblioteca.length} ${MAT==='legal'?'documentos oficiais':'livros e estudos'} pra ler na íntegra</small></span><span class="seta">${IC.seta}</span></button>` : ''}
@@ -706,22 +698,26 @@ function materia(){
 
 /* ---------- TREINAR PRA AV: menu de possibilidades (Rafael 25/11/2026: "abrir um menu assim que o aluno clica em Treinar pra AV") ---------- */
 function menuTreinoAV(){
-  const b = banco(), {completo, sm1, sm2, erros, casos, dest} = partes();
-  const it = (m, nome, sub, ic) => m && poolDe(m).length ? `<button class="item" data-go="${m.id}"><span class="ic">${ic||IC.folha}</span><span class="t"><b>${esc(nome||m.nome)}</b><small>${esc(sub||m.sub||'')}</small></span><span class="seta">${IC.seta}</span></button>` : '';
-  const nErr = erros ? poolDe(erros).length : 0;
+  const b = banco(), {completo, sm1, sm2, erros, temas, casos, novas, imgs, dest} = partes();
+  const it = (m, nome, sub, ic, dis) => m ? `<button class="item" data-go="${m.id}" ${dis?'disabled':''}><span class="ic">${ic||IC.folha}</span><span class="t"><b>${esc(nome||m.nome)}</b><small>${esc(sub||m.sub||'')}</small></span><span class="seta">${IC.seta}</span></button>` : '';
+  const n = m => m ? poolDe(m).length : 0, nErr = n(erros), nNov = n(novas);
   tela(`
   <div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
   <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">${esc(window.rotuloTreino ? rotuloTreino(MAT) : 'Treinar pra AV')}</h1><p>Escolha como quer treinar.</p></div>
   <div class="menu">
     ${it(completo, 'Simulado sorteado', '10 questões sorteadas, nota de 0 a 1', IC.play)}
+    ${n(sm1) ? it(sm1, 'Prova do SM1', 'As ' + n(sm1) + ' questões que caíram, na ordem da prova') : ''}
+    ${n(sm2) ? it(sm2, sm2.nome || 'Prova do SM2', sm2.sub || ('As ' + n(sm2) + ' questões, com gabarito comentado')) : ''}
     ${dest.map(m => it(m)).join('')}
-    ${it(sm1, 'Prova do SM1', 'As questões que caíram, na ordem da prova')}
-    ${it(sm2, sm2 && sm2.nome || 'Prova do SM2', sm2 && sm2.sub || 'As questões que caíram, com gabarito comentado')}
-    ${it(casos, 'Simulação de caso real', (casos ? poolDe(casos).length : 0) + ' casos com paciente, idade, dente e conduta', IC.esteto)}
-    ${nErr ? it(erros, 'Revisar meus erros', nErr + (nErr===1?' questão guardada':' questões guardadas'), IC.volta) : ''}
+    ${n(casos) ? it(casos, 'Simulação de caso real', n(casos) + ' casos com paciente, idade, dente e conduta', IC.esteto) : ''}
+    ${imgs.map(m => it(m, m.nome, m.sub || (n(m) + ' questões com imagem'), IC.foto || IC.olho || IC.play)).join('')}
+    ${novas ? it(novas, 'Questões que nunca fiz', nNov ? nNov + (nNov===1?' questão nova pra você':' questões novas pra você') : 'Você já respondeu todas, parabéns!', IC.play, !nNov) : ''}
+    ${temas.length ? `<button class="item" id="temas"><span class="ic">${IC.alvo}</span><span class="t"><b>Treinar um assunto</b><small>${temas.length} assuntos para escolher</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${erros ? it(erros, 'Revisar meus erros', nErr ? nErr + (nErr===1?' questão guardada':' questões guardadas') : 'Quando você errar, a questão aparece aqui', IC.volta, !nErr) : ''}
   </div>`);
   const {ms} = partes();
   $('#vol').onclick = materia;
+  if ($('#temas')) $('#temas').onclick = listaTemas;
   app.querySelectorAll('[data-go]').forEach(el => el.onclick = () => comeca(ms.find(m => m.id === el.dataset.go)));
 }
 
@@ -733,7 +729,7 @@ function listaTemas(){
   <div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
   <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Treinar um assunto</h1><p>Escolha o tema. Até 10 questões só dele.</p></div>
   <div class="menu">${temas.map(m => `<button class="item" data-go="${m.id}"><span class="t"><b>${esc(m.nome)}</b><small>${poolDe(m).length} questões</small></span><span class="seta">${IC.seta}</span></button>`).join('')}</div>`);
-  $('#vol').onclick = materia;
+  $('#vol').onclick = menuTreinoAV;
   app.querySelectorAll('[data-go]').forEach(el => el.onclick = () => comeca(temas.find(m => m.id === el.dataset.go)));
 }
 
