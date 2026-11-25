@@ -667,7 +667,7 @@ function materia(){
     ${b.proxima ? `<p class="quando">${esc(b.proxima)}</p>` : ''}
     ${(p => p ? `<p class="stat">${p.data ? 'Atualizada em ' + p.data + ' · ' : ''}${p.total} questões · você já fez ${p.feitas} (${p.pct}%)<span class="barra"><b style="width:${p.pct}%"></b></span></p>` : '')(progressoDe(MAT))}
   </header>
-  <button class="grande aperta" data-go="${completo.id}"><span class="ic">${IC.play}</span><span><b>${esc(window.rotuloTreino ? rotuloTreino(MAT) : 'Fazer simulado')}</b><small>10 questões sorteadas, nota de 0 a 1</small></span></button>
+  <button class="grande aperta" id="treinoav"><span class="ic">${IC.play}</span><span><b>${esc(window.rotuloTreino ? rotuloTreino(MAT) : 'Fazer simulado')}</b><small>10 questões sorteadas, nota de 0 a 1</small></span></button>
   <div class="menu">
     ${sm1 && nSm1 ? `<button class="item" data-go="${sm1.id}"><span class="ic">${IC.folha}</span><span class="t"><b>Prova do SM1</b><small>As ${nSm1} questões que caíram, na ordem da prova</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${sm2 && nSm2 ? `<button class="item" data-go="${sm2.id}"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(sm2.nome||'Prova do SM2')}</b><small>${esc(sm2.sub||('As '+nSm2+' questões, com gabarito comentado'))}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
@@ -692,6 +692,7 @@ function materia(){
   $('#vol').onclick = inicio;
   app.querySelectorAll('[data-mat]').forEach(el => el.onclick = () => { MAT = el.dataset.mat; grava('jogo-mat', MAT); materia(); });
   app.querySelectorAll('[data-go]').forEach(el => el.onclick = () => comeca(ms.find(m => m.id === el.dataset.go)));
+  $('#treinoav').onclick = menuTreinoAV;
   if ($('#temas')) $('#temas').onclick = listaTemas;
   $('#rev').onclick = resumo;
   if ($('#dic')) $('#dic').onclick = dicionario;
@@ -701,6 +702,27 @@ function materia(){
   ligaAulasMaterial();
   if ($('#fracos')) $('#fracos').onclick = () => comeca(modoFracos());
   app.querySelectorAll('[data-cai]').forEach(el => el.onclick = () => comeca({ id:'cai-'+el.dataset.cai, nome:el.dataset.cai, temas:[el.dataset.cai], cai:true }));
+}
+
+/* ---------- TREINAR PRA AV: menu de possibilidades (Rafael 25/11/2026: "abrir um menu assim que o aluno clica em Treinar pra AV") ---------- */
+function menuTreinoAV(){
+  const b = banco(), {completo, sm1, sm2, erros, casos, dest} = partes();
+  const it = (m, nome, sub, ic) => m && poolDe(m).length ? `<button class="item" data-go="${m.id}"><span class="ic">${ic||IC.folha}</span><span class="t"><b>${esc(nome||m.nome)}</b><small>${esc(sub||m.sub||'')}</small></span><span class="seta">${IC.seta}</span></button>` : '';
+  const nErr = erros ? poolDe(erros).length : 0;
+  tela(`
+  <div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
+  <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">${esc(window.rotuloTreino ? rotuloTreino(MAT) : 'Treinar pra AV')}</h1><p>Escolha como quer treinar.</p></div>
+  <div class="menu">
+    ${it(completo, 'Simulado sorteado', '10 questões sorteadas, nota de 0 a 1', IC.play)}
+    ${dest.map(m => it(m)).join('')}
+    ${it(sm1, 'Prova do SM1', 'As questões que caíram, na ordem da prova')}
+    ${it(sm2, sm2 && sm2.nome || 'Prova do SM2', sm2 && sm2.sub || 'As questões que caíram, com gabarito comentado')}
+    ${it(casos, 'Simulação de caso real', (casos ? poolDe(casos).length : 0) + ' casos com paciente, idade, dente e conduta', IC.esteto)}
+    ${nErr ? it(erros, 'Revisar meus erros', nErr + (nErr===1?' questão guardada':' questões guardadas'), IC.volta) : ''}
+  </div>`);
+  const {ms} = partes();
+  $('#vol').onclick = materia;
+  app.querySelectorAll('[data-go]').forEach(el => el.onclick = () => comeca(ms.find(m => m.id === el.dataset.go)));
 }
 
 /* ---------- TREINAR UM ASSUNTO ---------- */
