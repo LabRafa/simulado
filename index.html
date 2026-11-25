@@ -435,6 +435,7 @@ function marcaLeis(s, guarda){
 }
 /* Rafael 25/11: "link do porquê": banco.porques = [{t: 'trecho exato', p: 'por quê', fonte}] vira trecho com ❓ */
 function marcaPorques(s, guarda, feitos){
+  if (window._semPorq) return s; /* alternativas: porquê entregaria a resposta */
   const P = (banco() || {}).porques; if (!P || !P.length) return s;
   P.forEach((x, i) => {
     const key = 'porq|' + i; if (feitos && feitos.has(key)) return;
@@ -880,7 +881,7 @@ function questao(anima){
       let cls = '';
       if (it.conf) { if (k===it.certa) cls=' certa'; else if (k===it.resp) cls=' errada'; else cls=' apagada'; if (anima && (k===it.certa || k===it.resp)) cls+=' anim'; }
       else if (it.riscadas.includes(k)) cls=' riscada';
-      return `<button class="op${cls}" role="radio" data-op="${k}" aria-checked="${it.resp===k}" ${it.conf?'disabled':''}><span class="bola">${L[k]}</span><span class="txt">${G(q.o[o])}</span></button>`; }).join('')}</div>
+      return `<button class="op${cls}" role="radio" data-op="${k}" aria-checked="${it.resp===k}" ${it.conf?'disabled':''}><span class="bola">${L[k]}</span><span class="txt">${(window._semPorq=true, (function(){ try { return G(q.o[o]); } finally { window._semPorq=false; } })())}</span></button>`; }).join('')}</div>
     ${it.conf ? `
       <div class="retorno ${it.resp===it.certa?'ok':'no'}" role="status">
         <h3>${it.resp===it.certa ? 'Acertou. Mais 0,1' : 'Errou. A certa é a '+L[it.certa]}</h3>
