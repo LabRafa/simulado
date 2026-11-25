@@ -337,6 +337,7 @@ body.com-rodape .rodape{padding-left:54px;padding-right:54px} /* 13/11: bolinhas
 .glcar{margin:0 0 12px}.glvis{position:relative}.gltrilho{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-radius:12px}.gltrilho::-webkit-scrollbar{display:none}.glslide{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always}.glslide{display:flex;background:#f2f4f7}.glslide .glimg{margin:0;border-radius:0;display:flex;align-items:center;justify-content:center;height:100%}.glslide .glimg span{bottom:8px}.glseta{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.8);opacity:.85;box-shadow:0 1px 4px rgba(0,0,0,.3);font-size:24px;line-height:30px;color:#223;cursor:pointer;padding:0}.glseta.ant{left:6px}.glseta.prox{right:6px}.glseta[hidden]{display:none}.glconta{position:absolute;right:0;top:50%;transform:translateY(-50%);color:#5b6475;font-size:12px;font-weight:700}.glbolas{position:relative}.glbolas{display:flex;justify-content:center;gap:6px;margin:8px 0 6px}.glbolas i{width:7px;height:7px;border-radius:50%;background:#c5cad3;transition:background .2s}.glbolas i.on{background:var(--cor,#334)}.glcap{min-height:1em;margin:0}
 .gl.porq{text-decoration:none;border-bottom:2px dotted #c77d00;background:rgba(255,190,60,.16);border-radius:3px}.gl.porq sup{font-size:.62em;margin-left:1px}
 .porqb{display:inline-flex;align-items:center;justify-content:center;width:11px;height:11px;margin-left:1px;border-radius:50%;background:#1f6feb;color:#fff;font-size:8px;font-weight:700;line-height:1;vertical-align:super;cursor:pointer;text-decoration:none!important;border:0}
+.glvideo{display:flex;align-items:center;gap:6px;margin:0 0 10px;padding:10px 12px;border-radius:12px;background:#fdeaea;color:#b3261e;font-weight:700;font-size:14px;text-decoration:none}
 .glvermais{width:100%;min-height:44px;margin:0 0 12px;border:1.5px solid var(--cor,#334);border-radius:12px;background:#fff;color:var(--cor,#334);font-weight:700;font-size:15px;cursor:pointer}.glleg{font-size:13px;color:#5b6475;margin:-6px 0 12px}
 .lei-txt.tabela{background:#fff;padding:0;max-height:none}.gtab{width:100%;border-collapse:collapse;font-size:14px}.gtab th{text-align:left;background:var(--cor-claro,#eef);color:var(--cor,#333);padding:8px 10px;font-weight:700}.gtab td{padding:8px 10px;border-top:1px solid #e6e8ee;vertical-align:top}
 .lei-txt{max-height:46vh;overflow:auto;margin:0 0 12px;padding:10px 12px;background:#f6f7fa;border-radius:12px;font-size:15px;line-height:1.5}
@@ -374,6 +375,7 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <script src="farmaco-nivel-av.js?v=202611250015"></script>
 <script src="caderno-gustavo.js?v=202611251900"></script>
 <script src="glossario-farmaco.js?v=202611251445"></script>
+<script src="videos-farmaco.js?v=202611251855"></script>
 <script src="porques-farmaco.js?v=202611251445"></script>
 <script src="av-2026-11-24.js?v=202611251330"></script>
 <script src="jonas-guia.js?v=202611241755"></script>
@@ -505,6 +507,7 @@ function abreGlossario(k, novo){
     + '<h3>' + esc(v.titulo || k) + '</h3>' + (v.html ? (v.d ? '<p>' + G(v.d, new Set([k]), x => x === k) + '</p>' : '') + '<div class="lei-txt' + (v.d ? ' tabela' : '') + '">' + texto + '</div>' : '<p>' + texto + '</p>')
     + (v.rodape ? '<p class="glfonte">' + esc(v.rodape) + '</p>' : '')
     + glGaleria(imgs, v, k)
+    + ((v.videos || []).map(x => '<a class="glvideo" href="' + esc(x.url) + '" target="_blank" rel="noopener">▶ Vídeo: ' + esc(x.t) + '</a>').join(''))
     + (v.fonte ? '<p class="glfonte">' + 'Fonte: ' + esc(v.fonte) + '</p>' : '')
     + (doc ? '<button type="button" class="glbib">📚 ' + (v.html ? 'Ler a lei inteira' : 'Ler o documento') + ' na Biblioteca</button>' : '')
     + '<button type="button" class="glok">Entendi</button></div>';
