@@ -335,6 +335,7 @@ body.com-rodape .rodape{padding-left:54px;padding-right:54px} /* 13/11: bolinhas
 .bibit{scroll-margin-top:20px}.bibit.alvo{outline:3px solid #6c3fc5;outline-offset:2px;border-radius:14px}
 .glpop{max-height:88vh;overflow:auto}
 .glcar{margin:0 0 12px}.glvis{position:relative}.gltrilho{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-radius:12px}.gltrilho::-webkit-scrollbar{display:none}.glslide{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always}.glslide{display:flex;background:#f2f4f7}.glslide .glimg{margin:0;border-radius:0;display:flex;align-items:center;justify-content:center;height:100%}.glslide .glimg span{bottom:8px}.glseta{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.92);box-shadow:0 1px 4px rgba(0,0,0,.3);font-size:24px;line-height:30px;color:#223;cursor:pointer;padding:0}.glseta.ant{left:6px}.glseta.prox{right:6px}.glseta[hidden]{display:none}.glconta{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:2px 9px;border-radius:999px}.glbolas{display:flex;justify-content:center;gap:6px;margin:8px 0 6px}.glbolas i{width:7px;height:7px;border-radius:50%;background:#c5cad3;transition:background .2s}.glbolas i.on{background:var(--cor,#334)}.glcap{min-height:1em;margin:0}
+.gl.porq{text-decoration:none;border-bottom:2px dotted #c77d00;background:rgba(255,190,60,.16);border-radius:3px}.gl.porq sup{font-size:.62em;margin-left:1px}
 .glvermais{width:100%;min-height:44px;margin:0 0 12px;border:1.5px solid var(--cor,#334);border-radius:12px;background:#fff;color:var(--cor,#334);font-weight:700;font-size:15px;cursor:pointer}.glleg{font-size:13px;color:#5b6475;margin:-6px 0 12px}
 .lei-txt.tabela{background:#fff;padding:0;max-height:none}.gtab{width:100%;border-collapse:collapse;font-size:14px}.gtab th{text-align:left;background:var(--cor-claro,#eef);color:var(--cor,#333);padding:8px 10px;font-weight:700}.gtab td{padding:8px 10px;border-top:1px solid #e6e8ee;vertical-align:top}
 .lei-txt{max-height:46vh;overflow:auto;margin:0 0 12px;padding:10px 12px;background:#f6f7fa;border-radius:12px;font-size:15px;line-height:1.5}
@@ -371,6 +372,7 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <script src="av-bases-2026-11-23.js?v=202611240935"></script>
 <script src="farmaco-nivel-av.js?v=202611250015"></script>
 <script src="glossario-farmaco.js?v=202611251416"></script>
+<script src="porques-farmaco.js?v=202611251425"></script>
 <script src="av-2026-11-24.js?v=202611251330"></script>
 <script src="jonas-guia.js?v=202611241755"></script>
 <script src="unir-bases.js?v=202611220045"></script>
@@ -414,8 +416,21 @@ function marcaLeis(s, guarda){
     return '\u0001' + (guarda.length - 1) + '\u0002';
   });
 }
+/* Rafael 25/11: "link do porquê": banco.porques = [{t: 'trecho exato', p: 'por quê', fonte}] vira trecho com ❓ */
+function marcaPorques(s, guarda, feitos){
+  const P = (banco() || {}).porques; if (!P || !P.length) return s;
+  P.forEach((x, i) => {
+    const key = 'porq|' + i; if (feitos && feitos.has(key)) return;
+    const alvo = esc(x.t); const j = s.toLowerCase().indexOf(alvo.toLowerCase()); if (j < 0) return;
+    if (/\d*$/.test(s.slice(0, j)) ) return;
+    if (feitos) feitos.add(key);
+    guarda.push('<span class="gl porq" role="button" tabindex="0" data-gl="' + key + '">' + s.slice(j, j + alvo.length) + '<sup>❓</sup></span>');
+    s = s.slice(0, j) + '' + (guarda.length - 1) + '' + s.slice(j + alvo.length);
+  });
+  return s;
+}
 function G(t, feitos, fora){
-  const guarda = [], s0 = marcaLeis(esc(t), guarda), rx = glossRx();
+  const guarda = [], s0 = marcaPorques(marcaLeis(esc(t), guarda), guarda, feitos || _glVistos), rx = glossRx();
   const volta = x => x.replace(/\u0001(\d+)\u0002/g, (m, i) => guarda[+i]);
   if (!rx) return volta(s0); const s = s0;
   const g = banco().glossario, chaves = Object.keys(g); feitos = feitos || _glVistos;
@@ -451,6 +466,7 @@ const _glPilha = [];
 function abreGlossario(k, novo){
   const g = (banco() || {}).glossario || {};
   let v = g[k];
+  if (String(k).startsWith('porq|')) { const x = ((banco() || {}).porques || [])[+String(k).slice(5)]; if (!x) return; v = { titulo: 'Por quê?', d: '“' + x.t + '”: ' + x.p, fonte: x.fonte, img: x.img, legs: x.legs, alts: x.alts }; }
   if (String(k).startsWith('lei|')) {
     const [, lk, art, inc] = k.split('|'), L = ((banco() || {}).leis || {})[lk]; if (!L) return;
     const linhas = String(L.arts[art] || '').split('\n');
