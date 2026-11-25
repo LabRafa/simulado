@@ -334,6 +334,7 @@ body.com-rodape .rodape{padding-left:54px;padding-right:54px} /* 13/11: bolinhas
 .glbib{display:block;background:none;border:0;padding:4px 0 12px;font-size:14px;color:#6c3fc5;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .bibit{scroll-margin-top:20px}.bibit.alvo{outline:3px solid #6c3fc5;outline-offset:2px;border-radius:14px}
 .glpop{max-height:88vh;overflow:auto}
+.glcar{margin:0 0 12px}.glvis{position:relative}.gltrilho{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-radius:12px}.gltrilho::-webkit-scrollbar{display:none}.glslide{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always}.glslide{display:flex;background:#f2f4f7}.glslide .glimg{margin:0;border-radius:0;display:flex;align-items:center;justify-content:center;height:100%}.glslide .glimg span{bottom:8px}.glseta{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.92);box-shadow:0 1px 4px rgba(0,0,0,.3);font-size:24px;line-height:30px;color:#223;cursor:pointer;padding:0}.glseta.ant{left:6px}.glseta.prox{right:6px}.glseta[hidden]{display:none}.glconta{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:2px 9px;border-radius:999px}.glbolas{display:flex;justify-content:center;gap:6px;margin:8px 0 6px}.glbolas i{width:7px;height:7px;border-radius:50%;background:#c5cad3;transition:background .2s}.glbolas i.on{background:var(--cor,#334)}.glcap{min-height:1em;margin:0}
 .glvermais{width:100%;min-height:44px;margin:0 0 12px;border:1.5px solid var(--cor,#334);border-radius:12px;background:#fff;color:var(--cor,#334);font-weight:700;font-size:15px;cursor:pointer}.glleg{font-size:13px;color:#5b6475;margin:-6px 0 12px}
 .lei-txt.tabela{background:#fff;padding:0;max-height:none}.gtab{width:100%;border-collapse:collapse;font-size:14px}.gtab th{text-align:left;background:var(--cor-claro,#eef);color:var(--cor,#333);padding:8px 10px;font-weight:700}.gtab td{padding:8px 10px;border-top:1px solid #e6e8ee;vertical-align:top}
 .lei-txt{max-height:46vh;overflow:auto;margin:0 0 12px;padding:10px 12px;background:#f6f7fa;border-radius:12px;font-size:15px;line-height:1.5}
@@ -424,6 +425,28 @@ function G(t, feitos, fora){
     return pre + '<span class="gl" role="button" tabindex="0" data-gl="' + esc(k) + '">' + termo + plural + '</span>';
   }).replace(/\u0001(\d+)\u0002/g, (m, i) => guarda[+i]);
 }
+/* Rafael 25/11: mais de 1 imagem = carrossel tipo Instagram (passa pro lado, bolinhas, 1/3) */
+function glGaleria(imgs, v, k){
+  if (!imgs.length) return '';
+  const um = (src, n) => '<button type="button" class="glimg" data-zoom="' + esc(src) + '"><img src="' + esc(src) + '" alt="' + esc((v.alts && v.alts[n]) || v.alt || k) + '" loading="lazy"><span>⤢ Ampliar</span></button>';
+  const leg = n => (v.legs && v.legs[n]) ? esc(v.legs[n]) : '';
+  if (imgs.length === 1) return um(imgs[0], 0) + (leg(0) ? '<p class="glleg">' + leg(0) + '</p>' : '');
+  return '<div class="glcar"><div class="glvis"><div class="gltrilho">' + imgs.map((s, n) => '<div class="glslide">' + um(s, n) + '</div>').join('') + '</div>'
+    + '<button type="button" class="glseta ant" aria-label="Imagem anterior" hidden>‹</button><button type="button" class="glseta prox" aria-label="Próxima imagem">›</button>'
+    + '<div class="glconta">1/' + imgs.length + '</div></div>'
+    + '<div class="glbolas">' + imgs.map((_, n) => '<i' + (n ? '' : ' class="on"') + '></i>').join('') + '</div>'
+    + '<p class="glleg glcap">' + leg(0) + '</p></div>';
+}
+function glLigaCarrossel(f, v, n){
+  const car = f.querySelector('.glcar'); if (!car) return;
+  const tr = car.querySelector('.gltrilho'), legs = v.legs || [], cap = car.querySelector('.glcap');
+  const ant = car.querySelector('.ant'), prox = car.querySelector('.prox'); let at = 0;
+  const marca = i => { at = i; car.querySelectorAll('.glbolas i').forEach((b, j) => b.classList.toggle('on', j === i)); car.querySelector('.glconta').textContent = (i + 1) + '/' + n; cap.textContent = legs[i] || ''; ant.hidden = i === 0; prox.hidden = i === n - 1; };
+  tr.addEventListener('scroll', () => { const i = Math.round(tr.scrollLeft / tr.clientWidth); if (i !== at && i >= 0 && i < n) marca(i); }, {passive: true});
+  const ir = i => tr.scrollTo({left: i * tr.clientWidth, behavior: 'smooth'});
+  ant.onclick = e => { e.stopPropagation(); ir(Math.max(0, at - 1)); };
+  prox.onclick = e => { e.stopPropagation(); ir(Math.min(n - 1, at + 1)); };
+}
 const _glPilha = [];
 function abreGlossario(k, novo){
   const g = (banco() || {}).glossario || {};
@@ -447,8 +470,7 @@ function abreGlossario(k, novo){
     + (_glPilha.length ? '<button type="button" class="glvolta">‹ ' + esc(String(_glPilha[_glPilha.length-1]).startsWith('lei|') ? 'voltar' : _glPilha[_glPilha.length-1]) + '</button>' : '')
     + '<h3>' + esc(v.titulo || k) + '</h3>' + (v.html ? (v.d ? '<p>' + G(v.d, new Set([k]), x => x === k) + '</p>' : '') + '<div class="lei-txt' + (v.d ? ' tabela' : '') + '">' + texto + '</div>' : '<p>' + texto + '</p>')
     + (v.rodape ? '<p class="glfonte">' + esc(v.rodape) + '</p>' : '')
-    + imgs.map((src, n) => '<button type="button" class="glimg' + (n ? ' glmais' : '') + '"' + (n ? ' hidden' : '') + ' data-zoom="' + esc(src) + '"><img src="' + esc(src) + '" alt="' + esc((v.alts && v.alts[n]) || v.alt || k) + '" loading="lazy"><span>⤢ Ampliar</span></button>' + (v.legs && v.legs[n] ? '<p class="glleg"' + (n ? ' hidden' : '') + '>' + esc(v.legs[n]) + '</p>' : '')).join('')
-    + (imgs.length > 1 ? '<button type="button" class="glvermais">🖼️ Ver mais ' + (imgs.length - 1) + (imgs.length === 2 ? ' imagem' : ' imagens') + '</button>' : '')
+    + glGaleria(imgs, v, k)
     + (v.fonte ? '<p class="glfonte">' + 'Fonte: ' + esc(v.fonte) + '</p>' : '')
     + (doc ? '<button type="button" class="glbib">📚 ' + (v.html ? 'Ler a lei inteira' : 'Ler o documento') + ' na Biblioteca</button>' : '')
     + '<button type="button" class="glok">Entendi</button></div>';
@@ -461,7 +483,7 @@ function abreGlossario(k, novo){
     if (ev.target.closest('.glbib')) { fecha(); biblioteca(doc.id); return; }
     if (ev.target === f || ev.target.closest('.glok')) fecha();
   };
-  document.body.appendChild(f); f.querySelector('.glok').focus(); const mk = f.querySelector('.lin.marca'); if (mk) mk.scrollIntoView({block:'center'});
+  document.body.appendChild(f); glLigaCarrossel(f, v, imgs.length); f.querySelector('.glok').focus(); const mk = f.querySelector('.lin.marca'); if (mk) mk.scrollIntoView({block:'center'});
 }
 document.addEventListener('click', ev => { const el = ev.target.closest && ev.target.closest('.gl'); if (!el) return; ev.preventDefault(); ev.stopPropagation(); abreGlossario(el.dataset.gl); }, true);
 document.addEventListener('keydown', ev => { const el = ev.target.closest && ev.target.closest('.gl'); if (el && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); abreGlossario(el.dataset.gl); } if (ev.key === 'Escape') document.querySelectorAll('.glfundo').forEach(x => x.remove()); });
