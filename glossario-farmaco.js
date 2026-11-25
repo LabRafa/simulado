@@ -236,14 +236,14 @@
     /* --- antibióticos --- */
     'antibiótico': { d: 'Remédio contra bactérias. Em infecção odontogênica ele é COMPLEMENTO: o principal é drenar e tirar a causa. Receita de antimicrobiano: 2 vias, uma fica na farmácia, vale 10 dias.', fonte: FA + '; ' + FANV },
     'antimicrobiano': { d: 'Remédio contra micro-organismos (antibiótico é um tipo). Pela ANVISA: receita em 2 vias, a 1ª fica retida na farmácia, válida por 10 dias a partir da emissão.', fonte: FANV },
-    'amoxicilina': { d: 'Penicilina (betalactâmico), bactericida: o antibiótico mais usado na odontologia. Profilaxia de endocardite: 2 g uma hora antes. Sozinha é destruída pela betalactamase; com clavulanato fica protegida.', fonte: FA + '; ' + FAHA },
+    'amoxicilina': { d: 'Penicilina (betalactâmico), bactericida: o antibiótico mais usado na odontologia. Profilaxia de endocardite: 2 g de 30 a 60 minutos antes. Sozinha é destruída pela betalactamase; com clavulanato fica protegida.', fonte: FA + '; ' + FAHA },
     'penicilina': { d: 'Família de antibióticos betalactâmicos (amoxicilina, penicilina G, Benzetacil). Alérgico a uma = alérgico a todas, inclusive amoxicilina com clavulanato.', fonte: FA },
     'betalactâmico': { d: 'Antibiótico com o anel betalactâmico (penicilinas, cefalosporinas). Bactericida: impede a bactéria de fazer a parede celular. A betalactamase quebra esse anel.', fonte: FA },
     'bactericida': { d: 'Antibiótico que MATA a bactéria (ex.: amoxicilina). Bacteriostático só impede que ela se multiplique (ex.: clindamicina, macrolídeos).', fonte: FA },
     'bacteriostático': { d: 'Antibiótico que impede a bactéria de se multiplicar, sem matá-la; o sistema imune termina o serviço. O clavulanato NÃO transforma a amoxicilina em bacteriostático.', fonte: FA },
     'Benzetacil': { d: 'Nome comercial da penicilina G benzatina (injeção intramuscular). É penicilina: quem teve anafilaxia com ela não pode receber amoxicilina.', fonte: FA },
-    'azitromicina': { d: 'Macrolídeo: alternativa no alérgico à penicilina, para tratar infecção e para profilaxia de endocardite (500 mg uma hora antes, AHA 2021).', fonte: FA + '; ' + FAHA },
-    'claritromicina': { d: 'Macrolídeo como a azitromicina: alternativa no alérgico à penicilina. Profilaxia de endocardite: 500 mg uma hora antes (AHA 2021).', fonte: FAHA },
+    'azitromicina': { d: 'Macrolídeo: alternativa no alérgico à penicilina, para tratar infecção e para profilaxia de endocardite (500 mg de 30 a 60 minutos antes, AHA 2021).', fonte: FA + '; ' + FAHA },
+    'claritromicina': { d: 'Macrolídeo como a azitromicina: alternativa no alérgico à penicilina. Profilaxia de endocardite: 500 mg de 30 a 60 minutos antes (AHA 2021).', fonte: FAHA },
     'profilaxia': { d: 'Prevenção. Profilaxia antibiótica de endocardite: dose única ANTES do procedimento, só nos pacientes de alto risco (amoxicilina 2 g; alérgico: azitromicina ou claritromicina 500 mg). A clindamicina saiu da lista em 2021.', fonte: FAHA },
     'colite': { d: 'Inflamação do intestino grosso. A colite por C. difficile (diarreia grave) é o efeito adverso que fez a AHA tirar a clindamicina da profilaxia em 2021.', fonte: FAHA },
     /* --- analgésicos e anti-inflamatórios --- */
@@ -515,4 +515,88 @@
     v.fonte = v.fonte + '. Imagens: ' + cred.join('; ') + ' (Wikimedia Commons)';
   });
   B.glossario = Object.assign(B.glossario || {}, G);
+})();
+
+/* Termos novos usados nos "Por quê?" (25/11/2026): link dentro do link. Só entra o que ainda não existe no dicionário. */
+(function () {
+  var B = window.BANCOS && window.BANCOS.farmaco; if (!B) return;
+  var RANG = 'Rang & Dale, Farmacologia', MAL = 'Malamed, Manual de Anestesia Local', AND = 'Andrade, Terapêutica Medicamentosa em Odontologia';
+  var W = function (arq, larg) { return arq; };
+  var C = function (url, leg, alt, cred) { return { url: url, leg: leg, alt: alt, cred: cred }; };
+  var IM = {
+    paba: C('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/4-Aminobenzoic_acid.svg/960px-4-Aminobenzoic_acid.svg.png', 'Fórmula do PABA (ácido para-aminobenzoico).', 'Fórmula estrutural do PABA', 'Yikrazuul, domínio público'),
+    pa: C('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Action_potential.svg/960px-Action_potential.svg.png', 'Potencial de ação: subida = despolarização (entra sódio); o mergulho abaixo da linha de repouso é a hiperpolarização (em inglês).', 'Gráfico do potencial de ação', 'Chris 73 e Diberri, CC BY-SA 3.0'),
+    resis: C('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Antibiotic_resistance.svg/960px-Antibiotic_resistance.svg.png', 'Resistência: o antibiótico mata as sensíveis e sobram as resistentes, que se multiplicam (em inglês).', 'Esquema da seleção de bactérias resistentes', 'Wykis, domínio público'),
+    azitro: C('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Azithromycin.svg/960px-Azithromycin.svg.png', 'Azitromicina: o anel grande (macrolactona) é o que dá nome aos macrolídeos.', 'Fórmula estrutural da azitromicina', 'Ayacop, domínio público'),
+    cefa: C('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Cefalexin.svg/960px-Cefalexin.svg.png', 'Cefalexina: também tem o anel betalactâmico, mas o resto da molécula é diferente da penicilina.', 'Fórmula estrutural da cefalexina', 'Fvasconcellos, domínio público'),
+    glut: C('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Glutathione-skeletal.svg/960px-Glutathione-skeletal.svg.png', 'Fórmula da glutationa.', 'Fórmula estrutural da glutationa', 'domínio público'),
+    azul: C('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Methylene_blue.svg/960px-Methylene_blue.svg.png', 'Fórmula do azul de metileno.', 'Fórmula estrutural do azul de metileno', 'Solarchemist, domínio público'),
+    neutro: C('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Neutrophil_with_anthrax_copy.jpg/960px-Neutrophil_with_anthrax_copy.jpg', 'Neutrófilo (amarelo) engolindo bactérias, ao microscópio eletrônico.', 'Neutrófilo capturando bactérias', 'Volker Brinkmann, CC BY 2.5'),
+    ocito: C('https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Oxytocin_with_labels.png/960px-Oxytocin_with_labels.png', 'Ocitocina: a felipressina é um parente sintético desse hormônio e da vasopressina.', 'Fórmula estrutural da ocitocina', 'Edgar181, domínio público'),
+    para: C('https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Paracetamol-skeletal.svg/960px-Paracetamol-skeletal.svg.png', 'Paracetamol: analgésico e antitérmico.', 'Fórmula estrutural do paracetamol', 'Benjah-bmm27, domínio público'),
+    pepti: C('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Peptidoglycan.svg/960px-Peptidoglycan.svg.png', 'Peptidoglicano: a malha da parede da bactéria, que a amoxicilina impede de ser montada.', 'Fórmula do peptidoglicano', 'Yikrazuul, domínio público'),
+    plaq: C('https://upload.wikimedia.org/wikipedia/commons/8/89/Platelets.jpg', 'Plaquetas no sangue, ao microscópio.', 'Plaquetas ao microscópio', 'Tleonardi, CC BY 3.0'),
+    trim: C('https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Pregnancy_timeline.svg/960px-Pregnancy_timeline.svg.png', 'Linha do tempo da gestação dividida em trimestres (em inglês).', 'Linha do tempo da gravidez', 'Mikael Häggström, CC0'),
+    prosta: C('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Prostacyclin.svg/960px-Prostacyclin.svg.png', 'Fórmula da prostaciclina.', 'Fórmula estrutural da prostaciclina', 'Panoramix303, CC BY-SA 3.0'),
+    tranex: C('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Tranexamic_acid.svg/960px-Tranexamic_acid.svg.png', 'Fórmula do ácido tranexâmico.', 'Fórmula estrutural do ácido tranexâmico', 'domínio público'),
+    facial: C('https://upload.wikimedia.org/wikipedia/commons/6/6b/Gray788.png', 'Esquema do nervo facial (VII): a corda do tímpano é um dos ramos dele (Gray, em inglês).', 'Esquema do trajeto do nervo facial', 'Henry Vandyke Carter, Gray\'s Anatomy 1918, domínio público')
+  };
+  var T = function (d, fonte, imgs) {
+    var o = { d: d, fonte: fonte };
+    if (imgs && imgs.length) {
+      o.img = imgs.map(function (k) { return IM[k].url; }); o.legs = imgs.map(function (k) { return IM[k].leg; }); o.alts = imgs.map(function (k) { return IM[k].alt; });
+      o.fonte = fonte + '. Imagens: ' + imgs.map(function (k) { return IM[k].cred; }).join('; ') + ' (Wikimedia Commons)';
+    }
+    return o;
+  };
+  var antit = T('Que baixa a febre. A febre sobe porque prostaglandinas aumentam o "termostato" do hipotálamo; o antitérmico (paracetamol, dipirona) inibe a COX no cérebro e o termostato volta ao normal.', RANG, ['para']);
+  var N = {
+    'antitérmico': antit, 'antitérmica': antit,
+    'PABA': T('Ácido para-aminobenzoico. Sai quando os anestésicos do tipo éster são quebrados no plasma e é o que causa a maior parte das alergias a esses anestésicos. As amidas não formam PABA.', MAL, ['paba']),
+    'pseudocolinesterase': T('Enzima do plasma (colinesterase plasmática) que quebra os anestésicos do tipo éster logo no sangue, formando PABA.', MAL),
+    'ducto arterioso': T('Vaso do bebê, ainda dentro do útero, que liga a artéria pulmonar à aorta e desvia o sangue dos pulmões (que ainda não respiram). Fica aberto graças às prostaglandinas; um AINE tomado pela mãe no fim da gestação pode fechá-lo antes da hora.', RANG),
+    'líquido amniótico': T('Líquido que envolve o bebê no útero. Boa parte vem da urina do feto; AINE na gestação pode diminuir o trabalho do rim do bebê e reduzir esse líquido.', RANG),
+    'trimestre': T('Cada terço da gestação (cerca de 13 semanas). 1º: formação dos órgãos, fase mais sensível a remédios. 2º: melhor época para tratamento eletivo. 3º: desconforto na cadeira e risco de queda da pressão deitada de costas.', MAL, ['trim']),
+    'vigilância sanitária': T('Órgão do governo (ANVISA no país e as vigilâncias dos estados e municípios) que fiscaliza remédios, farmácias e receitas. É a vigilância do estado que libera a numeração do talão da Notificação de Receita B.', 'Portaria SVS/MS 344/1998'),
+    'psicotrópico': T('Remédio que age no sistema nervoso central e muda o humor, o sono ou o comportamento (ex.: benzodiazepínicos). Por causar dependência e abuso, tem receita controlada pela Portaria 344/1998.', 'Portaria SVS/MS 344/1998'),
+    'dependência': T('Quando o corpo ou a mente passam a precisar do remédio e a pessoa tem dificuldade de parar. Os benzodiazepínicos e os opioides podem causar; por isso têm receita controlada.', RANG),
+    'plaqueta': T('Pedacinho de célula do sangue, sem núcleo, que gruda no vaso machucado e começa a fechar o sangramento. Usa o tromboxano (feito pela COX-1) para agregar.', RANG, ['plaq']),
+    'tromboxano': T('Substância feita pela COX-1 da plaqueta que faz as plaquetas grudarem e contrai os vasos. O AAS bloqueia o tromboxano de forma irreversível.', RANG),
+    'prostaciclina': T('Prostaglandina feita pela parede dos vasos (muito pela COX-2): dilata o vaso e impede a plaqueta de grudar. É o contrapeso do tromboxano.', RANG, ['prosta']),
+    'peptidoglicano': T('A malha que forma a parede da bactéria. A amoxicilina e as outras penicilinas impedem a bactéria de montá-la, e ela estoura.', RANG, ['pepti']),
+    'citocromo P450': T('Família de enzimas do fígado que biotransforma a maior parte dos fármacos, incluindo os anestésicos do tipo amida e o midazolam.', RANG),
+    'veia porta': T('Veia que leva o sangue do estômago e do intestino direto para o fígado. É por ela que o fármaco tomado por via oral passa pela primeira passagem.', RANG),
+    'bacteremia': T('Bactéria circulando no sangue. Procedimentos que mexem na gengiva causam bacteremia passageira, e escovar os dentes também; no paciente de alto risco ela pode causar endocardite.', 'AHA 2021 (Wilson e cols., Circulation 2021)'),
+    'resistência bacteriana': T('Quando a bactéria deixa de morrer com um antibiótico. O uso sem necessidade seleciona as bactérias resistentes, que se multiplicam.', 'ANVISA, RDC 20/2011', ['resis']),
+    'macrolídeo': T('Família de antibióticos com um anel grande na molécula (azitromicina, claritromicina). Não tem reação cruzada com a penicilina: alternativa no alérgico.', AND, ['azitro']),
+    'cefalexina': T('Cefalosporina de 1ª geração (betalactâmico). Na profilaxia de endocardite pode ser usada no alérgico à penicilina que NÃO teve anafilaxia, angioedema ou urticária.', 'AHA 2021 (Wilson e cols., Circulation 2021)', ['cefa']),
+    'parótida': T('A maior glândula salivar, na frente da orelha e atrás do ramo da mandíbula. O nervo facial passa por dentro dela: anestésico depositado ali dá paralisia facial transitória.', MAL),
+    'periósteo': T('Membrana fina e muito inervada que cobre o osso. Injetar embaixo dela dói muito; por isso, no bloqueio, recua-se 1 mm depois de tocar o osso.', MAL),
+    'convulsão': T('Contrações descontroladas do corpo por descarga elétrica no cérebro. É o sinal grave de intoxicação por anestésico local (concentração alta no sangue).', MAL),
+    'hipoglicemia': T('Glicose baixa no sangue: suor, tremor, fome, confusão e até desmaio. Acontece no diabético que tomou o remédio ou a insulina e não comeu.', MAL),
+    'glutationa': T('Substância do fígado que neutraliza metabólitos tóxicos, como o NAPQI do paracetamol. Em dose alta de paracetamol ela acaba.', RANG, ['glut']),
+    'NAPQI': T('Metabólito tóxico do paracetamol, feito em pequena quantidade pelo fígado. Normalmente a glutationa neutraliza; em excesso, destrói as células do fígado.', RANG),
+    'corda do tímpano': T('Ramo do nervo facial (VII) que viaja junto com o nervo lingual e leva o paladar dos 2/3 anteriores da língua.', 'Gray\'s Anatomy', ['facial']),
+    'glossofaríngeo': T('IX par craniano: dá sensibilidade e paladar ao 1/3 posterior da língua e à faringe. Não é atingido pelo bloqueio do alveolar inferior.', 'Gray\'s Anatomy'),
+    'unifascicular': T('Nervo formado por um feixe só de fibras, sem tecido de proteção em volta. Quando é lesado, o dano pega o nervo inteiro; é assim o lingual em parte das pessoas, na altura da língula.', 'Pogrel e cols., JADA 2003;134:195-9'),
+    'ácido tranexâmico': T('Remédio que segura o coágulo, impedindo que ele seja dissolvido cedo demais. Usado como bochecho ou na gaze em extração de paciente anticoagulado.', AND, ['tranex']),
+    'azul de metileno': T('Antídoto da metemoglobinemia: ajuda a hemácia a devolver o ferro da hemoglobina ao normal. Dado na veia, no hospital.', MAL, ['azul']),
+    'neutrófilo': T('Glóbulo branco que é a primeira defesa contra bactérias. Na agranulocitose eles caem muito.', RANG, ['neutro']),
+    'hiperpolarização': T('Quando o interior do neurônio fica mais negativo que o normal, e fica mais difícil ele disparar. É o que o benzodiazepínico faz ao deixar entrar mais cloreto.', RANG, ['pa']),
+    'potencial de ação': T('O impulso elétrico do nervo: entra sódio, a célula despolariza e o sinal corre. O anestésico local impede a entrada de sódio e o potencial de ação não nasce.', MAL, ['pa']),
+    'ocitocina': T('Hormônio que contrai o útero (parto) e solta o leite. A felipressina é parecida com ela e com a vasopressina.', RANG, ['ocito']),
+    'vasopressina': T('Hormônio antidiurético, que também contrai vasos. A felipressina é um análogo sintético dela.', RANG),
+    'hipotálamo': T('Região do cérebro que funciona como termostato do corpo. Na febre, prostaglandinas sobem esse termostato; o antitérmico o traz de volta.', RANG),
+    'isquemia': T('Falta de sangue num tecido. Volume grande sob pressão (palato, papila) ou vasoconstritor demais podem causar isquemia e até necrose.', MAL),
+    'suprarrenal': T('Glândula em cima do rim que produz cortisol e adrenalina. Corticoide por semanas faz ela parar de produzir cortisol; dose única, não.', AND),
+    'ligamento periodontal': T('Fibras que prendem a raiz ao osso, num espaço bem estreito. A intraligamentar injeta nele, sob pressão.', MAL),
+    'pulpite': T('Inflamação da polpa. O tecido fica ácido e os nervos mais sensíveis, e a anestesia falha mais.', MAL),
+    'arritmia': T('Batimento do coração fora do ritmo. Epinefrina demais, principalmente injetada no vaso, pode provocar no cardiopata.', MAL),
+    'infarto': T('Morte de parte do músculo do coração por falta de sangue, geralmente por um trombo. Os COX-2 seletivos aumentam esse risco.', RANG),
+    'AVC': T('Acidente vascular cerebral: entupimento ou ruptura de um vaso do cérebro. Pressão muito alta e trombose aumentam o risco.', RANG)
+  };
+  Object.keys(N).forEach(function (k) {
+    var tem = Object.keys(B.glossario || {}).some(function (x) { return x.toLowerCase() === k.toLowerCase(); });
+    if (!tem) B.glossario[k] = N[k];
+  });
 })();
