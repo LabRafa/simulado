@@ -75,5 +75,105 @@
     'aspiração': { d: 'Obrigatória em toda técnica, para evitar injeção dentro do vaso. Aspiração positiva = reposicionar a agulha e aspirar de novo.', fonte: F },
     'mandibular (V3)': { d: 'Única divisão mista do trigêmeo (sensitiva e motora): leva a parte motora dos músculos da mastigação. Sai pelo forame oval.', fonte: F }
   };
+  /* FOTOS REAIS (Rafael 25/11/2026: "preciso de mais imagens... uma imagem só às vezes não ilustra bem").
+     Todas do Wikimedia Commons, licença livre, por link direto (nada baixado). Créditos completos em img/farmaco-FONTES.md.
+     Tamanho 960px: o Commons recusa 800px desde 2026 ("Use thumbnail sizes listed on w.wiki/GHai"). */
+  var W = 'https://upload.wikimedia.org/wikipedia/commons/';
+  var T = function (p, arq) { return W + 'thumb/' + p + '/' + arq + '/960px-' + arq; };
+  var C = {
+    gray: 'Henry Vandyke Carter, Gray\'s Anatomy 1918, domínio público',
+    grayHelgo: 'Henry Vandyke Carter (Gray\'s Anatomy), destaque de Helgo13, domínio público',
+    olho: 'Armin Kübelbeck, CC BY-SA 3.0', vacina: 'Nachtbold, CC0',
+    godart: 'Thomas Godart, Wellcome Collection, CC BY 4.0', lynch: 'Patrick J. Lynch, CC BY 2.5',
+    berichard: 'Berichard, CC BY-SA 3.0', eplasty: 'Ankit Jain, Anuradha Patel e Ian C. Hoppe (revista Eplasty), CC BY-SA 4.0',
+    choco: 'Thomas M. Nappe, Anthony M. Pacelli e Kenneth Katz, CC BY-SA 4.0', shihana: 'Fathima Shihana, CC BY-SA 3.0',
+    lesion: 'Lesion, CC BY-SA 3.0', rosario: 'RosarioVanTulpe, CC BY-SA 3.0', wasswa: 'Jameswasswa, CC BY-SA 4.0',
+    dcamp: 'Amy D\'Camp, domínio público', buttonwillow: 'ManfromButtonwillow, CC BY-SA 3.0',
+    bp3d: 'BodyParts3D (DBCLS), CC BY-SA 2.1 JP', anat90: 'Anatomist90, CC BY-SA 3.0', partynia: 'Partynia, CC BY-SA 4.0',
+    koya: 'Daisuke Koya, Kazuyuki Shibuya, Ryuichi Kikkawa e Masakazu Haneda, CC BY 2.0', marina: 'MarinaVladivostok, CC0',
+    scian: 'scientificanimations.com, CC BY-SA 4.0'
+  };
+  /* [url, legenda, texto alternativo, crédito] */
+  var I = {
+    olho: [T('d/d3', 'Black_Eye_01.jpg'), 'Hematoma em volta do olho depois da extração de um siso, dia a dia: roxo, depois verde e amarelo até sumir.', 'Sequência de fotos de olho roxo que vai clareando', C.olho],
+    vacina: [T('3/34', 'H%C3%A4matom_nach_Impfung.png'), 'Hematoma no braço depois de uma injeção: a agulha lesou um vaso e o sangue vazou para o tecido.', 'Braço com mancha roxa no local de uma injeção', C.vacina],
+    fossa: [W + 'a/a7/Gray189.png', 'Fossa infratemporal (Gray), entre o túber da maxila e a lâmina lateral do pterigoide: é nesse espaço que fica o plexo venoso pterigóideo, que a agulha profunda do PSA pode furar.', 'Desenho do crânio de lado mostrando a fossa infratemporal', C.gray],
+    pterigMed: [W + '2/2d/Gray_%E2%80%94_musculus_pterygoideus_medialis.png', 'Pterigóideo medial em vermelho: fica ao lado da agulha no bloqueio do alveolar inferior; o trauma dele dá o trismo.', 'Desenho da mandíbula com o músculo pterigóideo medial destacado', C.grayHelgo],
+    masseter: [W + '7/7e/Gray_%E2%80%94_musculus_masseter.png', 'Masseter em vermelho: o outro músculo que fecha a boca e pode entrar em espasmo.', 'Desenho do crânio com o músculo masseter destacado', C.grayHelgo],
+    paralisia: [T('2/29', 'Face_of_a_man_with_right_facial_paralysis_Wellcome_L0061825.jpg'), 'Paralisia facial (desenho histórico): um lado do rosto sem tônus, boca caída e olho que não fecha.', 'Desenho de rosto com paralisia de um lado', C.godart],
+    facial: [T('0/08', 'Head_facial_nerve_branches.jpg'), 'Ramos do nervo facial saindo da parótida para os músculos da mímica: é aí que cai a solução quando a agulha vai para trás demais.', 'Ilustração da face com os ramos do nervo facial em amarelo', C.lynch],
+    g782: [W + '7/7f/Gray782.png', 'Nervo mandibular visto por dentro (Gray): o lingual e o alveolar inferior descem juntos até o forame mandibular.', 'Desenho do nervo mandibular e seus ramos, vista medial', C.gray],
+    g784: [W + '2/20/Gray784.png', 'Áreas da pele de cada divisão do trigêmeo (V1, V2, V3): mostra onde fica a dormência.', 'Desenho da cabeça com as áreas sensitivas coloridas', C.gray],
+    nerfMand: [W + '9/9d/Nerf_mandibulaire.png', 'Nervo mandibular (V3) com o lingual e o alveolar inferior, vista medial (legendas em francês).', 'Ilustração colorida do nervo mandibular', C.berichard],
+    cianose: [W + 'a/af/Eplasty16ic18_fig1.jpg', 'Lábios arroxeados (cianose) num paciente com metemoglobinemia.', 'Lábios arroxeados de paciente', C.eplasty],
+    choco: [W + '8/88/ChocolateBrownBlood_%28cropped%29.jpg', 'Sangue cor de chocolate na seringa: sinal típico da metemoglobinemia.', 'Seringa com sangue marrom-escuro', C.choco],
+    escalaMet: [W + '0/08/MethemoglobinDiag.jpg', 'Escala de cor do sangue: quanto mais metemoglobina, mais escuro.', 'Faixas de sangue em tons de vermelho a marrom', C.shihana],
+    tubete: [T('6/6c', 'Lidocaine_HCl_local_anesthetic_cartridge.JPG'), 'Tubete de lidocaína: cilindro de vidro com 1,8 mL, rolha de borracha numa ponta e diafragma na outra.', 'Tubete de anestésico em pé', C.lesion],
+    carpule: [T('0/03', 'Karpulenspritze.jpg'), 'Seringa carpule com o tubete ao lado: o anel do êmbolo é o que permite puxar para aspirar.', 'Seringa carpule metálica com tubete e agulha', C.rosario],
+    montando: [T('7/73', 'Local_Dental_Anesthesia_Preparation.jpg'), 'Preparo da seringa carpule antes da anestesia.', 'Mãos com luva montando a seringa carpule', C.wasswa],
+    infiltr: [W + 'c/c2/Infiltration_OK.png', 'Infiltração na maxila: agulha pela vestibular, solução perto do ápice do dente (legenda em alemão).', 'Esquema de agulha na gengiva vestibular ao lado de um dente', C.partynia],
+    g781: [W + '4/4d/Gray781.png', 'Divisão mandibular do trigêmeo (Gray): alveolar inferior entrando na mandíbula, lingual, bucal e mentual.', 'Desenho do nervo mandibular com a mandíbula aberta', C.gray],
+    iaBranches: [W + 'd/d5/Inferior_Alveolar_nerve_Branches.png', 'Alveolar inferior dentro da mandíbula: sai pelo forame mentual (mentual) e segue como incisivo.', 'Esquema da mandíbula com o nervo alveolar inferior colorido', C.dcamp],
+    foramina: [W + '0/09/Mandibular_foramina.jpg', 'Mandíbula vista por trás: os círculos marcam os dois forames mandibulares, com a língula na frente de cada um.', 'Modelo de mandíbula com os forames mandibulares circulados', C.buttonwillow],
+    g177: [W + 'a/a3/Gray177.png', 'Face interna da mandíbula (Gray): forame mandibular e a língula logo na frente dele.', 'Desenho da face interna da mandíbula', C.gray],
+    bp3dMand: [T('0/05', 'Mandibular_foramen_-_skull_-_posterolateral_view.png'), 'Crânio 3D com o forame mandibular em vermelho (vista de trás e de lado).', 'Crânio em 3D com o forame mandibular marcado', C.bp3d],
+    g779: [W + 'a/a9/Gray779.png', 'Ramos alveolares superiores (posterior, médio e anterior) e o infraorbitário (Gray).', 'Desenho da maxila aberta com os nervos alveolares superiores', C.gray],
+    bp3dInfra: [T('4/40', 'Infraorbital_foramen_of_maxilla_-_skull_-_anterior_view.png'), 'Crânio 3D com os forames infraorbitários em vermelho, logo abaixo das órbitas.', 'Crânio em 3D de frente com os forames infraorbitários marcados', C.bp3d],
+    g157: [W + '7/71/Gray157.png', 'Maxila por fora (Gray): forame infraorbitário e túber da maxila.', 'Desenho da maxila, face externa', C.gray],
+    g780: [W + 'd/d7/Gray780.png', 'Gânglio pterigopalatino e seus ramos (Gray), entre eles o nasopalatino, que desce pelo septo até o forame incisivo.', 'Desenho da parede do nariz com os nervos do gânglio pterigopalatino', C.gray],
+    g160: [W + '4/4a/Gray160.png', 'Palato duro (Gray): forame incisivo na frente (nasopalatino) e forames palatinos maiores atrás (palatino maior).', 'Desenho do palato ósseo visto de baixo', C.gray],
+    palMaior: [W + '1/1d/Foramen_palatinum_majus.png', 'Palato duro com o forame palatino maior destacado nos quadrados, perto do 2º/3º molar.', 'Desenho do palato com os forames palatinos maiores marcados', C.gray],
+    palFoto: [W + '0/08/Greater_palatine_foramen.jpg', 'Crânio real: forames palatinos maiores e fossa incisiva marcados (legendas em inglês).', 'Foto do palato de um crânio com setas', C.anat90],
+    tuber: [T('a/a3', 'SchaedelSeitlichTuberMaxillae.png'), 'Crânio de lado com o túber da maxila em vermelho: atrás dele a agulha do PSA procura o nervo.', 'Desenho do crânio de lado com o túber da maxila marcado', C.rosario],
+    gowgates: [T('a/a6', 'GowGates.png'), 'Gow-Gates: com a boca bem aberta, a agulha segue a linha amarela rumo ao colo do côndilo.', 'Boca aberta com linhas amarelas mostrando a direção da agulha', C.partynia],
+    g176: [W + '6/64/Gray176.png', 'Mandíbula por fora (Gray): côndilo, colo do côndilo (alvo da Gow-Gates) e forame mentual.', 'Desenho da mandíbula, face externa', C.gray],
+    mentual: [T('4/45', 'Foramen_mentale_-_Alveolarknochen.png'), 'Forame mentual (ponto vermelho), entre os pré-molares inferiores (legendas em alemão).', 'Mandíbula com o forame mentual marcado', C.partynia],
+    eco: [T('f/fb', 'Endocarditis_ultrasound.JPG'), 'Ecocardiograma: a seta mostra a vegetação (bolo de bactérias e fibrina) presa na valva.', 'Imagem de ecocardiograma com seta', C.koya],
+    vegeta: [T('2/20', 'Vegetations_upon_the_mitral_valve_Wellcome_L0062658.jpg'), 'Vegetações na valva mitral (aquarela histórica).', 'Aquarela de valva do coração com pequenas vegetações', C.godart],
+    adrenalina: [T('8/89', 'Adrenaline_ball-and-stick.png'), 'Molécula da epinefrina (adrenalina).', 'Modelo de bolas e varetas da molécula de adrenalina', C.marina],
+    vaso: [T('d/da', 'Vasoconstriction_-_Constricted_blood_vessel.jpg'), 'Vaso contraído: a luz fica menor, passa menos sangue e o anestésico sai mais devagar do local.', 'Ilustração de vaso sanguíneo estreitado', C.scian]
+  };
+  var ESQ = 'Desenho esquemático do site (resposta marcada).';
+  var FOTOS = {
+    'hematoma': ['olho', 'vacina', 'fossa'],
+    'plexo venoso pterigóideo': ['fossa', 'tuber'],
+    'trismo': ['pterigMed', 'masseter'],
+    'paralisia facial': ['paralisia', 'facial'],
+    'parestesia': ['g782', 'g784'],
+    'metemoglobinemia': ['cianose', 'choco', 'escalaMet'],
+    'prilocaína': ['cianose'],
+    'tubete': ['tubete', 'carpule', 'montando'],
+    'aspiração': ['carpule', 'montando'],
+    'anestesia local': ['infiltr'],
+    'nervo lingual': ['g782', 'nerfMand'],
+    'alveolar inferior': ['g781', 'iaBranches', 'foramina'],
+    'língula': ['g177', 'foramina'],
+    'forame mandibular': ['foramina', 'bp3dMand', 'g177'],
+    'nervo mentual': ['mentual', 'iaBranches'],
+    'nervo bucal': ['g781'],
+    'mandibular (V3)': ['g781', 'g784'],
+    'Vazirani-Akinosi': ['g177', 'bp3dMand'],
+    'Gow-Gates': ['gowgates', 'g176'],
+    'alveolar superior posterior': ['g779', 'tuber'],
+    'alveolar superior médio': ['g779'],
+    'alveolar superior anterior': ['g779'],
+    'infraorbitário': ['g779', 'bp3dInfra', 'g157'],
+    'nasopalatino': ['g780', 'g160'],
+    'palatino maior': ['palMaior', 'palFoto', 'g160'],
+    'endocardite': ['eco', 'vegeta'],
+    'epinefrina': ['adrenalina'],
+    'vasoconstritor': ['vaso']
+  };
+  Object.keys(FOTOS).forEach(function (k) {
+    var v = G[k]; if (!v) return;
+    var lista = FOTOS[k].map(function (id) { return I[id]; });
+    var imgs = [], legs = [], alts = [];
+    if (v.img) { imgs.push(v.img); legs.push(ESQ); alts.push('Desenho esquemático: ' + k); }
+    lista.forEach(function (x) { imgs.push(x[0]); legs.push(x[1]); alts.push(x[2]); });
+    v.img = imgs; v.legs = legs; v.alts = alts;
+    var cred = [];
+    lista.forEach(function (x) { if (cred.indexOf(x[3]) < 0) cred.push(x[3]); });
+    v.fonte = v.fonte + '. Imagens: ' + cred.join('; ') + ' (Wikimedia Commons)';
+  });
   B.glossario = Object.assign(B.glossario || {}, G);
 })();

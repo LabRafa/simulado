@@ -369,7 +369,7 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <script src="estudo-dirigido-bases.js?v=202611240935"></script>
 <script src="av-bases-2026-11-23.js?v=202611240935"></script>
 <script src="farmaco-nivel-av.js?v=202611250015"></script>
-<script src="glossario-farmaco.js?v=202611251050"></script>
+<script src="glossario-farmaco.js?v=202611251400"></script>
 <script src="av-2026-11-24.js?v=202611251330"></script>
 <script src="jonas-guia.js?v=202611241755"></script>
 <script src="unir-bases.js?v=202611220045"></script>
@@ -449,7 +449,7 @@ function abreGlossario(k, novo){
     + (v.rodape ? '<p class="glfonte">' + esc(v.rodape) + '</p>' : '')
     + imgs.map((src, n) => '<button type="button" class="glimg' + (n ? ' glmais' : '') + '"' + (n ? ' hidden' : '') + ' data-zoom="' + esc(src) + '"><img src="' + esc(src) + '" alt="' + esc((v.alts && v.alts[n]) || v.alt || k) + '" loading="lazy"><span>⤢ Ampliar</span></button>' + (v.legs && v.legs[n] ? '<p class="glleg"' + (n ? ' hidden' : '') + '>' + esc(v.legs[n]) + '</p>' : '')).join('')
     + (imgs.length > 1 ? '<button type="button" class="glvermais">🖼️ Ver mais ' + (imgs.length - 1) + (imgs.length === 2 ? ' imagem' : ' imagens') + '</button>' : '')
-    + (v.fonte ? '<p class="glfonte">' + (imgs.length ? 'Imagem: ' : 'Fonte: ') + esc(v.fonte) + '</p>' : '')
+    + (v.fonte ? '<p class="glfonte">' + 'Fonte: ' + esc(v.fonte) + '</p>' : '')
     + (doc ? '<button type="button" class="glbib">📚 ' + (v.html ? 'Ler a lei inteira' : 'Ler o documento') + ' na Biblioteca</button>' : '')
     + '<button type="button" class="glok">Entendi</button></div>';
   const fecha = () => { f.remove(); _glPilha.length = 0; };
