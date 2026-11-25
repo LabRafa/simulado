@@ -39,7 +39,7 @@
     codigo: 'ARA4314',
     prof: 'GUSTAVO HOLDERBAUM',
     turma: '3002',
-    proxima: 'SM2 quinta 12/11, na sala, no horário da aula',
+    proxima: 'AV quinta 26/11. AVS entre 30/11 e 05/12',
     modos: [
       { id: 'completo', nome: 'Simulado completo', sub: '10 questões sorteadas de toda a matéria.', temas: null },
       { id: 't-nervos', nome: 'Nervos com imagem', sub: 'Desenhos com um nervo aceso de cada vez: qual é, por onde sai e o que anestesia.', temas: ['Nervos com imagem'], img: true },

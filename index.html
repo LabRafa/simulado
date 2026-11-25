@@ -296,6 +296,36 @@ body.com-rodape .rodape{padding-left:54px;padding-right:54px} /* 13/11: bolinhas
 .gl{border-bottom:2px dotted currentColor;cursor:help;text-decoration:none;-webkit-tap-highlight-color:transparent}
 .gl:focus-visible{outline:2px solid #6c3fc5;outline-offset:1px;border-radius:3px}
 .glfundo{position:fixed;inset:0;z-index:60;background:rgba(10,12,16,.45);display:flex;align-items:flex-end;justify-content:center;animation:sobe .18s ease-out}
+.gradetreino{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:6px 0 8px}
+@media(min-width:620px){.gradetreino{grid-template-columns:repeat(3,1fr)}}
+.tgrupo{margin:22px 0 2px;font-size:15px;font-weight:700;color:var(--cinza)}
+.gradetreino .quad{position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:10px;min-height:148px;padding:16px 16px 14px;border:1px solid rgba(20,30,50,.06);border-radius:18px;background:#fff;box-shadow:0 1px 2px rgba(20,30,50,.06);cursor:pointer;font:inherit;color:inherit;transition:transform .12s ease,box-shadow .12s ease}
+.gradetreino .quad:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(20,30,50,.10)}
+.gradetreino .quad:active{transform:translateY(0)}
+.gradetreino .quad:focus-visible{outline:3px solid var(--cor);outline-offset:2px}
+.gradetreino .quad[disabled]{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.gradetreino .quad .topo-q{display:flex;width:100%;justify-content:space-between;align-items:center}
+.gradetreino .quad .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--cor-claro);color:var(--cor)}
+.gradetreino .quad .ic svg{width:22px;height:22px}
+.gradetreino .quad .num{font-size:22px;font-weight:800;color:var(--cor);line-height:1;font-variant-numeric:tabular-nums}
+.gradetreino .quad b{display:block;font-size:16px;line-height:1.2;margin-top:8px}
+.gradetreino .quad small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13px;line-height:1.35;color:var(--cinza)}
+.gradetreino .quad.destaque{grid-column:1/-1;flex-direction:row;align-items:center;gap:16px;min-height:96px;background:var(--cor);border-color:transparent;color:#fff;box-shadow:0 6px 18px rgba(20,30,50,.14)}
+.gradetreino .quad.destaque .ic{width:56px;height:56px;border-radius:50%;background:#fff;color:var(--cor)}
+.gradetreino .quad.destaque b{font-size:19px;margin:0}
+.gradetreino .quad.destaque small{color:rgba(255,255,255,.85)}
+@media (prefers-reduced-motion:reduce){.gradetreino .quad{transition:none}.gradetreino .quad:hover{transform:none}}
+.ranking{display:grid;gap:8px;margin:6px 0 6px}
+.ranking .rk{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:12px;width:100%;padding:12px 14px;border:1px solid rgba(20,30,50,.06);border-radius:14px;background:#fff;cursor:pointer;font:inherit;color:inherit;text-align:left}
+.ranking .rk:hover{box-shadow:0 6px 16px rgba(20,30,50,.09)}
+.ranking .rk:focus-visible{outline:3px solid var(--cor);outline-offset:2px}
+.ranking .pos{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--cor-claro);color:var(--cor)}
+.ranking .rk:first-child .pos{background:var(--cor);color:#fff}
+.ranking .nome{display:block;font-weight:700;font-size:15px;line-height:1.25}
+.ranking .barra2{display:block;height:6px;border-radius:6px;background:var(--cor-claro);margin-top:6px;overflow:hidden}
+.ranking .barra2 i{display:block;height:100%;border-radius:6px;background:var(--cor)}
+.ranking .qt{font-size:13px;color:var(--cinza);text-align:right;white-space:nowrap}
+.ranking .qt b{display:block;font-size:18px;color:var(--cor);line-height:1}
 .glpop{background:#fff;color:#1a2233;width:100%;max-width:640px;border-radius:18px 18px 0 0;padding:20px 20px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -6px 24px rgba(0,0,0,.2)}
 .glpop h3{margin:0 0 8px;font-size:21px}.glpop p{margin:0 0 14px;font-size:17px;line-height:1.5}
 .glpop .glok{width:100%;min-height:48px;border:0;border-radius:12px;background:var(--grafite);color:#fff;font-weight:700;font-size:16px}
@@ -325,15 +355,15 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <body>
 <div class="palco" id="app"></div>
 <footer id="pe">Feito pela Mônica Fontes, IA da turma de Odontologia, com o material do professor. É treino, não é o simulado oficial.</footer>
-<script src="bancos.js?v=202611202100"></script>
-<script src="banco-farmaco.js?v=202611202100"></script>
+<script src="bancos.js?v=202611250910"></script>
+<script src="banco-farmaco.js?v=202611250910"></script>
 <script src="banco-imagino.js?v=202611202100"></script>
 <script src="banco-cabeca.js?v=202611202100"></script>
 <script src="banco-estomato.js?v=202611202100"></script>
 <script src="banco-legal.js?v=202611202100"></script>
 <script src="sm-numeros.js?v=202611220050"></script>
 <script src="revisao-sm1-inter.js?v=202611220040"></script>
-<script src="proximas-provas.js?v=202611221315"></script>
+<script src="proximas-provas.js?v=202611250910"></script>
 <script src="estudo-dirigido-bases.js?v=202611240935"></script>
 <script src="av-bases-2026-11-23.js?v=202611240935"></script>
 <script src="farmaco-nivel-av.js?v=202611250015"></script>
@@ -574,7 +604,7 @@ function maisCaem(){
 function maisCaemHtml(){
   const d = maisCaem(); if (!d.length) return '';
   const max = d[0].n;
-  return `<section class="bloco"><h2>Temas que mais caem</h2><p class="vazio" style="margin-bottom:10px;font-size:14px">Contando as questões que caíram nos simulados oficiais. Toque num tema pra treinar.</p><div class="desemp">${d.slice(0,8).map(x => `<button class="dl aperta" data-cai="${esc(x.tema)}" style="all:unset;display:block;cursor:pointer;width:100%"><div class="lin"><span>${esc(x.tema)}</span><small>${x.n} ${x.n===1?'questão':'questões'}${x.s1&&x.s2?' (SM1 e SM2)':x.s1?' (SM1)':' (SM2)'}</small></div><div class="trilho" aria-hidden="true"><div class="enche" style="width:${Math.round(x.n/max*100)}%;background:var(--c, #6c3fc5)"></div></div></button>`).join('')}</div></section>`;
+  return `<section class="bloco"><h2>Temas que mais caíram até agora</h2><p class="vazio" style="margin-bottom:10px;font-size:14px">Contando as questões que caíram nos simulados oficiais. Toque num tema pra treinar.</p><div class="desemp">${d.slice(0,8).map(x => `<button class="dl aperta" data-cai="${esc(x.tema)}" style="all:unset;display:block;cursor:pointer;width:100%"><div class="lin"><span>${esc(x.tema)}</span><small>${x.n} ${x.n===1?'questão':'questões'}${x.s1&&x.s2?' (SM1 e SM2)':x.s1?' (SM1)':' (SM2)'}</small></div><div class="trilho" aria-hidden="true"><div class="enche" style="width:${Math.round(x.n/max*100)}%;background:var(--c, #6c3fc5)"></div></div></button>`).join('')}</div></section>`;
 }
 function modoFracos(){
   const temas = desempenho().filter(x => x.t >= MIN_TENT && x.pct < .7).slice(0,3).map(x => x.tema);
@@ -667,8 +697,10 @@ function materia(){
     ${b.proxima ? `<p class="quando">${esc(b.proxima)}</p>` : ''}
     ${(p => p ? `<p class="stat">${p.data ? 'Atualizada em ' + p.data + ' · ' : ''}${p.total} questões · você já fez ${p.feitas} (${p.pct}%)<span class="barra"><b style="width:${p.pct}%"></b></span></p>` : '')(progressoDe(MAT))}
   </header>
-  <button class="grande aperta" id="treinoav"><span class="ic">${IC.play}</span><span><b>${esc(window.rotuloTreino ? rotuloTreino(MAT) : 'Treinar pra AV')}</b><small>Simulados, provas anteriores, nível AV, casos, assuntos e seus erros</small></span></button>
+  <button class="grande aperta" id="treinoav"><span class="ic">${IC.play}</span><span><b>${esc(window.rotuloTreino ? rotuloTreino(MAT) : 'Treinar pra AV')}</b><small>Simulado sorteado, nível AV, casos, assuntos e seus erros</small></span></button>
   <div class="menu">
+    ${sm1 && nSm1 ? `<button class="item" data-go="${sm1.id}"><span class="ic">${IC.folha}</span><span class="t"><b>Prova do SM1</b><small>As ${nSm1} questões que caíram, na ordem da prova</small></span><span class="seta">${IC.seta}</span></button>` : ''}
+    ${sm2 && nSm2 ? `<button class="item" data-go="${sm2.id}"><span class="ic">${IC.folha}</span><span class="t"><b>${esc(sm2.nome||'Prova do SM2')}</b><small>${esc(sm2.sub||('As '+nSm2+' questões, com gabarito comentado'))}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.estudo||[]).length ? `<button class="item" id="porcor"><span class="ic">${IC.paleta}</span><span class="t"><b>Estudar por cor</b><small>${(b.estudo||[]).length} grupos de lesões, com foto, e treino só de uma cor</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.mudancas||[]).length ? `<button class="item" id="mud"><span class="ic">${IC.livro}</span><span class="t"><b>Mudanças recentes</b><small>O que mudou nas leis e no Código de Ética, com data. Conferido em ${esc(b.atualizado||'')}</small></span><span class="seta">${IC.seta}</span></button>` : ''}
     ${(b.biblioteca||[]).length ? `<button class="item" id="bib"><span class="ic">${IC.folha}</span><span class="t"><b>Biblioteca</b><small>${b.biblioteca.length} ${MAT==='legal'?'documentos oficiais':'livros e estudos'} pra ler na íntegra</small></span><span class="seta">${IC.seta}</span></button>` : ''}
@@ -699,22 +731,27 @@ function materia(){
 /* ---------- TREINAR PRA AV: menu de possibilidades (Rafael 25/11/2026: "abrir um menu assim que o aluno clica em Treinar pra AV") ---------- */
 function menuTreinoAV(){
   const b = banco(), {completo, sm1, sm2, erros, temas, casos, novas, imgs, dest} = partes();
-  const it = (m, nome, sub, ic, dis) => m ? `<button class="item" data-go="${m.id}" ${dis?'disabled':''}><span class="ic">${ic||IC.folha}</span><span class="t"><b>${esc(nome||m.nome)}</b><small>${esc(sub||m.sub||'')}</small></span><span class="seta">${IC.seta}</span></button>` : '';
-  const n = m => m ? poolDe(m).length : 0, nErr = n(erros), nNov = n(novas);
+  const n = m => m ? poolDe(m).length : 0;
+  const q = (m, nome, sub, ic, o) => { o = o || {}; if (!m && !o.id) return '';
+    return `<button class="quad ${o.cls||''}" ${o.id ? `id="${o.id}"` : `data-go="${m.id}"`} ${o.dis?'disabled':''}>`
+      + (o.cls === 'destaque' ? `<span class="ic">${ic}</span><span><b>${esc(nome)}</b><small>${esc(sub)}</small></span>`
+         : `<span class="topo-q"><span class="ic">${ic||IC.folha}</span>${o.num ? `<span class="num">${o.num}</span>` : ''}</span><b>${esc(nome)}</b><small>${esc(sub)}</small>`)
+      + `</button>`; };
+  const provas = dest.filter(m => !/n[ií]vel/i.test(m.nome)).map(m => q(m, m.nome, 'Com gabarito comentado', IC.folha, {num: n(m)})).join('');
+  const treinos = dest.filter(m => /n[ií]vel/i.test(m.nome)).map(m => q(m, m.nome, 'Texto longo e pegadinha, igual à prova', IC.alvo, {num: n(m)})).join('')
+    + (n(casos) ? q(casos, 'Casos reais', 'Paciente, dente e conduta', IC.esteto, {num: n(casos)}) : '')
+    + imgs.map(m => q(m, m.nome, 'Qual é, por onde sai, o que anestesia', IC.foto || IC.olho || IC.play, {num: n(m)})).join('')
+    + (temas.length ? q(null, 'Por assunto', 'Escolha o tema mais fraco', IC.alvo, {id: 'temas', num: temas.length}) : '');
+  const nNov = n(novas), nErr = n(erros);
+  const meus = (novas ? q(novas, 'Nunca fiz', nNov ? 'Só as que você não respondeu' : 'Você já fez todas', IC.play, {num: nNov, dis: !nNov}) : '')
+    + (erros ? q(erros, 'Meus erros', nErr ? 'As que você errou, de novo' : 'Errou, aparece aqui', IC.volta, {num: nErr, dis: !nErr}) : '');
   tela(`
   <div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
   <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">${esc(window.rotuloTreino ? rotuloTreino(MAT) : 'Treinar pra AV')}</h1><p>Escolha como quer treinar.</p></div>
-  <div class="menu">
-    ${it(completo, 'Simulado sorteado', '10 questões sorteadas, nota de 0 a 1', IC.play)}
-    ${n(sm1) ? it(sm1, 'Prova do SM1', 'As ' + n(sm1) + ' questões que caíram, na ordem da prova') : ''}
-    ${n(sm2) ? it(sm2, sm2.nome || 'Prova do SM2', sm2.sub || ('As ' + n(sm2) + ' questões, com gabarito comentado')) : ''}
-    ${dest.map(m => it(m)).join('')}
-    ${n(casos) ? it(casos, 'Simulação de caso real', n(casos) + ' casos com paciente, idade, dente e conduta', IC.esteto) : ''}
-    ${imgs.map(m => it(m, m.nome, m.sub || (n(m) + ' questões com imagem'), IC.foto || IC.olho || IC.play)).join('')}
-    ${novas ? it(novas, 'Questões que nunca fiz', nNov ? nNov + (nNov===1?' questão nova pra você':' questões novas pra você') : 'Você já respondeu todas, parabéns!', IC.play, !nNov) : ''}
-    ${temas.length ? `<button class="item" id="temas"><span class="ic">${IC.alvo}</span><span class="t"><b>Treinar um assunto</b><small>${temas.length} assuntos para escolher</small></span><span class="seta">${IC.seta}</span></button>` : ''}
-    ${erros ? it(erros, 'Revisar meus erros', nErr ? nErr + (nErr===1?' questão guardada':' questões guardadas') : 'Quando você errar, a questão aparece aqui', IC.volta, !nErr) : ''}
-  </div>`);
+  <div class="gradetreino">${q(completo, 'Simulado sorteado', '10 questões de tudo, nota de 0 a 1', IC.play, {cls: 'destaque'})}</div>
+  ${provas ? `<h2 class="tgrupo">Provas que já caíram</h2><div class="gradetreino">${provas}</div>` : ''}
+  ${treinos ? `<h2 class="tgrupo">Treinos</h2><div class="gradetreino">${treinos}</div>` : ''}
+  ${meus ? `<h2 class="tgrupo">Do seu jeito</h2><div class="gradetreino">${meus}</div>` : ''}`);
   const {ms} = partes();
   $('#vol').onclick = materia;
   if ($('#temas')) $('#temas').onclick = listaTemas;
@@ -728,9 +765,11 @@ function listaTemas(){
   tela(`
   <div class="topo"><button class="voltar" id="vol">${IC.esq}${esc(b.curta||'Voltar')}</button></div>
   <div class="ola" style="margin-top:4px"><h1 style="font-size:28px">Treinar um assunto</h1><p>Escolha o tema. Até 10 questões só dele.</p></div>
-  <div class="menu">${temas.map(m => `<button class="item" data-go="${m.id}"><span class="t"><b>${esc(m.nome)}</b><small>${poolDe(m).length} questões</small></span><span class="seta">${IC.seta}</span></button>`).join('')}</div>`);
+  ${(d => d.length ? `<h2 class="tgrupo">O que mais caiu até agora</h2><p class="vazio" style="margin:2px 0 8px;font-size:14px">Contando as questões que caíram nos simulados oficiais. Toque pra treinar o tema.</p><div class="ranking">${d.slice(0,6).map((x,i) => `<button class="rk" data-cai="${esc(x.tema)}"><span class="pos">${i+1}</span><span><span class="nome">${esc(x.tema)}</span><span class="barra2" aria-hidden="true"><i style="width:${Math.round(x.n/d[0].n*100)}%"></i></span></span><span class="qt"><b>${x.n}</b>${x.s1&&x.s2?'SM1 e SM2':x.s1?'SM1':'SM2'}</span></button>`).join('')}</div><h2 class="tgrupo">Todos os assuntos</h2>` : '')(maisCaem())}
+  <div class="menu">${temas.map(m => `<button class="item" data-go="${m.id}"><span class="t"><b>${esc(m.casos ? 'Casos reais' : m.nome)}</b><small>${poolDe(m).length} questões</small></span><span class="seta">${IC.seta}</span></button>`).join('')}</div>`);
   $('#vol').onclick = menuTreinoAV;
   app.querySelectorAll('[data-go]').forEach(el => el.onclick = () => comeca(temas.find(m => m.id === el.dataset.go)));
+  app.querySelectorAll('[data-cai]').forEach(el => el.onclick = () => comeca({ id:'cai-'+el.dataset.cai, nome:el.dataset.cai, temas:[el.dataset.cai], cai:true }));
 }
 
 /* ---------- PROVA ---------- */

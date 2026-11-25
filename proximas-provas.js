@@ -1,10 +1,10 @@
 /* Rafael 22/11/2026: o botão grande diz pra qual prova a pessoa está treinando ("depende da próxima prova").
-   Datas do SIA (Datas de Provas Presenciais, conferidas em 14/10 e 19/11). AVS: o SIA mostra a mesma data da AV; sem data própria. */
+   Datas do SIA (Datas de Provas Presenciais, conferidas em 14/10 e 19/11). AVS: janela de 30/11 a 05/12 no app da Estácio (print do Conrado, 24/11/2026); o botão mostra o 1º dia. */
 window.PROVAS = {
-  bases:   [['SM1', '2026-09-21'], ['SM2', '2026-11-09'], ['AV', '2026-11-23'], ['AVS', '']],
-  carie:   [['SM1', '2026-09-22'], ['SM2', '2026-11-10'], ['AV', '2026-11-24'], ['AVS', '']],
-  inter:   [['SM1', '2026-09-22'], ['SM2', '2026-11-10'], ['AV', '2026-11-24'], ['AVS', '']],
-  farmaco: [['SM1', '2026-09-24'], ['SM2', '2026-11-12'], ['AV', '2026-11-26'], ['AVS', '']]
+  bases:   [['SM1', '2026-09-21'], ['SM2', '2026-11-09'], ['AV', '2026-11-23'], ['AVS', '2026-11-30']],
+  carie:   [['SM1', '2026-09-22'], ['SM2', '2026-11-10'], ['AV', '2026-11-24'], ['AVS', '2026-11-30']],
+  inter:   [['SM1', '2026-09-22'], ['SM2', '2026-11-10'], ['AV', '2026-11-24'], ['AVS', '2026-11-30']],
+  farmaco: [['SM1', '2026-09-24'], ['SM2', '2026-11-12'], ['AV', '2026-11-26'], ['AVS', '2026-11-30']]
 };
 window.proximaProva = function (mat) {
   var l = (window.PROVAS || {})[mat]; if (!l) return null;

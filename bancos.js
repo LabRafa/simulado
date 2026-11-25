@@ -27,7 +27,7 @@ window.BANCOS = {
     codigo: 'ARA4190',
     prof: 'GUSTAVO HOLDERBAUM',
     turma: '3008',
-    proxima: 'SM2 foi segunda 09/11. AV segunda 23/11',
+    proxima: 'AV foi segunda 23/11. AVS entre 30/11 e 05/12',
     modos: [
       { id: 'completo', nome: 'Simulado completo', sub: '10 questões sorteadas de toda a matéria.', temas: null },
       { id: 'sm1ver', nome: 'Prova do SM1', sub: 'As 10 questões que caíram no SM1, na ordem da prova.', temas: null, sm1todo: true },
@@ -324,7 +324,7 @@ window.BANCOS = {
  "codigo": "ARA4340",
  "prof": "SEBASTIÃO MAGNO",
  "turma": "3008",
- "proxima": "SM2 foi terça 10/11. AV terça 24/11",
+ "proxima": "AV foi terça 24/11. AVS entre 30/11 e 05/12",
  "modos": [
   {
    "id": "completo",
@@ -1346,7 +1346,7 @@ window.BANCOS = {
  "codigo": "ARA4380",
  "prof": "SEBASTIÃO MAGNO",
  "turma": "3007",
- "proxima": "SM2 foi terça 10/11. AV terça 24/11",
+ "proxima": "AV foi terça 24/11. AVS entre 30/11 e 05/12",
  "modos": [
   {
    "id": "completo",
