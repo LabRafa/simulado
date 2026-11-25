@@ -338,6 +338,7 @@ body.com-rodape .rodape{padding-left:54px;padding-right:54px} /* 13/11: bolinhas
 .gl.porq{text-decoration:none;border-bottom:2px dotted #c77d00;background:rgba(255,190,60,.16);border-radius:3px}.gl.porq sup{font-size:.62em;margin-left:1px}
 .porqb{display:inline-flex;align-items:center;justify-content:center;width:11px;height:11px;margin-left:1px;border-radius:50%;background:#1f6feb;color:#fff;font-size:8px;font-weight:700;line-height:1;vertical-align:super;cursor:pointer;text-decoration:none!important;border:0}
 .glvideo{display:flex;align-items:center;gap:6px;margin:0 0 10px;padding:10px 12px;border-radius:12px;background:#fdeaea;color:#b3261e;font-weight:700;font-size:14px;text-decoration:none}
+.apresenta{background:#eef4ff;border-left:4px solid #1f6feb;border-radius:12px;padding:12px 14px;margin:0 0 14px;font-size:15px}.apresenta p{margin:6px 0 0}.apresenta a{display:inline-block;margin-top:8px;font-weight:700}
 .glvermais{width:100%;min-height:44px;margin:0 0 12px;border:1.5px solid var(--cor,#334);border-radius:12px;background:#fff;color:var(--cor,#334);font-weight:700;font-size:15px;cursor:pointer}.glleg{font-size:13px;color:#5b6475;margin:-6px 0 12px}
 .lei-txt.tabela{background:#fff;padding:0;max-height:none}.gtab{width:100%;border-collapse:collapse;font-size:14px}.gtab th{text-align:left;background:var(--cor-claro,#eef);color:var(--cor,#333);padding:8px 10px;font-weight:700}.gtab td{padding:8px 10px;border-top:1px solid #e6e8ee;vertical-align:top}
 .lei-txt{max-height:46vh;overflow:auto;margin:0 0 12px;padding:10px 12px;background:#f6f7fa;border-radius:12px;font-size:15px;line-height:1.5}
@@ -373,7 +374,7 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <script src="estudo-dirigido-bases.js?v=202611240935"></script>
 <script src="av-bases-2026-11-23.js?v=202611240935"></script>
 <script src="farmaco-nivel-av.js?v=202611250015"></script>
-<script src="caderno-gustavo.js?v=202611251900"></script>
+<script src="caderno-gustavo.js?v=202611251905"></script>
 <script src="glossario-farmaco.js?v=202611251445"></script>
 <script src="videos-farmaco.js?v=202611251855"></script>
 <script src="porques-farmaco.js?v=202611251900"></script>
@@ -876,6 +877,7 @@ function questao(anima){
     ${trilhaHtml()}
   </div>
   <section class="folha${nova?' entra':''}">
+    ${P.i===0 && partida.modo && partida.modo.apresenta ? `<div class="apresenta"><b>📌 ${esc(partida.modo.apresenta.titulo || partida.modo.nome)}</b><p>${G(partida.modo.apresenta.texto)}</p>${partida.modo.apresenta.pdf ? `<a href="${esc(partida.modo.apresenta.pdf)}" target="_blank" rel="noopener">📄 Ver o material original</a>` : ''}</div>` : ''}
     <div class="qcab"><h2>Questão ${P.i+1} de ${total}</h2><span class="tema">${esc(q.tema)}</span>${partida.itens[partida.i].nova ? '<span class="nova" title="Você nunca respondeu esta questão">nova</span>' : ''}</div>
     ${marca ? `<div style="margin:-6px 0 10px">${marca}</div>` : ''}
     ${q.img ? figHtml(q.img, q.alt || 'Imagem da questão') + (q.imgf ? `<p class="imgfonte">Imagem: ${esc(q.imgf)}</p>` : '') : ''}
