@@ -440,7 +440,7 @@ function marcaPorques(s, guarda, feitos){
     const alvo = esc(x.t); const j = s.toLowerCase().indexOf(alvo.toLowerCase()); if (j < 0) return;
     if (/\d*$/.test(s.slice(0, j)) ) return;
     if (feitos) feitos.add(key);
-    guarda.push(s.slice(j, j + alvo.length) + '<sup class="gl porqb" role="button" tabindex="0" aria-label="Por quê?" data-gl="' + key + '">?</sup>');
+    guarda.push('<span class="gl porq" role="button" tabindex="0" aria-label="Por quê?" data-gl="' + key + '">' + s.slice(j, j + alvo.length) + '<sup class="porqb">?</sup></span>');
     s = s.slice(0, j) + '' + (guarda.length - 1) + '' + s.slice(j + alvo.length);
   });
   return s;
