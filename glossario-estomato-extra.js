@@ -103,7 +103,143 @@
     'dorso da língua': ['geo', 'fiss'], 'biofilme': ['fiss', 'pilosa1'], 'ventre da língua': ['varic'], 'assoalho': ['ranula'],
     'palato duro': ['torusP'], 'tecido de granulação': ['granul'], 'hemorragia': ['granul', 'vasc']
   };
-  /*__COMMONS__*/
+  /*COMMONS-INI*/
+  (function () { var IC = {
+ "epitNQ": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/A_classic_view_of_non-keratinized_stratified_squamous_epithelium.jpg/960px-A_classic_view_of_non-keratinized_stratified_squamous_epithelium.jpg",
+  "Epitélio pavimentoso estratificado NÃO queratinizado no microscópio (o da bochecha e do ventre da língua).",
+  "Lâmina com camadas de células epiteliais coradas",
+  "Photograper09, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "adiposo": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Adipose_tissue_with_crumpling_artifact_due_to_insufficient_fixation.jpg/960px-Adipose_tissue_with_crumpling_artifact_due_to_insufficient_fixation.jpg",
+  "Tecido adiposo no microscópio: células grandes e vazias (a gordura sai no preparo da lâmina).",
+  "Lâmina com células grandes e claras de contorno fino",
+  "Mikael Häggström, CC0 (Wikimedia Commons)"
+ ],
+ "queilite": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Angular_Cheilitis_2.jpg/120px-Angular_Cheilitis_2.jpg",
+  "Queilite angular: fissura avermelhada no canto da boca.",
+  "Canto da boca com fissura vermelha",
+  "Lesion, CC BY-SA 3.0 (Wikimedia Commons)"
+ ],
+ "punch": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Punch_Biopsy.jpg/960px-Punch_Biopsy.jpg",
+  "Punch para biópsia: tira um cilindro de tecido.",
+  "Instrumento de biópsia tipo punch",
+  "Ajay Kumar Chaurasiya, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "eletro": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Electrosurgery.jpg/960px-Electrosurgery.jpg",
+  "Bisturi elétrico (eletrocautério) em uso numa cirurgia de lipoma.",
+  "Ponta de bisturi elétrico sobre tecido em cirurgia",
+  "Jclemens, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "g1014": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Gray1014.png/500px-Gray1014.png",
+  "Boca aberta (Gray): no dorso da língua, as papilas valadas em V e, atrás, a tonsila lingual.",
+  "Desenho anatômico da cavidade da boca com a língua puxada",
+  "Henry Vandyke Carter, Gray's Anatomy 1918, domínio público (Wikimedia Commons)"
+ ],
+ "dentadura": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Making_of_complete_denture_31.JPG/960px-Making_of_complete_denture_31.JPG",
+  "Prótese total (dentadura) em confecção.",
+  "Prótese total sobre modelo",
+  "Werneuchen, domínio público (Wikimedia Commons)"
+ ],
+ "dentadura2": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Making_of_complete_denture_28.JPG/960px-Making_of_complete_denture_28.JPG",
+  "Prótese total: dentes montados na base.",
+  "Prótese total vista de perto",
+  "Werneuchen, domínio público (Wikimedia Commons)"
+ ],
+ "periodonto": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Periodontium.svg/330px-Periodontium.svg.png",
+  "Periodonto: gengiva (inclusive a inserida), ligamento, cemento e osso (em inglês).",
+  "Esquema do dente com gengiva e osso em volta",
+  "Goran tek-en, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "rankl1": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Rank_Ligand_Inhibition_Osteoporosis.jpg/960px-Rank_Ligand_Inhibition_Osteoporosis.jpg",
+  "Como o denosumabe age: bloqueia o RANKL e o osteoclasto não se forma (em inglês).",
+  "Esquema do bloqueio do RANKL",
+  "CodeSwitch, CC0 (Wikimedia Commons)"
+ ],
+ "rankl2": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/RANKL_inhibition_with_antibody_DE.svg/960px-RANKL_inhibition_with_antibody_DE.svg.png",
+  "Denosumabe (anticorpo) no sistema RANK/RANKL/OPG (em alemão).",
+  "Esquema de anticorpo bloqueando RANKL",
+  "Benff, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "amalg": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Amalgam_filling.JPG/330px-Amalgam_filling.JPG",
+  "Restauração de amálgama (metálica) num molar.",
+  "Dente com restauração prateada",
+  "autor no Commons, ver página do arquivo (Wikimedia Commons)"
+ ]
+};
+  var FC = {
+ "mucosa queratinizada": [
+  "epitNQ"
+ ],
+ "queratinizada": [
+  "epitNQ"
+ ],
+ "tecido adiposo": [
+  "adiposo"
+ ],
+ "lipoma": [
+  "adiposo",
+  "eletro"
+ ],
+ "queilite angular": [
+  "queilite"
+ ],
+ "biópsia": [
+  "punch"
+ ],
+ "biópsia incisional": [
+  "punch"
+ ],
+ "biópsia excisional": [
+  "eletro"
+ ],
+ "fragmento": [
+  "punch"
+ ],
+ "eletrocautério": [
+  "eletro"
+ ],
+ "tonsila lingual": [
+  "g1014"
+ ],
+ "papilas valadas": [
+  "g1014"
+ ],
+ "palato mole": [
+  "g1014"
+ ],
+ "prótese": [
+  "dentadura",
+  "dentadura2"
+ ],
+ "estomatite protética": [
+  "dentadura"
+ ],
+ "gengiva inserida": [
+  "periodonto"
+ ],
+ "denosumab": [
+  "rankl1",
+  "rankl2"
+ ],
+ "denosumabe": [
+  "rankl1",
+  "rankl2"
+ ]
+};
+  Object.assign(I, IC); Object.keys(FC).forEach(function (k) { F[k] = (F[k] || []).concat(FC[k]); }); })();
+  /*COMMONS-FIM*/
   var g = B.glossario = B.glossario || {};
   Object.keys(G).forEach(function (k) { if (!g[k]) g[k] = G[k]; });
   var feitos = [];

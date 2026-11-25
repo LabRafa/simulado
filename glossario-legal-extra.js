@@ -90,7 +90,175 @@
   /* imagens: [url, legenda, alt, crédito] (preenchido com Commons) */
   var I = {};
   var F = {};
-  /*__COMMONS__*/
+  /*COMMONS-INI*/
+  (function () { var IC = {
+ "odontograma": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Dental_Chart_1987_Daly_City_Jane_Doe.jpg/960px-Dental_Chart_1987_Daly_City_Jane_Doe.jpg",
+  "Odontograma (ficha dental) de pessoa não identificada, usado para comparar com prontuários.",
+  "Ficha dental com desenho dos dentes e anotações",
+  "FBI/autoridades dos EUA, domínio público (Wikimedia Commons)"
+ ],
+ "autopsia": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Autopsy_Room_at_Indiana_Medical_History_Museum.png/960px-Autopsy_Room_at_Indiana_Medical_History_Museum.png",
+  "Sala de necropsia antiga (museu de história da medicina de Indiana).",
+  "Sala com mesa de necropsia e armários",
+  "Huw Williams (Huwmanbeing), domínio público (Wikimedia Commons)"
+ ],
+ "lacre": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Security_bag_tape_showing_voiding_when_removed.jpg/960px-Security_bag_tape_showing_voiding_when_removed.jpg",
+  "Lacre de segurança: se alguém abrir, a fita mostra que foi violada. Garante a cadeia de custódia.",
+  "Fita de lacre de saco plástico com marca de violação",
+  "Btamevi, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "digital": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Fingerprint_Whorl.jpg/120px-Fingerprint_Whorl.jpg",
+  "Impressão digital do tipo verticilo: base da papiloscopia.",
+  "Impressão digital em preto e branco",
+  "NIST database, domínio público (Wikimedia Commons)"
+ ],
+ "antrop": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Anthropology_lab_at_NMNH.jpg/330px-Anthropology_lab_at_NMNH.jpg",
+  "Laboratório de antropologia (Smithsonian): estudo de ossos.",
+  "Laboratório com ossos sobre a bancada",
+  "Smithsonian Institute, CC BY-SA 3.0 (Wikimedia Commons)"
+ ],
+ "femur": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Femur_front.png/330px-Femur_front.png",
+  "Fêmur visto de frente.",
+  "Desenho do fêmur",
+  "Henry Vandyke Carter, domínio público (Wikimedia Commons)"
+ ],
+ "brumaFoto": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Brumadinho%2C_Minas_Gerais_%2847021723582%29.jpg/960px-Brumadinho%2C_Minas_Gerais_%2847021723582%29.jpg",
+  "Brumadinho (MG) depois do rompimento da barragem, em 2019.",
+  "Vista aérea de área coberta de lama",
+  "Ibama from Brasil, CC BY-SA 2.0 (Wikimedia Commons)"
+ ],
+ "nist": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/NIST_AML_building.jpg/500px-NIST_AML_building.jpg",
+  "Prédio do NIST, o instituto de padrões dos EUA.",
+  "Prédio do NIST",
+  "Gail Porter, domínio público (Wikimedia Commons)"
+ ],
+ "anest": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Local_Dental_Anesthesia_Preparation.jpg/960px-Local_Dental_Anesthesia_Preparation.jpg",
+  "Preparo da anestesia local odontológica: seringa carpule e tubete.",
+  "Seringa odontológica e tubetes de anestésico",
+  "Jameswasswa, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "tpd": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Dental_technician_2.jpg/960px-Dental_technician_2.jpg",
+  "Técnico em prótese dentária trabalhando no laboratório.",
+  "Técnico em prótese na bancada",
+  "CifraLab, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "forum": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Oldest_Courthouse%2C_Petr%C3%B3polis%2C_Rio_de_Janeiro_State%2C_Brazil.JPG/960px-Oldest_Courthouse%2C_Petr%C3%B3polis%2C_Rio_de_Janeiro_State%2C_Brazil.JPG",
+  "Antigo fórum de Petrópolis (RJ).",
+  "Fachada de prédio histórico em Petrópolis",
+  "Eugenio Hansen, OFS, CC BY-SA 3.0 (Wikimedia Commons)"
+ ],
+ "amalg": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Amalgam_filling.JPG/330px-Amalgam_filling.JPG",
+  "Restauração de amálgama num molar: ponto de comparação na identificação.",
+  "Dente com restauração prateada",
+  "autor não informado, CC BY-SA 3.0 (Wikimedia Commons)"
+ ],
+ "panBasica": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Basic_panoramic_radiograph.jpg/960px-Basic_panoramic_radiograph.jpg",
+  "Panorâmica de jovem de 16 anos com terceiros molares inclusos ainda em formação.",
+  "Radiografia panorâmica dos dois maxilares",
+  "Coronation Dental Specialty Group, CC BY 3.0 (Wikimedia Commons)"
+ ]
+};
+  var FC = {
+ "Odontologia Legal": [
+  "odontograma"
+ ],
+ "identificação humana": [
+  "odontograma"
+ ],
+ "odontograma": [
+  "odontograma"
+ ],
+ "prontuário": [
+  "odontograma"
+ ],
+ "ante mortem": [
+  "odontograma"
+ ],
+ "reconciliação": [
+  "odontograma"
+ ],
+ "necropsia": [
+  "autopsia"
+ ],
+ "cadáver": [
+  "autopsia"
+ ],
+ "cadeia de custódia": [
+  "lacre"
+ ],
+ "papiloscopia": [
+  "digital"
+ ],
+ "identificador primário": [
+  "digital"
+ ],
+ "identificadores primários": [
+  "digital"
+ ],
+ "antropologia forense": [
+  "antrop"
+ ],
+ "ossada": [
+  "antrop"
+ ],
+ "fêmur": [
+  "femur"
+ ],
+ "Brumadinho": [
+  "brumaFoto"
+ ],
+ "NIST": [
+  "nist"
+ ],
+ "anestesia local": [
+  "anest"
+ ],
+ "troncular": [
+  "anest"
+ ],
+ "laboratório de prótese": [
+  "tpd"
+ ],
+ "idade dental": [
+  "panBasica"
+ ],
+ "terceiro molar": [
+  "panBasica"
+ ],
+ "Demirjian": [
+  "panBasica"
+ ],
+ "maior de idade": [
+  "panBasica"
+ ],
+ "maioridade": [
+  "panBasica"
+ ],
+ "foro": [
+  "forum"
+ ],
+ "restauração": [
+  "amalg"
+ ],
+ "radiografia": [
+  "panBasica"
+ ]
+};
+  Object.assign(I, IC); Object.keys(FC).forEach(function (k) { F[k] = (F[k] || []).concat(FC[k]); }); })();
+  /*COMMONS-FIM*/
   var g = B.glossario = B.glossario || {};
   Object.keys(G).forEach(function (k) { if (!g[k]) g[k] = G[k]; });
   var feitos = [];

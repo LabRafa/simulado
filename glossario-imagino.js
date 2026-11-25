@@ -15,7 +15,7 @@
   var CORT = t('Cortical = a camada externa, compacta e densa do osso (a "casca"), que aparece como linha branca. Na mandíbula se fala em cortical vestibular e lingual; lesão de crescimento lento abaula (estufa) a cortical, lesão agressiva pode rompê-la.', f(PAL, WP));
   var CORTZ = t('Borda corticalizada (ou corticada) = a lesão é contornada por uma linha branca (radiopaca) bem marcada: o osso teve tempo de "murar" a lesão. Sugere crescimento lento, como nos cistos.', f(PAL, WP));
   var PERI = t('Radiografia periapical: radiografia intraoral que mostra poucos dentes inteiros, da coroa ao ápice, e o osso em volta. É o exame de DETALHE (ápice, lâmina dura, ligamento).', f(PAL, WP));
-  var TC = t('Tomografia computadorizada de feixe cônico (TCFC, ou cone beam): exame em 3D, em cortes, sem a sobreposição da radiografia comum. Mostra as corticais vestibular e lingual e a extensão real da lesão; costuma ser pedida quando ainda há dúvida.', f(PAL, WP));
+  var TC = t('Tomografia computadorizada de feixe cônico (TCFC, ou cone beam): exame em 3D, em cortes, sem a sobreposição da radiografia comum. Mostra as corticais vestibular e lingual e a extensão real da lesão; costuma ser pedida quando ainda há dúvida. Ex.: lesão grande que parece estufar a lingual da mandíbula: só a tomografia mostra se a cortical lingual rompeu.', f(PAL, WP));
   var HISTO = t('Exame histopatológico: análise no microscópio do tecido retirado na biópsia, feita pelo patologista. Junto com a clínica e a imagem, é o que fecha o diagnóstico.', f(PAL, NEV));
   var DCO = t('Displasia cemento-óssea: lesão fibro-óssea benigna em que o osso normal é trocado por tecido fibroso e depois por material parecido com cemento e osso. Os dentes têm VITALIDADE. Passa por fases: radiolúcida (inicial), mista e radiopaca (madura). Não se opera: acompanha-se.', f(PAL, NEV));
   var INC = t('Dente incluso = dente que não erupcionou (ficou dentro do osso) depois da época normal. Os mais comuns são terceiros molares e caninos superiores. Em volta da coroa existe o folículo (espaço pericoronário).', f(PAL, NEV));
@@ -36,15 +36,15 @@
     'vitalidade': VIT,
     'multilocular': MULTI,
     'difusa': DIFUSA,
-    'panorâmica': t('Radiografia panorâmica: uma só imagem extraoral que mostra os dois maxilares, todos os dentes, os seios maxilares e as ATMs. É o exame de visão geral e de triagem; perde detalhe e tem sobreposições e distorções.', f(PAL, WP)),
-    'biópsia': t('Retirada de um pedaço (incisional) ou da lesão inteira (excisional) para o exame histopatológico. Na dúvida sobre uma lesão, a conduta é biopsiar: a imagem sozinha não fecha o diagnóstico.', f(PAL, NEV)),
-    'unilocular': t('Unilocular = lesão com uma única cavidade, sem septos dentro. É o aspecto típico dos cistos (radicular, dentígero, residual).', f(PAL, WP)),
+    'panorâmica': t('Radiografia panorâmica: uma só imagem extraoral que mostra os dois maxilares, todos os dentes, os seios maxilares e as ATMs. É o exame de visão geral e de triagem; perde detalhe e tem sobreposições e distorções. Ex.: paciente que vai só fazer limpeza e, na panorâmica de rotina, aparece uma lesão sem sintoma (achado incidental).', f(PAL, WP)),
+    'biópsia': t('Retirada de um pedaço (incisional) ou da lesão inteira (excisional) para o exame histopatológico. Na dúvida sobre uma lesão, a conduta é biopsiar: a imagem sozinha não fecha o diagnóstico. Ex.: lesão radiolúcida que não se encaixa em nenhuma hipótese tranquila: biópsia antes de qualquer cirurgia grande.', f(PAL, NEV)),
+    'unilocular': t('Unilocular = lesão com uma única cavidade, sem septos dentro. É o aspecto típico dos cistos (radicular, dentígero, residual). Ex.: área escura redonda, contornada por linha branca, presa ao ápice de um dente sem vitalidade.', f(PAL, WP)),
     'septo': t('Septo ósseo = parede fina de osso que divide uma lesão em lojas. Septos, mesmo incompletos, fazem a lesão ser classificada como multilocular. Septos retos lembram "raquete de tênis"; curvos, "bolhas de sabão".', f(PAL, WP)),
     'esmalte': t('Esmalte = a camada mais externa da coroa do dente e o tecido mais mineralizado do corpo (cerca de 96% de mineral). Por isso é a estrutura MAIS RADIOPACA (mais clara) do dente na radiografia.', f(WP, 'Katchburian & Arana, Histologia e Embriologia Oral')),
     'bidimensional': t('A radiografia comum é bidimensional (2D): estruturas que estão em profundidades diferentes aparecem uma por cima da outra (sobreposição). Por isso o forame mentual pode "cair" sobre o ápice de um pré-molar. A tomografia, em 3D, acaba com essa dúvida.', f(PAL, WP)),
     'achado incidental': t('Achado incidental = lesão descoberta por acaso, num exame pedido por outro motivo (ex.: panorâmica de rotina), em paciente sem queixa. Mostra o valor da panorâmica como exame de triagem.', f(PAL, WP)),
     'forame mentual': t('Abertura na face externa da mandíbula, perto dos ápices dos pré-molares inferiores, por onde sai o nervo mentual. Na radiografia é uma imagem radiolúcida redonda que pode imitar lesão periapical: variando a angulação HORIZONTAL, o forame "sai" do ápice; a lesão continua presa a ele.', f(PAL, WP)),
-    'forame incisivo': t('Abertura na linha média do palato, atrás dos incisivos centrais superiores, por onde passam o nervo e os vasos nasopalatinos. Na radiografia aparece radiolúcido entre os incisivos, acima dos ápices: é anatomia normal, que pode ser confundida com o cisto do ducto nasopalatino.', f(PAL, WP)),
+    'forame incisivo': t('Abertura na linha média do palato, atrás dos incisivos centrais superiores, por onde passam o nervo e os vasos nasopalatinos. Na radiografia aparece radiolúcido entre os incisivos, acima dos ápices: é anatomia normal, que pode ser confundida com o cisto do ducto nasopalatino. Ex.: na periapical dos incisivos superiores, uma área escura oval entre as raízes, com os dentes vitais.', f(PAL, WP)),
     'seio maxilar': t('Cavidade cheia de ar dentro da maxila, acima dos ápices dos pré-molares e molares superiores. Na radiografia é uma área radiolúcida grande, com contorno radiopaco: estrutura normal.', f(PAL, WP)),
     'cavidade nasal': t('Fossa nasal: espaço cheio de ar acima do palato. Na panorâmica aparece radiolúcida, acima dos dentes anteriores superiores. Estrutura normal.', f(PAL, WP)),
     'canal mandibular': t('Canal dentro da mandíbula por onde correm o nervo e os vasos alveolares inferiores, abaixo dos ápices dos molares. Na radiografia é uma faixa radiolúcida entre duas linhas radiopacas: anatomia normal, importante em extração de terceiro molar e implante.', f(PAL, WP)),
@@ -52,7 +52,7 @@
     'base da mandíbula': t('Borda inferior da mandíbula, formada por osso cortical espesso. Na panorâmica é uma faixa radiopaca bem marcada: estrutura normal.', f(PAL, WP)),
     'côndilo': t('Cabeça da mandíbula, que se articula com o osso temporal na ATM. Na panorâmica aparece radiopaco, nas extremidades, à frente da orelha.', f(PAL, WP)),
     'mandíbula': t('Osso da arcada inferior, o único osso móvel da face. Lesões odontogênicas grandes, como o ameloblastoma, são mais comuns na região posterior da mandíbula.', f(NEV, WP)),
-    'lâmina dura': t('Linha radiopaca fina que contorna o alvéolo em volta da raiz (é a cortical do alvéolo). Íntegra no dente saudável; interrompida no ápice faz pensar em lesão periapical inflamatória.', f(PAL, WP)),
+    'lâmina dura': t('Linha radiopaca fina que contorna o alvéolo em volta da raiz (é a cortical do alvéolo). Íntegra no dente saudável; interrompida no ápice faz pensar em lesão periapical inflamatória. Ex.: num dente com necrose, a linha branca some no ápice, onde começa a lesão.', f(PAL, WP)),
     'angulação horizontal': t('Mudar a direção do feixe de raio X para mesial ou distal (no plano horizontal) entre duas tomadas. Estruturas que estão em profundidades diferentes "andam" uma em relação à outra: se a imagem sai do ápice, é anatomia (ex.: forame mentual); se continua presa ao ápice, é lesão daquele dente.', f(PAL, WP)),
     'abaulamento': t('Abaulamento = a lesão estufa o osso e deixa a cortical fina, "como casca de ovo", sem rompê-la. Junto com o deslocamento de dentes, sugere crescimento lento.', f(PAL, WP)),
     'deslocamento dentário': t('A lesão empurra os dentes vizinhos para os lados (dentes afastados e inclinados). Para isso ela precisa crescer devagar; por isso sugere comportamento menos agressivo.', f(PAL, WP)),
@@ -60,9 +60,9 @@
     'flutuantes': t('Dentes "flutuantes" = dentes que ficaram sem osso em volta, como se boiassem na lesão, porque o osso foi destruído sem os dentes serem empurrados. Foi citado como característica de lesões malignas.', f(PAL, WP)),
     'patognomônico': t('Patognomônico = sinal que, sozinho, garante o diagnóstico de uma doença. Nenhuma das analogias da radiologia (bolhas de sabão, raquete de tênis, raios de sol) é patognomônica: só ajudam a levantar hipóteses.', f(PAL, NEV)),
     'cisto': t('Cisto = cavidade patológica revestida por epitélio e com conteúdo líquido ou semissólido. Como o interior é pouco denso, aparece radiolúcido, geralmente unilocular, bem definido e corticalizado.', f(PAL, NEV)),
-    'cisto radicular': t('Cisto inflamatório que nasce no ápice de um dente SEM vitalidade (cárie profunda ou trauma), a partir dos restos epiteliais de Malassez. Radiolúcido, unilocular, bem definido, preso ao ápice. É o cisto mais comum dos maxilares.', f(PAL, NEV)),
-    'cisto residual': t('Cisto radicular que ficou no osso depois que o dente foi extraído. Aparece como área radiolúcida bem definida exatamente na região da extração, onde não há mais dente.', f(PAL, NEV)),
-    'cisto dentígero': t('Cisto que se forma em volta da COROA de um dente incluso, preso ao colo do dente. Radiolúcido, unilocular, bem definido e corticado; mais comum em terceiros molares inferiores e caninos superiores. Espaço pericoronário de 4 a 6 mm ou mais já faz pensar nele.', f(PAL, NEV)),
+    'cisto radicular': t('Cisto inflamatório que nasce no ápice de um dente SEM vitalidade (cárie profunda ou trauma), a partir dos restos epiteliais de Malassez. Radiolúcido, unilocular, bem definido, preso ao ápice. É o cisto mais comum dos maxilares. Ex.: incisivo escurecido por pancada antiga, sem resposta ao frio, com área radiolúcida redonda no ápice.', f(PAL, NEV)),
+    'cisto residual': t('Cisto radicular que ficou no osso depois que o dente foi extraído. Aparece como área radiolúcida bem definida exatamente na região da extração, onde não há mais dente. Ex.: paciente extraiu um molar com lesão no ápice há 5 anos e agora a panorâmica mostra uma área escura no lugar onde ele ficava.', f(PAL, NEV)),
+    'cisto dentígero': t('Cisto que se forma em volta da COROA de um dente incluso, preso ao colo do dente. Radiolúcido, unilocular, bem definido e corticado; mais comum em terceiros molares inferiores e caninos superiores. Espaço pericoronário de 4 a 6 mm ou mais já faz pensar nele. Ex.: terceiro molar inferior incluso de um jovem de 20 anos com área escura de 6 mm em volta da coroa.', f(PAL, NEV)),
     'cisto periodontal lateral': t('Cisto de desenvolvimento que aparece AO LADO da raiz de um dente com vitalidade, mais na região de canino e pré-molares inferiores. Radiolúcido, pequeno e bem definido.', f(PAL, NEV)),
     'cisto gengival': t('Cisto pequeno de tecido mole, na gengiva, que pode nem aparecer na radiografia. No adulto é mais comum na região de canino e pré-molares inferiores.', f(PAL, NEV)),
     'cisto de erupção': t('Cisto dentígero que fica no tecido mole, sobre a coroa de um dente em erupção: aparece como um aumento de volume azulado na gengiva da criança.', f(PAL, NEV)),
@@ -70,16 +70,16 @@
     'pericoronário': t('Espaço pericoronário = o espaço radiolúcido em volta da coroa de um dente incluso, ocupado pelo folículo dentário. Normal até uns 3 mm; com 4 a 6 mm ou mais já se pensa em cisto dentígero (com o folículo aumentado como diferencial).', f(PAL, NEV)),
     'folículo': t('Folículo dentário = saco de tecido conjuntivo que envolve a coroa do dente em formação. Em volta do dente incluso ele dá o espaço pericoronário normal; aumentado, é diferencial do cisto dentígero.', f(PAL, NEV)),
     'terceiro molar': t('O dente do siso, último molar de cada lado. É o dente que mais fica incluso, e o mais associado ao cisto dentígero.', f(PAL, NEV)),
-    'ameloblastoma': t('Tumor odontogênico BENIGNO, mas localmente agressivo. Mais comum na região posterior da mandíbula; radiolúcido, multilocular (bolhas de sabão) ou unilocular, abaula a cortical e reabsorve raízes. O tratamento costuma exigir remoção com margem de segurança (ressecção).', f(PAL, NEV)),
+    'ameloblastoma': t('Tumor odontogênico BENIGNO, mas localmente agressivo. Mais comum na região posterior da mandíbula; radiolúcido, multilocular (bolhas de sabão) ou unilocular, abaula a cortical e reabsorve raízes. O tratamento costuma exigir remoção com margem de segurança (ressecção). Ex.: homem de 35 anos com aumento de volume indolor no ângulo da mandíbula e lesão multilocular em bolhas de sabão.', f(PAL, NEV)),
     'ameloblastoma unicístico': t('Variante do ameloblastoma com uma única cavidade, muitas vezes em volta da coroa de um dente incluso, imitando cisto dentígero. Por isso entra no diferencial do cisto dentígero.', f(PAL, NEV)),
-    'odontoma': t('Tumor odontogênico mais comum, na verdade um hamartoma: um "nó" de esmalte, dentina, cemento e polpa. Radiopaco com halo radiolúcido em volta, bem definido; costuma ficar sobre um dente que não erupcionou e impedir a erupção.', f(PAL, NEV)),
+    'odontoma': t('Tumor odontogênico mais comum, na verdade um hamartoma: um "nó" de esmalte, dentina, cemento e polpa. Radiopaco com halo radiolúcido em volta, bem definido; costuma ficar sobre um dente que não erupcionou e impedir a erupção. Ex.: criança de 10 anos com canino que não nasce e, sobre ele, várias estruturas claras parecidas com dentes pequenos.', f(PAL, NEV)),
     'odontoma composto': t('Odontoma formado por várias estruturas parecidas com dentes pequenos (dentículos), mais comum na região anterior da maxila. O odontoma complexo, ao contrário, é uma massa sem forma de dente.', f(PAL, NEV)),
-    'mixoma odontogênico': t('Tumor odontogênico benigno, de tecido parecido com a polpa embrionária. Radiolúcido, multilocular, com septos finos e retos, lembrando cordas de raquete de tênis.', f(PAL, NEV)),
+    'mixoma odontogênico': t('Tumor odontogênico benigno, de tecido parecido com a polpa embrionária. Radiolúcido, multilocular, com septos finos e retos, lembrando cordas de raquete de tênis. Ex.: jovem com lesão multilocular de septos retos na região de molares.', f(PAL, NEV)),
     'osteossarcoma': t('Tumor ósseo MALIGNO. Nos maxilares pode mostrar espículas de osso novo saindo do osso em linhas, o aspecto de "raios de sol", e alargamento do ligamento periodontal.', f(PAL, NEV)),
-    'osteíte condensante': t('Esclerose óssea reacional: radiopacidade difusa no ápice de um dente com cárie profunda e inflamação pulpar. O osso reage à inflamação crônica ficando mais denso. Conduta: tratar a causa (canal).', f(PAL, NEV)),
+    'osteíte condensante': t('Esclerose óssea reacional: radiopacidade difusa no ápice de um dente com cárie profunda e inflamação pulpar. O osso reage à inflamação crônica ficando mais denso. Conduta: tratar a causa (canal). Ex.: molar com cárie profunda e dor, com osso mais claro e difuso em volta do ápice.', f(PAL, NEV)),
     'osteoesclerose idiopática': t('Área de osso mais denso sem causa conhecida, em dente com vitalidade: radiopacidade bem definida, sem halo, às vezes perto do ápice. Não é doença; nada a tratar.', f(PAL, NEV)),
-    'hipercementose': t('Depósito exagerado de cemento na raiz, que fica engrossada ("bulbosa") na radiografia, com o espaço do ligamento e a lâmina dura em volta. Dente vital; nada a tratar.', f(PAL, NEV)),
-    'cementoblastoma': t('Tumor odontogênico benigno de cemento: massa radiopaca FUNDIDA à raiz, com halo radiolúcido em volta, mais em molares inferiores. Conduta: remoção cirúrgica (geralmente com o dente).', f(PAL, NEV)),
+    'hipercementose': t('Depósito exagerado de cemento na raiz, que fica engrossada ("bulbosa") na radiografia, com o espaço do ligamento e a lâmina dura em volta. Dente vital; nada a tratar. Ex.: pré-molar de idoso com raiz em forma de clava, achado na panorâmica.', f(PAL, NEV)),
+    'cementoblastoma': t('Tumor odontogênico benigno de cemento: massa radiopaca FUNDIDA à raiz, com halo radiolúcido em volta, mais em molares inferiores. Conduta: remoção cirúrgica (geralmente com o dente). Ex.: primeiro molar inferior vital com dor leve e massa radiopaca grudada na raiz.', f(PAL, NEV)),
     'osteoma': t('Tumor benigno de osso maduro e compacto: massa radiopaca. Osteomas múltiplos nos maxilares, em pessoa jovem, fazem pensar em síndrome de Gardner.', f(PAL, NEV)),
     'síndrome de Gardner': t('Doença hereditária (autossômica dominante) com pólipos no intestino que tendem a virar câncer, osteomas múltiplos nos maxilares, dentes supranumerários e inclusos. Achar osteomas na radiografia pode antecipar o diagnóstico.', f(PAL, NEV)),
     'cementoma gigantiforme familiar': t('Lesão fibro-óssea rara e hereditária, que aparece cedo (infância/adolescência) com massas radiopacas grandes em vários quadrantes e expande os maxilares.', f(PAL, NEV)),
@@ -124,6 +124,8 @@
     radiopApice: [L + 'apice-radiopacidades-resposta.jpg', 'Radiopacidades no ápice: displasia, osteíte condensante, osteoesclerose, hipercementose e cementoblastoma.', 'Esquema de cinco dentes com radiopacidades diferentes no ápice', CL],
     local: [L + 'localizacao-resposta.svg', 'Onde está cada cisto: radicular, residual, periodontal lateral, dentígero e ceratocisto.', 'Esquema de hemimandíbula com cinco lesões numeradas', CL],
     padroes: [L + 'padroes-resposta.svg', 'Analogias: bolhas de sabão, raquete de tênis, dentículos e raios de sol.', 'Quatro desenhos de padrões radiográficos', CL],
+    desafio2: [L + 'desafio2.jpg', 'Lesão multilocular entre dois dentes que foram empurrados e inclinados para os lados.', 'Esquema de dois dentes inclinados com lesão de várias lojas entre eles', CL],
+    desafio1: [L + 'desafio1.jpg', 'Treino das 4 perguntas: onde está, clara ou escura, como é a borda, o que faz com os vizinhos.', 'Esquema de três dentes com lesão no ápice do dente do meio', CL],
     tomadas: [L + 'duas-tomadas-resposta.svg', 'Mudando a angulação horizontal, o forame mentual sai do ápice.', 'Esquema de duas radiografias periapicais da mesma região', CL]
   };
   var F = {
@@ -138,6 +140,9 @@
     'hipercementose': ['radiopApice'], 'cementoblastoma': ['radiopApice'],
     'cisto radicular': ['local'], 'cisto residual': ['local'], 'cisto periodontal lateral': ['local'], 'ceratocisto': ['local'],
     'bolhas de sabão': ['padroes'], 'raquete de tênis': ['padroes'], 'raios de sol': ['padroes'], 'mixoma odontogênico': ['padroes'], 'osteossarcoma': ['padroes'],
+    'deslocamento dentário': ['desafio2'], 'abaulamento': ['cortTC', 'desafio2'], 'crescimento lento': ['bordas', 'desafio2'],
+    'sinal de alerta': ['bordaReal', 'cortTC'], 'borda': ['bordas', 'bordaReal'], '4 perguntas': ['desafio1', 'desafio2'], 'ilíaco': ['antesDepois'],
+    'conduta': ['radiopApice'], 'diferencial': ['pericor'], 'diferenciais': ['pericor'],
     'angulação horizontal': ['tomadas'], 'forame mentual': ['tomadas'], 'bidimensional': ['tomadas']
   };
   /* COMMONS (preenchido abaixo) */
@@ -155,6 +160,58 @@
     });
   };
   aplica(I, F);
+  var C = {
+    cor: 'Coronation Dental Specialty Group, CC BY-SA 3.0 (Wikimedia Commons)', cor3: 'Coronation Dental Specialty Group, CC BY 3.0 (Wikimedia Commons)',
+    silva: 'B. S. F. Silva, M. R. Bueno, F. P. Yamamoto-Silva e cols. (2017), CC BY 4.0 (Wikimedia Commons)',
+    gray: 'Henry Vandyke Carter, Gray\'s Anatomy 1918, domínio público (Wikimedia Commons)'
+  };
+  var IC = {
+    periAbsc: ['https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Abscessed_tooth_periapical_radiograph.jpg/960px-Abscessed_tooth_periapical_radiograph.jpg', 'Radiografia periapical de um molar com lesão escura (radiolúcida) nos ápices das duas raízes.', 'Radiografia periapical de molar com áreas escuras nos ápices', C.cor],
+    panBasica: ['https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Basic_panoramic_radiograph.jpg/960px-Basic_panoramic_radiograph.jpg', 'Panorâmica de um jovem de 16 anos com os terceiros molares inclusos.', 'Radiografia panorâmica dos dois maxilares', C.cor3],
+    panDigital: ['https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Panoramic_radiograph_-_Orthopantomogram.jpg/960px-Panoramic_radiograph_-_Orthopantomogram.jpg', 'Panorâmica digital: restaurações e coroas aparecem bem brancas (radiopacas).', 'Radiografia panorâmica com várias restaurações brancas', 'Dennis van Zuijlekom, CC BY-SA 2.0 (Wikimedia Commons)'],
+    tcfc: ['https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Cone_beam_computed_tomography_%28CBCT%29.jpg/960px-Cone_beam_computed_tomography_%28CBCT%29.jpg', 'Imagens de tomografia de feixe cônico (TCFC): cortes e reconstrução em 3D.', 'Tela com cortes de tomografia dos maxilares', 'JohnHGood41, CC BY-SA 4.0 (Wikimedia Commons)'],
+    tcfcAparelho: ['https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Cone-beam_computed_tomography_system.jpg/330px-Cone-beam_computed_tomography_system.jpg', 'Aparelho de tomografia de feixe cônico.', 'Aparelho de tomografia odontológica', 'FDA (EUA), domínio público (Wikimedia Commons)'],
+    dentGif: ['https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Dentigerous_cyst.gif/960px-Dentigerous_cyst.gif', 'Animação: o cisto dentígero se forma em volta da coroa do dente incluso.', 'Animação de cisto em volta da coroa de um dente incluso', 'Emailshankar, CC BY 3.0 (Wikimedia Commons)'],
+    jawCyst: ['https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/JawCyst.jpg/960px-JawCyst.jpg', 'Panorâmica: cisto dentígero na mandíbula direita, em volta de um terceiro molar incluso.', 'Panorâmica com área escura grande em volta de um siso incluso', C.cor3],
+    jawCystSeta: ['https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/JawCyst_%28with_arrows%2C_cropped%29.jpg/330px-JawCyst_%28with_arrows%2C_cropped%29.jpg', 'O mesmo cisto, com setas marcando o contorno radiolúcido.', 'Recorte de panorâmica com setas em volta de uma área escura', C.cor3],
+    colest: ['https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Histopathology_of_cholesterol_clefts_of_a_periapical_cyst_of_the_jaw.jpg/960px-Histopathology_of_cholesterol_clefts_of_a_periapical_cyst_of_the_jaw.jpg', 'Histopatológico de cisto periapical (radicular): fendas de colesterol no microscópio.', 'Lâmina corada em rosa e roxo com fendas alongadas', 'Mikael Häggström, CC0 (Wikimedia Commons)'],
+    kcotHisto: ['https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Keratocystic_odontogenic_tumour_-_intermed_mag.jpg/960px-Keratocystic_odontogenic_tumour_-_intermed_mag.jpg', 'Ceratocisto no microscópio (HE): epitélio fino que produz ceratina.', 'Lâmina rosa com epitélio fino ondulado', 'Nephron, CC BY-SA 3.0 (Wikimedia Commons)'],
+    kcotPan: ['https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Massive_keratocystic_odontogenic_tumour.jpg/960px-Massive_keratocystic_odontogenic_tumour.jpg', 'Ceratocisto enorme na mandíbula, com terceiros molares inclusos.', 'Panorâmica com lesão escura extensa no corpo e ramo da mandíbula', C.cor3],
+    cemento: ['https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Jaw_lesions_-_Cementoblastoma_-_Cone_beam_CT.jpg/330px-Jaw_lesions_-_Cementoblastoma_-_Cone_beam_CT.jpg', 'Cementoblastoma na tomografia: massa radiopaca redonda grudada na raiz.', 'Cortes de tomografia com massa clara na raiz de um dente', C.silva],
+    osteite: ['https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Jaw_lesions_-_Condensing_osteitis_-_Cone_beam_CT.jpg/500px-Jaw_lesions_-_Condensing_osteitis_-_Cone_beam_CT.jpg', 'Osteíte condensante: osso mais denso e difuso no ápice de um molar inferior com lesão inflamatória.', 'Cortes de tomografia com área clara difusa no ápice', C.silva],
+    osteoescl: ['https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Jaw_lesions_-_Idiopathic_osteosclerosis_-_Cone_beam_CT.jpg/500px-Jaw_lesions_-_Idiopathic_osteosclerosis_-_Cone_beam_CT.jpg', 'Osteoesclerose idiopática: área redonda radiopaca abaixo do ápice de um dente sadio.', 'Cortes de tomografia com área clara redonda sob o ápice', C.silva],
+    dcoPan: ['https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Periapical_radiopaque-hyperdense_jaw_lesions_2.jpg/500px-Periapical_radiopaque-hyperdense_jaw_lesions_2.jpg', 'Displasia cemento-óssea periapical: lesões redondas radiopacas nos ápices dos dentes anteriores inferiores.', 'Recortes de panorâmica e tomografia com áreas claras nos ápices', C.silva],
+    dcoFlorida: ['https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Florid_osseous_dysplasia.png/500px-Florid_osseous_dysplasia.png', 'Displasia florida: várias massas mistas e radiopacas em vários quadrantes.', 'Panorâmica com várias áreas claras nos ápices dos dois lados', 'Coronation Dental Specialty Group, CC BY-SA 4.0 (Wikimedia Commons)'],
+    odontTC: ['https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Periapical_radiopaque-hyperdense_jaw_lesions_4.jpg/500px-Periapical_radiopaque-hyperdense_jaw_lesions_4.jpg', 'Odontoma composto na tomografia: várias estruturas parecidas com dentes pequenos.', 'Cortes de tomografia com pequenas estruturas claras com forma de dente', C.silva],
+    odontPan: ['https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Odontome_44jw_-_001.jpg/960px-Odontome_44jw_-_001.jpg', 'Odontoma na mandíbula: massa radiopaca com halo escuro em volta.', 'Recorte de panorâmica com massa clara na mandíbula', 'Hellerhoff, CC BY-SA 3.0 (Wikimedia Commons)'],
+    mixoma: ['https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Panoramic_X-ray_of_odontogenic_myxoma.jpg/500px-Panoramic_X-ray_of_odontogenic_myxoma.jpg', 'Panorâmica de mixoma odontogênico: lesão multilocular.', 'Panorâmica com lesão escura com septos na mandíbula', 'Naresh Kumar, Munish Kohli, Saumya Pandey e cols., domínio público (Wikimedia Commons)'],
+    mentual3d: ['https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Mental_foramen_-_skull_-_lateral_view.png/960px-Mental_foramen_-_skull_-_lateral_view.png', 'Forame mentual (em vermelho) na face externa da mandíbula.', 'Crânio em 3D visto de lado com o forame mentual em vermelho', 'BodyParts3D (DBCLS), CC BY-SA 2.1 JP (Wikimedia Commons)'],
+    mentualPartynia: ['https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Foramen_mentale_-_Alveolarknochen.png/960px-Foramen_mentale_-_Alveolarknochen.png', 'Forame mentual (ponto vermelho), entre os pré-molares inferiores (legendas em alemão).', 'Mandíbula com o forame mentual marcado', 'Partynia, CC BY-SA 4.0 (Wikimedia Commons)'],
+    g176: ['https://upload.wikimedia.org/wikipedia/commons/6/64/Gray176.png', 'Mandíbula por fora (Gray): côndilo, corpo, ramo e forame mentual.', 'Desenho da mandíbula, face externa', C.gray],
+    g188: ['https://upload.wikimedia.org/wikipedia/commons/2/2c/Gray188.png', 'Crânio de lado (Gray): maxila, mandíbula e côndilo.', 'Desenho do crânio visto de lado', C.gray],
+    g160: ['https://upload.wikimedia.org/wikipedia/commons/4/4a/Gray160.png', 'Palato duro visto de baixo (Gray): forame incisivo na frente.', 'Desenho do palato ósseo visto de baixo', C.gray],
+    dente: ['https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Human_tooth_diagram-en.svg/960px-Human_tooth_diagram-en.svg.png', 'Partes do dente (em inglês): esmalte (enamel), dentina, polpa, raiz e osso.', 'Corte de um molar com as partes nomeadas', 'KDS4444, CC BY-SA 4.0 (Wikimedia Commons)'],
+    dente2: ['https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Tooth_Section.svg/960px-Tooth_Section.svg.png', 'Corte do dente: ligamento periodontal e osso do alvéolo em volta da raiz (em inglês).', 'Corte de dente com as camadas', 'Indolences, CC BY-SA 3.0 (Wikimedia Commons)']
+  };
+  var FC = {
+    'radiolúcida': ['periAbsc', 'jawCystSeta'], 'radiolúcido': ['periAbsc', 'jawCystSeta'], 'radiolucidez': ['periAbsc'],
+    'radiopaca': ['panDigital', 'odontPan'], 'radiopaco': ['panDigital', 'odontPan'], 'radiopacidade': ['osteoescl', 'panDigital'],
+    'periapical': ['periAbsc'], 'panorâmica': ['panBasica', 'panDigital'], 'achado incidental': ['panBasica'],
+    'tomografia': ['tcfc', 'tcfcAparelho'], 'TCFC': ['tcfc', 'tcfcAparelho'], 'bidimensional': ['tcfc'],
+    'cisto': ['jawCystSeta', 'colest'], 'cisto dentígero': ['jawCyst', 'dentGif'], 'incluso': ['panBasica', 'dentGif'], 'terceiro molar': ['panBasica', 'jawCyst'],
+    'pericoronário': ['dentGif'], 'folículo': ['dentGif'],
+    'cisto radicular': ['colest'], 'lesão periapical inflamatória': ['periAbsc'], 'vitalidade': ['periAbsc'], 'cárie': ['periAbsc'],
+    'histopatológico': ['colest', 'kcotHisto'], 'histopatologia': ['colest', 'kcotHisto'], 'biópsia': ['colest'],
+    'ceratocisto': ['kcotPan', 'kcotHisto'], 'unilocular': ['jawCystSeta'], 'multilocular': ['mixoma', 'kcotPan'], 'septo': ['mixoma'],
+    'cementoblastoma': ['cemento'], 'osteíte condensante': ['osteite'], 'osteoesclerose idiopática': ['osteoescl'],
+    'displasia cemento-óssea': ['dcoPan', 'dcoFlorida'], 'odontoma': ['odontPan', 'odontTC'], 'odontoma composto': ['odontTC'], 'dentículo': ['odontTC'],
+    'mixoma odontogênico': ['mixoma'], 'raquete de tênis': ['mixoma'],
+    'forame mentual': ['mentual3d', 'mentualPartynia'], 'mandíbula': ['g176', 'g188'], 'côndilo': ['g176', 'g188'], 'base da mandíbula': ['g176'],
+    'palato duro': ['g160'], 'forame incisivo': ['g160'], 'esmalte': ['dente'], 'lâmina dura': ['dente2', 'periAbsc'], 'tratamento de canal': ['dente'],
+    'canal mandibular': ['panBasica'], 'seio maxilar': ['panBasica'], 'cavidade nasal': ['panBasica'],
+    'cortical': ['tcfc'], 'corticais': ['tcfc'], 'corticalizada': ['jawCystSeta'], 'corticada': ['jawCystSeta'], 'corticado': ['jawCystSeta']
+  };
+  aplica(IC, FC);
   /*__COMMONS__*/
   Object.keys(G).forEach(function (k) {
     var v = G[k]; if (v._fim) return; v._fim = 1;
