@@ -376,7 +376,7 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <script src="caderno-gustavo.js?v=202611251900"></script>
 <script src="glossario-farmaco.js?v=202611251445"></script>
 <script src="videos-farmaco.js?v=202611251855"></script>
-<script src="porques-farmaco.js?v=202611251445"></script>
+<script src="porques-farmaco.js?v=202611251900"></script>
 <script src="av-2026-11-24.js?v=202611251330"></script>
 <script src="jonas-guia.js?v=202611241755"></script>
 <script src="glossario-carie.js?v=202611251627"></script>
@@ -861,7 +861,7 @@ function abreZoom(src, alt){
   z.onclick = fecha; document.addEventListener('keydown', esc_); document.body.appendChild(z);
 }
 function enunciadoHtml(q){
-  if (q.af && q.af.length) return `<div class="enun"><p>${G(q.ctx)}</p><ul class="afs">${q.af.map((t,k)=>(q.ar&&k===1?'<li class="porque">PORQUE</li>':'')+`<li><b>${ROM[k]}.</b><span>${G(t)}</span></li>`).join('')}</ul>${q.p?`<p>${G(q.p)}</p>`:''}</div>`;
+  if (q.af && q.af.length) return `<div class="enun"><p>${G(q.ctx)}</p><ul class="afs">${q.af.map((t,k)=>(q.ar&&k===1?'<li class="porque">PORQUE</li>':'')+`<li><b>${ROM[k]}.</b><span>${(window._semPorq=true, (function(){ try { return G(t); } finally { window._semPorq=false; } })())}</span></li>`).join('')}</ul>${q.p?`<p>${G(q.p)}</p>`:''}</div>`;
   return `<div class="enun"><p>${G(q.ctx)}${q.p?' '+G(q.p):''}</p></div>`;
 }
 function questao(anima){
