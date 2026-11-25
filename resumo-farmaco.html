@@ -12,7 +12,7 @@ h1{font-size:34px;font-weight:900}.sub{color:var(--cinza);margin:6px 0 22px}
 .cap h2{font-size:24px;color:var(--cor);margin-bottom:10px}.cap h3{font-size:18px;margin:18px 0 6px}
 .num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--cor);color:#fff;font-size:15px;margin-right:8px;vertical-align:2px}
 p{margin:0 0 10px}ul{margin:0 0 10px;padding-left:22px}
-.tab{overflow-x:auto}
+.tab{overflow-x:auto}td{overflow-wrap:anywhere}@media(max-width:480px){table{font-size:13px}th,td{padding:6px 7px}.cap{padding:18px 12px}}
 table{width:100%;border-collapse:collapse;font-size:15px;margin:8px 0 12px;border-radius:12px;overflow:hidden}
 th{background:var(--claro);color:var(--cor);text-align:left;padding:9px 10px}td{padding:9px 10px;border-top:1px solid #e6e8ee;vertical-align:top}
 .atencao{background:var(--alerta);border-left:5px solid var(--alertab);border-radius:10px;padding:12px 14px;margin:12px 0;font-size:16px}
@@ -86,7 +86,7 @@ figure{margin:12px 0}figure img{width:100%;border-radius:12px;background:#1a2233
 <tr><td>Amina terminal</td><td>Hidrofílica: solubilidade em água</td></tr></tbody></table></div>
 <h3>Éster x amida</h3>
 <div class="tab"><table><thead><tr><th>Tipo</th><th>Exemplos</th><th>O que lembrar</th></tr></thead><tbody>
-<tr><td>Éster</td><td>Procaína (e a cocaína, histórica)</td><td>Mais alergênico, pouco usado hoje</td></tr>
+<tr><td>Éster</td><td>Procaína (e a cocaína, histórica)</td><td>Mais alergênico, pouco usado injetável hoje (a benzocaína tópica é éster)</td></tr>
 <tr><td>Amida</td><td>Lidocaína, articaína, mepivacaína, prilocaína, bupivacaína</td><td>As mais usadas, melhor perfil de segurança. Metabolismo no fígado (a articaína também é quebrada no plasma)</td></tr></tbody></table></div>
 <p>História na ordem da aula: óxido nitroso (século XIX), cocaína (muitos efeitos colaterais), procaína e depois as amidas.</p>
 <h3>Base fraca e pH: por que falha no abscesso</h3>
@@ -133,7 +133,7 @@ figure{margin:12px 0}figure img{width:100%;border-radius:12px;background:#1a2233
 
 <section class="cap" id="c5">
 <h2><span class="num">5</span>Dose máxima: a conta que sempre cai</h2>
-<p>Tubete = <b>1,8 mL</b>. Concentração em % x 10 = mg/mL. <b>mg/mL x 1,8 = mg por tubete</b>. Dose máxima = peso x mg/kg. Arredonda sempre pra <b>baixo</b>.</p>
+<p>Tubete = <b>1,8 mL</b>. Concentração em % x 10 = mg/mL. <b>mg/mL x 1,8 = mg por tubete</b>. Dose máxima = peso x mg/kg. Nunca passe do limite: o número de tubetes fica <b>abaixo</b> do resultado.</p>
 <h3>mg por tubete</h3>
 <div class="tab"><table><thead><tr><th>Solução</th><th>Conta</th><th>Por tubete</th></tr></thead><tbody>
 <tr><td>Lidocaína 2%</td><td>20 mg/mL x 1,8</td><td>36 mg</td></tr>
@@ -153,9 +153,9 @@ figure{margin:12px 0}figure img{width:100%;border-radius:12px;background:#1a2233
 <tr><td>Epinefrina 1:100.000, saudável</td><td>0,2 ÷ 0,018</td><td>11 tubetes</td></tr>
 <tr><td>Epinefrina 1:100.000, cardiopata</td><td>0,04 ÷ 0,018 = 2,2</td><td>2 tubetes</td></tr>
 <tr><td>Epinefrina 1:200.000, cardiopata</td><td>0,04 ÷ 0,009 = 4,4</td><td>4 tubetes</td></tr>
-<tr><td>Articaína 4%, criança de 20 kg</td><td>20 x 7 = 140 mg ÷ 72</td><td>1,9 tubete (menos de 2)</td></tr></tbody></table></div>
+<tr><td>Articaína 4%, criança de 20 kg</td><td>20 x 7 = 140 mg ÷ 72</td><td>1,9 tubete: menos de 2 (cerca de 3,5 mL)</td></tr></tbody></table></div>
 <p>Paciente de 60 kg saudável com lidocaína 2% e epinefrina 1:100.000: lidocaína dá 7, epinefrina dá 11. Vale o <b>menor</b>: 7, e quem limita é a lidocaína.</p>
-<div class="atencao"><b>Atenção pra prova</b>Faça as DUAS contas e fique com o MENOR. Erros clássicos: marcar 20 mg (é 1 mL, não o tubete); marcar 13 tubetes (esqueceu o peso); dar 7 tubetes de articaína pra criança (isso é adulto). A alternativa traiçoeira tem o número certo com o motivo trocado. A dose não substitui a aspiração.</div>
+<div class="atencao"><b>Atenção pra prova</b>Faça as DUAS contas e fique com o MENOR. Erros clássicos: marcar 20 mg (é 1 mL, não o tubete); marcar 13 tubetes (alternativa que diz que a dose não depende do peso); dar 7 tubetes de articaína pra criança (isso é adulto). A alternativa traiçoeira tem o número certo com o motivo trocado. A dose não substitui a aspiração.</div>
 </section>
 
 <section class="cap" id="c6">
@@ -189,7 +189,7 @@ figure{margin:12px 0}figure img{width:100%;border-radius:12px;background:#1a2233
 <li>Ponto: triângulo retromolar, 6 a 10 mm acima do plano oclusal, entre o ramo e a linha oblíqua interna.</li>
 <li>Referência: a <b>língula (espinha de Spix)</b>, na face medial do ramo, que protege o forame mandibular.</li>
 <li>Agulha longa até o contato ósseo (cerca de 20 a 25 mm). Recua 1 mm, aspira e injeta 1,0 a 1,5 mL devagar.</li>
-<li>Anestesia todos os dentes do lado e os tecidos moles do hemiarco, <b>exceto a vestibular dos molares</b>.</li>
+<li>Anestesia todos os dentes do lado e os tecidos moles do hemiarco (o nervo lingual entra no recuo da agulha), <b>exceto a vestibular dos molares</b>.</li>
 <li>Sem contato ósseo: não forçar (risco de injetar no pterigóideo medial).</li>
 </ul>
 <div class="tab"><table><thead><tr><th>Técnica</th><th>Como</th><th>Volume</th><th>O que anestesia</th></tr></thead><tbody>
@@ -272,7 +272,7 @@ figure{margin:12px 0}figure img{width:100%;border-radius:12px;background:#1a2233
 <tr><td>Quem recebe</td><td>Só ALTO risco: endocardite prévia, prótese de válvula, algumas cardiopatias congênitas, transplantado cardíaco com valvopatia. Idade sozinha não indica</td></tr>
 <tr><td>Quando</td><td>Procedimento que manipula gengiva, região periapical ou perfura a mucosa</td></tr>
 <tr><td>Esquema</td><td>Amoxicilina 2 g VO (criança 50 mg/kg), dose única, 30 a 60 min antes</td></tr>
-<tr><td>Alérgico sem anafilaxia</td><td>Cefalexina 2 g</td></tr>
+<tr><td>Alérgico sem anafilaxia</td><td>Cefalexina 2 g</td></tr><tr><td>Alérgico com anafilaxia, angioedema ou urticária</td><td>Azitromicina ou claritromicina 500 mg (ou doxiciclina 100 mg), dose única 30 a 60 min antes</td></tr>
 <tr><td>Clindamicina</td><td>Saiu da profilaxia em 2021 (risco de colite por C. difficile). Continua valendo pra TRATAR infecção</td></tr></tbody></table></div>
 <div class="atencao"><b>Atenção pra prova</b>"Clavulanato libera a amoxicilina pro alérgico" é falso. Profilaxia não é "curso de 7 dias": é dose única. Prova e livro antigos ainda trazem clindamicina 600 mg na profilaxia: hoje não vale mais.</div>
 </section>
