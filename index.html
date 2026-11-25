@@ -800,7 +800,7 @@ function menuTreinoAV(){
   const treinos = dest.filter(m => /n[ií]vel/i.test(m.nome)).map(m => q(m, m.nome, 'Texto longo e pegadinha, igual à prova', IC.alvo, {num: n(m)})).join('')
     + (n(casos) ? q(casos, 'Casos reais', 'Paciente, dente e conduta', IC.esteto, {num: n(casos)}) : '')
     + imgs.map(m => q(m, m.nome, 'Qual é, por onde sai, o que anestesia', IC.foto || IC.olho || IC.play, {num: n(m)})).join('')
-    + (temas.length ? q(null, 'Por assunto', 'Escolha o tema mais fraco', IC.alvo, {id: 'temas', num: temas.length}) : '');
+    + (temas.length ? q(null, 'Por assunto', 'Um tema de cada vez', IC.alvo, {id: 'temas', num: temas.length}) : '');
   const nNov = n(novas), nErr = n(erros);
   const meus = (novas ? q(novas, 'Nunca fiz', nNov ? 'Só as que você não respondeu' : 'Você já fez todas', IC.play, {num: nNov, dis: !nNov}) : '')
     + (erros ? q(erros, 'Meus erros', nErr ? 'As que você errou, de novo' : 'Errou, aparece aqui', IC.volta, {num: nErr, dis: !nErr}) : '');
