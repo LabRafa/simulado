@@ -1161,7 +1161,7 @@ pinta();
   const u = new URLSearchParams(location.search), mid = u.get('m'), mo = u.get('modo');
   if (mid && infoMat(mid) && visivel(infoMat(mid))) {
     MAT = mid; grava('jogo-mat', MAT);
-    if (u.get('tela') === 'treino') return menuTreinoAV(); /* Rafael 25/11: link direto pro Treinar pra AV */
+    if (u.get('tela') === 'treino') return menuTreinoAV(); if (u.get('tela') === 'resumo' && typeof resumo === 'function') return resumo(); /* Rafael 25/11: link direto pro Treinar pra AV */
     const alvo = mo && modos().find(x => x.id === mo);
     if (alvo && sorteia(alvo).length) return comeca(alvo);
     return materia();
