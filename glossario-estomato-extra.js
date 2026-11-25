@@ -123,6 +123,24 @@
   "Canto da boca com fissura vermelha",
   "Lesion, CC BY-SA 3.0 (Wikimedia Commons)"
  ],
+ "candGram": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Candida_Gram_stain.jpg/960px-Candida_Gram_stain.jpg",
+  "Candida albicans no microscópio (coloração de Gram): leveduras e pseudo-hifas.",
+  "Células ovais roxas e filamentos no microscópio",
+  "Graham Beards, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "cand64": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Candida_albicans_1964.jpg/500px-Candida_albicans_1964.jpg",
+  "Candida albicans: leveduras e pseudo-hifas (CDC).",
+  "Micrografia com células e filamentos do fungo",
+  "Centers for Disease Control and Prevention, CC0 (Wikimedia Commons)"
+ ],
+ "punch4": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Disposable_Biopsy_Punch-4_mm.jpg/960px-Disposable_Biopsy_Punch-4_mm.jpg",
+  "Punch descartável de 4 mm, usado em biópsia.",
+  "Instrumento cilíndrico de biópsia",
+  "Ajay Kumar Chaurasiya, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
  "punch": [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Punch_Biopsy.jpg/960px-Punch_Biopsy.jpg",
   "Punch para biópsia: tira um cilindro de tecido.",
@@ -141,6 +159,24 @@
   "Desenho anatômico da cavidade da boca com a língua puxada",
   "Henry Vandyke Carter, Gray's Anatomy 1918, domínio público (Wikimedia Commons)"
  ],
+ "granHisto": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Histopathology_of_edematous_granulation_tissue%2C_low_magnification.jpg/500px-Histopathology_of_edematous_granulation_tissue%2C_low_magnification.jpg",
+  "Tecido de granulação no microscópio: muitos vasos novos e células inflamatórias.",
+  "Lâmina rosa com muitos vasos pequenos",
+  "Mikael Häggström, CC0 (Wikimedia Commons)"
+ ],
+ "kaposi": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Kaposi%E2%80%99s_sarcoma_intraoral_AIDS_072_lores.jpg/500px-Kaposi%E2%80%99s_sarcoma_intraoral_AIDS_072_lores.jpg",
+  "Sarcoma de Kaposi no palato de paciente com HIV (CDC).",
+  "Palato com lesão arroxeada",
+  "CDC/Sol Silverman Jr., domínio público (Wikimedia Commons)"
+ ],
+ "linfang": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Lymphangioma_of_the_tongue_Wellcome_L0062762.jpg/960px-Lymphangioma_of_the_tongue_Wellcome_L0062762.jpg",
+  "Linfangioma da língua em aquarela antiga (Wellcome Collection).",
+  "Pintura de língua com pequenas bolhas na superfície",
+  "Alfred George Francis, Wellcome Collection, CC BY 4.0 (Wikimedia Commons)"
+ ],
  "dentadura": [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Making_of_complete_denture_31.JPG/960px-Making_of_complete_denture_31.JPG",
   "Prótese total (dentadura) em confecção.",
@@ -152,6 +188,24 @@
   "Prótese total: dentes montados na base.",
   "Prótese total vista de perto",
   "Werneuchen, domínio público (Wikimedia Commons)"
+ ],
+ "nistatina": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Nystatin.svg/500px-Nystatin.svg.png",
+  "Fórmula da nistatina, antifúngico do bochecho.",
+  "Fórmula estrutural da nistatina",
+  "Methano, CC BY-SA 3.0 (Wikimedia Commons)"
+ ],
+ "petequia": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Petechiae_strep_throat.jpg/960px-Petechiae_strep_throat.jpg",
+  "Petéquias: pontinhos vermelhos no palato mole (faringite estreptocócica, CDC).",
+  "Palato mole com pontos vermelhos",
+  "CDC/Heinz F. Eichenwald, domínio público (Wikimedia Commons)"
+ ],
+ "placa": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Post_plaque_disclosing.jpg/500px-Post_plaque_disclosing.jpg",
+  "Biofilme (placa) corado com evidenciador: aparece roxo nos dentes.",
+  "Dentes com áreas roxas de placa",
+  "Ajeverett, CC BY-SA 4.0 (Wikimedia Commons)"
  ],
  "periodonto": [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Periodontium.svg/330px-Periodontium.svg.png",
@@ -171,11 +225,65 @@
   "Esquema de anticorpo bloqueando RANKL",
   "Benff, CC BY-SA 4.0 (Wikimedia Commons)"
  ],
+ "formol": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Wet-preserved_biological_specimens.jpg/960px-Wet-preserved_biological_specimens.jpg",
+  "Peças guardadas em líquido fixador, em frascos fechados.",
+  "Vidros com peças biológicas em líquido",
+  "Noukayami, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "zoledr": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Zoledronic_acid.svg/330px-Zoledronic_acid.svg.png",
+  "Fórmula do ácido zoledrônico, um bisfosfonato.",
+  "Fórmula estrutural do ácido zoledrônico",
+  "Fvasconcellos, domínio público (Wikimedia Commons)"
+ ],
+ "linfDiag": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Diagram_showing_the_lymph_nodes_in_the_head_and_neck_CRUK_310.svg/330px-Diagram_showing_the_lymph_nodes_in_the_head_and_neck_CRUK_310.svg.png",
+  "Linfonodos da cabeça e do pescoço (em inglês).",
+  "Desenho do pescoço com os linfonodos",
+  "Cancer Research UK, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "linfDiag2": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Diagram_showing_the_position_of_the_lymph_nodes_in_the_neck_CRUK_353.svg/330px-Diagram_showing_the_position_of_the_lymph_nodes_in_the_neck_CRUK_353.svg.png",
+  "Posição dos linfonodos do pescoço (em inglês).",
+  "Desenho de perfil do pescoço com linfonodos",
+  "Cancer Research UK, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
  "amalg": [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Amalgam_filling.JPG/330px-Amalgam_filling.JPG",
   "Restauração de amálgama (metálica) num molar.",
   "Dente com restauração prateada",
-  "autor no Commons, ver página do arquivo (Wikimedia Commons)"
+  "autor não informado, CC BY-SA 3.0 (Wikimedia Commons)"
+ ],
+ "nevoH": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Normal_Epidermis_and_Dermis_with_Intradermal_Nevus_10x.JPG/500px-Normal_Epidermis_and_Dermis_with_Intradermal_Nevus_10x.JPG",
+  "Nevo melanocítico (intradérmico) no microscópio: ninhos de células névicas abaixo do epitélio (pele).",
+  "Lâmina com ninhos de células abaixo da epiderme",
+  "Kilbad, domínio público (Wikimedia Commons)"
+ ],
+ "sebH": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Insertion_of_sebaceous_glands_into_hair_shaft_x10.jpg/960px-Insertion_of_sebaceous_glands_into_hair_shaft_x10.jpg",
+  "Glândulas sebáceas no microscópio (na pele, junto ao pelo).",
+  "Lâmina com glândula de células claras",
+  "Kilbad, domínio público (Wikimedia Commons)"
+ ],
+ "necH": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Confluent_epidermal_necrosis_-_intermed_mag.jpg/960px-Confluent_epidermal_necrosis_-_intermed_mag.jpg",
+  "Necrose no microscópio: células mortas, sem núcleo, coradas de rosa.",
+  "Lâmina com área rosa sem núcleos",
+  "Nephron, CC BY-SA 3.0 (Wikimedia Commons)"
+ ],
+ "papH": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Cervical_cytology_smear_%28Pap_stain%29.png/960px-Cervical_cytology_smear_%28Pap_stain%29.png",
+  "Esfregaço citológico (Papanicolaou): células soltas no microscópio.",
+  "Células coloridas espalhadas no microscópio",
+  "Adel.stoyanova, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "absc": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Periapical_abscess.jpg/960px-Periapical_abscess.jpg",
+  "Dente extraído com abscesso preso no ápice: o pus desse foco é o que sai pela fístula.",
+  "Raiz de dente extraído com bolsa de pus na ponta",
+  "lacihobo, CC BY-SA 4.0 (Wikimedia Commons)"
  ]
 };
   var FC = {
@@ -195,8 +303,19 @@
  "queilite angular": [
   "queilite"
  ],
+ "Candida": [
+  "candGram",
+  "cand64"
+ ],
+ "candidose hiperplásica": [
+  "candGram"
+ ],
+ "microbiota": [
+  "cand64"
+ ],
  "biópsia": [
-  "punch"
+  "punch",
+  "punch4"
  ],
  "biópsia incisional": [
   "punch"
@@ -219,12 +338,39 @@
  "palato mole": [
   "g1014"
  ],
+ "tecido de granulação": [
+  "granHisto"
+ ],
+ "histopatológico": [
+  "granHisto"
+ ],
+ "sarcoma de Kaposi": [
+  "kaposi"
+ ],
+ "imunossupressão": [
+  "kaposi"
+ ],
+ "linfangioma": [
+  "linfang"
+ ],
  "prótese": [
   "dentadura",
   "dentadura2"
  ],
  "estomatite protética": [
   "dentadura"
+ ],
+ "antifúngico": [
+  "nistatina"
+ ],
+ "petéquia": [
+  "petequia"
+ ],
+ "discrasia sanguínea": [
+  "petequia"
+ ],
+ "biofilme": [
+  "placa"
  ],
  "gengiva inserida": [
   "periodonto"
@@ -236,6 +382,59 @@
  "denosumabe": [
   "rankl1",
   "rankl2"
+ ],
+ "bisfosfonato": [
+  "zoledr"
+ ],
+ "formol": [
+  "formol"
+ ],
+ "formol 10%": [
+  "formol"
+ ],
+ "fixador": [
+  "formol"
+ ],
+ "linfonodos": [
+  "linfDiag",
+  "linfDiag2"
+ ],
+ "linfonodo": [
+  "linfDiag",
+  "linfDiag2"
+ ],
+ "drenagem linfática": [
+  "linfDiag"
+ ],
+ "câncer de boca": [
+  "linfDiag"
+ ],
+ "nevo melanocítico": [
+  "nevoH"
+ ],
+ "glândula sebácea": [
+  "sebH"
+ ],
+ "glândulas sebáceas": [
+  "sebH"
+ ],
+ "grânulos de Fordyce": [
+  "sebH"
+ ],
+ "necrose": [
+  "necH"
+ ],
+ "citologia esfoliativa": [
+  "papH"
+ ],
+ "amálgama": [
+  "amalg"
+ ],
+ "pus": [
+  "absc"
+ ],
+ "fístula": [
+  "absc"
  ]
 };
   Object.assign(I, IC); Object.keys(FC).forEach(function (k) { F[k] = (F[k] || []).concat(FC[k]); }); })();

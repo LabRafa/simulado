@@ -102,6 +102,7 @@
     'diferenciais': t('Diagnósticos diferenciais = as outras lesões que podem dar uma imagem parecida com a da hipótese principal e precisam ser descartadas.', f(PAL, NEV)),
     'pense em cavalos': t('Frase clássica do raciocínio clínico ("quando ouvir cascos, pense em cavalos, não em zebras"): começar pela hipótese mais frequente e mais óbvia, e só depois listar as raras (as "zebras") como diferenciais.', f(PAL, 'aforismo atribuído a Theodore Woodward (anos 1940)')),
     'conduta': t('Conduta = o que fazer com o paciente depois de montar a hipótese: acompanhar (displasia, osteoesclerose), tratar a causa (lesão periapical inflamatória) ou operar o quanto antes (ameloblastoma, ceratocisto). Na dúvida, biópsia.', f(PAL, NEV)),
+    'periapical inflamatória': t('Lesão periapical inflamatória: lesão no ápice de dente SEM vitalidade (cárie ou trauma), como granuloma, cisto radicular ou abscesso. Radiolúcida, unilocular, bem definida, com a lâmina dura interrompida no ápice. Conduta: tratar a causa (canal ou extração). Ex.: molar com cárie enorme, sem resposta ao frio e área escura no ápice.', f(PAL, NEV)),
     'cárie': t('Doença causada pelo biofilme que dissolve esmalte e dentina com ácido. Na radiografia aparece radiolúcida na coroa; cárie profunda leva à morte da polpa e à lesão no ápice.', f(PAL, 'Fejerskov & Kidd, Cárie Dentária'))
   };
 
@@ -133,7 +134,7 @@
     'corticalizada': ['bordas'], 'corticada': ['bordas'], 'corticado': ['bordas'],
     'reabsorção radicular': ['raizes'], 'cortical': ['cortTC'], 'corticais': ['cortTC'],
     'ressecção': ['antesDepois'], 'margem de segurança': ['antesDepois'], 'ameloblastoma': ['antesDepois'],
-    'lesão periapical inflamatória': ['apice'], 'tratamento de canal': ['apice'], 'lâmina dura': ['apice'],
+    'lesão periapical inflamatória': ['apice'], 'periapical inflamatória': ['apice', 'periAbsc'], 'tratamento de canal': ['apice'], 'lâmina dura': ['apice'],
     'odontoma': ['denticulos'], 'odontoma composto': ['denticulos', 'padroes'], 'dentículo': ['padroes', 'denticulos'],
     'incluso': ['incluso'], 'terceiro molar': ['incluso'], 'cisto dentígero': ['incluso', 'pericor'], 'pericoronário': ['pericor'], 'folículo': ['pericor'],
     'displasia cemento-óssea': ['dcoFases'], 'osteíte condensante': ['radiopApice'], 'osteoesclerose idiopática': ['radiopApice'],
@@ -187,7 +188,7 @@
     mixoma: ['https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Panoramic_X-ray_of_odontogenic_myxoma.jpg/500px-Panoramic_X-ray_of_odontogenic_myxoma.jpg', 'Panorâmica de mixoma odontogênico: lesão multilocular.', 'Panorâmica com lesão escura com septos na mandíbula', 'Naresh Kumar, Munish Kohli, Saumya Pandey e cols., domínio público (Wikimedia Commons)'],
     mentual3d: ['https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Mental_foramen_-_skull_-_lateral_view.png/960px-Mental_foramen_-_skull_-_lateral_view.png', 'Forame mentual (em vermelho) na face externa da mandíbula.', 'Crânio em 3D visto de lado com o forame mentual em vermelho', 'BodyParts3D (DBCLS), CC BY-SA 2.1 JP (Wikimedia Commons)'],
     mentualPartynia: ['https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Foramen_mentale_-_Alveolarknochen.png/960px-Foramen_mentale_-_Alveolarknochen.png', 'Forame mentual (ponto vermelho), entre os pré-molares inferiores (legendas em alemão).', 'Mandíbula com o forame mentual marcado', 'Partynia, CC BY-SA 4.0 (Wikimedia Commons)'],
-    g176: ['https://upload.wikimedia.org/wikipedia/commons/6/64/Gray176.png', 'Mandíbula por fora (Gray): côndilo, corpo, ramo e forame mentual.', 'Desenho da mandíbula, face externa', C.gray],
+    g176: ['https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Gray176.png/500px-Gray176.png', 'Mandíbula por fora (Gray): côndilo, corpo, ramo e forame mentual.', 'Desenho da mandíbula, face externa', C.gray],
     g188: ['https://upload.wikimedia.org/wikipedia/commons/2/2c/Gray188.png', 'Crânio de lado (Gray): maxila, mandíbula e côndilo.', 'Desenho do crânio visto de lado', C.gray],
     g160: ['https://upload.wikimedia.org/wikipedia/commons/4/4a/Gray160.png', 'Palato duro visto de baixo (Gray): forame incisivo na frente.', 'Desenho do palato ósseo visto de baixo', C.gray],
     dente: ['https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Human_tooth_diagram-en.svg/960px-Human_tooth_diagram-en.svg.png', 'Partes do dente (em inglês): esmalte (enamel), dentina, polpa, raiz e osso.', 'Corte de um molar com as partes nomeadas', 'KDS4444, CC BY-SA 4.0 (Wikimedia Commons)'],
@@ -212,11 +213,83 @@
     'cortical': ['tcfc'], 'corticais': ['tcfc'], 'corticalizada': ['jawCystSeta'], 'corticada': ['jawCystSeta'], 'corticado': ['jawCystSeta']
   };
   aplica(IC, FC);
-  /*__COMMONS__*/
+  /*COMMONS-INI*/
+  (function () { var IC = {
+ "superN": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Supernumerary_teeth.jpg/960px-Supernumerary_teeth.jpg",
+  "Dentes supranumerários (dentes a mais).",
+  "Dentes extras na arcada",
+  "Albert, domínio público (Wikimedia Commons)"
+ ],
+ "mesiodens": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Mesiodens_Accessory_Teeth.jpg/960px-Mesiodens_Accessory_Teeth.jpg",
+  "Mesiodens: supranumerário entre os incisivos centrais superiores.",
+  "Dente extra entre os incisivos superiores",
+  "User:Nizil Shah, CC BY-SA 3.0 (Wikimedia Commons)"
+ ],
+ "siso": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Impacted_wisdom_tooth.jpg/960px-Impacted_wisdom_tooth.jpg",
+  "Terceiro molar incluso (impactado).",
+  "Radiografia de siso incluso",
+  "Free Dental Photos, CC BY 2.0 (Wikimedia Commons)"
+ ],
+ "sisoH": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Horizontal_impacted_wisdom_tooth.png/330px-Horizontal_impacted_wisdom_tooth.png",
+  "Terceiro molar incluso na horizontal, empurrando o segundo molar.",
+  "Esquema ou radiografia de siso deitado",
+  "Coronation Dental Specialty Group, CC BY-SA 3.0 (Wikimedia Commons)"
+ ],
+ "odontoma2": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Odontoma.jpg/960px-Odontoma.jpg",
+  "Odontoma: massa radiopaca com halo, sobre dente que não erupcionou.",
+  "Radiografia com massa clara sobre dente incluso",
+  "JXtra, CC BY-SA 3.0 (Wikimedia Commons)"
+ ],
+ "panAbsc": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Orthopantomogram_of_an_abscessed_tooth.jpg/960px-Orthopantomogram_of_an_abscessed_tooth.jpg",
+  "Panorâmica: molar inferior com lesão no ápice; as restaurações de amálgama aparecem brancas (radiopacas).",
+  "Panorâmica com restaurações brancas e lesão escura em um molar",
+  "O'Dea, CC BY-SA 3.0 (Wikimedia Commons)"
+ ],
+ "caninoIncl": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Orthopantomogram_showing_impacted_upper_canine.jpg/960px-Orthopantomogram_showing_impacted_upper_canine.jpg",
+  "Panorâmica com canino superior incluso.",
+  "Panorâmica com canino fora de posição dentro do osso",
+  "Challiyan, CC BY-SA 4.0 (Wikimedia Commons)"
+ ]
+};
+  var FC = {
+ "supranumerário": [
+  "superN",
+  "mesiodens"
+ ],
+ "incluso": [
+  "siso",
+  "caninoIncl"
+ ],
+ "terceiro molar": [
+  "sisoH"
+ ],
+ "odontoma": [
+  "odontoma2"
+ ],
+ "radiopaca": [
+  "panAbsc"
+ ],
+ "radiopaco": [
+  "panAbsc"
+ ],
+ "lesão periapical inflamatória": [
+  "panAbsc"
+ ]
+};
+  aplica(IC, FC); })();
+  /*COMMONS-FIM*/
   Object.keys(G).forEach(function (k) {
     var v = G[k]; if (v._fim) return; v._fim = 1;
     if (v._cred) v.fonte = v.fonte + '. Imagens: ' + v._cred.join('; ');
     delete v._cred; delete v._dono; delete v._ja;
   });
+  Object.keys(G).forEach(function (k) { delete G[k]._fim; });
   B.glossario = Object.assign(B.glossario || {}, G);
 })();

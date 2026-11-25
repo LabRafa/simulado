@@ -92,6 +92,30 @@
   var F = {};
   /*COMMONS-INI*/
   (function () { var IC = {
+ "dna": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/DNA_double_helix_horizontal.png/250px-DNA_double_helix_horizontal.png",
+  "Dupla hélice do DNA.",
+  "Desenho da molécula de DNA em dupla hélice",
+  "Jerome Walker, domínio público (Wikimedia Commons)"
+ ],
+ "dnaAnim": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/DNA_animation.gif/120px-DNA_animation.gif",
+  "DNA girando: as duas fitas e as bases pareadas.",
+  "Animação da dupla hélice do DNA",
+  "brian0918, domínio público (Wikimedia Commons)"
+ ],
+ "foro1": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/US%2C_Ghana_train_forensic_dentistry_during_AL26_%289663082%29.jpg/960px-US%2C_Ghana_train_forensic_dentistry_during_AL26_%289663082%29.jpg",
+  "Treinamento de odontologia legal: equipe examinando arcadas para identificação.",
+  "Profissionais examinando dentes em treinamento forense",
+  "Exército dos EUA, domínio público (Wikimedia Commons)"
+ ],
+ "foro2": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/US%2C_Ghana_train_forensic_dentistry_during_AL26_%289663034%29.jpg/960px-US%2C_Ghana_train_forensic_dentistry_during_AL26_%289663034%29.jpg",
+  "Treinamento de identificação odontológica em desastres.",
+  "Profissionais em treinamento de odontologia forense",
+  "Exército dos EUA, domínio público (Wikimedia Commons)"
+ ],
  "odontograma": [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Dental_Chart_1987_Daly_City_Jane_Doe.jpg/960px-Dental_Chart_1987_Daly_City_Jane_Doe.jpg",
   "Odontograma (ficha dental) de pessoa não identificada, usado para comparar com prontuários.",
@@ -109,6 +133,18 @@
   "Lacre de segurança: se alguém abrir, a fita mostra que foi violada. Garante a cadeia de custódia.",
   "Fita de lacre de saco plástico com marca de violação",
   "Btamevi, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "iml": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Edificio_del_Instituto_M%C3%A9dico_Legal%2C_Independencia%2C_Santiago_20230326_03.jpg/960px-Edificio_del_Instituto_M%C3%A9dico_Legal%2C_Independencia%2C_Santiago_20230326_03.jpg",
+  "Prédio de um Instituto Médico Legal (Santiago, Chile).",
+  "Fachada de prédio institucional",
+  "Carlos Figueroa Rojas, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "stj": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/DF_%E2%80%93_Edif%C3%ADcio_Sede_do_STJ_-_55044958268.jpg/960px-DF_%E2%80%93_Edif%C3%ADcio_Sede_do_STJ_-_55044958268.jpg",
+  "Sede do Superior Tribunal de Justiça (STJ), em Brasília.",
+  "Prédio moderno do STJ",
+  "STJNoticias, CC BY 4.0 (Wikimedia Commons)"
  ],
  "digital": [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Fingerprint_Whorl.jpg/120px-Fingerprint_Whorl.jpg",
@@ -128,11 +164,23 @@
   "Desenho do fêmur",
   "Henry Vandyke Carter, domínio público (Wikimedia Commons)"
  ],
+ "brumaCorte": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Brumadinho_dam_-_cross_section_-_pt.png/960px-Brumadinho_dam_-_cross_section_-_pt.png",
+  "Corte da barragem B1 de Brumadinho (em português).",
+  "Esquema em corte de uma barragem de rejeitos",
+  "Agricolax, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
  "brumaFoto": [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Brumadinho%2C_Minas_Gerais_%2847021723582%29.jpg/960px-Brumadinho%2C_Minas_Gerais_%2847021723582%29.jpg",
   "Brumadinho (MG) depois do rompimento da barragem, em 2019.",
   "Vista aérea de área coberta de lama",
   "Ibama from Brasil, CC BY-SA 2.0 (Wikimedia Commons)"
+ ],
+ "interpol": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Interpol_-_Lyon.JPG/960px-Interpol_-_Lyon.JPG",
+  "Sede da INTERPOL em Lyon (França).",
+  "Prédio da INTERPOL",
+  "Jean-Marc Brivet, CC BY-SA 3.0 (Wikimedia Commons)"
  ],
  "nist": [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/NIST_AML_building.jpg/500px-NIST_AML_building.jpg",
@@ -152,6 +200,12 @@
   "Técnico em prótese na bancada",
   "CifraLab, CC BY-SA 4.0 (Wikimedia Commons)"
  ],
+ "deciduo": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Deciduous_teeth-boy-OPG-10%2C10%2C2019.jpg/960px-Deciduous_teeth-boy-OPG-10%2C10%2C2019.jpg",
+  "Panorâmica de criança: dentes decíduos e permanentes se formando por baixo.",
+  "Radiografia panorâmica de criança",
+  "Gang65, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
  "forum": [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Oldest_Courthouse%2C_Petr%C3%B3polis%2C_Rio_de_Janeiro_State%2C_Brazil.JPG/960px-Oldest_Courthouse%2C_Petr%C3%B3polis%2C_Rio_de_Janeiro_State%2C_Brazil.JPG",
   "Antigo fórum de Petrópolis (RJ).",
@@ -169,13 +223,55 @@
   "Panorâmica de jovem de 16 anos com terceiros molares inclusos ainda em formação.",
   "Radiografia panorâmica dos dois maxilares",
   "Coronation Dental Specialty Group, CC BY 3.0 (Wikimedia Commons)"
+ ],
+ "g176": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Gray176.png/500px-Gray176.png",
+  "Mandíbula vista de fora (Gray).",
+  "Desenho da mandíbula",
+  "Henry Vandyke Carter, Gray's Anatomy 1918, domínio público (Wikimedia Commons)"
+ ],
+ "tcle": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/CDC_Informed_Consent_form_1977.png/330px-CDC_Informed_Consent_form_1977.png",
+  "Exemplo de termo de consentimento escrito (CDC, 1977).",
+  "Formulário de consentimento impresso",
+  "Centers for Disease Control and Prevention (1977), domínio público (Wikimedia Commons)"
+ ],
+ "amox": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Amoxicillin_500mg_capsules_on_a_plate_(Sandoz).jpg/960px-Amoxicillin_500mg_capsules_on_a_plate_(Sandoz).jpg",
+  "Cápsulas de amoxicilina 500 mg, antibiótico muito usado em Odontologia.",
+  "Cápsulas de amoxicilina num prato",
+  "Henrysz, CC BY 4.0 (Wikimedia Commons)"
+ ],
+ "epipen": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Epipen_design_(cropped).jpg/960px-Epipen_design_(cropped).jpg",
+  "Caneta de epinefrina (autoinjetor), usada na emergência de anafilaxia.",
+  "Autoinjetor de epinefrina aberto mostrando as peças",
+  "Chemistryroxpharmacysux, CC BY-SA 4.0 (Wikimedia Commons)"
+ ],
+ "sisoX": [
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Impacted_wisdom_tooth.jpg/960px-Impacted_wisdom_tooth.jpg",
+  "Terceiro molar incluso: exodontia comum, que exige explicar riscos e ter o consentimento do paciente.",
+  "Radiografia de siso incluso",
+  "Free Dental Photos, CC BY 2.0 (Wikimedia Commons)"
  ]
 };
   var FC = {
+ "DNA": [
+  "dna"
+ ],
  "Odontologia Legal": [
+  "foro1",
   "odontograma"
  ],
+ "odontolegista": [
+  "foro1",
+  "foro2"
+ ],
+ "odontolegal": [
+  "foro2"
+ ],
  "identificação humana": [
+  "foro2",
   "odontograma"
  ],
  "odontograma": [
@@ -187,8 +283,15 @@
  "ante mortem": [
   "odontograma"
  ],
+ "post mortem": [
+  "foro1"
+ ],
  "reconciliação": [
-  "odontograma"
+  "odontograma",
+  "foro2"
+ ],
+ "DVI": [
+  "foro2"
  ],
  "necropsia": [
   "autopsia"
@@ -199,14 +302,28 @@
  "cadeia de custódia": [
   "lacre"
  ],
+ "IML": [
+  "iml"
+ ],
+ "Instituto Médico-Legal": [
+  "iml"
+ ],
+ "STJ": [
+  "stj"
+ ],
+ "REsp": [
+  "stj"
+ ],
  "papiloscopia": [
   "digital"
  ],
  "identificador primário": [
-  "digital"
+  "digital",
+  "dna"
  ],
  "identificadores primários": [
-  "digital"
+  "digital",
+  "dna"
  ],
  "antropologia forense": [
   "antrop"
@@ -218,7 +335,11 @@
   "femur"
  ],
  "Brumadinho": [
-  "brumaFoto"
+  "brumaFoto",
+  "brumaCorte"
+ ],
+ "INTERPOL": [
+  "interpol"
  ],
  "NIST": [
   "nist"
@@ -232,14 +353,22 @@
  "laboratório de prótese": [
   "tpd"
  ],
+ "decíduo": [
+  "deciduo"
+ ],
  "idade dental": [
+  "deciduo",
   "panBasica"
  ],
  "terceiro molar": [
   "panBasica"
  ],
  "Demirjian": [
-  "panBasica"
+  "panBasica",
+  "deciduo"
+ ],
+ "mineralização": [
+  "deciduo"
  ],
  "maior de idade": [
   "panBasica"
@@ -250,11 +379,38 @@
  "foro": [
   "forum"
  ],
+ "perícia": [
+  "foro1"
+ ],
+ "perito": [
+  "foro2"
+ ],
  "restauração": [
   "amalg"
  ],
  "radiografia": [
   "panBasica"
+ ],
+ "lesão corporal": [
+  "g176"
+ ],
+ "lesão grave": [
+  "g176"
+ ],
+ "TCLE": [
+  "tcle"
+ ],
+ "consentimento": [
+  "tcle"
+ ],
+ "antibiótico": [
+  "amox"
+ ],
+ "emergência": [
+  "epipen"
+ ],
+ "exodontia": [
+  "sisoX"
  ]
 };
   Object.assign(I, IC); Object.keys(FC).forEach(function (k) { F[k] = (F[k] || []).concat(FC[k]); }); })();
@@ -271,8 +427,8 @@
     var cred = [];
     lista.forEach(function (x) { if (v.img.indexOf(x[0]) < 0) { v.img.push(x[0]); v.legs.push(x[1]); v.alts.push(x[2]); if (cred.indexOf(x[3]) < 0) cred.push(x[3]); } });
     v._fonte0 = v.fonte;
-    if (cred.length) v.fonte = (v.fonte ? v.fonte + '. ' : '') + 'Imagens: ' + cred.join('; ') + ' (Wikimedia Commons)';
+    if (cred.length) v.fonte = (v.fonte ? v.fonte + '. ' : '') + 'Imagens: ' + cred.join('; ');
     feitos.push(v);
   });
-  Object.keys(g).forEach(function (k) { if (g[k] && g[k]._fonte0 !== undefined) delete g[k]._fonte0; });
+  Object.keys(g).forEach(function (k) { if (g[k] && typeof g[k] === 'object' && '_fonte0' in g[k]) delete g[k]._fonte0; });
 })();
