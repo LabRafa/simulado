@@ -411,10 +411,10 @@
     var ms = B.modos || (B.modos = []);
     if (ms.some(function (m) { return m.id === idModo; })) return;
     var modo = { id: idModo, nome: "Treino para a AVS (parecidas com a AV)",
-      sub: Q.length + " questões irmãs das da AV de 24/11, com resposta comentada. Vêm todas de uma vez.",
+      sub: Q.length + " questões paralelas às da AV de 24/11, com resposta comentada. Vêm todas de uma vez.",
       lista: Q, todas: true, destaque: true,
       apresenta: { titulo: "O que é este treino?",
-        texto: "São " + Q.length + " questões parecidas com as da AV de 24/11 (versão A): para cada questão da prova, duas irmãs com o mesmo tema e o mesmo jeito de perguntar (pergunta direta, caso clínico ou afirmativas I, II, III), mas com outro caso e outras alternativas. Não é cópia da prova. É para quem vai fazer a AVS treinar o raciocínio que a prova cobra. Cada uma tem resposta comentada explicando a certa e por que as outras erram." } };
+        texto: "São " + Q.length + " questões parecidas com as da AV de 24/11 (versão A): para cada questão da prova, duas questões paralelas, com o mesmo tema e o mesmo jeito de perguntar (pergunta direta, caso clínico ou afirmativas I, II, III), mas com outro caso e outras alternativas. Não é cópia da prova. É para quem vai fazer a AVS treinar o raciocínio que a prova cobra. Cada uma tem resposta comentada explicando a certa e por que as outras erram." } };
     var i = -1; ms.forEach(function (m, k) { if (m.id === idAV) i = k; });
     ms.splice(i >= 0 ? i + 1 : Math.min(1, ms.length), 0, modo);
   }
