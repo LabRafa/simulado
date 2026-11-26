@@ -2,168 +2,274 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Jogo do tubete</title>
 <style>
-:root{--cor:#1f6f8b;--ok:#1a7f37;--erro:#c0392b;--av:#b7791f;--fundo:#f6f8fa;--txt:#1b1f24}
-@media (prefers-color-scheme:dark){:root{--fundo:#15181c;--txt:#e6e9ec;--cor:#4fb3d6}}
-body{margin:0;background:var(--fundo);color:var(--txt);font:17px/1.5 system-ui,sans-serif}
-main{max-width:560px;margin:0 auto;padding:16px}
-h1{font-size:1.3em;margin:.2em 0}
-.card{background:rgba(127,127,127,.1);border-radius:14px;padding:14px;margin:12px 0}
-button{font:inherit;padding:.6em 1em;border:0;border-radius:999px;background:var(--cor);color:#fff;font-weight:700;cursor:pointer;margin:.25em 0}
+:root{--cor:#1f6f8b;--ok:#1a7f37;--erro:#c0392b;--av:#b7791f;--fundo:#f3f5f7;--txt:#1b1f24;--card:#ffffff}
+@media (prefers-color-scheme:dark){:root{--fundo:#121417;--txt:#e6e9ec;--card:#1d2126;--cor:#4fb3d6}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fundo);color:var(--txt);font:16px/1.45 system-ui,sans-serif;touch-action:manipulation}
+main{max-width:560px;margin:0 auto;padding:12px 12px 120px}
+h1{font-size:1.2em;margin:.2em 0}
+.card{background:var(--card);border-radius:14px;padding:12px;margin:10px 0;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+button{font:inherit;padding:.5em .9em;border:0;border-radius:999px;background:var(--cor);color:#fff;font-weight:700;cursor:pointer;margin:.2em .1em}
 button.sec{background:transparent;color:var(--cor);border:2px solid var(--cor)}
-.prat{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.prat button{border-radius:12px;background:#fff;color:#111;border:2px solid #ccc;font-weight:600;text-align:left;font-size:.9em}
-.prat button.sel{border-color:var(--cor);background:#e3f3f9}
-input{font:inherit;width:7em;padding:.4em;border-radius:8px;border:1px solid #999}
+button:disabled{opacity:.4}
+.bar{height:12px;border-radius:6px;background:rgba(127,127,127,.25);overflow:hidden;margin:2px 0 6px}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .4s}
+.lbl{display:flex;justify-content:space-between;font-size:.9em}
+.prat,.tecs{display:flex;flex-wrap:wrap;gap:6px}
+.prat button,.tecs button{border-radius:10px;background:transparent;color:var(--txt);border:2px solid rgba(127,127,127,.4);font-weight:600;font-size:.85em;margin:0}
+.prat button.sel,.tecs button.sel{border-color:var(--cor);background:rgba(31,111,139,.15)}
+#boca{width:100%;height:auto;display:block;touch-action:none;user-select:none}
+#seringa{position:fixed;left:12px;bottom:14px;z-index:20;width:150px;height:46px;touch-action:none;cursor:grab;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+#seringa.vazia{opacity:.45}
+#seringaTxt{position:fixed;left:170px;bottom:22px;z-index:20;font-size:.8em;max-width:180px;background:var(--card);padding:4px 8px;border-radius:8px}
+#log p{margin:.35em 0}
 .ok{color:var(--ok);font-weight:700}.erro{color:var(--erro);font-weight:700}.av{color:var(--av);font-weight:700}
-.passo{display:none}.passo.on{display:block}
-.placar{font-weight:700}
+#morte{position:fixed;inset:0;background:rgba(0,0,0,.88);color:#fff;z-index:50;display:none;align-items:center;justify-content:center;padding:20px;text-align:center}
+#morte.on{display:flex;animation:fade .6s}
+#morte .cx{max-width:420px}
+#morte h2{font-size:2em;margin:.2em 0}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes treme{0%,100%{transform:translate(0)}25%{transform:translate(-4px,2px)}50%{transform:translate(4px,-2px)}75%{transform:translate(-3px,-3px)}}
+.treme{animation:treme .15s infinite}
+.pisca{animation:pisca 1s infinite}
+@keyframes pisca{50%{opacity:.3}}
+details summary{cursor:pointer;font-weight:700}
 small{opacity:.75}
 </style>
 </head>
 <body>
 <main>
 <h1>💉 Jogo do tubete</h1>
-<p class="placar">Acertos: <span id="pts">0</span> de <span id="tot">0</span></p>
+<div class="lbl"><span>✅ Procedimentos sem dor: <b id="pOk">0</b></span><span>💀 Pacientes perdidos: <b id="pMorte">0</b></span></div>
 
 <div class="card" id="pac"></div>
 
-<div class="card passo on" id="p1">
-  <p><b>1. Pegue o tubete na prateleira</b></p>
+<div class="card">
+  <div class="lbl"><span>Anestésico no corpo</span><span id="tMg">0 mg</span></div><div class="bar"><i id="bMg"></i></div>
+  <div class="lbl"><span>Epinefrina no corpo</span><span id="tEpi">0 mg</span></div><div class="bar"><i id="bEpi"></i></div>
+  <div class="lbl"><span>Coração</span><span id="bpm">❤️ 76 bpm</span></div>
+  <p id="estado" style="margin:.3em 0 0">😐 Paciente tranquilo</p>
+</div>
+
+<div class="card">
+  <p style="margin:0 0 6px"><b>1. Caixa de tubetes</b> <small>(toque pra carregar a carpule)</small></p>
   <div class="prat" id="prat"></div>
-  <p id="r1"></p>
 </div>
 
-<div class="card passo" id="p2">
-  <p><b>2. Monte a carpule</b></p>
-  <p>Seringa carpule + agulha + o tubete que você escolheu.</p>
-  <button id="montar">🔧 Encaixar o tubete na seringa</button>
-  <p id="r2"></p>
+<div class="card">
+  <p style="margin:0 0 6px"><b>2. Técnica</b></p>
+  <div class="tecs" id="tecs"></div>
 </div>
 
-<div class="card passo" id="p3">
-  <p><b>3. Quanto de anestésico ele aguenta?</b></p>
-  <p>peso × dose por kg (sem passar do teto). Em mg:</p>
-  <input id="i3" type="number" inputmode="decimal"> <button id="b3">Conferir</button>
-  <p id="r3"></p>
+<div class="card" id="cartBoca">
+  <p style="margin:0"><b>3. Arraste a seringa até o ponto da injeção</b> <small>(o dente do procedimento está em vermelho)</small></p>
+  <svg id="boca" viewBox="-24 -6 408 312"></svg>
+  <button class="sec" id="dica">👀 Mostrar os pontos</button>
+  <button id="proc">🦷 Começar o procedimento</button>
 </div>
 
-<div class="card passo" id="p4">
-  <p><b>4. Quantos tubetes pelo anestésico?</b></p>
-  <p>o que ele aguenta ÷ mg de 1 tubete, arredonda pra baixo:</p>
-  <input id="i4" type="number" inputmode="numeric"> <button id="b4">Conferir</button>
-  <p id="r4"></p>
-</div>
+<div class="card" id="log"></div>
 
-<div class="card passo" id="p5">
-  <p><b>5. Quantos tubetes pela epinefrina?</b></p>
-  <p id="t5"></p>
-  <input id="i5" type="number" inputmode="numeric"> <button id="b5">Conferir</button>
-  <p id="r5"></p>
-</div>
-
-<div class="card passo" id="p6">
-  <p><b>6. Aplique: quantos tubetes no máximo?</b></p>
-  <p>vale o MENOR número entre o passo 4 e o passo 5</p>
-  <input id="i6" type="number" inputmode="numeric"> <button id="b6">💉 Aplicar</button>
-  <p id="r6"></p>
-</div>
-
-<button id="novo">Próximo paciente</button>
-<p><small>Doses máximas: tabela de Andrade (livro da disciplina). Epinefrina: até 0,2 mg no saudável e 0,04 mg no cardiopata.</small></p>
+<details class="card"><summary>📖 Como fazer a conta</summary>
+<p>Quanto ele aguenta = peso × dose por kg (sem passar do teto). Tubetes = esse total ÷ mg de 1 tubete (% × 10 × 1,8 mL).</p>
+<p>Epinefrina 1:100.000 = 0,018 mg por tubete, 1:200.000 = 0,009 mg. Teto: 0,2 mg no saudável e 0,04 mg no cardiopata. Vale o MENOR número de tubetes.</p>
+<p>Doses máximas (Andrade): lidocaína e mepivacaína 4,4 mg/kg (teto 300 mg), articaína 7 mg/kg (500 mg), bupivacaína 1,3 mg/kg (90 mg).</p>
+</details>
+<button id="novo">➡️ Próximo paciente</button>
 </main>
+
+<svg id="seringa" viewBox="0 0 150 46"><g>
+<rect x="38" y="14" width="80" height="18" rx="4" fill="#dfe6ea" stroke="#556" stroke-width="2"/>
+<rect id="liq" x="40" y="16" width="76" height="14" rx="3" fill="#7fc8e8"/>
+<rect x="118" y="10" width="8" height="26" rx="2" fill="#889"/>
+<rect x="126" y="20" width="18" height="6" fill="#889"/><circle cx="144" cy="23" r="6" fill="#889"/>
+<rect x="28" y="18" width="10" height="10" fill="#aab"/>
+<line x1="2" y1="23" x2="28" y2="23" stroke="#666" stroke-width="2"/>
+</g></svg>
+<div id="seringaTxt">Carpule vazia</div>
+
+<div id="morte"><div class="cx"><h2>💀</h2><h2 id="mTit">O paciente morreu</h2><p id="mTxt"></p><p>🚔 <b>Odontologia Legal:</b> processo ético no Conselho Regional de Odontologia, ação cível por indenização e inquérito por homicídio culposo (imperícia).</p><p id="mConta"></p><button id="mNovo">Próximo paciente</button></div></div>
+
 <script>
 var ANEST=[
- {id:'lido',nome:'Lidocaína 2% + epinefrina 1:100.000',pct:2,mgkg:4.4,teto:300,mgTub:36,epi:0.018},
- {id:'mepi2',nome:'Mepivacaína 2% + epinefrina 1:100.000',pct:2,mgkg:4.4,teto:300,mgTub:36,epi:0.018},
- {id:'mepi3',nome:'Mepivacaína 3% sem vasoconstritor',pct:3,mgkg:4.4,teto:300,mgTub:54,epi:0},
- {id:'arti1',nome:'Articaína 4% + epinefrina 1:100.000',pct:4,mgkg:7,teto:500,mgTub:72,epi:0.018},
- {id:'arti2',nome:'Articaína 4% + epinefrina 1:200.000',pct:4,mgkg:7,teto:500,mgTub:72,epi:0.009},
- {id:'bupi',nome:'Bupivacaína 0,5% + epinefrina 1:200.000',pct:0.5,mgkg:1.3,teto:90,mgTub:9,epi:0.009}
+ {id:'lido',nome:'Lidocaína 2% + epi 1:100.000',pct:2,mgkg:4.4,teto:300,mgTub:36,epi:0.018},
+ {id:'mepi2',nome:'Mepivacaína 2% + epi 1:100.000',pct:2,mgkg:4.4,teto:300,mgTub:36,epi:0.018},
+ {id:'mepi3',nome:'Mepivacaína 3% sem vaso',pct:3,mgkg:4.4,teto:300,mgTub:54,epi:0},
+ {id:'arti1',nome:'Articaína 4% + epi 1:100.000',pct:4,mgkg:7,teto:500,mgTub:72,epi:0.018},
+ {id:'arti2',nome:'Articaína 4% + epi 1:200.000',pct:4,mgkg:7,teto:500,mgTub:72,epi:0.009},
+ {id:'bupi',nome:'Bupivacaína 0,5% + epi 1:200.000',pct:0.5,mgkg:1.3,teto:90,mgTub:9,epi:0.009}
+];
+var TEC={
+ alv_inf:{nome:'Alveolar inferior (pterigomandibular)',arc:'inf'},
+ bucal:{nome:'Bucal',arc:'inf'},
+ mentual:{nome:'Incisivo / mentual',arc:'inf'},
+ asp:{nome:'Alveolar superior posterior',arc:'sup'},
+ asm:{nome:'Alveolar superior médio',arc:'sup'},
+ infil:{nome:'Infiltrativa no vestíbulo anterior',arc:'sup'},
+ palatino:{nome:'Palatino maior',arc:'sup'},
+ naso:{nome:'Nasopalatino',arc:'sup'}
+};
+var CASOS=[
+ {dente:46,proc:'Extração do 46 (1º molar inferior direito)',tec:['alv_inf','bucal']},
+ {dente:36,proc:'Restauração do 36 (1º molar inferior esquerdo)',tec:['alv_inf']},
+ {dente:27,proc:'Restauração do 27 (2º molar superior esquerdo)',tec:['asp']},
+ {dente:14,proc:'Restauração do 14 (1º pré-molar superior direito)',tec:['asm']},
+ {dente:21,proc:'Canal do 21 (incisivo central superior esquerdo)',tec:['infil']},
+ {dente:44,proc:'Restauração do 44 (1º pré-molar inferior direito)',tec:['mentual']},
+ {dente:26,proc:'Extração do 26 (1º molar superior esquerdo)',tec:['asp','asm','palatino']},
+ {dente:11,proc:'Extração do 11 (incisivo central superior direito)',tec:['infil','naso']}
 ];
 var PAC=[
- ['Dona Lurdes',68,62,'cardiopata','Teve infarto há 2 anos, toma remédio pro coração'],
- ['Seu Antônio',74,80,'cardiopata','Tem angina, usa nitrato'],
- ['Carla',29,55,'saudavel','Sem doença, veio fazer restauração'],
- ['Pedro',8,25,'saudavel','Criança, vai extrair um dente de leite'],
- ['Júlia',12,40,'saudavel','Adolescente, extração de pré-molar pra ortodontia'],
- ['Marcos',45,95,'saudavel','Grandão, sem doença, extração de siso'],
- ['Seu Jorge',70,72,'cardiopata','Hipertenso descompensado, pressão alta hoje'],
- ['Renata',35,60,'saudavel','Saudável, canal no molar'],
- ['Dona Zélia',81,50,'cardiopata','Arritmia, usa marcapasso'],
- ['Lucas',19,70,'saudavel','Saudável, 4 sisos de uma vez'],
- ['Ana',6,18,'saudavel','Criança pequena, pulpotomia'],
- ['Roberto',58,100,'saudavel','Saudável, protocolo de implante, muita anestesia']
+ ['Dona Lurdes',68,62,1,'Infartou há 2 anos, toma remédio pro coração'],
+ ['Seu Antônio',74,80,1,'Tem angina, usa nitrato'],
+ ['Carla',29,55,0,'Saudável'],
+ ['Pedrinho',8,25,0,'Criança, morre de medo de agulha'],
+ ['Júlia',12,40,0,'Adolescente, saudável'],
+ ['Marcos',45,95,0,'Grandão, saudável'],
+ ['Seu Jorge',70,72,1,'Hipertenso descompensado, pressão alta hoje'],
+ ['Renata',35,60,0,'Saudável'],
+ ['Dona Zélia',81,50,1,'Arritmia, usa marcapasso'],
+ ['Ana',6,18,0,'Criança pequena'],
+ ['Roberto',58,100,0,'Saudável, cirurgia longa']
 ];
+var $=function(i){return document.getElementById(i)};
 var fmt=function(n){return String(Math.round(n*1000)/1000).replace('.',',')};
-var num=function(id){return parseFloat(String(document.getElementById(id).value).replace(',','.'))};
-var $=function(id){return document.getElementById(id)};
-var S={},pts=0,tot=0;
-try{pts=+localStorage.getItem('jt-pts')||0;tot=+localStorage.getItem('jt-tot')||0}catch(e){}
-function placar(){ $('pts').textContent=pts;$('tot').textContent=tot;try{localStorage.setItem('jt-pts',pts);localStorage.setItem('jt-tot',tot)}catch(e){} }
-function mostra(n){for(var i=1;i<=6;i++)$('p'+i).classList.toggle('on',i<=n)}
+var S,pOk=0,pMorte=0;
+try{pOk=+localStorage.getItem('jt2-ok')||0;pMorte=+localStorage.getItem('jt2-m')||0}catch(e){}
+function salvaPlacar(){$('pOk').textContent=pOk;$('pMorte').textContent=pMorte;try{localStorage.setItem('jt2-ok',pOk);localStorage.setItem('jt2-m',pMorte)}catch(e){}}
+function log(h){$('log').insertAdjacentHTML('afterbegin','<p>'+h+'</p>')}
+
+/* ---------- boca ---------- */
+var NS='http://www.w3.org/2000/svg';
+function el(t,a,pai){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);(pai||$('boca')).appendChild(e);return e}
+function lado(q){return (q===1||q===4)?-1:1} /* paciente direito = esquerda da tela */
+function posDente(num){var q=Math.floor(num/10),n=num%10,s=lado(q),sup=q<=2;
+ var x=180+s*(12+(n-1)*19),t=Math.pow((n-1)/7,2);
+ return {x:x,y:sup?(88+t*55):(212-t*55),sup:sup}}
+function zona(tec,dente){var q=Math.floor(dente/10),s=lado(q);
+ switch(tec){
+  case 'asp':return {x:180+s*150,y:112};
+  case 'asm':return {x:180+s*92,y:64};
+  case 'infil':return {x:180+s*14,y:62};
+  case 'palatino':return {x:180+s*82,y:138};
+  case 'naso':return {x:180,y:112};
+  case 'alv_inf':return {x:180+s*138,y:168};
+  case 'bucal':return {x:180+s*162,y:226};
+  case 'mentual':return {x:180+s*80,y:250};
+ }}
+function desenhaBoca(){var b=$('boca');b.innerHTML='';
+ el('ellipse',{cx:180,cy:150,rx:172,ry:142,fill:'#e8a0a0'});
+ el('ellipse',{cx:180,cy:150,rx:150,ry:122,fill:'#5a1a22'});
+ el('ellipse',{cx:180,cy:128,rx:100,ry:42,fill:'#c46b78'}); /* palato */
+ el('ellipse',{cx:180,cy:192,rx:95,ry:34,fill:'#b0505f'}); /* língua */
+ [11,12,13,14,15,16,17,21,22,23,24,25,26,27,31,32,33,34,35,36,37,41,42,43,44,45,46,47].forEach(function(d){
+  var p=posDente(d),n=d%10,w=n>=6?17:n>=4?14:12;
+  var alvo=S&&S.caso.dente===d;
+  el('rect',{x:p.x-w/2,y:p.y-10,width:w,height:20,rx:4,fill:alvo?'#e53935':'#f8f6ef',stroke:'#998',class:alvo?'pisca':''});
+ });
+ var t=el('text',{x:180,y:22,'text-anchor':'middle','font-size':'11',fill:'#fff'});t.textContent='lado DIREITO do paciente ←   → lado ESQUERDO';
+ S.zonasG=el('g',{opacity:S.dica?1:0});
+ Object.keys(TEC).forEach(function(k){var z=zona(k,S.caso.dente);
+  el('circle',{cx:z.x,cy:z.y,r:16,fill:'none',stroke:'#ffd54f','stroke-width':2,'stroke-dasharray':'4 3'},S.zonasG);
+  var tx=el('text',{x:z.x,y:z.y-19,'text-anchor':'middle','font-size':'8',fill:'#ffd54f'},S.zonasG);tx.textContent=TEC[k].nome.split(' (')[0];
+ });
+ S.marcas=el('g',{});
+}
+
+/* ---------- jogo ---------- */
 function novo(){
- var p=PAC[Math.floor(Math.random()*PAC.length)];
- S={nome:p[0],idade:p[1],peso:p[2],cardio:p[3]==='cardiopata',hist:p[4],a:null};
- $('pac').innerHTML='<b>🧑 '+S.nome+'</b>, '+S.idade+' anos, <b>'+S.peso+' kg</b><br>'+S.hist+'<br>Condição: <b>'+(S.cardio?'❤️‍🩹 cardiopata':'💪 saudável')+'</b>';
+ var p=PAC[Math.floor(Math.random()*PAC.length)],c=CASOS[Math.floor(Math.random()*CASOS.length)];
+ S={nome:p[0],idade:p[1],peso:p[2],cardio:!!p[3],hist:p[4],caso:c,a:null,carregada:false,tec:null,mg:0,epi:0,tub:0,feitas:{},morto:false,dica:false};
+ $('pac').innerHTML='<b>🧑 '+S.nome+'</b>, '+S.idade+' anos, <b>'+S.peso+' kg</b> · '+(S.cardio?'❤️‍🩹 <b>cardiopata</b>':'💪 saudável')+'<br>'+S.hist+'<br>🦷 <b>'+c.proc+'</b>';
  $('prat').innerHTML=ANEST.map(function(a){return '<button data-id="'+a.id+'">'+a.nome+'</button>'}).join('');
- ['r1','r2','r3','r4','r5','r6'].forEach(function(r){$(r).innerHTML=''});
- ['i3','i4','i5','i6'].forEach(function(i){$(i).value=''});
- mostra(1);
+ $('tecs').innerHTML=Object.keys(TEC).map(function(k){return '<button data-t="'+k+'">'+TEC[k].nome+'</button>'}).join('');
+ $('log').innerHTML='';$('morte').classList.remove('on');$('dica').textContent='👀 Mostrar os pontos';
+ desenhaBoca();atualiza();seringaVazia();
+ log('Novo paciente. Pegue um tubete, escolha a técnica e arraste a seringa até o ponto.');
 }
-$('prat').addEventListener('click',function(e){
- var b=e.target.closest('button');if(!b)return;
- [].forEach.call($('prat').children,function(x){x.classList.remove('sel')});b.classList.add('sel');
- S.a=ANEST.filter(function(a){return a.id===b.dataset.id})[0];
- var a=S.a,msg='Pegou: <b>'+a.nome+'</b><br>Cada tubete = '+a.pct+'% × 10 × 1,8 mL = <b>'+a.mgTub+' mg</b>';
- if(S.cardio&&a.epi===0.018)msg+='<br><span class="av">⚠️ Cardiopata com 1:100.000: pode, mas vai render poucos tubetes. 1:200.000 ou sem vasoconstritor rendem mais.</span>';
- if(S.cardio&&a.epi===0)msg+='<br><span class="ok">👍 Sem vasoconstritor: boa escolha pro cardiopata, só dura menos.</span>';
- $('r1').innerHTML=msg;mostra(2);
+function maxMg(){return S.a?Math.min(S.peso*S.a.mgkg,S.a.teto):0}
+function maxEpi(){return S.cardio?0.04:0.2}
+function atualiza(){
+ var mm=maxMg()||1,me=maxEpi(),rm=S.mg/mm,re=S.epi/me;
+ $('tMg').textContent=fmt(S.mg)+' mg'+(S.a?' / limite '+fmt(mm):'');
+ $('tEpi').textContent=fmt(S.epi)+' mg / limite '+fmt(me);
+ $('bMg').style.width=Math.min(100,rm*100)+'%';$('bMg').style.background=rm>1?'var(--erro)':rm>.8?'var(--av)':'var(--ok)';
+ $('bEpi').style.width=Math.min(100,re*100)+'%';$('bEpi').style.background=re>1?'var(--erro)':re>.8?'var(--av)':'var(--ok)';
+ var bpm=Math.round(76+Math.max(0,re)*(S.cardio?45:25)+(re>1?(re-1)*40:0));
+ $('bpm').textContent=(re>1?'💓':'❤️')+' '+bpm+' bpm';
+ var est='😐 Paciente tranquilo',cls='';
+ if(re>1)est=S.cardio?'😰 Palpitação, dor no peito, pressão subindo':'😰 Coração disparado, tremor, pressão alta';
+ if(rm>1)est='😵 Zumbido, gosto metálico, língua dormente, fala enrolada';
+ if(rm>1.3){est='🤢 Tremores, agitação, confusão... vai convulsionar';cls='treme'}
+ if(rm>1.6)est='⚡ CONVULSÃO';
+ if(S.cardio&&re>1.5)est='💔 Arritmia grave, dor forte no peito';
+ $('estado').textContent=est;$('pac').className='card '+cls;
+ if(!S.morto&&(rm>1.9||(S.cardio&&re>2.5)||re>4)){
+  S.morto=true;pMorte++;salvaPlacar();
+  var causa=rm>1.9?'Intoxicação pelo anestésico: convulsão, depressão respiratória e parada cardiorrespiratória.':'A epinefrina passou muito do limite: '+(S.cardio?'infarto e arritmia fatal no coração doente':'crise hipertensiva e arritmia fatal')+'.';
+  $('mTit').textContent=S.nome+' morreu';$('mTxt').textContent=causa+' Foram '+S.tub+' tubetes ('+fmt(S.mg)+' mg).';
+  $('mConta').innerHTML=contaCerta();
+  setTimeout(function(){$('morte').classList.add('on')},700);
+ }
+}
+function contaCerta(){var a=S.a,tA=Math.floor(maxMg()/a.mgTub+1e-9),tE=a.epi?Math.floor(maxEpi()/a.epi+1e-9):null,c=tE===null?tA:Math.min(tA,tE);
+ return '📐 A conta certa: '+S.peso+' × '+fmt(a.mgkg)+' = '+fmt(S.peso*a.mgkg)+' mg'+(S.peso*a.mgkg>a.teto?' (teto '+a.teto+')':'')+' ÷ '+a.mgTub+' = <b>'+tA+' tubetes</b>'+(tE!==null?'; epinefrina '+fmt(maxEpi())+' ÷ '+fmt(a.epi)+' = <b>'+tE+' tubetes</b>':'; sem vasoconstritor')+'. Máximo: <b>'+c+' tubetes</b>.'}
+function seringaVazia(){S.carregada=false;$('seringa').classList.add('vazia');$('liq').setAttribute('width',0);$('seringaTxt').textContent='Carpule vazia: toque num tubete'}
+
+$('prat').addEventListener('click',function(e){var b=e.target.closest('button');if(!b||S.morto)return;
+ var a=ANEST.filter(function(x){return x.id===b.dataset.id})[0];
+ if(S.a&&S.a.id!==a.id&&S.tub>0){log('<span class="av">Melhor não misturar anestésicos no mesmo paciente: continue com '+S.a.nome+'.</span>');return}
+ S.a=a;[].forEach.call($('prat').children,function(x){x.classList.toggle('sel',x===b)});
+ S.carregada=true;$('seringa').classList.remove('vazia');$('liq').setAttribute('width',76);
+ $('seringaTxt').textContent='Carregada: '+a.nome+' ('+a.mgTub+' mg)';
+ if(S.cardio&&a.epi===0.018&&S.tub===0)log('<span class="av">⚠️ Cardiopata com epinefrina 1:100.000: cada tubete pesa 0,018 mg num limite de 0,04.</span>');
+ atualiza();
 });
-$('montar').onclick=function(){
- $('r2').innerHTML='✅ Carpule montada com '+S.a.nome+'. Agora a conta.';
- S.bruto=S.peso*S.a.mgkg;S.total=Math.min(S.bruto,S.a.teto);
- S.tubA=Math.floor(S.total/S.a.mgTub+1e-9);
- S.tetoE=S.cardio?0.04:0.2;
- S.tubE=S.a.epi?Math.floor(S.tetoE/S.a.epi+1e-9):null;
- S.certo=S.tubE===null?S.tubA:Math.min(S.tubA,S.tubE);
- $('p3').querySelector('p:nth-child(2)').innerHTML='peso × dose por kg = '+S.peso+' × '+fmt(S.a.mgkg)+' (teto '+S.a.teto+' mg). Em mg:';
- mostra(3);
-};
-function confere(r,ok,certoTxt,expl){
- $(r).innerHTML=ok?'<span class="ok">✅ Certo!</span> '+expl:'<span class="erro">❌ Era '+certoTxt+'.</span> '+expl;
+$('tecs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;S.tec=b.dataset.t;[].forEach.call($('tecs').children,function(x){x.classList.toggle('sel',x===b)})});
+$('dica').onclick=function(){S.dica=!S.dica;S.zonasG.setAttribute('opacity',S.dica?1:0);this.textContent=S.dica?'🙈 Esconder os pontos':'👀 Mostrar os pontos'};
+
+/* ---------- arrastar a seringa ---------- */
+(function(){var sr=$('seringa'),arr=false,ox=0,oy=0;
+ function casa(){sr.style.left='12px';sr.style.top='';sr.style.bottom='14px'}
+ sr.addEventListener('pointerdown',function(e){if(S.morto)return;
+  if(!S.carregada){log('<span class="av">A carpule está vazia: toque num tubete primeiro.</span>');return}
+  if(!S.tec){log('<span class="av">Escolha a técnica antes de injetar.</span>');return}
+  arr=true;sr.setPointerCapture(e.pointerId);sr.style.cursor='grabbing';ox=e.clientX-sr.getBoundingClientRect().left;oy=e.clientY-sr.getBoundingClientRect().top});
+ sr.addEventListener('pointermove',function(e){if(!arr)return;sr.style.bottom='';sr.style.left=(e.clientX-ox)+'px';sr.style.top=(e.clientY-oy)+'px'});
+ sr.addEventListener('pointerup',function(e){if(!arr)return;arr=false;sr.style.cursor='grab';
+  var r=sr.getBoundingClientRect(),tipX=e.clientX-ox+2*(r.width/150),tipY=e.clientY-oy+23*(r.height/46);
+  var svg=$('boca'),pt=svg.createSVGPoint();pt.x=tipX;pt.y=tipY;var p=pt.matrixTransform(svg.getScreenCTM().inverse());
+  casa();
+  if(p.x<-24||p.y<-6||p.x>384||p.y>306){log('Você soltou fora da boca. Arraste a ponta da agulha até o ponto.');return}
+  injeta(p.x,p.y)});
+})();
+
+function injeta(x,y){
+ if(S.morto)return;
+ S.tub++;S.mg+=S.a.mgTub;S.epi+=S.a.epi;
+ el('circle',{cx:x,cy:y,r:5,fill:'#29b6f6',opacity:.8},S.marcas);
+ var z=zona(S.tec,S.caso.dente),d=Math.hypot(x-z.x,y-z.y),nome=TEC[S.tec].nome;
+ var precisa=S.caso.tec.indexOf(S.tec)>=0;
+ if(d>26){log('💉 Tubete '+S.tub+': <span class="erro">agulha longe do ponto da técnica '+nome+'</span>. O anestésico foi pra onde não precisava (e conta no corpo do mesmo jeito).')}
+ else if(!precisa){log('💉 Tubete '+S.tub+': '+nome+' feita certinho, <span class="av">mas essa técnica não anestesia o '+S.caso.dente+'</span>.')}
+ else{S.feitas[S.tec]=true;log('💉 Tubete '+S.tub+': <span class="ok">'+nome+' no ponto certo</span>. Região anestesiando...')}
+ seringaVazia();atualiza();
 }
-$('b3').onclick=function(){
- var v=num('i3');confere('r3',Math.abs(v-S.total)<0.6,fmt(S.total)+' mg',S.peso+' × '+fmt(S.a.mgkg)+' = '+fmt(S.bruto)+' mg'+(S.bruto>S.a.teto?' → passou do teto, fica '+S.a.teto+' mg':''));
- if(v>S.total*1.3)$('r3').innerHTML+='<br><span class="erro">💀 Com '+fmt(v)+' mg '+S.nome+' convulsiona na cadeira... 🚔 e a Odontologia Legal bate na sua porta. Ainda bem que é só jogo!</span>';
- $('p4').querySelector('p:nth-child(2)').innerHTML=fmt(S.total)+' mg ÷ '+S.a.mgTub+' mg de 1 tubete, arredonda pra baixo:';
- mostra(4);
+$('proc').onclick=function(){if(S.morto)return;
+ if(!S.tub){log('<span class="erro">😱 Começou sem anestesia! '+S.nome+' pulou da cadeira.</span>');return}
+ var falta=S.caso.tec.filter(function(t){return !S.feitas[t]});
+ if(falta.length){log('<span class="erro">😖 '+S.nome+' sentiu dor!</span> Faltou anestesiar com: <b>'+falta.map(function(t){return TEC[t].nome}).join(' + ')+'</b>.');return}
+ var rm=S.mg/maxMg(),re=S.epi/maxEpi();
+ if(rm>1||re>1){log('<span class="av">🦷 Procedimento feito, sem dor... mas o paciente passou do limite e saiu passando mal.</span> '+contaCerta());return}
+ pOk++;salvaPlacar();
+ log('<span class="ok">🎉 '+S.caso.proc+' sem dor e com segurança! Usou '+S.tub+' tubete(s).</span> '+contaCerta());
 };
-$('b4').onclick=function(){
- var v=num('i4');confere('r4',v===S.tubA,S.tubA+' tubetes',fmt(S.total)+' ÷ '+S.a.mgTub+' = '+fmt(S.total/S.a.mgTub)+' → '+S.tubA);
- if(S.tubE===null){$('t5').innerHTML='Esse tubete NÃO tem vasoconstritor. Não tem limite de epinefrina: escreva 0 e siga.';}
- else $('t5').innerHTML=(S.cardio?'Cardiopata: teto 0,04 mg':'Saudável: teto 0,2 mg')+'. Cada tubete '+(S.a.epi===0.018?'1:100.000 tem 0,018 mg':'1:200.000 tem 0,009 mg')+'. Teto ÷ mg do tubete:';
- mostra(5);
-};
-$('b5').onclick=function(){
- var v=num('i5');
- if(S.tubE===null)$('r5').innerHTML='<span class="ok">✅ Sem vasoconstritor, vale só a conta do anestésico.</span>';
- else confere('r5',v===S.tubE,S.tubE+' tubetes',fmt(S.tetoE)+' ÷ '+fmt(S.a.epi)+' = '+fmt(S.tetoE/S.a.epi)+' → '+S.tubE);
- mostra(6);
-};
-$('b6').onclick=function(){
- var v=num('i6');tot++;
- var quem=S.tubE!==null&&S.tubE<S.tubA?'a epinefrina':'o anestésico';
- if(v===S.certo){pts++;$('r6').innerHTML='<span class="ok">🎉 Paciente anestesiado com segurança! Máximo '+S.certo+' tubetes, quem limita é '+quem+'.</span>';}
- else if(v>S.certo){$('r6').innerHTML='<span class="erro">🚨 Overdose! Com '+v+' tubetes '+(S.tubE!==null&&v>S.tubE?'a epinefrina estoura'+(S.cardio?' e o coração do '+S.nome.split(' ').pop()+' sofre (taquicardia, pico de pressão)':''):'o anestésico fica tóxico (tontura, convulsão)')+'. O máximo era '+S.certo+'. 🚔 Chama o advogado!</span>';}
- else $('r6').innerHTML='<span class="av">⚠️ Seguro, mas dava até '+S.certo+' tubetes.</span>';
- placar();
-};
-$('novo').onclick=novo;
-placar();novo();
+$('novo').onclick=novo;$('mNovo').onclick=novo;
+salvaPlacar();novo();
 </script>
 </body>
 </html>
