@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Jogo do tubete</title>
+<style>
+:root{--cor:#1f6f8b;--ok:#1a7f37;--erro:#c0392b;--av:#b7791f;--fundo:#f6f8fa;--txt:#1b1f24}
+@media (prefers-color-scheme:dark){:root{--fundo:#15181c;--txt:#e6e9ec;--cor:#4fb3d6}}
+body{margin:0;background:var(--fundo);color:var(--txt);font:17px/1.5 system-ui,sans-serif}
+main{max-width:560px;margin:0 auto;padding:16px}
+h1{font-size:1.3em;margin:.2em 0}
+.card{background:rgba(127,127,127,.1);border-radius:14px;padding:14px;margin:12px 0}
+button{font:inherit;padding:.6em 1em;border:0;border-radius:999px;background:var(--cor);color:#fff;font-weight:700;cursor:pointer;margin:.25em 0}
+button.sec{background:transparent;color:var(--cor);border:2px solid var(--cor)}
+.prat{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.prat button{border-radius:12px;background:#fff;color:#111;border:2px solid #ccc;font-weight:600;text-align:left;font-size:.9em}
+.prat button.sel{border-color:var(--cor);background:#e3f3f9}
+input{font:inherit;width:7em;padding:.4em;border-radius:8px;border:1px solid #999}
+.ok{color:var(--ok);font-weight:700}.erro{color:var(--erro);font-weight:700}.av{color:var(--av);font-weight:700}
+.passo{display:none}.passo.on{display:block}
+.placar{font-weight:700}
+small{opacity:.75}
+</style>
+</head>
+<body>
+<main>
+<h1>💉 Jogo do tubete</h1>
+<p class="placar">Acertos: <span id="pts">0</span> de <span id="tot">0</span></p>
+
+<div class="card" id="pac"></div>
+
+<div class="card passo on" id="p1">
+  <p><b>1. Pegue o tubete na prateleira</b></p>
+  <div class="prat" id="prat"></div>
+  <p id="r1"></p>
+</div>
+
+<div class="card passo" id="p2">
+  <p><b>2. Monte a carpule</b></p>
+  <p>Seringa carpule + agulha + o tubete que você escolheu.</p>
+  <button id="montar">🔧 Encaixar o tubete na seringa</button>
+  <p id="r2"></p>
+</div>
+
+<div class="card passo" id="p3">
+  <p><b>3. Quanto de anestésico ele aguenta?</b></p>
+  <p>peso × dose por kg (sem passar do teto). Em mg:</p>
+  <input id="i3" type="number" inputmode="decimal"> <button id="b3">Conferir</button>
+  <p id="r3"></p>
+</div>
+
+<div class="card passo" id="p4">
+  <p><b>4. Quantos tubetes pelo anestésico?</b></p>
+  <p>o que ele aguenta ÷ mg de 1 tubete, arredonda pra baixo:</p>
+  <input id="i4" type="number" inputmode="numeric"> <button id="b4">Conferir</button>
+  <p id="r4"></p>
+</div>
+
+<div class="card passo" id="p5">
+  <p><b>5. Quantos tubetes pela epinefrina?</b></p>
+  <p id="t5"></p>
+  <input id="i5" type="number" inputmode="numeric"> <button id="b5">Conferir</button>
+  <p id="r5"></p>
+</div>
+
+<div class="card passo" id="p6">
+  <p><b>6. Aplique: quantos tubetes no máximo?</b></p>
+  <p>vale o MENOR número entre o passo 4 e o passo 5</p>
+  <input id="i6" type="number" inputmode="numeric"> <button id="b6">💉 Aplicar</button>
+  <p id="r6"></p>
+</div>
+
+<button id="novo">Próximo paciente</button>
+<p><small>Doses máximas: tabela de Andrade (livro da disciplina). Epinefrina: até 0,2 mg no saudável e 0,04 mg no cardiopata.</small></p>
+</main>
+<script>
+var ANEST=[
+ {id:'lido',nome:'Lidocaína 2% + epinefrina 1:100.000',pct:2,mgkg:4.4,teto:300,mgTub:36,epi:0.018},
+ {id:'mepi2',nome:'Mepivacaína 2% + epinefrina 1:100.000',pct:2,mgkg:4.4,teto:300,mgTub:36,epi:0.018},
+ {id:'mepi3',nome:'Mepivacaína 3% sem vasoconstritor',pct:3,mgkg:4.4,teto:300,mgTub:54,epi:0},
+ {id:'arti1',nome:'Articaína 4% + epinefrina 1:100.000',pct:4,mgkg:7,teto:500,mgTub:72,epi:0.018},
+ {id:'arti2',nome:'Articaína 4% + epinefrina 1:200.000',pct:4,mgkg:7,teto:500,mgTub:72,epi:0.009},
+ {id:'bupi',nome:'Bupivacaína 0,5% + epinefrina 1:200.000',pct:0.5,mgkg:1.3,teto:90,mgTub:9,epi:0.009}
+];
+var PAC=[
+ ['Dona Lurdes',68,62,'cardiopata','Teve infarto há 2 anos, toma remédio pro coração'],
+ ['Seu Antônio',74,80,'cardiopata','Tem angina, usa nitrato'],
+ ['Carla',29,55,'saudavel','Sem doença, veio fazer restauração'],
+ ['Pedro',8,25,'saudavel','Criança, vai extrair um dente de leite'],
+ ['Júlia',12,40,'saudavel','Adolescente, extração de pré-molar pra ortodontia'],
+ ['Marcos',45,95,'saudavel','Grandão, sem doença, extração de siso'],
+ ['Seu Jorge',70,72,'cardiopata','Hipertenso descompensado, pressão alta hoje'],
+ ['Renata',35,60,'saudavel','Saudável, canal no molar'],
+ ['Dona Zélia',81,50,'cardiopata','Arritmia, usa marcapasso'],
+ ['Lucas',19,70,'saudavel','Saudável, 4 sisos de uma vez'],
+ ['Ana',6,18,'saudavel','Criança pequena, pulpotomia'],
+ ['Roberto',58,100,'saudavel','Saudável, protocolo de implante, muita anestesia']
+];
+var fmt=function(n){return String(Math.round(n*1000)/1000).replace('.',',')};
+var num=function(id){return parseFloat(String(document.getElementById(id).value).replace(',','.'))};
+var $=function(id){return document.getElementById(id)};
+var S={},pts=0,tot=0;
+try{pts=+localStorage.getItem('jt-pts')||0;tot=+localStorage.getItem('jt-tot')||0}catch(e){}
+function placar(){ $('pts').textContent=pts;$('tot').textContent=tot;try{localStorage.setItem('jt-pts',pts);localStorage.setItem('jt-tot',tot)}catch(e){} }
+function mostra(n){for(var i=1;i<=6;i++)$('p'+i).classList.toggle('on',i<=n)}
+function novo(){
+ var p=PAC[Math.floor(Math.random()*PAC.length)];
+ S={nome:p[0],idade:p[1],peso:p[2],cardio:p[3]==='cardiopata',hist:p[4],a:null};
+ $('pac').innerHTML='<b>🧑 '+S.nome+'</b>, '+S.idade+' anos, <b>'+S.peso+' kg</b><br>'+S.hist+'<br>Condição: <b>'+(S.cardio?'❤️‍🩹 cardiopata':'💪 saudável')+'</b>';
+ $('prat').innerHTML=ANEST.map(function(a){return '<button data-id="'+a.id+'">'+a.nome+'</button>'}).join('');
+ ['r1','r2','r3','r4','r5','r6'].forEach(function(r){$(r).innerHTML=''});
+ ['i3','i4','i5','i6'].forEach(function(i){$(i).value=''});
+ mostra(1);
+}
+$('prat').addEventListener('click',function(e){
+ var b=e.target.closest('button');if(!b)return;
+ [].forEach.call($('prat').children,function(x){x.classList.remove('sel')});b.classList.add('sel');
+ S.a=ANEST.filter(function(a){return a.id===b.dataset.id})[0];
+ var a=S.a,msg='Pegou: <b>'+a.nome+'</b><br>Cada tubete = '+a.pct+'% × 10 × 1,8 mL = <b>'+a.mgTub+' mg</b>';
+ if(S.cardio&&a.epi===0.018)msg+='<br><span class="av">⚠️ Cardiopata com 1:100.000: pode, mas vai render poucos tubetes. 1:200.000 ou sem vasoconstritor rendem mais.</span>';
+ if(S.cardio&&a.epi===0)msg+='<br><span class="ok">👍 Sem vasoconstritor: boa escolha pro cardiopata, só dura menos.</span>';
+ $('r1').innerHTML=msg;mostra(2);
+});
+$('montar').onclick=function(){
+ $('r2').innerHTML='✅ Carpule montada com '+S.a.nome+'. Agora a conta.';
+ S.bruto=S.peso*S.a.mgkg;S.total=Math.min(S.bruto,S.a.teto);
+ S.tubA=Math.floor(S.total/S.a.mgTub+1e-9);
+ S.tetoE=S.cardio?0.04:0.2;
+ S.tubE=S.a.epi?Math.floor(S.tetoE/S.a.epi+1e-9):null;
+ S.certo=S.tubE===null?S.tubA:Math.min(S.tubA,S.tubE);
+ $('p3').querySelector('p:nth-child(2)').innerHTML='peso × dose por kg = '+S.peso+' × '+fmt(S.a.mgkg)+' (teto '+S.a.teto+' mg). Em mg:';
+ mostra(3);
+};
+function confere(r,ok,certoTxt,expl){
+ $(r).innerHTML=ok?'<span class="ok">✅ Certo!</span> '+expl:'<span class="erro">❌ Era '+certoTxt+'.</span> '+expl;
+}
+$('b3').onclick=function(){
+ var v=num('i3');confere('r3',Math.abs(v-S.total)<0.6,fmt(S.total)+' mg',S.peso+' × '+fmt(S.a.mgkg)+' = '+fmt(S.bruto)+' mg'+(S.bruto>S.a.teto?' → passou do teto, fica '+S.a.teto+' mg':''));
+ $('p4').querySelector('p:nth-child(2)').innerHTML=fmt(S.total)+' mg ÷ '+S.a.mgTub+' mg de 1 tubete, arredonda pra baixo:';
+ mostra(4);
+};
+$('b4').onclick=function(){
+ var v=num('i4');confere('r4',v===S.tubA,S.tubA+' tubetes',fmt(S.total)+' ÷ '+S.a.mgTub+' = '+fmt(S.total/S.a.mgTub)+' → '+S.tubA);
+ if(S.tubE===null){$('t5').innerHTML='Esse tubete NÃO tem vasoconstritor. Não tem limite de epinefrina: escreva 0 e siga.';}
+ else $('t5').innerHTML=(S.cardio?'Cardiopata: teto 0,04 mg':'Saudável: teto 0,2 mg')+'. Cada tubete '+(S.a.epi===0.018?'1:100.000 tem 0,018 mg':'1:200.000 tem 0,009 mg')+'. Teto ÷ mg do tubete:';
+ mostra(5);
+};
+$('b5').onclick=function(){
+ var v=num('i5');
+ if(S.tubE===null)$('r5').innerHTML='<span class="ok">✅ Sem vasoconstritor, vale só a conta do anestésico.</span>';
+ else confere('r5',v===S.tubE,S.tubE+' tubetes',fmt(S.tetoE)+' ÷ '+fmt(S.a.epi)+' = '+fmt(S.tetoE/S.a.epi)+' → '+S.tubE);
+ mostra(6);
+};
+$('b6').onclick=function(){
+ var v=num('i6');tot++;
+ var quem=S.tubE!==null&&S.tubE<S.tubA?'a epinefrina':'o anestésico';
+ if(v===S.certo){pts++;$('r6').innerHTML='<span class="ok">🎉 Paciente anestesiado com segurança! Máximo '+S.certo+' tubetes, quem limita é '+quem+'.</span>';}
+ else if(v>S.certo){$('r6').innerHTML='<span class="erro">🚨 Overdose! Com '+v+' tubetes '+(S.tubE!==null&&v>S.tubE?'a epinefrina estoura'+(S.cardio?' e o coração do '+S.nome.split(' ').pop()+' sofre (taquicardia, pico de pressão)':''):'o anestésico fica tóxico (tontura, convulsão)')+'. O máximo era '+S.certo+'.</span>';}
+ else $('r6').innerHTML='<span class="av">⚠️ Seguro, mas dava até '+S.certo+' tubetes.</span>';
+ placar();
+};
+$('novo').onclick=novo;
+placar();novo();
+</script>
+</body>
+</html>
