@@ -340,6 +340,7 @@ body.com-rodape .rodape{padding-left:54px;padding-right:54px} /* 13/11: bolinhas
 .glvideo{display:flex;align-items:center;gap:6px;margin:0 0 10px;padding:10px 12px;border-radius:12px;background:#fdeaea;color:#b3261e;font-weight:700;font-size:14px;text-decoration:none}
 .apresenta{background:#eef4ff;border-left:4px solid #1f6feb;border-radius:12px;padding:12px 14px;margin:0 0 14px;font-size:15px}.apresenta p{margin:6px 0 0}.apresenta a{display:inline-block;margin-top:8px;font-weight:700}
 .glfonte a,.fonte a{color:#1f6feb;font-weight:700;text-decoration:underline}
+.dcard{display:flex;gap:14px;align-items:center}.anel{flex:0 0 76px;width:76px;height:76px;border-radius:50%;background:conic-gradient(var(--cor) calc(var(--p)*1%),#e3ecee 0);display:grid;place-items:center}.anel span{width:60px;height:60px;border-radius:50%;background:var(--papel,#fff);display:grid;place-items:center;font-weight:800;font-size:17px;color:var(--cor)}.dinfo{flex:1;min-width:0}.dinfo b{display:block;font-size:17px}.dinfo small{display:block;color:#5b6475;margin:2px 0 8px}.fracos{background:var(--cor);box-shadow:0 4px 0 var(--cor-escuro)}.dtit{margin:14px 0 6px;font-weight:800;font-size:14px}.fchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}.fchip{padding:6px 11px;border-radius:999px;background:#fff3e0;color:#8a4b00;border:1px solid #ffd9a6;font-size:13px;font-weight:600}.fchip b{margin-left:4px}
 .glvermais{width:100%;min-height:44px;margin:0 0 12px;border:1.5px solid var(--cor,#334);border-radius:12px;background:#fff;color:var(--cor,#334);font-weight:700;font-size:15px;cursor:pointer}.glleg{font-size:13px;color:#5b6475;margin:-6px 0 12px}
 .lei-txt.tabela{background:#fff;padding:0;max-height:none}.gtab{width:100%;border-collapse:collapse;font-size:14px}.gtab th{text-align:left;background:var(--cor-claro,#eef);color:var(--cor,#333);padding:8px 10px;font-weight:700}.gtab td{padding:8px 10px;border-top:1px solid #e6e8ee;vertical-align:top}
 .lei-txt{max-height:46vh;overflow:auto;margin:0 0 12px;padding:10px 12px;background:#f6f7fa;border-radius:12px;font-size:15px;line-height:1.5}
@@ -662,13 +663,15 @@ function desempenho(){
 const corPct = p => p >= .8 ? 'var(--certo)' : p >= .5 ? '#d99a00' : 'var(--errado)';
 function desempenhoHtml(){
   const d = desempenho();
-  if (!d.length) return `<p class="vazio">Faça um simulado e aqui aparece quanto você acerta em cada tema, do que mais erra pro que mais acerta.</p>`;
-  const fracos = d.filter(x => x.t >= MIN_TENT && x.pct < .7);
-  return `<div class="desemp">${d.map(x => `<div class="dl"><div class="lin"><span>${esc(x.tema)}</span><small>${Math.round(x.pct*100)}%, ${x.a} de ${x.t}</small></div><div class="trilho" aria-hidden="true"><div class="enche" style="width:${Math.max(4,Math.round(x.pct*100))}%;background:${corPct(x.pct)}"></div></div></div>`).join('')}</div>
-  ${fracos.length ? `<button class="fracos" id="fracos"><b>Treinar meus pontos fracos</b><small>10 questões de ${esc(fracos.slice(0,3).map(x=>x.tema).join(', '))}</small></button>` : `<p class="vazio" style="margin-top:12px">${d.some(x=>x.t>=MIN_TENT) ? 'Nenhum tema abaixo de 70 % ainda. Continue assim.' : 'Depois de 3 questões de um tema ele entra na conta dos pontos fracos.'}</p>`}
-  <p class="vazio" style="margin-top:10px;font-size:13px">Seus dados ficam guardados só neste celular.</p>`;
+  const totalQ = (banco().q || []).length;
+  if (!d.length) return `<div class="dcard"><div class="anel" style="--p:0"><span>0%</span></div><div class="dinfo"><b>Você ainda não começou</b><small>Faça um simulado e aqui aparece quanto você acerta e onde está mais fraco.</small></div></div>`;
+  const feitas = d.reduce((s,x) => s + x.t, 0), certas = d.reduce((s,x) => s + x.a, 0);
+  const pct = feitas ? Math.round(certas / feitas * 100) : 0;
+  const fracos = d.filter(x => x.t >= MIN_TENT && x.pct < .7).sort((x,y) => x.pct - y.pct).slice(0,3);
+  return `<div class="dcard"><div class="anel" style="--p:${pct}"><span>${pct}%</span></div><div class="dinfo"><b>Você acerta ${pct}%</b><small>${feitas} ${feitas===1?'questão feita':'questões feitas'}${totalQ ? ' de ' + totalQ + ' no banco' : ''}</small><div class="trilho" aria-hidden="true"><div class="enche" style="width:${Math.min(100, Math.max(3, Math.round(feitas/Math.max(1,totalQ)*100)))}%;background:var(--cor)"></div></div></div></div>
+  ${fracos.length ? `<p class="dtit">Seus pontos fracos</p><div class="fchips">${fracos.map(x => `<span class="fchip">${esc(x.tema)} <b>${Math.round(x.pct*100)}%</b></span>`).join('')}</div><button class="fracos" id="fracos"><b>Treinar meus pontos fracos</b><small>10 questões desses temas</small></button>` : `<p class="vazio" style="margin-top:10px;font-size:14px">${d.some(x=>x.t>=MIN_TENT) ? 'Nenhum tema abaixo de 70 %. Continue assim 💪' : 'Depois de 3 questões de um tema ele entra na conta dos pontos fracos.'}</p>`}
+  <p class="vazio" style="margin-top:8px;font-size:12px">Fica guardado só neste celular.</p>`;
 }
-/* Rafael 11/11: temas que mais caem nas provas (contagem das questões que caíram no SM1 e no SM2) */
 function maisCaem(){
   const c = {};
   banco().q.forEach(q => { if (q && (q.sm1 || q.sm2) && q.tema) { const t = q.tema; c[t] = c[t] || {tema:t, n:0, s1:0, s2:0}; c[t].n++; if (q.sm1) c[t].s1++; if (q.sm2) c[t].s2++; } });
@@ -782,7 +785,6 @@ function materia(){
     ${itemMaterial()}
   </div>
   <section class="bloco"><h2>Meu desempenho</h2>${desempenhoHtml()}</section>
-  ${maisCaemHtml()}
   ${nSm1 || nSm2 ? `<section class="bloco legenda">${nSm1 ? '<span><i class="tag sm1">SM1</i>a questão caiu igual no simulado 1</span>' : ''}${nSm2 ? '<span><i class="tag sm2">SM2</i>a questão caiu igual no simulado 2</span>' : ''}${nSm1 ? '<span><i class="tag par">parecida</i>semelhante a uma do simulado 1</span>' : ''}</section>` : ''}`);
   const {ms} = partes();
   $('#vol').onclick = inicio;
