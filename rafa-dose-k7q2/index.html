@@ -262,7 +262,12 @@ function injeta(x,y){
 $('proc').onclick=function(){if(S.morto)return;
  if(!S.tub){log('<span class="erro">😱 Começou sem anestesia! '+S.nome+' pulou da cadeira.</span>');return}
  var falta=S.caso.tec.filter(function(t){return !S.feitas[t]});
- if(falta.length){log('<span class="erro">😖 '+S.nome+' sentiu dor!</span> Faltou anestesiar com: <b>'+falta.map(function(t){return TEC[t].nome}).join(' + ')+'</b>.');return}
+ if(falta.length){S.dor=(S.dor||0)+1;
+  log('<span class="erro">😖 '+S.nome+' sentiu dor! ('+S.dor+'ª vez)</span> Faltou anestesiar com: <b>'+falta.map(function(t){return TEC[t].nome}).join(' + ')+'</b>.');
+  if(S.cardio){S.epi+=0.015;log('<span class="av">💓 Dor = estresse = o corpo solta adrenalina própria. No cardiopata isso pesa no coração.</span>');atualiza();
+   if(!S.morto&&S.dor>=3){S.morto=true;pMorte++;salvaPlacar();$('mTit').textContent=S.nome+' infartou de dor';$('mTxt').textContent='Dor repetida num cardiopata: o estresse libera adrenalina do próprio corpo, o coração doente não aguenta. Anestesia bem feita também é proteção do coração.';$('mConta').innerHTML=S.a?contaCerta():'';setTimeout(function(){$('morte').classList.add('on')},500)}}
+  else if(S.dor>=3){log('<span class="erro">😵 '+S.nome+' ficou pálido, suou frio e desmaiou na cadeira (síncope vasovagal, a emergência mais comum do consultório). Deita, pernas pra cima.</span>')}
+  return}
  var rm=S.mg/maxMg(),re=S.epi/maxEpi();
  if(rm>1||re>1){log('<span class="av">🦷 Procedimento feito, sem dor... mas o paciente passou do limite e saiu passando mal.</span> '+contaCerta());return}
  pOk++;salvaPlacar();
