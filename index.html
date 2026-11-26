@@ -785,7 +785,7 @@ function materia(){
     ${itemMaterial()}
   </div>
   <section class="bloco"><h2>Meu desempenho</h2>${desempenhoHtml()}</section>
-  ${nSm1 || nSm2 ? `<section class="bloco legenda">${nSm1 ? '<span><i class="tag sm1">SM1</i>a questão caiu igual no simulado 1</span>' : ''}${nSm2 ? '<span><i class="tag sm2">SM2</i>a questão caiu igual no simulado 2</span>' : ''}${nSm1 ? '<span><i class="tag par">parecida</i>semelhante a uma do simulado 1</span>' : ''}</section>` : ''}`);
+  `);
   const {ms} = partes();
   $('#vol').onclick = inicio;
   app.querySelectorAll('[data-mat]').forEach(el => el.onclick = () => { MAT = el.dataset.mat; grava('jogo-mat', MAT); materia(); });
@@ -880,7 +880,7 @@ function questao(anima){
   const respondidas = P.itens.filter(x => x.conf).length;
   const nova = ultimaVista !== P.i; ultimaVista = P.i;
   const nSM = k => { const l = banco().q.filter(x => x[k]).map(x => x.id).sort((a,b)=>a.localeCompare(b,'pt',{numeric:true})); const i = l.indexOf(q.id); return i >= 0 ? (i+1) + ' ' : ''; };
-  const marca = q.sm2 ? `<p class="nota-sm2">(questão ${nSM('sm2')}do simulado 2)</p>` : q.sm1 ? `<p class="nota-sm1">(questão ${nSM('sm1')}do simulado 1)</p>` : q.sm1par ? `<p class="nota-par">(semelhante à questão ${typeof q.sm1par === 'number' ? q.sm1par + ' ' : ''}do simulado 1)</p>` : '';
+  const marca = q.sm2 ? `<p class="nota-sm2">(questão ${nSM('sm2')}do simulado 2)</p>` : q.sm1 ? `<p class="nota-sm1">(questão ${nSM('sm1')}do simulado 1)</p>` : q.sm1par ? `<p class="nota-par">(paralela à questão ${typeof q.sm1par === 'number' ? q.sm1par + ' ' : ''}do simulado 1)</p>` : '';
   app.innerHTML = `
   <div class="barra">
     <div class="barraL"><button class="fechar" id="sair">${IC.x}Sair</button><span class="ponto" aria-live="polite">${nota1(acertos())} <small>de ${nota1(total)}</small></span></div>
