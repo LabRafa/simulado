@@ -138,6 +138,7 @@ function confere(r,ok,certoTxt,expl){
 }
 $('b3').onclick=function(){
  var v=num('i3');confere('r3',Math.abs(v-S.total)<0.6,fmt(S.total)+' mg',S.peso+' × '+fmt(S.a.mgkg)+' = '+fmt(S.bruto)+' mg'+(S.bruto>S.a.teto?' → passou do teto, fica '+S.a.teto+' mg':''));
+ if(v>S.total*1.3)$('r3').innerHTML+='<br><span class="erro">💀 Com '+fmt(v)+' mg '+S.nome+' convulsiona na cadeira... 🚔 e a Odontologia Legal bate na sua porta. Ainda bem que é só jogo!</span>';
  $('p4').querySelector('p:nth-child(2)').innerHTML=fmt(S.total)+' mg ÷ '+S.a.mgTub+' mg de 1 tubete, arredonda pra baixo:';
  mostra(4);
 };
@@ -157,7 +158,7 @@ $('b6').onclick=function(){
  var v=num('i6');tot++;
  var quem=S.tubE!==null&&S.tubE<S.tubA?'a epinefrina':'o anestésico';
  if(v===S.certo){pts++;$('r6').innerHTML='<span class="ok">🎉 Paciente anestesiado com segurança! Máximo '+S.certo+' tubetes, quem limita é '+quem+'.</span>';}
- else if(v>S.certo){$('r6').innerHTML='<span class="erro">🚨 Overdose! Com '+v+' tubetes '+(S.tubE!==null&&v>S.tubE?'a epinefrina estoura'+(S.cardio?' e o coração do '+S.nome.split(' ').pop()+' sofre (taquicardia, pico de pressão)':''):'o anestésico fica tóxico (tontura, convulsão)')+'. O máximo era '+S.certo+'.</span>';}
+ else if(v>S.certo){$('r6').innerHTML='<span class="erro">🚨 Overdose! Com '+v+' tubetes '+(S.tubE!==null&&v>S.tubE?'a epinefrina estoura'+(S.cardio?' e o coração do '+S.nome.split(' ').pop()+' sofre (taquicardia, pico de pressão)':''):'o anestésico fica tóxico (tontura, convulsão)')+'. O máximo era '+S.certo+'. 🚔 Chama o advogado!</span>';}
  else $('r6').innerHTML='<span class="av">⚠️ Seguro, mas dava até '+S.certo+' tubetes.</span>';
  placar();
 };
