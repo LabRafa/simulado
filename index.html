@@ -376,7 +376,7 @@ footer{text-align:center;font-size:13px;color:var(--cinza);padding:8px 16px 28px
 <script src="estudo-dirigido-bases.js?v=202611240935"></script>
 <script src="av-bases-2026-11-23.js?v=202611240935"></script>
 <script src="farmaco-nivel-av.js?v=202611251942"></script>
-<script src="caderno-gustavo.js?v=202611251942"></script>
+<script src="caderno-gustavo.js?v=202611252335"></script>
 <script src="glossario-farmaco.js?v=202611251445"></script>
 <script src="videos-farmaco.js?v=202611251855"></script>
 <script src="porques-farmaco.js?v=202611251900"></script>
@@ -809,10 +809,10 @@ function menuTreinoAV(){
       + (o.cls === 'destaque' ? `<span class="ic">${ic}</span><span><b>${esc(nome)}</b><small>${esc(sub)}</small></span>`
          : `<span class="topo-q"><span class="ic">${ic||IC.folha}</span>${o.num ? `<span class="num">${o.num}</span>` : ''}</span><b>${esc(nome)}</b><small>${esc(sub)}</small>`)
       + `</button>`; };
-  const provas = dest.filter(m => !/n[ií]vel/i.test(m.nome)).map(m => q(m, m.nome, 'Com gabarito comentado', IC.folha, {num: n(m)})).join('');
+  const material = dest.filter(m => m.material).map(m => q(m, m.nome, 'Do professor, com introdução', IC.folha, {num: n(m)})).join('');
+  const provas = dest.filter(m => !/n[ií]vel/i.test(m.nome) && !m.material).map(m => q(m, m.nome, 'Com gabarito comentado', IC.folha, {num: n(m)})).join('');
   const treinos = dest.filter(m => /n[ií]vel/i.test(m.nome)).map(m => q(m, m.nome, 'Texto longo e pegadinha, igual à prova', IC.alvo, {num: n(m)})).join('')
-    + (n(casos) ? q(casos, 'Casos reais', 'Paciente, dente e conduta', IC.esteto, {num: n(casos)}) : '')
-    + imgs.map(m => q(m, m.nome, 'Qual é, por onde sai, o que anestesia', IC.foto || IC.olho || IC.play, {num: n(m)})).join('')
+    /* Rafael 25/11: sem botão de casos e de imagem (ficam espalhados; casos dentro do Por assunto) */
     + (temas.length ? q(null, 'Por assunto', 'Um tema de cada vez', IC.alvo, {id: 'temas', num: temas.length}) : '');
   const nNov = n(novas), nErr = n(erros);
   const meus = (novas ? q(novas, 'Nunca fiz', nNov ? 'Só as que você não respondeu' : 'Você já fez todas', IC.play, {num: nNov, dis: !nNov}) : '')
@@ -823,6 +823,7 @@ function menuTreinoAV(){
   <div class="gradetreino">${q(completo, 'Simulado sorteado', '10 questões de tudo, nota de 0 a 1', IC.play, {cls: 'destaque'})}</div>
   ${provas ? `<h2 class="tgrupo">Provas que já caíram</h2><div class="gradetreino">${provas}</div>` : ''}
   ${treinos ? `<h2 class="tgrupo">Treinos</h2><div class="gradetreino">${treinos}</div>` : ''}
+  ${material ? `<h2 class="tgrupo">Material do professor</h2><div class="gradetreino">${material}</div>` : ''}
   ${meus ? `<h2 class="tgrupo">Do seu jeito</h2><div class="gradetreino">${meus}</div>` : ''}`);
   const {ms} = partes();
   $('#vol').onclick = materia;
