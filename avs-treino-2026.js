@@ -410,7 +410,7 @@
     Q.forEach(function (q) { q.tema = TEMA; B.q.push(q); });
     var ms = B.modos || (B.modos = []);
     if (ms.some(function (m) { return m.id === idModo; })) return;
-    var modo = { id: idModo, nome: "Treino para a AVS (parecidas com a AV)",
+    var modo = { id: idModo, nome: "Treino para a AVS (questões paralelas à AV)",
       sub: Q.length + " questões paralelas às da AV de 24/11, com resposta comentada. Vêm todas de uma vez.",
       lista: Q, todas: true, destaque: true,
       apresenta: { titulo: "O que é este treino?",
