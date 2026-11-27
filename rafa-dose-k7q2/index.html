@@ -37,6 +37,17 @@ button:disabled{opacity:.4}
 .treme{animation:treme .15s infinite}
 .pisca{animation:pisca 1s infinite}
 @keyframes pisca{50%{opacity:.3}}
+#rosto{display:flex;align-items:center;gap:12px}
+#rosto svg{width:96px;height:96px;flex:none;transition:transform .5s,filter .6s}
+.r-dor svg{animation:treme .12s 6}
+.r-feliz svg{animation:pula .5s 2}
+.r-desmaio svg{transform:rotate(-70deg) translateY(10px);filter:saturate(.3) brightness(1.15)}
+.r-morto svg{transform:rotate(-90deg);filter:grayscale(1) brightness(.8)}
+.r-convulsao svg{animation:treme .08s infinite}
+.r-palpita svg{animation:bate .45s infinite}
+@keyframes pula{50%{transform:translateY(-12px)}}
+@keyframes bate{50%{transform:scale(1.08)}}
+#falaRosto{font-weight:700}
 details summary{cursor:pointer;font-weight:700}
 small{opacity:.75}
 </style>
@@ -47,6 +58,7 @@ small{opacity:.75}
 <div class="lbl"><span>✅ Procedimentos sem dor: <b id="pOk">0</b></span><span>💀 Pacientes perdidos: <b id="pMorte">0</b></span></div>
 
 <div class="card" id="pac"></div>
+<div class="card" id="rosto"><svg id="cara" viewBox="0 0 100 100"></svg><span id="falaRosto">😐</span></div>
 
 <div class="card">
   <div class="lbl"><span>Anestésico no corpo</span><span id="tMg">0 mg</span></div><div class="bar"><i id="bMg"></i></div>
@@ -92,7 +104,7 @@ small{opacity:.75}
 </g></svg>
 <div id="seringaTxt">Carpule vazia</div>
 
-<div id="morte"><div class="cx"><h2>💀</h2><h2 id="mTit">O paciente morreu</h2><p id="mTxt"></p><p>🚔 <b>Odontologia Legal:</b> processo ético no Conselho Regional de Odontologia, ação cível por indenização e inquérito por homicídio culposo (imperícia).</p><p id="mConta"></p><button id="mNovo">Próximo paciente</button></div></div>
+<div id="morte"><div class="cx"><h2 id="mIco">💀</h2><h2 id="mTit">O paciente morreu</h2><p id="mTxt"></p><p id="mLei">🚔 <b>Odontologia Legal:</b> processo ético no Conselho Regional de Odontologia, ação cível por indenização e inquérito por homicídio culposo (imperícia).</p><p id="mConta"></p><button id="mNovo">Próximo paciente</button></div></div>
 
 <script>
 var ANEST=[
@@ -138,6 +150,18 @@ var PAC=[
 ];
 var $=function(i){return document.getElementById(i)};
 var fmt=function(n){return String(Math.round(n*1000)/1000).replace('.',',')};
+var FEM={'Dona Lurdes':1,'Carla':1,'Júlia':1,'Renata':1,'Dona Zélia':1,'Ana':1};
+function oa(m,f){return S&&FEM[S.nome]?f:m}
+var ROSTO={calmo:['ok','😐 Tranquilo'],feliz:['feliz','😁 Não sentiu nada!'],dor:['dor','😖 AI! Tá doendo!'],tonto:['tonto','😵‍💫 Tudo girando...'],convulsao:['x','⚡ Convulsionando'],palpita:['susto','💓 Coração na boca'],desmaio:['x','😵 Desmaiou'],morto:['x','💀'],foi:['bravo','😤 Foi embora']};
+function cara(tipo){var c=$('cara');if(!c||!S)return;var pele=S.idade<13?'#f6c9a0':S.idade>65?'#e9b996':'#f1c08f',cab=S.idade>65?'#cfcfcf':FEM[S.nome]?'#6b3e26':'#3b2a1e';
+ var o={ok:'<circle cx="37" cy="45" r="4"/><circle cx="63" cy="45" r="4"/>',feliz:'<path d="M31 45q6-6 12 0M57 45q6-6 12 0" fill="none" stroke="#222" stroke-width="3"/>',dor:'<path d="M31 41l12 6M31 47l12-6M57 41l12 6M57 47l12-6" stroke="#222" stroke-width="3"/>',tonto:'<path d="M33 45a4 4 0 1 1 8 0a3 3 0 1 1-6 0M59 45a4 4 0 1 1 8 0a3 3 0 1 1-6 0" fill="none" stroke="#222" stroke-width="2"/>',x:'<path d="M32 40l10 10M42 40l-10 10M58 40l10 10M68 40l-10 10" stroke="#222" stroke-width="3"/>',susto:'<circle cx="37" cy="45" r="6" fill="#fff" stroke="#222" stroke-width="2"/><circle cx="63" cy="45" r="6" fill="#fff" stroke="#222" stroke-width="2"/><circle cx="37" cy="45" r="2"/><circle cx="63" cy="45" r="2"/>',bravo:'<path d="M30 38l12 4M70 38l-12 4" stroke="#222" stroke-width="3"/><circle cx="37" cy="46" r="3.5"/><circle cx="63" cy="46" r="3.5"/>'}[ROSTO[tipo][0]];
+ var b={ok:'<path d="M38 68h24" stroke="#222" stroke-width="3"/>',feliz:'<path d="M34 64q16 14 32 0" fill="#c0392b" stroke="#222" stroke-width="2"/>',dor:'<ellipse cx="50" cy="69" rx="9" ry="7" fill="#5a1a1a"/>',tonto:'<path d="M36 68q5-5 10 0t10 0t10 0" fill="none" stroke="#222" stroke-width="3"/>',x:'<path d="M38 70q12-6 24 0" fill="none" stroke="#222" stroke-width="3"/>',susto:'<circle cx="50" cy="69" r="6" fill="#5a1a1a"/>',bravo:'<path d="M36 72q14-10 28 0" fill="none" stroke="#222" stroke-width="3"/>'}[ROSTO[tipo][0]];
+ var extra=tipo==='dor'?'<path d="M70 50q3 8 0 12q-3-4 0-12" fill="#4fc3f7"/>':tipo==='palpita'||tipo==='tonto'?'<circle cx="76" cy="30" r="3" fill="#4fc3f7"/><circle cx="24" cy="34" r="2.5" fill="#4fc3f7"/>':tipo==='morto'?'<ellipse cx="50" cy="8" rx="16" ry="4" fill="none" stroke="#ffd54f" stroke-width="3"/>':'';
+ var pal=(tipo==='desmaio'||tipo==='morto')?'#e6e0d6':pele;
+ c.innerHTML='<ellipse cx="50" cy="28" rx="36" ry="22" fill="'+cab+'"/><circle cx="50" cy="52" r="34" fill="'+pal+'" stroke="#00000022"/>'+(S.idade<13?'<circle cx="30" cy="60" r="5" fill="#f4a3a3" opacity=".6"/><circle cx="70" cy="60" r="5" fill="#f4a3a3" opacity=".6"/>':'')+o+b+extra;
+ $('rosto').className='card r-'+tipo;$('falaRosto').textContent=ROSTO[tipo][1];
+ if(tipo==='dor'||tipo==='feliz'){clearTimeout(S.tRosto);S.tRosto=setTimeout(function(){if(!S.morto&&!S.fora)atualiza()},1400)}
+}
 var S,pOk=0,pMorte=0;
 try{pOk=+localStorage.getItem('jt2-ok')||0;pMorte=+localStorage.getItem('jt2-m')||0}catch(e){}
 function salvaPlacar(){$('pOk').textContent=pOk;$('pMorte').textContent=pMorte;try{localStorage.setItem('jt2-ok',pOk);localStorage.setItem('jt2-m',pMorte)}catch(e){}}
@@ -187,7 +211,7 @@ function novo(){
  $('pac').innerHTML='<b>🧑 '+S.nome+'</b>, '+S.idade+' anos, <b>'+S.peso+' kg</b> · '+(S.cardio?'❤️‍🩹 <b>cardiopata</b>':'💪 saudável')+'<br>'+S.hist+'<br>🦷 <b>'+c.proc+'</b>';
  $('prat').innerHTML=ANEST.map(function(a){return '<button data-id="'+a.id+'">'+a.nome+'</button>'}).join('');
  $('tecs').innerHTML=Object.keys(TEC).map(function(k){return '<button data-t="'+k+'">'+TEC[k].nome+'</button>'}).join('');
- $('log').innerHTML='';$('morte').classList.remove('on');$('dica').textContent='👀 Mostrar os pontos';
+ $('log').innerHTML='';$('morte').classList.remove('on');$('mIco').textContent='💀';$('mLei').innerHTML='🚔 <b>Odontologia Legal:</b> processo ético no Conselho Regional de Odontologia, ação cível por indenização e inquérito por homicídio culposo (imperícia).';$('dica').textContent='👀 Mostrar os pontos';
  desenhaBoca();atualiza();seringaVazia();
  log('Novo paciente. Pegue um tubete, escolha a técnica e arraste a seringa até o ponto.');
 }
@@ -208,10 +232,11 @@ function atualiza(){
  if(rm>1.6)est='⚡ CONVULSÃO';
  if(S.cardio&&re>1.5)est='💔 Arritmia grave, dor forte no peito';
  $('estado').textContent=est;$('pac').className='card '+cls;
+ if(!S.morto&&!S.fora&&!S.desmaiado){cara(rm>1.6?'convulsao':rm>1?'tonto':re>1?'palpita':'calmo')}
  if(!S.morto&&(rm>1.9||(S.cardio&&re>2.5)||re>4)){
   S.morto=true;pMorte++;salvaPlacar();
   var causa=rm>1.9?'Intoxicação pelo anestésico: convulsão, depressão respiratória e parada cardiorrespiratória.':'A epinefrina passou muito do limite: '+(S.cardio?'infarto e arritmia fatal no coração doente':'crise hipertensiva e arritmia fatal')+'.';
-  $('mTit').textContent=S.nome+' morreu';$('mTxt').textContent=causa+' Foram '+S.tub+' tubetes ('+fmt(S.mg)+' mg).';
+  cara('morto');$('mTit').textContent=S.nome+' morreu';$('mTxt').textContent=causa+' Foram '+S.tub+' tubetes ('+fmt(S.mg)+' mg).';
   $('mConta').innerHTML=contaCerta();
   setTimeout(function(){$('morte').classList.add('on')},700);
  }
@@ -260,17 +285,18 @@ function injeta(x,y){
  seringaVazia();atualiza();
 }
 $('proc').onclick=function(){if(S.morto)return;
- if(!S.tub){log('<span class="erro">😱 Começou sem anestesia! '+S.nome+' pulou da cadeira.</span>');return}
+ if(!S.tub){cara('dor');log('<span class="erro">😱 Começou sem anestesia! '+S.nome+' pulou da cadeira.</span>');return}
  var falta=S.caso.tec.filter(function(t){return !S.feitas[t]});
  if(falta.length){S.dor=(S.dor||0)+1;
-  log('<span class="erro">😖 '+S.nome+' sentiu dor! ('+S.dor+'ª vez)</span> Faltou anestesiar com: <b>'+falta.map(function(t){return TEC[t].nome}).join(' + ')+'</b>.');
+  cara('dor');log('<span class="erro">😖 '+S.nome+' sentiu dor! ('+S.dor+'ª vez)</span> Faltou anestesiar com: <b>'+falta.map(function(t){return TEC[t].nome}).join(' + ')+'</b>.');
   if(S.cardio){S.epi+=0.015;log('<span class="av">💓 Dor = estresse = o corpo solta adrenalina própria. No cardiopata isso pesa no coração.</span>');atualiza();
-   if(!S.morto&&S.dor>=3){S.morto=true;pMorte++;salvaPlacar();$('mTit').textContent=S.nome+' infartou de dor';$('mTxt').textContent='Dor repetida num cardiopata: o estresse libera adrenalina do próprio corpo, o coração doente não aguenta. Anestesia bem feita também é proteção do coração.';$('mConta').innerHTML=S.a?contaCerta():'';setTimeout(function(){$('morte').classList.add('on')},500)}}
-  else if(S.dor>=3){log('<span class="erro">😵 '+S.nome+' ficou pálido, suou frio e desmaiou na cadeira (síncope vasovagal, a emergência mais comum do consultório). Deita, pernas pra cima.</span>')}
+   if(!S.morto&&S.dor>=3){S.morto=true;pMorte++;salvaPlacar();cara('morto');$('mTit').textContent=S.nome+' infartou de dor';$('mTxt').textContent='Dor repetida num cardiopata: o estresse libera adrenalina do próprio corpo, o coração doente não aguenta. Anestesia bem feita também é proteção do coração.';$('mConta').innerHTML=S.a?contaCerta():'';setTimeout(function(){$('morte').classList.add('on')},500)}}
+  else if(S.dor>=5){S.morto=true;S.fora=true;pMorte++;salvaPlacar();cara('foi');$('mIco').textContent='🚪';$('mLei').innerHTML='⚖️ <b>Odontologia Legal:</b> processo ético no CRO e ação cível por danos morais. Sem morte, não tem inquérito criminal, mas a imperícia fica registrada.';$('mTit').textContent=S.nome+' foi embora';$('mTxt').textContent=S.dor+' vezes com dor, desmaiou na cadeira e levantou e foi embora. Saiu direto pro CRO: denúncia ética por imperícia, e o prontuário mostra '+S.tub+' tubetes no lugar errado. Odontologia Legal: o dentista responde pelo dano, mesmo sem morte.';$('mConta').innerHTML=S.a?contaCerta():'';setTimeout(function(){$('morte').classList.add('on')},900)}
+  else if(S.dor>=3){S.desmaiado=true;cara('desmaio');log('<span class="erro">😵 '+S.nome+' ficou sem cor, suou frio e desmaiou na cadeira (síncope vasovagal, a emergência mais comum do consultório). Deita, pernas pra cima.</span> <small>Mais '+(5-S.dor)+' dor(es) e '+oa('ele','ela')+' vai embora.</small>');setTimeout(function(){if(!S.morto){S.desmaiado=false;atualiza()}},2500)}
   return}
  var rm=S.mg/maxMg(),re=S.epi/maxEpi();
  if(rm>1||re>1){log('<span class="av">🦷 Procedimento feito, sem dor... mas o paciente passou do limite e saiu passando mal.</span> '+contaCerta());return}
- pOk++;salvaPlacar();
+ pOk++;salvaPlacar();cara('feliz');
  log('<span class="ok">🎉 '+S.caso.proc+' sem dor e com segurança! Usou '+S.tub+' tubete(s).</span> '+contaCerta());
 };
 $('novo').onclick=novo;$('mNovo').onclick=novo;
